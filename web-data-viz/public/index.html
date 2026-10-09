@@ -56,7 +56,7 @@
             </div>
         </nav>
         <a href="./html/login.html" class="btnLogin"><button class="login">Entrar</button></a>
-        <a href="./html/loginEmpresa.html" class="btnLoginEmpresa"><button class="login">Realizar cadastro</button></a>
+        <a href="./html/loginEmpresa.html" class="btnLoginEmpresa"><button class="login">Contratar</button></a>
     </header>
     <main>
         <section id="primeira" class="primeira">
@@ -152,10 +152,10 @@
                             <span class="oqeGradiente">DASHBOARD</span>.
                         </div>
                     </div>
-                    <img src="./assets/imgs/grafico.png" alt="">
+                    <img src="./assets/imgs/grafico.png" alt="" class="imagem-solucao">
                 </div>
                 <div class="solucao" id="detec">
-                    <img src="./assets/imgs/alerta.jpg" alt="">
+                    <img src="./assets/imgs/alerta.jpg" alt="" class="imagem-solucao-invertida">
                     <div class="textoSolu">
                         <div class="tituloSolu">Detecte</div>
                         <div class="descricaoSolu">Fique sempre a par do que está acontecendo com seu sistema!<br>
@@ -173,22 +173,17 @@
                             situação da sua farm ou mante-la como o esperado para o maior lucro com suas operações de
                             mineração.</div>
                     </div>
-                    <img src="./assets/imgs/manutencao.png" alt="">
+                    <img src="./assets/imgs/manutencao.png" alt="" class="imagem-solucao">
                 </div>
             </div>
         </section>
         <section id="quinta">
-            <h1 class="titulomaquina tituloAsic ativo">Conheça o <span class="asicT">Asic</span></h1>
-            <h1 class="titulomaquina tituloGPU">Conheça a <span class="asicT">GPU</span></h1>
+            <h1 class="titulomaquina tituloGPU ativo">Conheça a <span class="asicT">GPU</span></h1>
             <h1 class="titulomaquina tituloRig">Conheça o <span class="asicT">MiningRig</span></h1>
             <div class="maquinas">
                 <div class="gradiente"></div>
                 <div class="maquina">
-                    <div class="maquinaDescricao descAsic ativo">Um ASIC Miner é um equipamento desenvolvido
-                        especificamente para realizar os cálculos necessários para a mineração de Bitcoin. Ele possui
-                        chips especializados que oferecem alto desempenho e eficiência para executar o algoritmo de
-                        mineração, sendo uma das principais opções utilizadas na mineração profissional.</div>
-                    <div class="maquinaDescricao descGPU">Uma GPU (Graphics Processing Unit) é um processador
+                    <div class="maquinaDescricao descGPU ativo">Uma GPU (Graphics Processing Unit) é um processador
                         originalmente desenvolvido para trabalhar com gráficos, mas que também pode realizar muitos
                         cálculos simultaneamente. Na mineração, várias GPUs podem ser utilizadas em conjunto para
                         executar os cálculos necessários, formando uma alternativa mais flexível aos ASICs.</div>
@@ -197,15 +192,11 @@
                         para realizar mineração de criptomoedas. O conjunto precisa ser monitorado para acompanhar
                         fatores como temperatura, consumo de energia e desempenho dos componentes.</div>
                     <div class="escolha">
-                        <div class="escolher asicMiner selecionado">Asic</div>
-                        <div class="escolher gpu">GPU</div>
+                        <div class="escolher gpu selecionado">GPU</div>
                         <div class="escolher minerig">Mining Rig</div>
                     </div>
                 </div>
-                <model-viewer class="asic3d ativo" src="./assets/tresD/ant_miner_s19_pro.glb" camera-controls
-                    auto-rotate shadow-intensity="1">
-                </model-viewer>
-                <model-viewer class="gpu3d" src="./assets/tresD/rx_480_gpu.glb" camera-controls auto-rotate
+                <model-viewer class="gpu3d ativo" src="./assets/tresD/rx_480_gpu.glb" camera-controls auto-rotate
                     shadow-intensity="1">
                 </model-viewer>
                 <model-viewer class="minerig3d" src="./assets/tresD/mining_rig.glb" camera-controls auto-rotate
@@ -216,44 +207,26 @@
 
         <section id="sexta">
             <h1 class="sexta-titulo">O QUE MONITORAMOS?</h1>
-            <div class="sexta-desc">
-                Quais são as métricas que mostramos para você em sua aplicação?
-            </div>
             <div class="grid-cards">
                 <div class="cards-metricas" style="--clr:#32c4ae;">
                     <h3 class="titulo-card">CPU/GPU</h3>
-                    <div class="descricao-card">Monitore em tempo real o uso em porcentagem da sua CPU, para saber o
-                        quanto ela está trabalhando além da frequência em GHz. Com sua GPU, monitore o gasto energético
-                        para melhor controle de seus gastos e o uso total, para garantir o maior desempenho do hardware
-                        para a mineração. </div>
+                    <div class="descricao-card">Saiba quando as CPUs estão trabalhando demais e conheça o gasto energético de sua GPU, para garantir o maior desempenho do hardware.</div>
                 </div>
                 <div class="cards-metricas" style="--clr:#32c4ae;">
                     <h3 class="titulo-card">RAM</h3>
-                    <div class="descricao-card">Saiba o uso da sua memória RAM, garanta que seu sistema está estável,
-                        que seu sistema operacional esteja carregado juntamente de seu software de mineração operando da
-                        melhor maneira possível. Saiba também sobre o uso de sua memoria swap.</div>
+                    <div class="descricao-card">Conheça o uso de suas memórias RAM e swap, garantindo estabilidade para seus sistemas durante a mineração.</div>
                 </div>
                 <div class="cards-metricas" style="--clr:#32c4ae;">
                     <h3 class="titulo-card">Rede</h3>
-                    <div class="descricao-card">Observe a velocidade de upload e download da sua rede da maneira mais
-                        fácil com os nossos alertas e dashboard, garantindo que não tenha delay entre as operações,
-                        preservando a rapidez dos seus processos para que a latência não te impeça de validar o próximo
-                        bloco.</div>
+                    <div class="descricao-card">Tenha conhecimento imediato sobre qualquer anomalia em sua rede com alertas dinâmicos e previna-se de falhas e ataques.</div>
                 </div>
-            </div>
-            <div class="grid-cards">
                 <div class="cards-metricas" style="--clr:#32c4ae;">
                     <h3 class="titulo-card">Temperatura</h3>
-                    <div class="descricao-card">Consulte a temperatura de suas máquinas, observando e agindo conforme a
-                        variação de temperatura para mitigar problemas ou mal funcionamento de sua mineração, evitando
-                        perda de componentes e garantindo a saúde dos seus aparatos tecnológicos.</div>
+                    <div class="descricao-card">Monitore a temperatura de suas máquinas durante a operação, evite superaquecimento e garanta a longevidade das peças.</div>
                 </div>
                 <div class="cards-metricas" style="--clr:#32c4ae;">
                     <h3 class="titulo-card">Disco</h3>
-                    <div class="descricao-card">Verifique a porcentagem de disco livre, assegure a continuidade de
-                        processos como: armazenar o histórico da rede, agilizar a sincronização do nó, garantir a
-                        estabilidade operacional do sistema, disponibilizar a memória swap e a sincronização de dados
-                    </div>
+                    <div class="descricao-card">Acompanhe dinâmicamente o armazenamento disponivel em disco e nunca mais seja pego de surpresa pela falta de espaço</div>
                 </div>
                 <div class="cards-metricas" style="--clr:#32c4ae;">
                     <h3 class="titulo-card">Ventoinhas</h3>
@@ -280,7 +253,7 @@
         </div>
         <div class="cta">
             <h3>Deseja fazer parte?</h3>
-            <a href="./html/cadastroEmpresa.html" class="sim">Juntar-se</a>
+            <a href="./html/cadastroEmpresa.html" class="sim">Contratar</a>
         </div>
         <div class="copy">CryptoSight © 2026</div>
     </footer>
