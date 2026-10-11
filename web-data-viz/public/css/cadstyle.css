@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Blinker:wght@100;200;300;400;600;700;800;900&family=Jost:ital,wght@0,100..900;1,100..900&family=Play:wght@400;700&family=Sora:wght@100..800&display=swap');
+
 *{
     margin: 0;
     padding: 0;
@@ -101,7 +103,7 @@ main{
     }
     .crypto{
 
-        font-family: 'manrope';
+        font-family: 'Manrope';
         font-weight: 800;
         font-size: 3rem;
         color: white;
@@ -118,7 +120,7 @@ main{
     justify-content: center;
     
     .titulo{
-        font-family: 'manrope';
+        font-family: 'Manrope';
         font-size: 3rem;
         font-weight: 800;
         color: white;
@@ -153,7 +155,7 @@ main{
 .campos{
     display: flex;
     flex-direction: column;
-    font-family: 'manrope';
+    font-family: 'Inter';
     font-size: 20px;
     font-weight: 800;
     color: white;
@@ -170,9 +172,8 @@ main{
         background-color: #1F1F1F;
         height: 6.5vh;
         width: 35vw;
-        font-family: 'manrope';
+        font-family: 'Play';
         font-size: 20px;
-        font-weight: 800;
         color: white;
     }
     input:focus{
@@ -187,9 +188,8 @@ main{
         background-color: #1F1F1F;
         height: 6.5vh;
         width: 35vw;
-        font-family: 'manrope';
+        font-family: 'Play';
         font-size: 20px;
-        font-weight: 800;
         color: white;
     }
     select:focus{
@@ -199,9 +199,8 @@ main{
 }
 .campos2{
     display: flex;
-    font-family: 'manrope';
+    font-family: 'Play';
     font-size: 20px;
-    font-weight: 800;
     color: white;
     gap: 0.5vh;
     .campo{
@@ -227,7 +226,7 @@ main{
 }
 
 .submit{
-    font-family: 'inter';
+    font-family: 'Manrope';
     font-size: 28px;
     font-weight: 700;
     padding: 2vh 2vw;
@@ -316,12 +315,12 @@ main{
 /* Fonts */
 
 @font-face {
-    font-family: 'manrope';
+    font-family: 'Manrope';
     src: url(../assets/fonts/Manrope-VariableFont_wght.ttf);
 }
 
 @font-face {
-    font-family: 'inter';
+    font-family: 'Inter';
     src: url(../assets/fonts/Inter-VariableFont_opsz\,wght.ttf);
 }
     
