@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "concurrently 'node app.js' 'npx @tailwindcss/cli -i ./public/css/style.css -o ./public/css/output.css --watch'",
+    "start": "concurrently \"node app.js\" \"npx @tailwindcss/cli --input ./public/css/style.css --output ./public/css/output.css --watch\"",
     "dev": "nodemon --exec node app.js"
   },
   "author": "Feito pelos desenvolvedores @ São Paulo Tech School / Bandtec Digital School",
