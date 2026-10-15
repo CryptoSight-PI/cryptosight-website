@@ -4,14 +4,22 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+<<<<<<< HEAD
     "start": "concurrently \"node app.js\" \"npx @tailwindcss/cli --input ./public/css/style.css --output ./public/css/output.css --watch\"",
     "dev": "nodemon --exec node app.js"
+=======
+    "start": "node app.js",
+    "dev": "npx @tailwindcss/cli -i ./public/css/input.css -o ./public/css//output.css --watch"
+>>>>>>> d9595b628306d7d68adc99ea8417aec732e6d471
   },
   "author": "Feito pelos desenvolvedores @ São Paulo Tech School / Bandtec Digital School",
   "license": "MIT",
   "dependencies": {
     "@tailwindcss/cli": "^4.3.3",
+<<<<<<< HEAD
     "concurrently": "^10.0.6",
+=======
+>>>>>>> d9595b628306d7d68adc99ea8417aec732e6d471
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.17.1",
