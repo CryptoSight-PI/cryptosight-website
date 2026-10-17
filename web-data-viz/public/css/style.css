@@ -5,6 +5,7 @@
 
 @theme{
     --font-ibm-mono: "IBM Plex Mono";
+    --font-space-mono: "Space Mono"
 }
 
 html {
@@ -2601,3 +2602,45 @@ footer{
     }
 }
 
+.filtro-selecionado{
+    background: #235347;
+    color: #00E6A6;
+    border-color: #00E6A6;
+}
+
+.filtro{
+    background: #0C1F19;
+    color: white;
+    border-color: #207F70;
+}
+
+.filtro:hover{
+    background: #235347;
+    color: #00E6A6;
+    border-color: #00E6A6;
+}
+
+.saudavel{
+    background: #0D3831;
+    border-color: #207F70;
+}
+
+.atencao{
+    background: #D08E0024;
+    border-color: #FFAE00;
+}
+
+.critico{
+    background: #7A001539;
+    border-color: #E00027;
+}
+
+.offline{
+    background: #747F7A28;
+    border-color: #81988D;
+}
+
+.rig-selecionada{
+    border-width: 2px !important;
+    border-color: #00E6A6 !important; 
+}
