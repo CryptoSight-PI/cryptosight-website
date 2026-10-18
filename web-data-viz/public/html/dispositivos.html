@@ -19,6 +19,45 @@
                 <p class="text-gray-400 text-sm m-auto flex justify-center">Cadastre e gerencie dispositivos dessa sessão</p>
             </div>
         </div>
+
+         <div class="mb-8 flex justify-between">
+            <input id="inputbusca" oninput="buscar()" type="text" placeholder="Pesquisar por dispositivo..." class="w-80 bg-[#0C1F19] text-white px-5 py-3 rounded-xl border border-[#207F70]">
+            <button onclick="modal_adicionar_dispositivo.showModal()" class="bg-[#00E6A6] text-black font-bold px-6 py-3 rounded-xl hover:bg-[#00c992] cursor-pointer flex items-center gap-2">
+                + Novo dispositivo
+            </button>
+        </div>
+        
+
+        <dialog id="modal_adicionar_dispositivo" class="w-full p-15 m-auto max-w-xl bg-[#0C1F19] border border-[#207F70]/60 rounded-2xl backdrop:backdrop-blur-sm">
+            <h2 class="text-2xl text-white font-bold pb-2">Novo Dispositivo</h2>
+            <div>
+                <label class="text-white">endereço mac</label>
+                <input oninput="validarmac()" maxlength="17" placeholder="AA:BB:CC:DD:EE:FF" id="iptmacdispositivo" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+            </div>
+
+            <div>
+                <label class="text-white">Modelo</label>
+                <input placeholder="AntimerS21" id="iptmodelodispositivo" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+            </div>
+
+            <div>
+                <label class="text-white">Fabricante</label>
+                <input placeholder="Bitmain" id="iptfabricantedispositivo" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+            </div>
+
+            <div>
+                <label class="text-white">Tipo</label>
+                <input placeholder="ASIC" id="ipttipodispositivo" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+            </div>
+
+            <div class="flex justify-between">
+                <button class="p-3 mt-5 text-white bg-[#00E6A6] rounded-2xl font-bold" onclick="modal_adicionar_dispositivo.close() ; adicionardispositivo()">CADASTRAR</button>
+                <button class="p-3 mt-5 rounded-2xl border border-[#207F70]/60 text-[#A0B5AC] hover:text-white font-bold cursor-pointer transition-colors" onclick="modal_adicionar_dispositivo.close()">CANCELAR</button>
+            </div>
+            
+        </dialog>
+
+
     </main>
 </body>
 </html>
@@ -33,4 +72,21 @@
     function voltarfarm(){
         window.location.href = 'farm.html'
     }
+
+    function validarmac(){
+        mac = iptmacdispositivo.value.replace(/[^0-9A-Fa-f]/g, "").toUpperCase();
+        let m = "";
+        for (let i = 0; i < mac.length; i++) {
+            if (i > 0 && i % 2 === 0) {
+                m += ":";
+            }
+            m += mac[i];
+            }
+       iptmacdispositivo.value = m;
+    }
+
+    function adicionardispositivo(){
+        alert("Dispositivo adicionado")
+    }
+
 </script>
