@@ -26,6 +26,9 @@
                 + Novo dispositivo
             </button>
         </div>
+
+        <p id="vazio" class="hidden text-center text-[#A0B5AC] py-10">Nenhuma máquina encontrada</p>
+
         
 
         <dialog id="modal_adicionar_dispositivo" class="w-full p-15 m-auto max-w-xl bg-[#0C1F19] border border-[#207F70]/60 rounded-2xl backdrop:backdrop-blur-sm">
@@ -88,5 +91,22 @@
     function adicionardispositivo(){
         alert("Dispositivo adicionado")
     }
+
+     function buscar(){
+           let texto = inputbusca.value.toLowerCase();
+            let itens = document.querySelectorAll('.usuario');
+            let visiveis = 0;
+
+            for (let i = 0; i < itens.length; i++) {
+                
+                if (itens[i].textContent.toLowerCase().includes(texto)) {
+                    itens[i].style.display = "";
+                    visiveis++;
+                } else {
+                    itens[i].style.display = "none";
+                }
+            }
+            vazio.style.display = visiveis > 0 ? "none" : "block";
+        }
 
 </script>
