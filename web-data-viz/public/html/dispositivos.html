@@ -4,8 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="icon" href="../assets/imgs/logo.png">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/output.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
-<body>
-    
+<body class="pl-20 min-h-screen w-screen bg-linear-135 from-[#0d1412] via-[#09483f] to-[#0d1412] text-white">
+    <main class="flex-1 p-10">
+        <div class="flex justify-between mb-10">
+            <i onclick="voltarfarm()" class="fa-solid fa-arrow-left-long cursor-pointer text-2xl"></i>
+            <div class="justify-center items-center m-auto">
+                
+                <h1 id="pid" class="text-3xl font-bold text-white">Gerenciamento de dispositivos da sessão </h1>
+                <p class="text-gray-400 text-sm m-auto flex justify-center">Cadastre e gerencie dispositivos dessa sessão</p>
+            </div>
+        </div>
+    </main>
 </body>
 </html>
+<script>
+    let sessao = new URLSearchParams(location.search).get('sessao')
+    function nomessessao(){
+        pid.innerHTML = `Gerenciamento de dispositivos da ${sessao}`
+    }
+    nomessessao()
+    function voltarfarm(){
+        window.location.href = 'farm.html'
+    }
+</script>
