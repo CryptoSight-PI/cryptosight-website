@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="icon" href="../assets/imgs/logo.png">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/output.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body class="pl-20 min-h-screen w-screen bg-linear-135 from-[#0d1412] via-[#09483f] to-[#0d1412] text-white">
+    <main class="flex-1 p-10">
+        <div class="flex justify-between mb-10">
+            <div class="justify-center items-center m-auto">
+                <h1 class="text-3xl font-bold text-white">Gerenciamento de farms</h1>
+                <p class="text-gray-400 text-sm m-auto flex justify-center">Cadastre e gerencie suas unidades de farms</p>
+            </div>
+        </div>
+
+        <div class="mb-8 flex justify-between">
+            <input id="inputbusca" oninput="buscar()" type="text" placeholder="Pesquisar por nome da farm..." class="w-80 bg-[#0C1F19] text-white px-5 py-3 rounded-xl border border-[#207F70]">
+            <button onclick="modal_adicionar.showModal()" class="bg-[#00E6A6] text-black font-bold px-6 py-3 rounded-xl hover:bg-[#00c992] cursor-pointer flex items-center gap-2">
+                + Nova Farm
+            </button>
+        </div>
+
+        <div class="w-100">
+            
+            <div class="farm p-6 bg-[#0C1F19] border border-[#207F70] rounded-2xl flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-center">
+                        <h2 class="text-xl font-bold text-white">Farm X</h2>
+                        <button onclick="statusfarm()" class="cursor-pointer">
+                            <span id="status_farm" class="bg-[#144840] text-[#00E6A6] px-3 py-1 rounded-lg text-xs">Ativa</span>
+                        </button>
+                    </div>
+                    <p class="text-sm text-gray-400">São Paulo - SP</p>
+                    <p class="text-xs text-gray-400 mb-4">Criado em: 18/10/2026</p>
+                    <div class="pt-4 mb-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-bold text-[#00E6A6]">SESSÕES DA FARM</span>
+                            <button onclick="modal_sessao_adicionar.showModal()" class="text-xs bg-[#144840] hover:bg-[#1a5e54] text-[#00E6A6] px-2.5 py-1 rounded-lg cursor-pointer">
+                                + Nova Sessão
+                            </button>
+                        </div>
+
+                        <div>
+                            
+                            <div class="flex justify-between items-center bg-[#101b18] p-3 rounded-xl border border-[#207F70]/40">
+                                <div>
+                                    <p class="text-sm text-white">Sessão Bloco A</p>
+                                    <p class="text-xs text-gray-400">Setor de ASICs principais</p>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <button onclick="dispositivoabrir()" class="text-xs bg-[#00E6A6]/10 border border-[#00E6A6] text-[#00E6A6] px-2.5 py-1.5 rounded-lg hover:bg-[#00E6A6] hover:text-black cursor-pointer">
+                                        Máquinas <i class="fa-solid fa-arrow-right"></i>
+                                    </button>
+                                    <button onclick="modal_sessao_editar.showModal()" class="text-xs text-[#00E6A6] hover:text-[#00c992] cursor-pointer">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </button>
+                                    <button onclick="modal_sessao_excluir.showModal()" class="text-xs text-red-400 hover:text-red-300 cursor-pointer">
+                                        <i class="fa-solid fa-trash-can"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex gap-2">
+                    <button onclick="modal_editar.showModal()" class="flex-1 py-2 rounded-lg bg-[#144840] border border-[#207F70]/40 hover:bg-[#1a5e54] text-[#00E6A6] text-xs cursor-pointer flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-pen-to-square"></i> Editar Farm
+                    </button>
+                    <button onclick="modal_excluir.showModal()" class="flex-1 py-2 rounded-lg bg-[#7A0015]/30 border border-[#E00027]/40 hover:bg-red-900/50 text-red-400 text-xs cursor-pointer flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-trash-can"></i> Excluir Farm
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <p id="vazio" class="hidden text-center text-[#A0B5AC] py-10">Nenhuma farm encontrada.</p>
+
+        
+        
+
+    </main>
+
+    <script>
+        function buscar(){
+            let texto = inputbusca.value.toLowerCase();
+            let itens = document.querySelectorAll('.farm');
+            let visiveis = 0;
+
+            for (let i = 0; i < itens.length; i++) {
+                if (itens[i].textContent.toLowerCase().includes(texto)) {
+                    itens[i].style.display = "";
+                    visiveis++;
+                } else {
+                    itens[i].style.display = "none";
+                }
+            }
+            vazio.style.display = visiveis > 0 ? "none" : "block";
+        }
+
+
+        function statusfarm() {
+            if (status_farm.textContent === 'Ativa') {
+                status_farm.textContent = 'Inativa';
+                status_farm.className = 'bg-gray border border-black text-gray-400 px-3 py-1 rounded-lg text-xs';
+            } else {
+                status_farm.textContent = 'Ativa';
+                status_farm.className = 'bg-[#144840] text-[#00E6A6] px-3 py-1 rounded-lg text-xs';
+            }
+        }
+
+        
+       
+        function dispositivoabrir() {
+            // depois usar para logica do back // ou passar id na url
+            // sessionStorage.setItem('id_sessao_selecionada', idSessao);
+
+            // ou passa o id da sessao na url
+            window.location.href = 'dispositivos.html';
+        }
+
+      
+        function adicionarFarm() {
+             
+            }
+        function editarFarm() {
+             
+            }
+        function excluirFarm() {
+              
+            }
+        function adicionarSessao() {
+              
+            }
+        function editarSessao() {
+             
+            }
+        function excluirSessao() {
+             
+            }
+    </script>
+</body>
+</html>
