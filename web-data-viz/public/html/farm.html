@@ -53,7 +53,7 @@
                                     <p class="text-xs text-gray-400">Setor de ASICs principais</p>
                                 </div>
                                 <div class="flex items-center gap-2">
-                                    <button onclick="dispositivoabrir('Sessão Bloco A')" class="text-xs bg-[#00E6A6]/10 border border-[#00E6A6] text-[#00E6A6] px-2.5 py-1.5 rounded-lg hover:bg-[#00E6A6] hover:text-black cursor-pointer">
+                                    <button onclick="dispositivoabrir('Sessão Bloco A' , 1)" class="text-xs bg-[#00E6A6]/10 border border-[#00E6A6] text-[#00E6A6] px-2.5 py-1.5 rounded-lg hover:bg-[#00E6A6] hover:text-black cursor-pointer">
                                         Máquinas <i class="fa-solid fa-arrow-right"></i>
                                     </button>
                                     <button onclick="modal_sessao_editar.showModal()" class="text-xs text-[#00E6A6] hover:text-[#00c992] cursor-pointer">
@@ -118,12 +118,12 @@
 
         
        
-        function dispositivoabrir(nome) {
+        function dispositivoabrir(nome , idsessao) {
             // depois usar para logica do back // ou passar id na url
             // sessionStorage.setItem('id_sessao_selecionada', idSessao);
 
             // ou passa o id da sessao na url
-            window.location.href = `dispositivos.html?sessao=${nome}`;
+            window.location.href = `dispositivos.html?sessao=${nome}&id=${idsessao}`;
         }
 
       

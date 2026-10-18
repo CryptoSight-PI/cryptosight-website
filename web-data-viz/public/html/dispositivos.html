@@ -24,6 +24,8 @@
 </html>
 <script>
     let sessao = new URLSearchParams(location.search).get('sessao')
+    let idsessao = new URLSearchParams(location.search).get('id')
+    console.log(idsessao)
     function nomessessao(){
         pid.innerHTML = `Gerenciamento de dispositivos da ${sessao}`
     }
