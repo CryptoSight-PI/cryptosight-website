@@ -53,32 +53,32 @@
     </div>
 
     <!-- Visão geral -->
-    <p class="ml-10 mr-15 mt-7 mb-3 text-xl font-ibm-mono font-semibold">Visão geral das farms</p>
-    <div class="bg-linear-to-r from-[#0C1F19] to-[#0E3226] border border-[#207F70] rounded-2xl ml-10 mr-15 p-10">
-        <div class="mb-5 justify-between flex flex-row">
+    <p class="ml-10 mr-15 mt-7 mb-8 mt-3 text-3xl font-ibm-mono font-semibold">Visão geral das farms</p>
+    <div class="bg-linear-to-r from-[#0C1F19] to-[#0E3226] border border-[#207F70] rounded-2xl ml-10 mr-15 pr-10 pl-10 pb-9 pt-9">
+        <div class="mb-7 justify-between flex flex-row">
             <div>
                 <p class="text-sm font-inter">Rigs online</p>
-                <p class="text-md font-bold text-[#207F70] font-ibm-mono"><span id="rigs_ativas" class="text-xl text-white">40</span> / <span id="rigs_total">42</span></p>
+                <p class="text-2xl font-bold text-[#207F70] font-ibm-mono"><span id="rigs_ativas" class="text-3xl text-white">40</span><span id="rigs_total">/42</span></p>
             </div>
             <div>
                 <p class="text-sm font-inter">Alertas em atividade</p>
-                <p class="text-md font-bold text-[#207F70] font-ibm-mono"><span id="alertas_ativos" class="text-xl text-[#FFAE00]">11</span></p>
+                <p class="text-2xl font-bold text-[#207F70] font-ibm-mono"><span id="alertas_ativos" class="text-3xl text-[#FFAE00]">11</span></p>
             </div>
             <div>
                 <p class="text-sm font-inter">Hashrate total</p>
-                <p class="text-md font-bold text-[#207F70] font-ibm-mono"><span id="hashrate_total" class="text-xl text-white">7.70</span> PH/s</span></p>
+                <p class="text-2xl font-bold text-[#207F70] font-ibm-mono"><span id="hashrate_total" class="text-3xl text-white">7.70</span> PH/s</span></p>
             </div>
             <div>
                 <p class="text-sm font-inter">Consumo total</p>
-                <p class="text-md font-bold text-[#207F70] font-ibm-mono"><span id="consumo_total" class="text-xl text-white">130.0</span> kW</p>
+                <p class="text-2xl font-bold text-[#207F70] font-ibm-mono"><span id="consumo_total" class="text-3xl text-white">130.0</span> kW</p>
             </div>
             <div>
                 <p class="text-sm font-inter">Temperatura média</p>
-                <p class="text-md font-bold text-[#207F70] font-ibm-mono"><span id="temperatura_media" class="text-xl text-white">66</span> °C</p>
+                <p class="text-2xl font-bold text-[#207F70] font-ibm-mono"><span id="temperatura_media" class="text-3xl text-white">66</span> °C</p>
             </div>
         </div>
         <div>
-            <div class="flex flex-row justify-between text-xs font-inter">
+            <div class="flex flex-row justify-between gap-1 font-space-mono mb-2">
                 <p>Saúde das Rigs</p>
                 <p> <span id="num_ok">29</span> Ok · 
                     <span id="num_atencao">8</span> Atenção · 
@@ -96,26 +96,27 @@
 
     <!-- Filtros -->
     <div class="flex flex-row ml-10 mr-15 mt-5">
-        <button class="text-sm rounded-2xl p-2 border ml-2 hover:cursor-pointer filtro-selecionado transition-colors duration-100 ease-in-out"  id="filtro_total">Todas <span id="rigs_total_filtro">42</span></button>
-        <button class="text-sm rounded-2xl p-2 border ml-2 hover:cursor-pointer filtro transition-colors duration-100 ease-in-out"  id="filtro_saudaveis">Saudáveis <span id="rigs_saudaveis_filtro">29</span></button>
-        <button class="text-sm rounded-2xl p-2 border ml-2 hover:cursor-pointer filtro transition-colors duration-100 ease-in-out"  id="filtro_atencao">Atenção <span id="rigs_atencao_filtro">8</span></button>
-        <button class="text-sm rounded-2xl p-2 border ml-2 hover:cursor-pointer filtro transition-colors duration-100 ease-in-out"  id="filtro_criticas">Críticas <span id="rigs_criticas_filtro">3</span></button>
-        <button class="text-sm rounded-2xl p-2 border ml-2 hover:cursor-pointer filtro transition-colors duration-100 ease-in-out"  id="filtro_offline">Offline <span id="rigs_offline_filtro">2</span></button>
+        <button class="text-sm rounded-2xl pl-3 pr-3 p-2 border ml-2 hover:cursor-pointer filtro-selecionado transition-colors duration-100 ease-in-out"  id="filtro_total">Todas <span id="rigs_total_filtro">42</span></button>
+        <button class="text-sm rounded-2xl pl-3 pr-3 p-2 border ml-2 hover:cursor-pointer filtro transition-colors duration-100 ease-in-out"  id="filtro_saudaveis">Saudáveis <span id="rigs_saudaveis_filtro">29</span></button>
+        <button class="text-sm rounded-2xl pl-3 pr-3 p-2 border ml-2 hover:cursor-pointer filtro transition-colors duration-100 ease-in-out"  id="filtro_atencao">Atenção <span id="rigs_atencao_filtro">8</span></button>
+        <button class="text-sm rounded-2xl pl-3 pr-3 p-2 border ml-2 hover:cursor-pointer filtro transition-colors duration-100 ease-in-out"  id="filtro_criticas">Críticas <span id="rigs_criticas_filtro">3</span></button>
+        <button class="text-sm rounded-2xl pl-3 pr-3 p-2 border ml-2 hover:cursor-pointer filtro transition-colors duration-100 ease-in-out"  id="filtro_offline">Offline <span id="rigs_offline_filtro">2</span></button>
     </div>
 
     <!-- Restante -->
     <div class="grid grid-cols-3 ml-10 mr-15 mt-3 gap-5">
         <div class="col-span-2">
     <!-- Fazenda A -->
-            <div class="bg-[#0C1F19] border border-[#207F70] p-10 rounded-2xl mb-10">
+            <div class="bg-[#0C1F19] border border-[#207F70] pb-8 pt-8 pl-10 pr-10 rounded-2xl mb-10">
                 <div class="flex flex-row justify-between">
                     <div>
-                        <p id="farm1_nome" class="font-semibold font-inter text-xl">Farm A</p>
+                        <p id="farm1_nome" class="font-semibold font-inter text-2xl">Farm A</p>
                         <p id="farm1_local" class="text-sm font-space-mono">São Paulo · SP</p>
                     </div>
-                    <p class="font-ibm-mono text-sm"><span id="farm1_rigs_ativas">19</span>/<span id="farm1_rigs">21</span> online · <span id="farm1_hashrate">2,69</span> PH/s · <span id="farm1_energia">45,5</span> kW · <span id="farm1_alertas">4</span> alertas</p>
+                    <p class="font-space-mono text-sm"><span id="farm1_rigs_ativas">19</span>/<span id="farm1_rigs">21</span> online · <span id="farm1_hashrate">2,69</span> PH/s · <span id="farm1_energia">45,5</span> kW · <span id="farm1_alertas">4</span> alertas</p>
                 </div>
-                <p class="mt-7 font-space-mono">SESSÃO 1</p>
+                <p class="mt-7 font-space-mono mb-3">SESSÃO 1</p>
+
                 <div class="grid grid-cols-7 gap-2 font-space-mono text-[#A0B5AC]" id="farm1_sessao1">
                     <div id="cardA1_1" class="saudavel border p-3 rounded-2xl">
                         <div class="flex flex-row pb-2">
@@ -195,7 +196,7 @@
                         <p class="text-sm"><span id="hashrateA1_7">195</span> TH/s</p>
                     </div>
                 </div>
-                <p class="mt-7 font-space-mono">SESSÃO 2</p>
+                <p class="mt-7 font-space-mono ono mb-3">SESSÃO 2</p>
                 <div class="grid grid-cols-7 gap-2 font-space-mono text-[#A0B5AC]" id="farm1_sessao1">
                     <div id="cardA2_1" class="saudavel border p-3 rounded-2xl">
                         <div class="flex flex-row pb-2">
@@ -275,7 +276,7 @@
                         <p class="text-sm"><span id="hashrateA2_7">195</span> TH/s</p>
                     </div>
                 </div>
-                <p class="mt-7 font-space-mono">SESSÃO 3</p>
+                <p class="mt-7 font-space-mono ono mb-3">SESSÃO 3</p>
                 <div class="grid grid-cols-7 gap-2 font-space-mono text-[#A0B5AC]" id="farm1_sessao1">
                     <div id="cardA3_1" class="saudavel border p-3 rounded-2xl">
                         <div class="flex flex-row pb-2">
@@ -357,15 +358,15 @@
                 </div>
             </div>
     <!-- Fazenda B -->
-            <div class="bg-[#0C1F19] border border-[#207F70] p-10 rounded-2xl">
+            <div class="bg-[#0C1F19] border border-[#207F70] pl-10 pr-10 pb-8 pt-8 rounded-2xl">
                 <div class="flex flex-row justify-between">
                     <div>
-                        <p id="farm2_nome" class="font-semibold font-inter text-xl">Farm B</p>
+                        <p id="farm2_nome" class="font-semibold font-inter text-2xl">Farm B</p>
                         <p id="farm2_local" class="text-sm font-space-mono">São Paulo · SP</p>
                     </div>
-                    <p class="font-ibm-mono text-sm"><span id="farm1_rigs_ativas">19</span>/<span id="farm1_rigs">21</span> online · <span id="farm1_hashrate">2,69</span> PH/s · <span id="farm1_energia">45,5</span> kW · <span id="farm1_alertas">4</span> alertas</p>
+                    <p class="font-space-mono text-sm"><span id="farm1_rigs_ativas">19</span>/<span id="farm1_rigs">21</span> online · <span id="farm1_hashrate">2,69</span> PH/s · <span id="farm1_energia">45,5</span> kW · <span id="farm1_alertas">4</span> alertas</p>
                 </div>
-                <p class="mt-7 font-space-mono">SESSÃO 1</p>
+                <p class="mt-7 font-space-mono ono mb-3">SESSÃO 1</p>
                 <div class="grid grid-cols-7 gap-2 font-space-mono text-[#A0B5AC]" id="farm1_sessao1">
                     <div id="cardA1_1" class="saudavel border p-3 rounded-2xl">
                         <div class="flex flex-row pb-2">
@@ -445,7 +446,7 @@
                         <p class="text-sm"><span id="hashrateB1_7">195</span> TH/s</p>
                     </div>
                 </div>
-                <p class="mt-7 font-space-mono">SESSÃO 2</p>
+                <p class="mt-7 font-space-mono ono mb-3">SESSÃO 2</p>
                 <div class="grid grid-cols-7 gap-2 font-space-mono text-[#A0B5AC]" id="farm1_sessao1">
                     <div id="cardB2_1" class="saudavel border p-3 rounded-2xl">
                         <div class="flex flex-row pb-2">
@@ -525,7 +526,7 @@
                         <p class="text-sm"><span id="hashrateB2_7">195</span> TH/s</p>
                     </div>
                 </div>
-                <p class="mt-7 font-space-mono">SESSÃO 3</p>
+                <p class="mt-7 font-space-mono ono mb-3">SESSÃO 3</p>
                 <div class="grid grid-cols-7 gap-2 font-space-mono text-[#A0B5AC]" id="farm1_sessao1">
                     <div id="cardB3_1" class="saudavel border p-3 rounded-2xl">
                         <div class="flex flex-row pb-2">
@@ -611,37 +612,37 @@
     <!-- Alertas e mais informações -->
 
         <div>
-            <div class="bg-[#0C1F19] border border-[#207F70] p-5 rounded-2xl mb-5">
+            <div class="bg-[#0C1F19] border border-[#207F70] pb-6 pt-6 pr-6 pl-6 rounded-2xl mb-5">
                 <div class="flex flex-row justify-between">
                     <div>
-                        <p class="font-inter text-sm font-medium">Rig selecionada</p>
+                        <p class="font-inter text-sm mb-5 font-medium">Rig selecionada</p>
                         <p id="modelo_selecionado" class="font-space-mono font-semibold text-xl">MR01-02</p>
-                        <p class="font-inter text-sm font-medium"><span id="farm_selecionada">Farm A</span> · <span id="sessao_selecionada">Sessão 2</span></p>
+                        <p class="font-inter text-sm font-medium"><span id="farm_selecionada">Farm A</span> · <span id="sessao_selecono mb-3">Sessão 2</span></p>
                     </div>
                     <p id="status_selecionada" class="border border-[#7A0015] bg-[#7A001542] text-[#E00027] text-sm pl-2 pr-2 pt-1 pb-1 rounded-2xl h-fit">Crítica</p>
                 </div>
                 <div class="grid grid-cols-2 grid-rows-2 gap-2 mt-3 text-[#D5D5D5]">
-                    <div class="border border-[#207F70] rounded-2xl p-2">
+                    <div class="border border-[#207F70] rounded-2xl pt-2.5 pb-2.5 pr-3 pl-3">
                         <p class="text-xs font-inter">Hashrate</p>
-                        <p class="font-ibm-mono"><span id="hash_selecionada">140.5</span> TH/s</p>
+                        <p class="font-ibm-mono font-bold"><span id="hash_selecionada">140.5</span> TH/s</p>
                     </div>
-                    <div class="border border-[#207F70] rounded-2xl p-2">
+                    <div class="border border-[#207F70] rounded-2xl pt-2.5 pb-2.5 pr-3 pl-3">
                         <p class="text-xs font-inter">Temperatura</p>
-                        <p class="font-ibm-mono"><span id="temperatura_selecionada">140.5</span> °C</p>
+                        <p class="font-ibm-mono font-bold"><span id="temperatura_selecionada">140.5</span> °C</p>
                     </div>
-                    <div class="border border-[#207F70] rounded-2xl p-2">
+                    <div class="border border-[#207F70] rounded-2xl pt-2.5 pb-2.5 pr-3 pl-3">
                         <p class="text-xs font-inter">Consumo</p>
-                        <p class="font-ibm-mono"><span id="consumo_selecionada">140.5</span> W</p>
+                        <p class="font-ibm-mono font-bold"><span id="consumo_selecionada">140.5</span> W</p>
                     </div>
-                    <div class="border border-[#207F70] rounded-2xl p-2">
+                    <div class="border border-[#207F70] rounded-2xl pt-2.5 pb-2.5 pr-3 pl-3">
                         <p class="text-xs font-inter">CPU / RAM</p>
-                        <p class="font-ibm-mono"><span id="cpu_selecionada">140.5</span>% / <span id="ram_selecionada">140.5</span>%</p>
+                        <p class="font-ibm-mono font-bold"><span id="cpu_selecionada">140.5</span>% / <span id="ram_selecionada">140.5</span>%</p>
                     </div>
                 </div>
                 <button class="bg-[#0D3831] border border-[#207F70] rounded-xl font-inter font-medium w-full p-2 mt-3 hover:cursor-pointer hover:bg-[#207F7025] transition-colors duration-100 ease-in-out">Abrir Dashboard da Rig</button>
             </div>
             
-            <div class="bg-[#0C1F19] border border-[#207F70] p-10 rounded-2xl mb-5">
+            <div class="bg-[#0C1F19] border border-[#207F70] pb-6 pt-6 pr-6 pl-6 rounded-2xl mb-5">
                 <div class="flex flex-row justify-between">
                     <p class="font-ibm-mono font-semibold">Alertas ativos</p>
                     <p id="total_alertas" class="border border-[#207F70] rounded-2xl text-sm pt-1 pb-1 pl-3 pr-3 text-[#A0B5AC]">11</p>
