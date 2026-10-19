@@ -7,6 +7,7 @@
     <link rel="icon" href="../assets/imgs/logo.png">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/output.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body class="pl-20 h-screen w-screen bg-linear-135 from-[#0d1412] via-[#09483f] to-[#0d1412]">
     <main class="flex-1 p-10">
@@ -38,6 +39,7 @@
                             <span class="bg-[#144840] text-[#00E6A6] px-3 py-1 rounded-lg text-xs border border-[#207F70]">Administrador</span>
                         </div>
                         <p class="text-sm text-gray-400">Jeff@cryptosight.com</p>
+                        <p id="farmsusuario" class="text-xs text-gray-400">Farm X, Farm Y</p>
                     </div>
                 </div>
 
@@ -54,6 +56,7 @@
                 </div>
 
                 <div class="flex gap-4">
+                    <button onclick="abrirfarms()" title="Atribuir farms" class="px-5 py-2.5 rounded-lg bg-[#144840] border border-[#207F70]/40 hover:bg-[#1a5e54] text-[#00E6A6] text-sm cursor-pointer"><i class="fa-solid fa-industry"></i></button>
                     <button onclick="modal_editar.showModal()" class="px-5 py-2.5 rounded-lg bg-[#144840] border border-[#207F70]/40 hover:bg-[#1a5e54] text-[#00E6A6] text-sm cursor-pointer">Editar</button>
                     <button onclick="modal_excluir.showModal()" class="px-5 py-2.5 rounded-lg bg-[#7A0015]/39 border border-[#E00027] hover:bg-red-900 text-red-400 text-sm cursor-pointer">Excluir</button>
                 </div>
@@ -122,7 +125,15 @@
             
         </dialog>
 
+        <dialog id="modal_farms" class="w-full p-15 m-auto max-w-xl bg-[#0C1F19] border border-[#207F70]/60 rounded-2xl backdrop:backdrop-blur-sm">
+            <h2 class="text-2xl text-white font-bold pb-10">Atribuir farms</h2>
+            <div id="listafarms"></div>
 
+            <div class="flex justify-between">
+                <button class="p-3 mt-5 text-white bg-[#00E6A6] rounded-2xl font-bold" onclick="salvarfarms()">SALVAR</button>
+                <button class="p-3 mt-5 rounded-2xl border border-[#207F70]/60 text-[#A0B5AC] hover:text-white font-bold cursor-pointer transition-colors" onclick="modal_farms.close()">CANCELAR</button>
+            </div>
+        </dialog>
 
         <dialog id="modal_excluir" class="m-auto max-w-xl p-5 bg-[#0C1F19] border border-[#207F70]/60 rounded-2xl backdrop:backdrop-blur-sm">
             <div>
@@ -140,6 +151,14 @@
    
 
     <script>
+        // ficar mais facil pro back dps troca os mockado
+        let idusuario = 1
+        let farms = [
+            { id: 1, nome: 'Farm X', tem: true },
+            { id: 2, nome: 'Farm Y', tem: true },
+            { id: 3, nome: 'Farm Z', tem: false }
+        ]
+
         function buscar(){
            let texto = inputbusca.value.toLowerCase();
             let itens = document.querySelectorAll('.usuario');
@@ -156,6 +175,60 @@
             }
             vazio.style.display = visiveis > 0 ? "none" : "block";
         }
+
+        
+
+        function abrirfarms() {
+            desenharfarms()
+            modal_farms.showModal()
+        }
+
+        function desenharfarms() {
+            listafarms.innerHTML = ""
+            for (let i = 0; i < farms.length; i++) {
+                let icone = 'fa-regular fa-square'
+                if (farms[i].tem) {
+                    icone = 'fa-solid fa-square-check text-[#00E6A6]'
+                }
+                listafarms.innerHTML += `<button type="button" onclick="marcarfarm(${i})" class="flex items-center gap-4 text-white py-2 cursor-pointer">
+                            <i class="${icone}"></i> ${farms[i].nome}
+                         </button>`
+            }
+        }
+
+        function marcarfarm(i) {
+            farms[i].tem = !farms[i].tem
+            desenharfarms()
+        }
+
+        function salvarfarms() {
+            let ids = []
+            for (let i = 0; i < farms.length; i++) {
+                if (farms[i].tem) {
+                    ids.push(farms[i].id)
+                }
+            }
+
+            mostrarfarms()
+            modal_farms.close()
+        }
+
+        function mostrarfarms() {
+            let nomes = ''
+            for (let i = 0; i < farms.length; i++) {
+                if (farms[i].tem) {
+                    if (nomes != '') {
+                        nomes += ', '
+                    }
+                    nomes += farms[i].nome
+                }
+            }
+            if (nomes == '') {
+                nomes = 'Nenhuma farm'
+            }
+            farmsusuario.textContent = nomes
+        }
+        mostrarfarms()
 
         function adicionar(){
             alert("adicionado")
