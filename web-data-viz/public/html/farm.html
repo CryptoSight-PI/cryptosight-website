@@ -36,7 +36,9 @@
                         </button>
                     </div>
                     <p class="text-sm text-gray-400">São Paulo - SP</p>
+                    <p class="text-xs text-gray-400">CEP: 01234567</p>
                     <p class="text-xs text-gray-400 mb-4">Criado em: 18/10/2026</p>
+                    
                     <div class="pt-4 mb-4">
                         <div class="flex justify-between items-center mb-2">
                             <span class="text-xs font-bold text-[#00E6A6]">SESSÕES DA FARM</span>
@@ -70,7 +72,7 @@
                 </div>
 
                 <div class="flex gap-2">
-                    <button onclick="mostrarmodaleditarfarm('Farm X' , 'São Paulo' , 1)" class="flex-1 py-2 rounded-lg bg-[#144840] border border-[#207F70]/40 hover:bg-[#1a5e54] text-[#00E6A6] text-xs cursor-pointer flex items-center justify-center gap-1.5">
+                    <button onclick="mostrarmodaleditarfarm('Farm X' , 'São Paulo' , '01234567', 1)" class="flex-1 py-2 rounded-lg bg-[#144840] border border-[#207F70]/40 hover:bg-[#1a5e54] text-[#00E6A6] text-xs cursor-pointer flex items-center justify-center gap-1.5">
                         <i class="fa-solid fa-pen-to-square"></i> Editar Farm
                     </button>
                     <button onclick="modal_excluir_farm.showModal()" class="flex-1 py-2 rounded-lg bg-[#7A0015]/30 border border-[#E00027]/40 hover:bg-red-900/50 text-red-400 text-xs cursor-pointer flex items-center justify-center gap-1.5">
@@ -275,9 +277,10 @@
              alert("Sessão excluída")
             }
 
-        function mostrarmodaleditarfarm(nome , cidade , id){
+        function mostrarmodaleditarfarm(nome , cidade , cep , id){
             iptnomefarmeditado.value = nome;
             iptcidadefarmeditado.value = cidade;
+            iptcepfarmeditado.value = cep;
 
             modal_editar_farm.showModal()
         }
