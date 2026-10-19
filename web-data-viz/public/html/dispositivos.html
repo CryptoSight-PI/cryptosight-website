@@ -40,6 +40,7 @@
                     </div>
                     <p class="text-sm text-gray-400">MAC: 01:01:01:01:01</p>
                     <p class="text-xs text-gray-400">Asic</p>
+                    <p class="text-xs text-gray-400">Antminer</p>
                     <p class="text-xs text-gray-400">Bitmain</p>
                     <p class="text-xs text-gray-400">Criado em: 18/10/2026</p>
                     
@@ -163,8 +164,8 @@
                                     <p class="text-xs text-gray-400">Lim max: 900</p>
                                 </div>
                                 <div class="flex items-center gap-2">
-                                    <button onclick="statusrig()" class="cursor-pointer">
-                                        <span id="status_rig" class="bg-[#144840] text-[#00E6A6] px-3 py-1 rounded-lg text-xs">Monitorado</span>
+                                    <button onclick="statusrig(5)" class="cursor-pointer">
+                                        <span id="status_rig_5" class="bg-[#144840] text-[#00E6A6] px-3 py-1 rounded-lg text-xs">Monitorado</span>
                                     </button>
                                     <!-- <button onclick="dispositivoabrir('Sessão Bloco A' , 1)" class="text-xs bg-[#00E6A6]/10 border border-[#00E6A6] text-[#00E6A6] px-2.5 py-1.5 rounded-lg hover:bg-[#00E6A6] hover:text-black cursor-pointer">
                                         Máquinas <i class="fa-solid fa-arrow-right"></i>
@@ -188,10 +189,10 @@
                 </div>
 
                 <div class="flex gap-2">
-                    <button onclick="mostrarmodaleditarfarm('Farm X' , 'São Paulo' , '01234567', 1)" class="flex-1 py-2 rounded-lg bg-[#144840] border border-[#207F70]/40 hover:bg-[#1a5e54] text-[#00E6A6] text-xs cursor-pointer flex items-center justify-center gap-1.5">
+                    <button onclick="mostrarmodaleditardispositivo('0101010101' , 'Antminer' , 'Bitmain', 'Asic', 1)" class="flex-1 py-2 rounded-lg bg-[#144840] border border-[#207F70]/40 hover:bg-[#1a5e54] text-[#00E6A6] text-xs cursor-pointer flex items-center justify-center gap-1.5">
                         <i class="fa-solid fa-pen-to-square"></i> Editar Dispositivo
                     </button>
-                    <button onclick="modal_excluir_farm.showModal()" class="flex-1 py-2 rounded-lg bg-[#7A0015]/30 border border-[#E00027]/40 hover:bg-red-900/50 text-red-400 text-xs cursor-pointer flex items-center justify-center gap-1.5">
+                    <button onclick="modal_excluir_dispositivo.showModal()" class="flex-1 py-2 rounded-lg bg-[#7A0015]/30 border border-[#E00027]/40 hover:bg-red-900/50 text-red-400 text-xs cursor-pointer flex items-center justify-center gap-1.5">
                         <i class="fa-solid fa-trash-can"></i> Excluir Dispositivo
                     </button>
                 </div>
@@ -234,6 +235,65 @@
             </div>
             
         </dialog>
+
+
+        <dialog id="modal_excluir_dispositivo" class="m-auto max-w-xl p-5 bg-[#0C1F19] border border-[#207F70]/60 rounded-2xl backdrop:backdrop-blur-sm">
+            <div>
+                <h1 class="font-bold text-white">Certeza que deseja excluir esse dispostivo?</h1>
+                <div class="flex justify-between gap-4">
+                    <button class="p-3 mt-5 text-white bg-[#00E6A6] rounded-2xl font-bold" onclick="modal_excluir_dispositivo.close() ; excluirdispositivo()">EXCLUIR</button>
+                    <button class="p-3 mt-5 rounded-2xl border border-[#207F70]/60 text-[#A0B5AC] hover:text-white font-bold cursor-pointer" onclick="modal_excluir_dispositivo.close()">CANCELAR</button>
+                </div>
+            </div>
+        </dialog>
+
+
+
+
+        <dialog id="modal_excluir_componente" class="m-auto max-w-xl p-5 bg-[#0C1F19] border border-[#207F70]/60 rounded-2xl backdrop:backdrop-blur-sm">
+            <div>
+                <h1 class="font-bold text-white">Certeza que deseja excluir esse componente?</h1>
+                <div class="flex justify-between gap-4">
+                    <button class="p-3 mt-5 text-white bg-[#00E6A6] rounded-2xl font-bold" onclick="modal_excluir_componente.close() ; excluircomponente()">EXCLUIR</button>
+                    <button class="p-3 mt-5 rounded-2xl border border-[#207F70]/60 text-[#A0B5AC] hover:text-white font-bold cursor-pointer" onclick="modal_excluir_componente.close()">CANCELAR</button>
+                </div>
+            </div>
+        </dialog>
+
+
+
+
+
+
+         <dialog id="modal_editar_dispositivo" class="w-full p-15 m-auto max-w-xl bg-[#0C1F19] border border-[#207F70]/60 rounded-2xl backdrop:backdrop-blur-sm">
+            <h2 class="text-2xl text-white font-bold pb-2">Editar Dispositivo</h2>
+            <div>
+                <label class="text-white">endereço mac</label>
+                <input oninput="validarmac()" maxlength="17" placeholder="AA:BB:CC:DD:EE:FF" id="iptmacdispositivoeditado" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+            </div>
+
+            <div>
+                <label class="text-white">Modelo</label>
+                <input placeholder="AntimerS21" id="iptmodelodispositivoeditado" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+            </div>
+
+            <div>
+                <label class="text-white">Fabricante</label>
+                <input placeholder="Bitmain" id="iptfabricantedispositivoeditado" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+            </div>
+
+            <div>
+                <label class="text-white">Tipo</label>
+                <input placeholder="ASIC" id="ipttipodispositivoeditado" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+            </div>
+
+            <div class="flex justify-between">
+                <button class="p-3 mt-5 text-white bg-[#00E6A6] rounded-2xl font-bold" onclick="modal_editar_dispositivo.close() ; editardispositivo()">EDITAR</button>
+                <button class="p-3 mt-5 rounded-2xl border border-[#207F70]/60 text-[#A0B5AC] hover:text-white font-bold cursor-pointer transition-colors" onclick="modal_editar_dispositivo.close()">CANCELAR</button>
+            </div>
+            
+        </dialog>
+
 
 
 
@@ -298,6 +358,17 @@
                 spandavez.textContent = 'Monitorado';
                 spandavez.className = 'bg-[#144840] text-[#00E6A6] px-3 py-1 rounded-lg text-xs';
             }
+        }
+
+
+
+        function mostrarmodaleditardispositivo(mac , modelo , fabricante , tipo , id){
+            iptmacdispositivoeditado.value = mac;
+            iptmodelodispositivoeditado.value = modelo;
+            iptfabricantedispositivoeditado.value = fabricante;
+            ipttipodispositivoeditado.value = tipo;
+
+            modal_editar_dispositivo.showModal()
         }
 
 </script>
