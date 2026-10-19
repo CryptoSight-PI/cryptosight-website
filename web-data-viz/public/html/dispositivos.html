@@ -52,7 +52,7 @@
                             </button>
                         </div>
 
-                        <div class="flex flex-col gap-3 max-h-[180px] overflow-y-auto pr-2">
+                        <div class="flex flex-col gap-3 max-h-[180px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-[#207F70]">
                             
                             <div class="flex justify-between items-center bg-[#101b18] p-3 rounded-xl border border-[#207F70]/40">
                                 <div>
@@ -292,6 +292,40 @@
                 <button class="p-3 mt-5 rounded-2xl border border-[#207F70]/60 text-[#A0B5AC] hover:text-white font-bold cursor-pointer transition-colors" onclick="modal_editar_dispositivo.close()">CANCELAR</button>
             </div>
             
+        </dialog>
+
+
+
+
+        <dialog id="modal_adicionar_componente" class="w-full p-15 m-auto max-w-xl bg-[#0C1F19] border border-[#207F70]/60 rounded-2xl backdrop:backdrop-blur-sm">
+            <h2 class="text-2xl text-white font-bold pb-2">Adicionar Componente</h2>
+            <div>
+                <label class="text-white">Componente</label>
+                <input placeholder="CPU" id="iptcomponentecomponente" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+            </div>
+            <div class="flex gap-6">
+                 <div>
+                    <label class="text-white">Limite Mínimo</label>
+                    <input placeholder="60.0" id="iptcomponentelimmin" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+                </div>
+                <div>
+                    <label class="text-white">Limite Máximo</label>
+                    <input placeholder="95.0" id="iptcomponentelimmax" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+                </div>
+            </div>
+           
+            <div> 
+                <label class="text-white">Monitorado</label> 
+                <select id="iptcomponentemonitorado" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+                    <option value="sim" class="bg-[#0C1F19]">Monitorado</option>
+                    <option value="nao" class="bg-[#0C1F19]">Não Monitorado</option>
+                </select>
+            </div> 
+
+             <div class="flex justify-between">
+                <button class="p-3 mt-5 text-white bg-[#00E6A6] rounded-2xl font-bold" onclick="modal_adicionar_componente.close() ; adicionarcomponente()">CADASTRAR</button>
+                <button class="p-3 mt-5 rounded-2xl border border-[#207F70]/60 text-[#A0B5AC] hover:text-white font-bold cursor-pointer transition-colors" onclick="modal_adicionar_componente.close()">CANCELAR</button>
+            </div>
         </dialog>
 
 
