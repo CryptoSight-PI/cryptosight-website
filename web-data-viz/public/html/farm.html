@@ -20,7 +20,7 @@
 
         <div class="mb-8 flex justify-between">
             <input id="inputbusca" oninput="buscar()" type="text" placeholder="Pesquisar por nome da farm..." class="w-80 bg-[#0C1F19] text-white px-5 py-3 rounded-xl border border-[#207F70]">
-            <button onclick="modal_adicionar.showModal()" class="bg-[#00E6A6] text-black font-bold px-6 py-3 rounded-xl hover:bg-[#00c992] cursor-pointer flex items-center gap-2">
+            <button onclick="modal_adicionar_farm.showModal()" class="bg-[#00E6A6] text-black font-bold px-6 py-3 rounded-xl hover:bg-[#00c992] cursor-pointer flex items-center gap-2">
                 + Nova Farm
             </button>
         </div>
@@ -40,7 +40,7 @@
                     <div class="pt-4 mb-4">
                         <div class="flex justify-between items-center mb-2">
                             <span class="text-xs font-bold text-[#00E6A6]">SESSÕES DA FARM</span>
-                            <button onclick="modal_sessao_adicionar.showModal()" class="text-xs bg-[#144840] hover:bg-[#1a5e54] text-[#00E6A6] px-2.5 py-1 rounded-lg cursor-pointer">
+                            <button onclick="modal_adicionar_sessao.showModal()" class="text-xs bg-[#144840] hover:bg-[#1a5e54] text-[#00E6A6] px-2.5 py-1 rounded-lg cursor-pointer">
                                 + Nova Sessão
                             </button>
                         </div>
@@ -56,10 +56,10 @@
                                     <button onclick="dispositivoabrir('Sessão Bloco A' , 1)" class="text-xs bg-[#00E6A6]/10 border border-[#00E6A6] text-[#00E6A6] px-2.5 py-1.5 rounded-lg hover:bg-[#00E6A6] hover:text-black cursor-pointer">
                                         Máquinas <i class="fa-solid fa-arrow-right"></i>
                                     </button>
-                                    <button onclick="modal_sessao_editar.showModal()" class="text-xs text-[#00E6A6] hover:text-[#00c992] cursor-pointer">
+                                    <button onclick="modal_editar_sessao.showModal()" class="text-xs text-[#00E6A6] hover:text-[#00c992] cursor-pointer">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </button>
-                                    <button onclick="modal_sessao_excluir.showModal()" class="text-xs text-red-400 hover:text-red-300 cursor-pointer">
+                                    <button onclick="modal_excluir_sessao.showModal()" class="text-xs text-red-400 hover:text-red-300 cursor-pointer">
                                         <i class="fa-solid fa-trash-can"></i>
                                     </button>
                                 </div>
@@ -70,10 +70,10 @@
                 </div>
 
                 <div class="flex gap-2">
-                    <button onclick="modal_editar.showModal()" class="flex-1 py-2 rounded-lg bg-[#144840] border border-[#207F70]/40 hover:bg-[#1a5e54] text-[#00E6A6] text-xs cursor-pointer flex items-center justify-center gap-1.5">
+                    <button onclick="modal_editar_farm.showModal()" class="flex-1 py-2 rounded-lg bg-[#144840] border border-[#207F70]/40 hover:bg-[#1a5e54] text-[#00E6A6] text-xs cursor-pointer flex items-center justify-center gap-1.5">
                         <i class="fa-solid fa-pen-to-square"></i> Editar Farm
                     </button>
-                    <button onclick="modal_excluir.showModal()" class="flex-1 py-2 rounded-lg bg-[#7A0015]/30 border border-[#E00027]/40 hover:bg-red-900/50 text-red-400 text-xs cursor-pointer flex items-center justify-center gap-1.5">
+                    <button onclick="modal_excluir_farm.showModal()" class="flex-1 py-2 rounded-lg bg-[#7A0015]/30 border border-[#E00027]/40 hover:bg-red-900/50 text-red-400 text-xs cursor-pointer flex items-center justify-center gap-1.5">
                         <i class="fa-solid fa-trash-can"></i> Excluir Farm
                     </button>
                 </div>
@@ -84,6 +84,134 @@
         <p id="vazio" class="hidden text-center text-[#A0B5AC] py-10">Nenhuma farm encontrada.</p>
 
         
+
+        <dialog id="modal_adicionar_farm" class="w-full p-15 m-auto max-w-xl bg-[#0C1F19] border border-[#207F70]/60 rounded-2xl backdrop:backdrop-blur-sm">
+            <h2 class="text-2xl text-white font-bold pb-4">Nova Farm</h2>
+            <div>
+                <label class="text-white">Nome da farm</label>
+                <input placeholder="Farm x" id="iptnomefarm" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+            </div>
+
+            <div>
+                <label class="text-white">CEP</label>
+                <input placeholder="01234567" id="iptcepfarm" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+            </div>
+
+            <div class="flex justify-between">
+                <div class="w-50">
+                    <label class="text-white">Cidade</label>
+                    <input placeholder="São Paulo" id="iptcidadefarm" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+                </div>
+
+                <div class="w-50">
+                    <label class="text-white">Número</label>
+                    <input placeholder="12" type="number" id="iptnumerofarm" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+                </div>
+            </div>
+
+            <div class="flex justify-between">
+                <button class="p-3 mt-5 text-white bg-[#00E6A6] rounded-2xl font-bold" onclick="modal_adicionar_farm.close() ; adicionarfarm()">CADASTRAR</button>
+                <button class="p-3 mt-5 rounded-2xl border border-[#207F70]/60 text-[#A0B5AC] hover:text-white font-bold cursor-pointer transition-colors" onclick="modal_adicionar_farm.close()">CANCELAR</button>
+            </div>
+            
+        </dialog>
+
+
+
+
+        <dialog id="modal_adicionar_sessao" class="w-full p-15 m-auto max-w-xl bg-[#0C1F19] border border-[#207F70]/60 rounded-2xl backdrop:backdrop-blur-sm">
+            <h2 class="text-2xl text-white font-bold pb-4">Nova Sessão</h2>
+            <div>
+                <label class="text-white">Nome da Sessão</label>
+                <input placeholder="Sessão A" id="iptnomesessao" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+            </div>
+
+            <div>
+                <label class="text-white">Descricão da Sessão</label>
+                <input placeholder="Sessão principal de Asics" id="iptdescsessao" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+            </div>
+
+            <div class="flex justify-between">
+                <button class="p-3 mt-5 text-white bg-[#00E6A6] rounded-2xl font-bold" onclick="modal_adicionar_sessao.close() ; adicionarsessao()">CADASTRAR</button>
+                <button class="p-3 mt-5 rounded-2xl border border-[#207F70]/60 text-[#A0B5AC] hover:text-white font-bold cursor-pointer transition-colors" onclick="modal_adicionar_sessao.close()">CANCELAR</button>
+            </div>
+        </dialog>
+
+
+
+        <dialog id="modal_editar_sessao" class="w-full p-15 m-auto max-w-xl bg-[#0C1F19] border border-[#207F70]/60 rounded-2xl backdrop:backdrop-blur-sm">
+            <h2 class="text-2xl text-white font-bold pb-4">Editar Sessão</h2>
+            <div>
+                <label class="text-white">Nome da Sessão</label>
+                <input placeholder="Sessão A" id="iptnomesessaoeditada" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+            </div>
+
+            <div>
+                <label class="text-white">Descricão da Sessão</label>
+                <input placeholder="Sessão principal de Asics" id="iptdescsessaoeditada" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+            </div>
+
+            <div class="flex justify-between">
+                <button class="p-3 mt-5 text-white bg-[#00E6A6] rounded-2xl font-bold" onclick="modal_editar_sessao.close() ; editarsessao()">EDITAR</button>
+                <button class="p-3 mt-5 rounded-2xl border border-[#207F70]/60 text-[#A0B5AC] hover:text-white font-bold cursor-pointer transition-colors" onclick="modal_editar_sessao.close()">CANCELAR</button>
+            </div>
+        </dialog>
+
+
+
+
+        <dialog id="modal_excluir_sessao" class="m-auto max-w-xl p-5 bg-[#0C1F19] border border-[#207F70]/60 rounded-2xl backdrop:backdrop-blur-sm">
+            <div>
+                <h1 class="font-bold text-white">Certeza que deseja excluir essa Sessão?</h1>
+                <div class="flex justify-between gap-4">
+                    <button class="p-3 mt-5 text-white bg-[#00E6A6] rounded-2xl font-bold" onclick="modal_excluir_sessao.close() ; excluirsessao()">EXCLUIR</button>
+                    <button class="p-3 mt-5 rounded-2xl border border-[#207F70]/60 text-[#A0B5AC] hover:text-white font-bold cursor-pointer" onclick="modal_excluir_sessao.close()">CANCELAR</button>
+                </div>
+            </div>
+        </dialog>
+
+
+        <dialog id="modal_editar_farm"class="w-full p-15 m-auto max-w-xl bg-[#0C1F19] border border-[#207F70]/60 rounded-2xl backdrop:backdrop-blur-sm">
+            <h2 class="text-2xl text-white font-bold pb-4">Editar Farm</h2>
+            <div>
+                <label class="text-white">Nome da farm</label>
+                <input placeholder="Farm x" id="iptnomefarm" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+            </div>
+
+            <div>
+                <label class="text-white">CEP</label>
+                <input placeholder="01234567" id="iptcepfarm" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+            </div>
+
+            <div class="flex justify-between">
+                <div class="w-50">
+                    <label class="text-white">Cidade</label>
+                    <input placeholder="São Paulo" id="iptcidadefarm" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+                </div>
+
+                <div class="w-50">
+                    <label class="text-white">Número</label>
+                    <input placeholder="12" type="number" id="iptnumerofarm" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+                </div>
+            </div>
+
+            <div class="flex justify-between">
+                <button class="p-3 mt-5 text-white bg-[#00E6A6] rounded-2xl font-bold" onclick="modal_editar_farm.close() ; editarfarm()">EDITAR</button>
+                <button class="p-3 mt-5 rounded-2xl border border-[#207F70]/60 text-[#A0B5AC] hover:text-white font-bold cursor-pointer transition-colors" onclick="modal_editar_farm.close()">CANCELAR</button>
+            </div>
+        </dialog>
+
+
+         <dialog id="modal_excluir_farm" class="m-auto max-w-xl p-5 bg-[#0C1F19] border border-[#207F70]/60 rounded-2xl backdrop:backdrop-blur-sm">
+            <div>
+                <h1 class="font-bold text-white">Certeza que deseja excluir essa Farm?</h1>
+                <div class="flex justify-between gap-4">
+                    <button class="p-3 mt-5 text-white bg-[#00E6A6] rounded-2xl font-bold" onclick="modal_excluir_farm.close() ; excluirsessao()">EXCLUIR</button>
+                    <button class="p-3 mt-5 rounded-2xl border border-[#207F70]/60 text-[#A0B5AC] hover:text-white font-bold cursor-pointer" onclick="modal_excluir_farm.close()">CANCELAR</button>
+                </div>
+            </div>
+        </dialog>
+
         
 
     </main>
