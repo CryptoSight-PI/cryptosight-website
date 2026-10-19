@@ -56,7 +56,7 @@
                                     <button onclick="dispositivoabrir('Sessão Bloco A' , 1)" class="text-xs bg-[#00E6A6]/10 border border-[#00E6A6] text-[#00E6A6] px-2.5 py-1.5 rounded-lg hover:bg-[#00E6A6] hover:text-black cursor-pointer">
                                         Máquinas <i class="fa-solid fa-arrow-right"></i>
                                     </button>
-                                    <button onclick="modal_editar_sessao.showModal()" class="text-xs text-[#00E6A6] hover:text-[#00c992] cursor-pointer">
+                                    <button onclick="mostrarmodaleditarsessao('Sessão Bloco A' , 'Setor de ASICs principais' , 1)" class="text-xs text-[#00E6A6] hover:text-[#00c992] cursor-pointer">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </button>
                                     <button onclick="modal_excluir_sessao.showModal()" class="text-xs text-red-400 hover:text-red-300 cursor-pointer">
@@ -70,7 +70,7 @@
                 </div>
 
                 <div class="flex gap-2">
-                    <button onclick="modal_editar_farm.showModal()" class="flex-1 py-2 rounded-lg bg-[#144840] border border-[#207F70]/40 hover:bg-[#1a5e54] text-[#00E6A6] text-xs cursor-pointer flex items-center justify-center gap-1.5">
+                    <button onclick="mostrarmodaleditarfarm('Farm X' , 'São Paulo' , 1)" class="flex-1 py-2 rounded-lg bg-[#144840] border border-[#207F70]/40 hover:bg-[#1a5e54] text-[#00E6A6] text-xs cursor-pointer flex items-center justify-center gap-1.5">
                         <i class="fa-solid fa-pen-to-square"></i> Editar Farm
                     </button>
                     <button onclick="modal_excluir_farm.showModal()" class="flex-1 py-2 rounded-lg bg-[#7A0015]/30 border border-[#E00027]/40 hover:bg-red-900/50 text-red-400 text-xs cursor-pointer flex items-center justify-center gap-1.5">
@@ -175,18 +175,18 @@
             <h2 class="text-2xl text-white font-bold pb-4">Editar Farm</h2>
             <div>
                 <label class="text-white">Nome da farm</label>
-                <input placeholder="Farm x" id="iptnomefarm" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+                <input placeholder="Farm x" id="iptnomefarmeditado" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
             </div>
 
             <div>
                 <label class="text-white">CEP</label>
-                <input placeholder="01234567" id="iptcepfarm" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+                <input placeholder="01234567" id="iptcepfarmeditado" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
             </div>
 
             <div class="flex justify-between">
                 <div class="w-50">
                     <label class="text-white">Cidade</label>
-                    <input placeholder="São Paulo" id="iptcidadefarm" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+                    <input placeholder="São Paulo" id="iptcidadefarmeditado" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
                 </div>
 
                 <div class="w-50">
@@ -256,23 +256,38 @@
 
       
         function adicionarFarm() {
+            alert("Farm adicionada")
              
             }
         function editarFarm() {
-             
+             alert("Farm editada")
             }
         function excluirFarm() {
-              
+              alert("Farm excluída")
             }
         function adicionarSessao() {
-              
+              alert("Sessão Adicionada")
             }
         function editarSessao() {
-             
+             alert("Sessão editada")
             }
         function excluirSessao() {
-             
+             alert("Sessão excluída")
             }
+
+        function mostrarmodaleditarfarm(nome , cidade , id){
+            iptnomefarmeditado.value = nome;
+            iptcidadefarmeditado.value = cidade;
+
+            modal_editar_farm.showModal()
+        }
+
+        function mostrarmodaleditarsessao(nome, desc , id){
+            iptnomesessaoeditada.value = nome;
+            iptdescsessaoeditada.value = desc;
+
+            modal_editar_sessao.showModal()
+        }
     </script>
 </body>
 </html>
