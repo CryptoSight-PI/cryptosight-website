@@ -48,4 +48,8 @@ router.delete("/excluircomponente/:idcomponenteexcluido", function (req, res) {
     dispositivosController.excluircomponente(req, res);
 });
 
+router.put("/editarcomponente/:idcomponenteeditado" , function(req , res) {
+    dispositivosController.editarcomponente(req , res);
+})
+
 module.exports = router;

@@ -216,6 +216,32 @@ function excluircomponente(req , res){
 
 }
 
+
+function editarcomponente(req, res) {
+    var idcomponenteeditado = req.params.idcomponenteeditado;
+    var limmineditado = req.body.limmin;
+    var limmaxeditado = req.body.limmax;
+    var monitoradoeditado = req.body.monitorado;
+
+    if (idcomponenteeditado == undefined || limmineditado == undefined || limmaxeditado == undefined || monitoradoeditado == undefined) {
+        return res.status(400).send("Dados para editar o componente incompletos.");
+    }
+
+    dispositivosModel.editarcomponente(
+        idcomponenteeditado,
+        limmineditado,
+        limmaxeditado,
+        monitoradoeditado
+    )
+    .then((resultado) => {
+        res.status(200).json(resultado);
+    })
+    .catch((erro) => {
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+
 module.exports = {
     cadastrar,
     listar,
@@ -227,5 +253,6 @@ module.exports = {
     vermonitorado,
     switchmonitorado,
     switchnaomonitorado,
-    excluircomponente
+    excluircomponente,
+    editarcomponente
 };

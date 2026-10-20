@@ -384,20 +384,6 @@
             modal_editar_dispositivo.showModal()
         }
 
-        let idcomponenteeditado = null;
-
-        function mostrarmodaleditarcomponente(nome , min , max , monitorado , id){
-            iptcomponentecomponenteeditado.value = nome
-            iptcomponentelimmineditado.value = min
-            iptcomponentelimmaxeditado.value = max
-            iptcomponentemonitoradoeditado.value = String(monitorado)
-
-
-            idcomponenteeditado = id
-
-            modal_editar_componente.showModal()
-
-        }
         
         let idcomponenteexcluido = null;
 
@@ -621,8 +607,48 @@
             });
         }
 
+        let idcomponenteeditado = null;
+
+        function mostrarmodaleditarcomponente(nome , min , max , monitorado , id){
+            iptcomponentecomponenteeditado.value = nome
+            iptcomponentelimmineditado.value = min
+            iptcomponentelimmaxeditado.value = max
+            iptcomponentemonitoradoeditado.value = String(monitorado)
+
+
+            idcomponenteeditado = id
+
+            modal_editar_componente.showModal()
+
+        }
+
 
         function editarcomponente(){
+            let limmineditado = iptcomponentelimmineditado.value.trim();
+            let limmaxeditado = iptcomponentelimmaxeditado.value.trim();
+            let monitoradoeditado = iptcomponentemonitoradoeditado.value.trim();
+            
+            fetch(`/dispositivos/editarcomponente/${idcomponenteeditado}` , {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    limmin: Number(limmineditado),
+                    limmax: Number(limmaxeditado),
+                    monitorado: Number(monitoradoeditado)
+                })
+            }).then((resposta) => {
+                if(resposta.ok) {
+                    resposta.json().then((dados) => {
+                        alert("componente editado")
+                        modal_editar_componente.close()
+                        listardispositivos()
+                    })
+                }
+            }).catch((erro) => {
+                console.log(erro)
+            })
 
 
         }

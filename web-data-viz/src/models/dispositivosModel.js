@@ -60,17 +60,22 @@ function vermonitorado(idcomponente){
 }
 
 function switchmonitorado(idcomponente){
-    var instrucaoSql = `update maquina_componente set monitorado = 1 where id = ${idcomponente}`
+    var instrucaoSql = `update maquina_componente set monitorado = 1 where id = ${idcomponente};`
     return database.executar(instrucaoSql);
 }
 
 function switchnaomonitorado(idcomponente){
-    var instrucaoSql = `update maquina_componente set monitorado = 0 where id = ${idcomponente}`
+    var instrucaoSql = `update maquina_componente set monitorado = 0 where id = ${idcomponente};`
     return database.executar(instrucaoSql);
 }
 
 function excluircomponente(idcomponenteexcluido){
-    var instrucaoSql = `delete from maquina_componente where id = ${idcomponenteexcluido}`
+    var instrucaoSql = `delete from maquina_componente where id = ${idcomponenteexcluido};`
+    return database.executar(instrucaoSql);
+}
+
+function editarcomponente(idcomponenteeditado , limmineditado , limmaxeditado , monitoradoeditado){
+    var instrucaoSql = `update maquina_componente set limite_min = ${limmineditado} , limite_max = ${limmaxeditado} , monitorado = ${monitoradoeditado} where id = ${idcomponenteeditado};`
     return database.executar(instrucaoSql);
 }
 
@@ -86,5 +91,6 @@ module.exports = {
     vermonitorado,
     switchmonitorado,
     switchnaomonitorado,
-    excluircomponente
+    excluircomponente,
+    editarcomponente
 };
