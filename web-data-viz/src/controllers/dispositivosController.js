@@ -72,8 +72,36 @@ function excluir(req , res){
 
 }
 
+function atualizar(req , res){
+    var iddispositivo = req.params.iddispositivo;
+    var mac_addresseditado = req.body.mac_addresseditado;
+    var modeloeditado = req.body.modeloeditado;
+    var fabricanteeditado = req.body.fabricanteeditado;
+    var tipoeditado = req.body.tipoeditado;
+
+    if (iddispositivo == undefined) {
+        res.status(400).send("iddispositivo está undefined!");
+    } else if (mac_addresseditado == undefined) {
+        res.status(400).send("mac_address está undefined!");
+    } else if (modeloeditado == undefined) {
+        res.status(400).send("modelo está undefined!");
+    } else if (fabricanteeditado == undefined) {
+        res.status(400).send("fabricante está undefined!");
+    } else if (tipoeditado == undefined) {
+        res.status(400).send("tipo está undefined!");
+    } else {
+        dispositivosModel.atualizar(iddispositivo , mac_addresseditado , modeloeditado , fabricanteeditado , tipoeditado).then((resultado) => {
+            res.status(201).json(resultado);
+        }).catch((erro) => {
+            res.status(400).send(erro.sqlMessage)
+        })
+
+    }
+}
+
 module.exports = {
     cadastrar,
     listar,
-    excluir
+    excluir,
+    atualizar
 };
