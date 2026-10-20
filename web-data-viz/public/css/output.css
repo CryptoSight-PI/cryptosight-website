@@ -10,6 +10,8 @@
       "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
+    --default-transition-duration: 150ms;
+    --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     --default-font-family: var(--font-sans);
     --default-mono-font-family: var(--font-mono);
   }
@@ -174,6 +176,22 @@
   }
   .transform {
     transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,);
+  }
+  .border {
+    border-style: var(--tw-border-style);
+    border-width: 1px;
+  }
+  .outline {
+    outline-style: var(--tw-outline-style);
+    outline-width: 1px;
+  }
+  .filter {
+    filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
+  }
+  .transition {
+    transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events;
+    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+    transition-duration: var(--tw-duration, var(--default-transition-duration));
   }
 }
 * {
@@ -429,6 +447,7 @@ header {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  line-height: 1;
 }
 .oqe {
   font-family: 'Inter';
@@ -594,7 +613,7 @@ header {
   font-size: 50pt;
   position: absolute;
   z-index: 99;
-  top: 6vh;
+  top: 2vh;
   left: 10vw;
   text-shadow: none;
   filter: drop-shadow(10px 10px 5px black);
@@ -620,9 +639,6 @@ header {
   backdrop-filter: blur(2.3px);
   border: 1px solid #00E6A6;
   transition: all .2s;
-  p {
-    text-indent: 2vw;
-  }
 }
 .oqueE {
   font-size: 20pt;
@@ -820,7 +836,7 @@ header {
   width: 100vw;
 }
 .titulomaquina {
-  padding-left: 10%;
+  padding-left: 9%;
   font-family: 'IBM Plex Sans';
   font-weight: 800;
   text-transform: uppercase;
@@ -868,8 +884,7 @@ header {
   color: #cefff8;
   font-weight: 700;
   font-size: 20pt;
-  padding-left: 10%;
-  margin-left: 20%;
+  padding-left: 30%;
 }
 .maquinaDescricao::before {
   content: "•";
@@ -1149,10 +1164,7 @@ footer {
   height: 200px;
   width: 100%;
   background: linear-gradient(45deg, #09483f, #0f6b5d, #13685b);
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  gap: 15vw;
+  position: relative;
   padding: 0 10%;
 }
 .copy {
@@ -1160,13 +1172,20 @@ footer {
   font-weight: 600;
   font-size: 20pt;
   color: white;
+  position: absolute;
+  right: 10%;
+  top: 50%;
+  transform: translateY(-50%);
 }
 .cta {
   display: flex;
-  align-items: center;
   flex-direction: column;
-  justify-content: space-evenly;
   gap: 3vh;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  align-items: center;
+  transform: translate(-50%, -50%);
   h3 {
     font-family: 'Manrope';
     font-weight: 1000;
@@ -1181,12 +1200,18 @@ footer {
   padding: 2vh 2vw;
   border: none;
   border-radius: 15px;
+  color: white;
   background: linear-gradient(45deg, #207F70, #00E6A6);
   text-decoration: none;
-  color: white;
 }
-.logo-footer img {
-  height: 100px;
+.logo-footer {
+  position: absolute;
+  left: 10%;
+  top: 50%;
+  transform: translateY(-50%);
+  img {
+    height: 100px;
+  }
 }
 footer {
   display: flex;
@@ -1911,7 +1936,6 @@ footer {
   }
   .titulomaquina {
     width: 90%;
-    padding-right: 0;
     text-align: center;
     font-size: clamp(32px, 8vw, 60pt);
     line-height: 1.1;
@@ -1934,7 +1958,7 @@ footer {
   .maquinaDescricao {
     width: 100%;
     margin-left: 0;
-    padding: 0 5%;
+    padding: 0 10%;
     font-size: clamp(16px, 4vw, 20pt);
     text-align: center;
   }
@@ -2341,6 +2365,69 @@ footer {
   syntax: "*";
   inherits: false;
 }
+@property --tw-border-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
+@property --tw-outline-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
+@property --tw-blur {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-brightness {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-contrast {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-grayscale {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-hue-rotate {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-invert {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-opacity {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-saturate {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-sepia {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-drop-shadow {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-drop-shadow-color {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-drop-shadow-alpha {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 100%;
+}
+@property --tw-drop-shadow-size {
+  syntax: "*";
+  inherits: false;
+}
 @layer properties {
   @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
     *, ::before, ::after, ::backdrop {
@@ -2349,6 +2436,21 @@ footer {
       --tw-rotate-z: initial;
       --tw-skew-x: initial;
       --tw-skew-y: initial;
+      --tw-border-style: solid;
+      --tw-outline-style: solid;
+      --tw-blur: initial;
+      --tw-brightness: initial;
+      --tw-contrast: initial;
+      --tw-grayscale: initial;
+      --tw-hue-rotate: initial;
+      --tw-invert: initial;
+      --tw-opacity: initial;
+      --tw-saturate: initial;
+      --tw-sepia: initial;
+      --tw-drop-shadow: initial;
+      --tw-drop-shadow-color: initial;
+      --tw-drop-shadow-alpha: 100%;
+      --tw-drop-shadow-size: initial;
       --angulo: 0deg;
     }
   }
