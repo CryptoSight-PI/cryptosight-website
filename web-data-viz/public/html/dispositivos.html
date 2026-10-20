@@ -394,37 +394,54 @@
 
         }
         
+let idcomponenteexcluido = null;
 
-        let iddispositivoComponenteExcluido = null;
+function mostrarmodalexcluircomponente(id) {
+    idcomponenteexcluido = id;
+    console.log("ID do componente selecionado:", idcomponenteexcluido);
 
-        function mostrarmodalexcluircomponente(idComponente, idDispositivo) {
-            idcomponenteexcluido = idComponente;
-            iddispositivoComponenteExcluido = idDispositivo;
+    modal_excluir_componente.showModal();
+}
 
-            modal_excluir_componente.showModal();
-        }
+async function excluircomponente() {
+    if (idcomponenteexcluido === null) {
+        alert("Nenhum componente selecionado!");
+        return;
+    }
 
-        function excluircomponente() {
-            fetch(`/dispositivos/excluircomponente/${idcomponenteexcluido}`, {
+    const id = idcomponenteexcluido;
+
+    try {
+        const resposta = await fetch(
+            `/dispositivos/excluircomponente/${id}`,
+            {
                 method: "DELETE"
-            })
-            .then((resposta) => {
-                if (resposta.ok) {
-                    alert("Componente excluído com sucesso!");
+            }
+        );
 
-                    modal_excluir_componente.close();
-                    listarcomponente(iddispositivoComponenteExcluido);
-                } else {
-                    resposta.text().then((texto) => {
-                        alert("Erro ao excluir componente: " + texto);
-                    });
-                }
-            })
-            .catch((erro) => {
-                console.log(erro);
-                alert("Erro de conexão ao excluir componente.");
-            });
+        const mensagem = await resposta.text();
+
+        console.log("Status HTTP:", resposta.status);
+        console.log("Resposta do servidor:", mensagem);
+
+        if (!resposta.ok) {
+            alert(`Erro ao excluir componente (${resposta.status}): ${mensagem}`);
+            return;
         }
+
+        alert("Componente excluído com sucesso!");
+        modal_excluir_componente.close();
+
+        idcomponenteexcluido = null;
+        listardispositivos();
+
+    } catch (erro) {
+        console.error("Erro na requisição:", erro);
+        alert("Não foi possível conectar ao servidor.");
+    }
+}
+
+
 
         let iddispositivodeletado = null
         function mostrarmodalexcluirdispositivo(id){
@@ -565,7 +582,7 @@
                                         <button onclick="mostrarmodaleditarcomponente('${resposta[i].nome}', ${resposta[i].limite_min}, ${resposta[i].limite_max}, ${resposta[i].monitorado}, ${resposta[i].id})" class="p-1.5 bg-[#144840] hover:bg-[#1a5e54] text-[#00E6A6] rounded cursor-pointer">
                                             <i class="fa-solid fa-pen"></i>
                                         </button>
-                                        <button onclick="mostrarmodalexcluircomponente(${resposta[i].id} , ${iddispositivocomponente})" class="p-1.5 bg-red-900/30 hover:bg-red-900/50 text-red-400 rounded cursor-pointer">
+                                        <button onclick="mostrarmodalexcluircomponente(${resposta[i].id})" class="p-1.5 bg-red-900/30 hover:bg-red-900/50 text-red-400 rounded cursor-pointer">
                                             <i class="fa-solid fa-trash"></i>
                                         </button>
                                     </div>
@@ -595,7 +612,7 @@
                                 })
                                 .then((resposta1) => {
                                     if(resposta1.ok){
-                                        listarcomponente(idcomponente);
+                                        listardispositivos();
                                     }
                                 }).catch((erro) => {
                                     console.log(erro);
@@ -608,7 +625,7 @@
                                 })
                                 .then((resposta2) => {
                                     if(resposta2.ok){
-                                        listarcomponente(idcomponente);
+                                        listardispositivos();
                                     }
                                 }).catch((erro) => {
                                     console.log(erro);
@@ -621,6 +638,7 @@
                 console.log(erro);
             });
         }
+
 
 
 

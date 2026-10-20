@@ -41,22 +41,22 @@ function listarcomponente(iddispositivocomponente) {
 }
 
 function vermonitorado(idcomponente){
-    var instrucaoSql = `select monitorado from maquina_componente where id_componente = ${idcomponente};`
+    var instrucaoSql = `select monitorado from maquina_componente where id = ${idcomponente};`
     return database.executar(instrucaoSql);
 }
 
 function switchmonitorado(idcomponente){
-    var instrucaoSql = `update maquina_componente set monitorado = 1 where id_componente = ${idcomponente}`
+    var instrucaoSql = `update maquina_componente set monitorado = 1 where id = ${idcomponente}`
     return database.executar(instrucaoSql);
 }
 
 function switchnaomonitorado(idcomponente){
-    var instrucaoSql = `update maquina_componente set monitorado = 0 where id_componente = ${idcomponente}`
+    var instrucaoSql = `update maquina_componente set monitorado = 0 where id = ${idcomponente}`
     return database.executar(instrucaoSql);
 }
 
 function excluircomponente(idcomponenteexcluido){
-    var instrucaoSql = `delete from maquina_componente where id_componente = ${idcomponenteexcluido}`
+    var instrucaoSql = `delete from maquina_componente where id = ${idcomponenteexcluido}`
     return database.executar(instrucaoSql);
 }
 
