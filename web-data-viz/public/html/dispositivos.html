@@ -230,7 +230,7 @@
             </div>
 
             <div class="flex justify-between">
-                <button class="p-3 mt-5 text-white bg-[#00E6A6] rounded-2xl font-bold" onclick="modal_adicionar_dispositivo.close() ; adicionardispositivo()">CADASTRAR</button>
+                <button class="p-3 mt-5 text-white bg-[#00E6A6] rounded-2xl font-bold" onclick="adicionardispositivo()">CADASTRAR</button>
                 <button class="p-3 mt-5 rounded-2xl border border-[#207F70]/60 text-[#A0B5AC] hover:text-white font-bold cursor-pointer transition-colors" onclick="modal_adicionar_dispositivo.close()">CANCELAR</button>
             </div>
             
@@ -372,8 +372,8 @@
 </html>
 <script>
     let sessao = new URLSearchParams(location.search).get('sessao')
-    let idsessao = new URLSearchParams(location.search).get('id')
-    console.log(idsessao)
+    let id_sessao = new URLSearchParams(location.search).get('id')
+    console.log(id_sessao)
     function nomessessao(){
         pid.innerHTML = `Gerenciamento de dispositivos da ${sessao}`
     }
@@ -406,8 +406,44 @@
         iptmacdispositivoeditado.value = m;
     }
 
-    function adicionardispositivo(){
-        alert("Dispositivo adicionado")
+    function adicionardispositivo() {
+        let mac = iptmacdispositivo.value.trim();
+        let modelo = iptmodelodispositivo.value.trim();
+        let fabricante = iptfabricantedispositivo.value.trim();
+        let tipo = ipttipodispositivo.value.trim();
+
+        if (mac.length !== 17 || modelo == "" || fabricante == "" || tipo == "") {
+            alert("Preencha todos os campos corretamente (MAC com 17 caracteres).");
+            return;
+        }
+
+        fetch(`/dispositivos/cadastrar/${id_sessao}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                mac_address: mac,
+                modelo: modelo,
+                fabricante: fabricante,
+                tipo: tipo
+            })
+        })
+        .then(function (resposta) {
+            if (resposta.ok) {
+                alert("Dispositivo cadastrado com sucesso!");
+                modal_adicionar_dispositivo.close();
+                iptmacdispositivo.value = "";
+                iptmodelodispositivo.value = "";
+                iptfabricantedispositivo.value = "";
+                ipttipodispositivo.value = "";
+                location.reload();
+            } else {
+                resposta.text().then(texto => alert("Erro ao cadastrar: " + texto));
+            }
+        })
+        .catch(function (erro) {
+            console.log(erro);
+            alert("Erro de conexão com o servidor.");
+        });
     }
 
      function buscar(){
