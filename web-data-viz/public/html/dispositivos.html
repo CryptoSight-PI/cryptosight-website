@@ -167,7 +167,7 @@
             <h2 class="text-2xl text-white font-bold pb-2">Editar Componente</h2>
             <div>
                 <label class="text-white">Componente</label>
-                <input placeholder="CPU" id="iptcomponentecomponenteeditado" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+                <input placeholder="CPU" id="iptcomponentecomponenteeditado" readonly class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
             </div>
             <div class="flex gap-6">
                  <div>
@@ -189,7 +189,7 @@
             </div> 
 
              <div class="flex justify-between">
-                <button class="p-3 mt-5 text-white bg-[#00E6A6] rounded-2xl font-bold" onclick="modal_editar_componente.close() ; editarcomponente()">EDITAR</button>
+                <button class="p-3 mt-5 text-white bg-[#00E6A6] rounded-2xl font-bold" onclick="editarcomponente()">EDITAR</button>
                 <button class="p-3 mt-5 rounded-2xl border border-[#207F70]/60 text-[#A0B5AC] hover:text-white font-bold cursor-pointer transition-colors" onclick="modal_editar_componente.close()">CANCELAR</button>
             </div>
         </dialog>
@@ -384,62 +384,44 @@
             modal_editar_dispositivo.showModal()
         }
 
+        let idcomponenteeditado = null;
+
         function mostrarmodaleditarcomponente(nome , min , max , monitorado , id){
             iptcomponentecomponenteeditado.value = nome
             iptcomponentelimmineditado.value = min
             iptcomponentelimmaxeditado.value = max
-            iptcomponentemonitoradoeditado.value = monitorado
+            iptcomponentemonitoradoeditado.value = String(monitorado)
+
+
+            idcomponenteeditado = id
 
             modal_editar_componente.showModal()
 
         }
         
-let idcomponenteexcluido = null;
+        let idcomponenteexcluido = null;
 
-function mostrarmodalexcluircomponente(id) {
-    idcomponenteexcluido = id;
-    console.log("ID do componente selecionado:", idcomponenteexcluido);
+        function mostrarmodalexcluircomponente(id) {
+            idcomponenteexcluido = id;
+            console.log("ID do componente selecionado:", idcomponenteexcluido);
 
-    modal_excluir_componente.showModal();
-}
-
-async function excluircomponente() {
-    if (idcomponenteexcluido === null) {
-        alert("Nenhum componente selecionado!");
-        return;
-    }
-
-    const id = idcomponenteexcluido;
-
-    try {
-        const resposta = await fetch(
-            `/dispositivos/excluircomponente/${id}`,
-            {
-                method: "DELETE"
-            }
-        );
-
-        const mensagem = await resposta.text();
-
-        console.log("Status HTTP:", resposta.status);
-        console.log("Resposta do servidor:", mensagem);
-
-        if (!resposta.ok) {
-            alert(`Erro ao excluir componente (${resposta.status}): ${mensagem}`);
-            return;
+            modal_excluir_componente.showModal();
         }
 
-        alert("Componente excluído com sucesso!");
-        modal_excluir_componente.close();
-
-        idcomponenteexcluido = null;
-        listardispositivos();
-
-    } catch (erro) {
-        console.error("Erro na requisição:", erro);
-        alert("Não foi possível conectar ao servidor.");
-    }
-}
+        function excluircomponente() {
+            fetch(`/dispositivos/excluircomponente/${idcomponenteexcluido}`, { method: "DELETE" })
+            .then((resposta) => {
+                if (resposta.ok) {
+                    alert("componente excluido");
+                    modal_excluir_componente.close()
+                    listardispositivos();
+                } 
+            })
+            .catch((erro) =>  {
+                alert("Erro excluir");
+            });
+        
+        }
 
 
 
@@ -637,6 +619,12 @@ async function excluircomponente() {
             }).catch((erro) => {
                 console.log(erro);
             });
+        }
+
+
+        function editarcomponente(){
+
+
         }
 
 
