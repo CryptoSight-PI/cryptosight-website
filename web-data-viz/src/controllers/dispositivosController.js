@@ -139,11 +139,93 @@ function cadastrarcomponente(req, res) {
     }
 }
 
+function listarcomponente(req, res) {
+    var iddispositivocomponente = req.params.iddispositivocomponente;
+
+    if (iddispositivocomponente == undefined) {
+        res.status(400).send("iddispositivocomponente está undefined!");
+    } else {
+        dispositivosModel.listarcomponente(iddispositivocomponente)
+            .then((resultado) => {
+                res.status(200).json(resultado);
+            })
+            .catch((erro) => {
+                console.log(erro);
+                console.log("\nHouve um erro ao listar! Erro: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            });
+    }
+}
+
+function vermonitorado(req, res){
+    var idcomponente = req.params.idcomponente;
+    if (idcomponente == undefined) {
+        res.status(400).send("idcomponente está undefined!");
+    } else {
+        dispositivosModel.vermonitorado(idcomponente)
+            .then((resultado) => {
+                res.status(200).json(resultado);
+            })
+            .catch((erro) => {
+                console.log(erro);
+                console.log("\nHouve um erro ao listar! Erro: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            });
+    }
+}
+
+function switchmonitorado(req, res){
+    var idcomponente = req.params.idcomponente;
+    if(idcomponente == undefined){
+        res.status(400).send("idcomponente esta undefined")
+    }else{
+        dispositivosModel.switchmonitorado(idcomponente).then((resultado) => {
+            res.status(200).json(resultado)
+        }).catch((erro) => {
+            console.log(erro)
+        })
+    }
+
+}
+
+function switchnaomonitorado(req, res){
+    var idcomponente = req.params.idcomponente;
+    if(idcomponente == undefined){
+        res.status(400).send("idcomponente esta undefined")
+    }else{
+        dispositivosModel.switchnaomonitorado(idcomponente).then((resultado) => {
+            res.status(200).json(resultado)
+        }).catch((erro) => {
+            console.log(erro)
+        })
+    }
+
+}
+
+function excluircomponente(req , res){
+    var idcomponenteexcluido = req.params.idcomponenteexcluido;
+    if(idcomponenteexcluido == undefined){
+        res.status(400).send("idcomponenteexcluido undefined")
+    }else {
+        dispositivosModel.excluircomponente(idcomponenteexcluido).then((resultado) => {
+            res.status(200).json(resultado)
+        }).catch((erro) => {
+            console.log(erro)
+        })
+    }
+
+}
+
 module.exports = {
     cadastrar,
     listar,
     excluir,
     atualizar,
     catalogocomponente,
-    cadastrarcomponente
+    cadastrarcomponente,
+    listarcomponente,
+    vermonitorado,
+    switchmonitorado,
+    switchnaomonitorado,
+    excluircomponente
 };

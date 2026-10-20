@@ -35,6 +35,31 @@ function cadastrarcomponente(iddispositivocomponente, idcomponentecomponente, li
     return database.executar(instrucaoSql);
 }
 
+function listarcomponente(iddispositivocomponente) {
+    var instrucaoSql = `select mc.id, c.nome , mc.id_maquina, mc.id_componente, mc.limite_min, mc.limite_max, mc.monitorado , mc.criacao from maquina_componente mc join componente c on mc.id_componente = c.id where id_maquina = ${iddispositivocomponente} order by id;`;
+    return database.executar(instrucaoSql);
+}
+
+function vermonitorado(idcomponente){
+    var instrucaoSql = `select monitorado from maquina_componente where id_componente = ${idcomponente};`
+    return database.executar(instrucaoSql);
+}
+
+function switchmonitorado(idcomponente){
+    var instrucaoSql = `update maquina_componente set monitorado = 1 where id_componente = ${idcomponente}`
+    return database.executar(instrucaoSql);
+}
+
+function switchnaomonitorado(idcomponente){
+    var instrucaoSql = `update maquina_componente set monitorado = 0 where id_componente = ${idcomponente}`
+    return database.executar(instrucaoSql);
+}
+
+function excluircomponente(idcomponenteexcluido){
+    var instrucaoSql = `delete from maquina_componente where id_componente = ${idcomponenteexcluido}`
+    return database.executar(instrucaoSql);
+}
+
 
 module.exports = {  
     cadastrar,
@@ -42,5 +67,10 @@ module.exports = {
     excluir,
     atualizar,
     catalogocomponente,
-    cadastrarcomponente
+    cadastrarcomponente,
+    listarcomponente,
+    vermonitorado,
+    switchmonitorado,
+    switchnaomonitorado,
+    excluircomponente
 };

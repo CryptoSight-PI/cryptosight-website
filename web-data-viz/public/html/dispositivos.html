@@ -86,7 +86,7 @@
             <div>
                 <h1 class="font-bold text-white">Certeza que deseja excluir esse componente?</h1>
                 <div class="flex justify-between gap-4">
-                    <button class="p-3 mt-5 text-white bg-[#00E6A6] rounded-2xl font-bold" onclick="modal_excluir_componente.close() ; excluircomponente()">EXCLUIR</button>
+                    <button class="p-3 mt-5 text-white bg-[#00E6A6] rounded-2xl font-bold" onclick="excluircomponente()">EXCLUIR</button>
                     <button class="p-3 mt-5 rounded-2xl border border-[#207F70]/60 text-[#A0B5AC] hover:text-white font-bold cursor-pointer" onclick="modal_excluir_componente.close()">CANCELAR</button>
                 </div>
             </div>
@@ -263,6 +263,8 @@
                             </button>
                         </div>
                     </div>`;
+
+                    listarcomponente(dispositivos[i].id)
                 }
 
                 })
@@ -391,13 +393,39 @@
             modal_editar_componente.showModal()
 
         }
+        
 
-        function mostrarmodalexcluircomponente(id){
-            // deixando mais facil pro back
+        let iddispositivoComponenteExcluido = null;
 
-            modal_excluir_componente.showModal()
+        function mostrarmodalexcluircomponente(idComponente, idDispositivo) {
+            idcomponenteexcluido = idComponente;
+            iddispositivoComponenteExcluido = idDispositivo;
 
+            modal_excluir_componente.showModal();
         }
+
+        function excluircomponente() {
+            fetch(`/dispositivos/excluircomponente/${idcomponenteexcluido}`, {
+                method: "DELETE"
+            })
+            .then((resposta) => {
+                if (resposta.ok) {
+                    alert("Componente excluído com sucesso!");
+
+                    modal_excluir_componente.close();
+                    listarcomponente(iddispositivoComponenteExcluido);
+                } else {
+                    resposta.text().then((texto) => {
+                        alert("Erro ao excluir componente: " + texto);
+                    });
+                }
+            })
+            .catch((erro) => {
+                console.log(erro);
+                alert("Erro de conexão ao excluir componente.");
+            });
+        }
+
         let iddispositivodeletado = null
         function mostrarmodalexcluirdispositivo(id){
             iddispositivodeletado = id
@@ -515,5 +543,85 @@
                 alert("Erro de conexão com o servidor.");
             });
         }
+
+        function listarcomponente(iddispositivocomponente){
+            fetch(`/dispositivos/listarcomponente/${iddispositivocomponente}`).then((resposta) => {
+                if(resposta.ok){
+                    resposta.json().then((resposta) => {
+                        spancomponente = document.getElementById(`componentes_${iddispositivocomponente}`);
+                        spancomponente.innerHTML = ""
+                        for(let i = 0 ; i < resposta.length ; i++){
+                            let statusTexto = resposta[i].monitorado == 1 ? "Monitorado" : "Não Monitorado";
+                            let statusCor = resposta[i].monitorado == 1 ? "text-[#00E6A6] bg-[#144840]" : "text-gray-400 bg-gray-800";
+
+                            spancomponente.innerHTML += `
+                                <div class="bg-[#101b18] p-2.5 rounded-xl border border-[#207F70]/40 flex justify-between items-center text-xs">
+                                    <div>
+                                        <p class="font-bold text-white">${resposta[i].nome} - ${resposta[i].id}</p>
+                                        <p class="text-gray-400">Min: ${resposta[i].limite_min} | Máx: ${resposta[i].limite_max}</p>
+                                        <button onclick="switchmonitorado(${resposta[i].id})" class="cursor-pointer inline-block px-2 py-0.5 rounded text-[10px] mt-1 ${statusCor}">${statusTexto}</button>
+                                    </div>
+                                    <div class="flex gap-1.5">
+                                        <button onclick="mostrarmodaleditarcomponente('${resposta[i].nome}', ${resposta[i].limite_min}, ${resposta[i].limite_max}, ${resposta[i].monitorado}, ${resposta[i].id})" class="p-1.5 bg-[#144840] hover:bg-[#1a5e54] text-[#00E6A6] rounded cursor-pointer">
+                                            <i class="fa-solid fa-pen"></i>
+                                        </button>
+                                        <button onclick="mostrarmodalexcluircomponente(${resposta[i].id} , ${iddispositivocomponente})" class="p-1.5 bg-red-900/30 hover:bg-red-900/50 text-red-400 rounded cursor-pointer">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            `;
+                            
+                        }
+                    })
+
+                }
+            }).catch((erro) => {
+                console.log(erro)
+                alert("erro no listar do componente")
+            })
+        }
+
+        
+        function switchmonitorado(idcomponente){
+            fetch(`/dispositivos/vermonitorado/${idcomponente}`).then((resposta) => {
+                if(resposta.ok){
+                    resposta.json().then((dado) => {
+                        if(dado.length > 0){
+                            if(dado[0].monitorado == 1){
+                                fetch(`/dispositivos/switchnaomonitorado/${idcomponente}`, {
+                                    method: "PUT",
+                                    headers: { "Content-Type": "application/json" },
+                                })
+                                .then((resposta1) => {
+                                    if(resposta1.ok){
+                                        listarcomponente(idcomponente);
+                                    }
+                                }).catch((erro) => {
+                                    console.log(erro);
+                                });
+
+                            }else{
+                                fetch(`/dispositivos/switchmonitorado/${idcomponente}`, {
+                                    method: "PUT",
+                                    headers: { "Content-Type": "application/json" },
+                                })
+                                .then((resposta2) => {
+                                    if(resposta2.ok){
+                                        listarcomponente(idcomponente);
+                                    }
+                                }).catch((erro) => {
+                                    console.log(erro);
+                                });
+                            }
+                        }
+                    });
+                }
+            }).catch((erro) => {
+                console.log(erro);
+            });
+        }
+
+
 
 </script>

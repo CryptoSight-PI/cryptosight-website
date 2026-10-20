@@ -28,4 +28,24 @@ router.post("/cadastrarcomponente/:iddispositivocomponente" , function(req , res
     dispositivosController.cadastrarcomponente(req , res);
 })
 
+router.get("/listarcomponente/:iddispositivocomponente", function (req, res) {
+    dispositivosController.listarcomponente(req, res);
+});
+
+router.get("/vermonitorado/:idcomponente", function (req, res) {
+    dispositivosController.vermonitorado(req, res);
+});
+
+router.put("/switchmonitorado/:idcomponente" , function(req , res) {
+    dispositivosController.switchmonitorado(req , res);
+});
+
+router.put("/switchnaomonitorado/:idcomponente" , function(req , res) {
+    dispositivosController.switchnaomonitorado(req , res);
+});
+
+router.delete("/excluircomponente/:idcomponenteexcluido", function (req, res) {
+    dispositivosController.excluircomponente(req, res);
+});
+
 module.exports = router;
