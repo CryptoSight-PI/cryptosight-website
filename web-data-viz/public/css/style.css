@@ -1,18 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Blinker:wght@100;200;300;400;600;700;800;900&family=Inter:ital,wght@0,100..900;1,100..900&family=Play:wght@400;700&family=Sora:wght@100..800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
 @import "tailwindcss";
 
-* {
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
+@theme{
+    --font-ibm-mono: "IBM Plex Mono";
+    --font-space-mono: "Space Mono"
 }
 
 html {
     scroll-behavior: smooth;
 }
 
-body {
+.body-index {
     width: 100%;
     margin: 0 auto;
     background-color: #101b18;
@@ -24,6 +24,7 @@ body {
     background-size: 30px 30px;
     scroll-behavior: smooth;
 }
+
 
 .blur-topo {
     position: absolute;
@@ -1671,7 +1672,7 @@ footer{
         height: 40px !important;
     }
 
-    body {
+    .body-index {
         width: 100%;
         min-width: 0;
         overflow-x: hidden;
@@ -2601,3 +2602,45 @@ footer{
     }
 }
 
+.filtro-selecionado{
+    background: #235347;
+    color: #00E6A6;
+    border-color: #00E6A6;
+}
+
+.filtro{
+    background: #0C1F19;
+    color: white;
+    border-color: #207F70;
+}
+
+.filtro:hover{
+    background: #235347;
+    color: #00E6A6;
+    border-color: #00E6A6;
+}
+
+.saudavel{
+    background: #0D3831;
+    border-color: #207F70;
+}
+
+.atencao{
+    background: #D08E0024;
+    border-color: #FFAE00;
+}
+
+.critico{
+    background: #7A001539;
+    border-color: #E00027;
+}
+
+.offline{
+    background: #747F7A28;
+    border-color: #81988D;
+}
+
+.rig-selecionada{
+    border-width: 2px !important;
+    border-color: #00E6A6 !important; 
+}
