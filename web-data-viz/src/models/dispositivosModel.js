@@ -30,6 +30,10 @@ function catalogocomponente() {
     var instrucaoSql = `select id, nome from componente order by nome;`;
     return database.executar(instrucaoSql);
 }
+function cadastrarcomponente(iddispositivocomponente, idcomponentecomponente, limmin, limmax, monitorado) {
+    var instrucaoSql = `insert into maquina_componente (id_maquina, id_componente, limite_min, limite_max, monitorado) values (${iddispositivocomponente}, ${idcomponentecomponente}, ${limmin}, ${limmax}, '${monitorado}');`;
+    return database.executar(instrucaoSql);
+}
 
 
 module.exports = {  
@@ -37,5 +41,6 @@ module.exports = {
     listar,
     excluir,
     atualizar,
-    catalogocomponente
+    catalogocomponente,
+    cadastrarcomponente
 };

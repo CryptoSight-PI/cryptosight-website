@@ -149,8 +149,8 @@
             <div> 
                 <label class="text-white">Monitorado</label> 
                 <select id="iptcomponentemonitorado" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
-                    <option value="sim" class="bg-[#0C1F19]">Monitorado</option>
-                    <option value="nao" class="bg-[#0C1F19]">Não Monitorado</option>
+                    <option value="1" class="bg-[#0C1F19]">Monitorado</option>
+                    <option value="0" class="bg-[#0C1F19]">Não Monitorado</option>
                 </select>
             </div> 
 
@@ -183,8 +183,8 @@
             <div> 
                 <label class="text-white">Monitorado</label> 
                 <select id="iptcomponentemonitoradoeditado" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
-                    <option value="sim" class="bg-[#0C1F19]">Monitorado</option>
-                    <option value="nao" class="bg-[#0C1F19]">Não Monitorado</option>
+                    <option value="1" class="bg-[#0C1F19]">Monitorado</option>
+                    <option value="0" class="bg-[#0C1F19]">Não Monitorado</option>
                 </select>
             </div> 
 
@@ -340,7 +340,7 @@
     }
 
      function buscar(){
-           let texto = inputbusca.value.toLowerCase();
+            let texto = inputbusca.value.toLowerCase();
             let itens = document.querySelectorAll('.dispositivo');
             let visiveis = 0;
 
@@ -471,6 +471,7 @@
 
         catalogocomponente()
 
+        iddispositivocomponente = null
         function mostrarmodaladicionarcomponente(id) {
             iddispositivocomponente = id;
             modal_adicionar_componente.showModal();
@@ -478,37 +479,41 @@
 
 
         function adicionarcomponente() {
-        let idcomponente = iptcomponentecomponente.value.trim();
-        let limmin = iptcomponentelimmin.value.trim();
-        let limmax = iptcomponentelimmax.value.trim();
-        let monitorado = iptcomponentemonitorado.value.trim();
+            let idcomponente = iptcomponentecomponente.value.trim();
+            let limmin = iptcomponentelimmin.value.trim();
+            let limmax = iptcomponentelimmax.value.trim();
+            let monitorado = iptcomponentemonitorado.value.trim();
 
-        fetch(`/dispositivos/cadastrarcomponente/${id_sessao}`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                idcomponente: idcomponente,
-                modelo: modelo,
-                fabricante: fabricante,
-                tipo: tipo
-            })
-        })
-        .then(function (resposta) {
-            if (resposta.ok) {
-                alert("componente cadastrado com sucesso!");
-                modal_adicionar_dispositivo.close();
-                iptcomponentelimmin.value = "";
-                iptcomponentelimmax.value = "";
-                iptcomponentemonitorado.value = "";
-                location.reload();
-            } else {
-                resposta.text().then(texto => alert("Erro ao cadastrar: " + texto));
+            if (idcomponente == "" || limmin == "" || limmax == "") {
+                alert("Preencha todos os campos.");
+                return;
             }
-        })
-        .catch(function (erro) {
-            console.log(erro);
-            alert("Erro de conexão com o servidor.");
-        });
-    }
+
+            fetch(`/dispositivos/cadastrarcomponente/${iddispositivocomponente}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    idcomponente: idcomponente,
+                    limmin: limmin,
+                    limmax: limmax,
+                    monitorado: monitorado
+                })
+            })
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    alert("componente cadastrado com sucesso!");
+                    modal_adicionar_componente.close();
+                    iptcomponentelimmin.value = "";
+                    iptcomponentelimmax.value = "";
+                    listardispositivos();
+                } else {
+                    resposta.text().then(texto => alert("Erro ao cadastrar: " + texto));
+                }
+            })
+            .catch(function (erro) {
+                console.log(erro);
+                alert("Erro de conexão com o servidor.");
+            });
+        }
 
 </script>

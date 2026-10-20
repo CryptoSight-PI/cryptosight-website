@@ -24,4 +24,8 @@ router.get("/catalogocomponente", function (req, res) {
     dispositivosController.catalogocomponente(req, res);
 });
 
+router.post("/cadastrarcomponente/:iddispositivocomponente" , function(req , res) {
+    dispositivosController.cadastrarcomponente(req , res);
+})
+
 module.exports = router;

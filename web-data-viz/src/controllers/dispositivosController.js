@@ -110,10 +110,40 @@ function catalogocomponente(req, res) {
         });
 }
 
+function cadastrarcomponente(req, res) {
+    var iddispositivocomponente = req.params.iddispositivocomponente;
+    var idcomponentecomponente = req.body.idcomponente;
+    var limmin = req.body.limmin;
+    var limmax = req.body.limmax;
+    var monitorado = req.body.monitorado;
+
+    if (iddispositivocomponente == undefined) {
+        res.status(400).send("iddispositivo está undefined!");
+    } else if (idcomponentecomponente == undefined) {
+        res.status(400).send("componente está undefined!");
+    } else if (limmin == undefined) {
+        res.status(400).send("limmin está undefined!");
+    } else if (limmax == undefined) {
+        res.status(400).send("limmax está undefined!");
+    } else if (monitorado == undefined) {
+        res.status(400).send("monitorado está undefined!");
+    } else {
+        dispositivosModel.cadastrarcomponente(iddispositivocomponente, idcomponentecomponente, limmin, limmax, monitorado)
+            .then((resultado) => {
+                res.status(201).json(resultado);
+            })
+            .catch((erro) => {
+                console.log(erro);
+                res.status(500).json(erro.sqlMessage);
+            });
+    }
+}
+
 module.exports = {
     cadastrar,
     listar,
     excluir,
     atualizar,
-    catalogocomponente
+    catalogocomponente,
+    cadastrarcomponente
 };
