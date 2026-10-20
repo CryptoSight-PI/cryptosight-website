@@ -74,10 +74,10 @@ function excluir(req , res){
 
 function atualizar(req , res){
     var iddispositivo = req.params.iddispositivo;
-    var mac_addresseditado = req.body.mac_addresseditado;
-    var modeloeditado = req.body.modeloeditado;
-    var fabricanteeditado = req.body.fabricanteeditado;
-    var tipoeditado = req.body.tipoeditado;
+    var mac_addresseditado = req.body.mac_address;
+    var modeloeditado = req.body.modelo;
+    var fabricanteeditado = req.body.fabricante;
+    var tipoeditado = req.body.tipo;
 
     if (iddispositivo == undefined) {
         res.status(400).send("iddispositivo está undefined!");

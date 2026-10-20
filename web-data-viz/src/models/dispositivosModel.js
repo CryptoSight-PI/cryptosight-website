@@ -22,7 +22,7 @@ function excluir(iddispositivo) {
 }
 
 function atualizar(iddispositivo , mac_addresseditado , modeloeditado , fabricanteeditado , tipoeditado){
-    var instrucaoSql = `update from dispositivo set mac_address = ${mac_addresseditado} , modelo = ${modeloeditado} , fabricante = ${fabricanteeditado} , tipo = ${tipoeditado} ;`;
+    var instrucaoSql = `update maquina set mac_address = '${mac_addresseditado}' , modelo = '${modeloeditado}' , fabricante = '${fabricanteeditado}' , tipo = '${tipoeditado}' where id = ${iddispositivo} ;`;
     return database.executar(instrucaoSql);
 }
 

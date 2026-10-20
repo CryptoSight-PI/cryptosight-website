@@ -377,6 +377,8 @@
             iptfabricantedispositivoeditado.value = fabricante;
             ipttipodispositivoeditado.value = tipo;
 
+            iddispositivoeditado = id
+
             modal_editar_dispositivo.showModal()
         }
 
@@ -412,8 +414,41 @@
                 } 
             })
             .catch((erro) =>  {
-                alert("Erro");
+                alert("Erro excluir");
             });
-    }
+        }
+
+        function editardispositivo(){
+            let mac = iptmacdispositivoeditado.value.trim();
+            let modelo = iptmodelodispositivoeditado.value.trim();
+            let fabricante = iptfabricantedispositivoeditado.value.trim();
+            let tipo = ipttipodispositivoeditado.value.trim();
+
+            if (mac.length !== 17 || modelo == "" || fabricante == "" || tipo == "") {
+                alert("Preencha todos os campos corretamente (MAC com 17 caracteres).");
+                return;
+            }
+
+            fetch(`/dispositivos/atualizar/${iddispositivoeditado}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    mac_address: mac,
+                    modelo: modelo,
+                    fabricante: fabricante,
+                    tipo: tipo
+                })
+            }).then((resposta) => {
+                if (resposta.ok) {
+                    alert("dispositivo atualizado");
+                    listardispositivos()
+                } else {
+                    resposta.text().then(texto => alert("Erro ao editar: " + texto));
+                }
+            }).catch((erro) => {
+                console.log(erro);
+                alert("erro editar")
+            })
+        }
 
 </script>
