@@ -16,4 +16,8 @@ router.delete("/excluir/:iddispositivo", function (req, res) {
     dispositivosController.excluir(req, res);
 });
 
+router.put("/atualizar/:iddispositivo" , function(req , res) {
+    dispositivosController.atualizar(req , res);
+})
+
 module.exports = router;
