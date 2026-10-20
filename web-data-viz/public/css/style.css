@@ -1140,7 +1140,7 @@ model-viewer {
 
 footer {
     height: 200px;
-    width: 100%;
+    width: 100vw;
     background: linear-gradient(45deg, #09483f, #0f6b5d, #13685b);
     position: relative;
     padding: 0 10%;
