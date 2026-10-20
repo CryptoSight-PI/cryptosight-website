@@ -99,9 +99,21 @@ function atualizar(req , res){
     }
 }
 
+function catalogocomponente(req, res) {
+    dispositivosModel.catalogocomponente()
+        .then((resultado) => {
+            res.status(200).json(resultado);
+        })
+        .catch((erro) => {
+            console.log(erro);
+            res.status(500).json(erro.sqlMessage);
+        });
+}
+
 module.exports = {
     cadastrar,
     listar,
     excluir,
-    atualizar
+    atualizar,
+    catalogocomponente
 };

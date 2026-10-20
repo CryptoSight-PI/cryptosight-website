@@ -26,10 +26,16 @@ function atualizar(iddispositivo , mac_addresseditado , modeloeditado , fabrican
     return database.executar(instrucaoSql);
 }
 
+function catalogocomponente() {
+    var instrucaoSql = `select id, nome from componente order by nome;`;
+    return database.executar(instrucaoSql);
+}
+
 
 module.exports = {  
     cadastrar,
     listar,
     excluir,
-    atualizar
+    atualizar,
+    catalogocomponente
 };

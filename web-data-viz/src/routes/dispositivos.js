@@ -20,4 +20,8 @@ router.put("/atualizar/:iddispositivo" , function(req , res) {
     dispositivosController.atualizar(req , res);
 })
 
+router.get("/catalogocomponente", function (req, res) {
+    dispositivosController.catalogocomponente(req, res);
+});
+
 module.exports = router;
