@@ -21,9 +21,15 @@ function excluir(iddispositivo) {
     return database.executar(instrucaoSql);
 }
 
+function atualizar(iddispositivo , mac_addresseditado , modeloeditado , fabricanteeditado , tipoeditado){
+    var instrucaoSql = `update from dispositivo set mac_address = ${mac_addresseditado} , modelo = ${modeloeditado} , fabricante = ${fabricanteeditado} , tipo = ${tipoeditado} ;`;
+    return database.executar(instrucaoSql);
+}
+
 
 module.exports = {  
     cadastrar,
     listar,
-    excluir
+    excluir,
+    atualizar
 };
