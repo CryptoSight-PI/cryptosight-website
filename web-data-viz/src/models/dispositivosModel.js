@@ -16,10 +16,24 @@ function listar(sessaoId) {
 }
 
 
+
 function excluir(iddispositivo) {
-    var instrucaoSql = `delete from maquina where id = ${iddispositivo};`;
-    return database.executar(instrucaoSql);
+    var instrucaoSql = `
+        DELETE FROM maquina_componente
+        WHERE id_maquina = ${iddispositivo};
+    `;
+
+    return database.executar(instrucaoSql)
+        .then(() => {
+            var instrucaoExcluirMaquina = `
+                DELETE FROM maquina
+                WHERE id = ${iddispositivo};
+            `;
+
+            return database.executar(instrucaoExcluirMaquina);
+        });
 }
+
 
 function atualizar(iddispositivo , mac_addresseditado , modeloeditado , fabricanteeditado , tipoeditado){
     var instrucaoSql = `update maquina set mac_address = '${mac_addresseditado}' , modelo = '${modeloeditado}' , fabricante = '${fabricanteeditado}' , tipo = '${tipoeditado}' where id = ${iddispositivo} ;`;
