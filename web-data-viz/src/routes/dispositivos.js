@@ -5,6 +5,15 @@ var dispositivosController = require("../controllers/dispositivosController.js")
 
 router.post("/cadastrar/:idsessao", function (req, res) {
     dispositivosController.cadastrar(req, res);
-})
+});
+
+
+router.get("/listar/:idsessao", function (req, res) {
+    dispositivosController.listar(req, res);
+});
+
+router.delete("/excluir/:iddispositivo", function (req, res) {
+    dispositivosController.excluir(req, res);
+});
 
 module.exports = router;

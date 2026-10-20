@@ -35,6 +35,45 @@ function cadastrar(req, res) {
   }
 }
 
+
+
+function listar(req, res) {
+    var sessaoId = req.params.idsessao;
+
+    if (sessaoId == undefined) {
+        res.status(400).send("sessaoId está undefined!");
+    } else {
+        dispositivosModel.listar(sessaoId)
+            .then((resultado) => {
+                res.status(200).json(resultado);
+            })
+            .catch((erro) => {
+                console.log(erro);
+                console.log("\nHouve um erro ao listar! Erro: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            });
+    }
+}
+
+
+function excluir(req , res){
+    var iddispositivo = req.params.iddispositivo;
+    if (iddispositivo == undefined) {
+        res.status(400).send("iddispositivo undefined");
+    } else {
+        dispositivosModel.excluir(iddispositivo)
+            .then((resultado) => {
+                res.status(200).json(resultado);
+            }).catch((erro) => {
+                console.log("erro")
+                res.status(500).json(erro.sqlMessage);
+            })
+    }
+
+}
+
 module.exports = {
-    cadastrar
+    cadastrar,
+    listar,
+    excluir
 };

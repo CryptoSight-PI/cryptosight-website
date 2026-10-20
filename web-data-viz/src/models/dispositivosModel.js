@@ -9,6 +9,21 @@ function cadastrar(sessaoId, mac_address, modelo , fabricante, tipo) {
   return database.executar(instrucaoSql);
 }
 
-module.exports = {
-    cadastrar
+
+function listar(sessaoId) {
+    var instrucaoSql = `select id, mac_address, modelo, fabricante, tipo, criacao from maquina where id_sessao = ${sessaoId} order by id;`;
+    return database.executar(instrucaoSql);
+}
+
+
+function excluir(iddispositivo) {
+    var instrucaoSql = `delete from maquina where id = ${iddispositivo};`;
+    return database.executar(instrucaoSql);
+}
+
+
+module.exports = {  
+    cadastrar,
+    listar,
+    excluir
 };
