@@ -11,9 +11,6 @@
       "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
-    --color-gray-300: oklch(87.2% 0.01 258.338);
-    --color-gray-500: oklch(55.1% 0.027 264.364);
-    --color-stone-500: oklch(55.3% 0.013 58.071);
     --color-white: #fff;
     --spacing: 0.25rem;
     --text-xs: 0.75rem;
@@ -222,6 +219,9 @@
   .mt-7 {
     margin-top: calc(var(--spacing) * 7);
   }
+  .mt-10 {
+    margin-top: calc(var(--spacing) * 10);
+  }
   .mt-30 {
     margin-top: calc(var(--spacing) * 30);
   }
@@ -234,23 +234,14 @@
   .mr-15 {
     margin-right: calc(var(--spacing) * 15);
   }
-  .mb-1 {
-    margin-bottom: var(--spacing);
-  }
   .mb-2 {
     margin-bottom: calc(var(--spacing) * 2);
   }
   .mb-3 {
     margin-bottom: calc(var(--spacing) * 3);
   }
-  .mb-4 {
-    margin-bottom: calc(var(--spacing) * 4);
-  }
   .mb-5 {
     margin-bottom: calc(var(--spacing) * 5);
-  }
-  .mb-6 {
-    margin-bottom: calc(var(--spacing) * 6);
   }
   .mb-7 {
     margin-bottom: calc(var(--spacing) * 7);
@@ -300,9 +291,6 @@
   }
   .h-fit {
     height: fit-content;
-  }
-  .h-px {
-    height: 1px;
   }
   .h-screen {
     height: 100vh;
@@ -410,6 +398,22 @@
     border-style: var(--tw-border-style);
     border-width: 1px;
   }
+  .border-2 {
+    border-style: var(--tw-border-style);
+    border-width: 2px;
+  }
+  .border-3 {
+    border-style: var(--tw-border-style);
+    border-width: 3px;
+  }
+  .border-5 {
+    border-style: var(--tw-border-style);
+    border-width: 5px;
+  }
+  .border-10 {
+    border-style: var(--tw-border-style);
+    border-width: 10px;
+  }
   .border-r {
     border-right-style: var(--tw-border-style);
     border-right-width: 1px;
@@ -423,6 +427,12 @@
   }
   .border-\[\#207F70\] {
     border-color: #207F70;
+  }
+  .border-\[\#144840\] {
+    border-color: #144840;
+  }
+  .border-white {
+    border-color: var(--color-white);
   }
   .bg-\[\#0C1F19\] {
     background-color: #0C1F19;
@@ -454,9 +464,6 @@
   .bg-\[\#FFAE00\] {
     background-color: #FFAE00;
   }
-  .bg-gray-300 {
-    background-color: var(--color-gray-300);
-  }
   .bg-transparent {
     background-color: transparent;
   }
@@ -480,10 +487,6 @@
   }
   .from-\[\#0d1412\] {
     --tw-gradient-from: #0d1412;
-    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
-  }
-  .from-stone-500 {
-    --tw-gradient-from: var(--color-stone-500);
     --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
   }
   .via-\[\#09483f\] {
@@ -516,15 +519,6 @@
   }
   .p-5 {
     padding: calc(var(--spacing) * 5);
-  }
-  .p-6 {
-    padding: calc(var(--spacing) * 6);
-  }
-  .p-8 {
-    padding: calc(var(--spacing) * 8);
-  }
-  .p-10 {
-    padding: calc(var(--spacing) * 10);
   }
   .pt-1 {
     padding-top: var(--spacing);
@@ -561,9 +555,6 @@
   }
   .pr-6 {
     padding-right: calc(var(--spacing) * 6);
-  }
-  .pr-8 {
-    padding-right: calc(var(--spacing) * 8);
   }
   .pr-10 {
     padding-right: calc(var(--spacing) * 10);
@@ -615,9 +606,6 @@
   }
   .font-ibm-mono {
     font-family: var(--font-ibm-mono);
-  }
-  .font-mono {
-    font-family: var(--font-mono);
   }
   .font-space-mono {
     font-family: var(--font-space-mono);
@@ -684,9 +672,6 @@
   }
   .text-\[\#FFAE00\] {
     color: #FFAE00;
-  }
-  .text-gray-500 {
-    color: var(--color-gray-500);
   }
   .text-white {
     color: var(--color-white);
