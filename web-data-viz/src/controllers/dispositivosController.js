@@ -35,6 +35,262 @@ function cadastrar(req, res) {
   }
 }
 
+
+
+function listar(req, res) {
+    var sessaoId = req.params.idsessao;
+
+    if (sessaoId == undefined) {
+        res.status(400).send("sessaoId está undefined!");
+    } else {
+        dispositivosModel.listar(sessaoId)
+            .then((resultado) => {
+                res.status(200).json(resultado);
+            })
+            .catch((erro) => {
+                console.log(erro);
+                console.log("\nHouve um erro ao listar! Erro: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            });
+    }
+}
+
+
+function excluir(req , res){
+    var iddispositivo = req.params.iddispositivo;
+    if (iddispositivo == undefined) {
+        res.status(400).send("iddispositivo undefined");
+    } else {
+        dispositivosModel.excluir(iddispositivo)
+            .then((resultado) => {
+                res.status(200).json(resultado);
+            }).catch((erro) => {
+                console.log("erro")
+                res.status(500).json(erro.sqlMessage);
+            })
+    }
+
+}
+
+function atualizar(req , res){
+    var iddispositivo = req.params.iddispositivo;
+    var mac_addresseditado = req.body.mac_address;
+    var modeloeditado = req.body.modelo;
+    var fabricanteeditado = req.body.fabricante;
+    var tipoeditado = req.body.tipo;
+
+    if (iddispositivo == undefined) {
+        res.status(400).send("iddispositivo está undefined!");
+    } else if (mac_addresseditado == undefined) {
+        res.status(400).send("mac_address está undefined!");
+    } else if (modeloeditado == undefined) {
+        res.status(400).send("modelo está undefined!");
+    } else if (fabricanteeditado == undefined) {
+        res.status(400).send("fabricante está undefined!");
+    } else if (tipoeditado == undefined) {
+        res.status(400).send("tipo está undefined!");
+    } else {
+        dispositivosModel.atualizar(iddispositivo , mac_addresseditado , modeloeditado , fabricanteeditado , tipoeditado).then((resultado) => {
+            res.status(201).json(resultado);
+        }).catch((erro) => {
+            res.status(400).send(erro.sqlMessage)
+        })
+
+    }
+}
+
+function catalogocomponente(req, res) {
+    dispositivosModel.catalogocomponente()
+        .then((resultado) => {
+            res.status(200).json(resultado);
+        })
+        .catch((erro) => {
+            console.log(erro);
+            res.status(500).json(erro.sqlMessage);
+        });
+}
+
+function cadastrarcomponente(req, res) {
+    var iddispositivocomponente = req.params.iddispositivocomponente;
+    var idcomponentecomponente = req.body.idcomponente;
+    var limmin = req.body.limmin;
+    var limmax = req.body.limmax;
+    var monitorado = req.body.monitorado;
+
+    if (iddispositivocomponente == undefined) {
+        res.status(400).send("iddispositivo está undefined!");
+    } else if (idcomponentecomponente == undefined) {
+        res.status(400).send("componente está undefined!");
+    } else if (limmin == undefined) {
+        res.status(400).send("limmin está undefined!");
+    } else if (limmax == undefined) {
+        res.status(400).send("limmax está undefined!");
+    } else if (monitorado == undefined) {
+        res.status(400).send("monitorado está undefined!");
+    } else {
+        dispositivosModel.cadastrarcomponente(iddispositivocomponente, idcomponentecomponente, limmin, limmax, monitorado)
+            .then((resultado) => {
+                res.status(201).json(resultado);
+            })
+            .catch((erro) => {
+                console.log(erro);
+                res.status(500).json(erro.sqlMessage);
+            });
+    }
+}
+
+function listarcomponente(req, res) {
+    var iddispositivocomponente = req.params.iddispositivocomponente;
+
+    if (iddispositivocomponente == undefined) {
+        res.status(400).send("iddispositivocomponente está undefined!");
+    } else {
+        dispositivosModel.listarcomponente(iddispositivocomponente)
+            .then((resultado) => {
+                res.status(200).json(resultado);
+            })
+            .catch((erro) => {
+                console.log(erro);
+                console.log("\nHouve um erro ao listar! Erro: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            });
+    }
+}
+
+function vermonitorado(req, res){
+    var idcomponente = req.params.idcomponente;
+    if (idcomponente == undefined) {
+        res.status(400).send("idcomponente está undefined!");
+    } else {
+        dispositivosModel.vermonitorado(idcomponente)
+            .then((resultado) => {
+                res.status(200).json(resultado);
+            })
+            .catch((erro) => {
+                console.log(erro);
+                console.log("\nHouve um erro ao listar! Erro: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            });
+    }
+}
+
+function switchmonitorado(req, res){
+    var idcomponente = req.params.idcomponente;
+    if(idcomponente == undefined){
+        res.status(400).send("idcomponente esta undefined")
+    }else{
+        dispositivosModel.switchmonitorado(idcomponente).then((resultado) => {
+            res.status(200).json(resultado)
+        }).catch((erro) => {
+            console.log(erro)
+        })
+    }
+
+}
+
+function switchnaomonitorado(req, res){
+    var idcomponente = req.params.idcomponente;
+    if(idcomponente == undefined){
+        res.status(400).send("idcomponente esta undefined")
+    }else{
+        dispositivosModel.switchnaomonitorado(idcomponente).then((resultado) => {
+            res.status(200).json(resultado)
+        }).catch((erro) => {
+            console.log(erro)
+        })
+    }
+
+}
+
+function excluircomponente(req , res){
+    var idcomponenteexcluido = req.params.idcomponenteexcluido;
+    if(idcomponenteexcluido == undefined){
+        res.status(400).send("idcomponenteexcluido undefined")
+    }else {
+        dispositivosModel.excluircomponente(idcomponenteexcluido).then((resultado) => {
+            res.status(200).json(resultado)
+        }).catch((erro) => {
+            console.log(erro)
+        })
+    }
+
+}
+
+
+function editarcomponente(req, res) {
+    var idcomponenteeditado = req.params.idcomponenteeditado;
+    var limmineditado = req.body.limmin;
+    var limmaxeditado = req.body.limmax;
+    var monitoradoeditado = req.body.monitorado;
+
+    if (idcomponenteeditado == undefined || limmineditado == undefined || limmaxeditado == undefined || monitoradoeditado == undefined) {
+        return res.status(400).send("Dados para editar o componente incompletos.");
+    }
+
+    dispositivosModel.editarcomponente(
+        idcomponenteeditado,
+        limmineditado,
+        limmaxeditado,
+        monitoradoeditado
+    )
+    .then((resultado) => {
+        res.status(200).json(resultado);
+    })
+    .catch((erro) => {
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+function catalogocripto(req, res) {
+    dispositivosModel.catalogocripto()
+        .then((resultado) => {
+            res.status(200).json(resultado);
+        })
+        .catch((erro) => {
+            console.log(erro);
+            res.status(500).json(erro.sqlMessage);
+        });
+}
+
+function listarcripto(req, res) {
+    dispositivosModel.listarcripto(req.params.iddispositivo)
+        .then((resultado) => res.status(200).json(resultado))
+        .catch((erro) => res.status(500).json(erro.sqlMessage));
+}
+
+function adicionarcripto(req, res) {
+    var idcripto = req.body.idcripto;
+    if (idcripto == undefined) {
+        res.status(400).send("idcripto está undefined!");
+    } else {
+        dispositivosModel.adicionarcripto(req.params.iddispositivo, idcripto)
+            .then((resultado) => res.status(201).json(resultado))
+            .catch((erro) => res.status(500).json(erro.sqlMessage));
+    }
+}
+
+function removercripto(req, res) {
+    dispositivosModel.removercripto(req.params.idligacao)
+        .then((resultado) => res.status(200).json(resultado))
+        .catch((erro) => res.status(500).json(erro.sqlMessage));
+}
+
+
 module.exports = {
-    cadastrar
+    cadastrar,
+    listar,
+    excluir,
+    atualizar,
+    catalogocomponente,
+    cadastrarcomponente,
+    listarcomponente,
+    vermonitorado,
+    switchmonitorado,
+    switchnaomonitorado,
+    excluircomponente,
+    editarcomponente,
+    catalogocripto,
+    listarcripto,
+    adicionarcripto,
+    removercripto
 };

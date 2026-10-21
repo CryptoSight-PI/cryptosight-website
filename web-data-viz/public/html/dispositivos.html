@@ -28,176 +28,8 @@
         </div>
 
 
-        <div class="w-100">
-            
-            <div class="dispositivo p-6 bg-[#0C1F19] border border-[#207F70] rounded-2xl flex flex-col justify-between">
-                <div>
-                    <div class="flex justify-between items-center">
-                        <h2 class="text-xl font-bold text-white">Rig 01</h2>
-                        <!-- <button onclick="statusrig()" class="cursor-pointer">
-                            <span id="status_farm" class="bg-[#144840] text-[#00E6A6] px-3 py-1 rounded-lg text-xs">Ativa</span>
-                        </button> -->
-                    </div>
-                    <p class="text-sm text-gray-400">MAC: 01:01:01:01:01</p>
-                    <p class="text-xs text-gray-400">Asic</p>
-                    <p class="text-xs text-gray-400">Antminer</p>
-                    <p class="text-xs text-gray-400">Bitmain</p>
-                    <p class="text-xs text-gray-400">Criado em: 18/10/2026</p>
-                    
-                    <div class="pt-4 mb-4">
-                        <div class="flex justify-between items-center mb-2">
-                            <span class="text-xs font-bold text-[#00E6A6]">Componentes do dispositivo</span>
-                            <button onclick="modal_adicionar_componente.showModal()" class="text-xs bg-[#144840] hover:bg-[#1a5e54] text-[#00E6A6] px-2.5 py-1 rounded-lg cursor-pointer">
-                                + Novo componente
-                            </button>
-                        </div>
-
-                        <div class="flex flex-col gap-3 max-h-[180px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-[#207F70]">
-                            
-                            <div class="flex justify-between items-center bg-[#101b18] p-3 rounded-xl border border-[#207F70]/40">
-                                <div>
-                                    <p class="text-sm text-white">CPU 1</p>
-                                    <p class="text-xs text-gray-400">Lim min: 80</p>
-                                    <p class="text-xs text-gray-400">Lim max: 95</p>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <button onclick="statusrig(1)" class="cursor-pointer">
-                                        <span id="status_rig_1" class="bg-[#144840] text-[#00E6A6] px-3 py-1 rounded-lg text-xs">Monitorado</span>
-                                    </button>
-                                    <!-- <button onclick="dispositivoabrir('Sessão Bloco A' , 1)" class="text-xs bg-[#00E6A6]/10 border border-[#00E6A6] text-[#00E6A6] px-2.5 py-1.5 rounded-lg hover:bg-[#00E6A6] hover:text-black cursor-pointer">
-                                        Máquinas <i class="fa-solid fa-arrow-right"></i>
-                                    </button> -->
-                                    <button onclick="mostrarmodaleditarcomponente('CPU 1' , 80 , 95 ,'sim', 1)" class="text-xs text-[#00E6A6] hover:text-[#00c992] cursor-pointer">
-                                        <i class="fa-solid fa-pen-to-square"></i>
-                                    </button>
-                                    <button onclick="mostrarmodalexcluircomponente(1)" class="text-xs text-red-400 hover:text-red-300 cursor-pointer">
-                                        <i class="fa-solid fa-trash-can"></i>
-                                    </button>
-                                </div>
-
-                                
-                            </div>
-
-
-                            <div class="flex justify-between items-center bg-[#101b18] p-3 rounded-xl border border-[#207F70]/40">
-                                <div>
-                                    <p class="text-sm text-white">CPU 2</p>
-                                    <p class="text-xs text-gray-400">Lim min: 83</p>
-                                    <p class="text-xs text-gray-400">Lim max: 95</p>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <button onclick="statusrig(2)" class="cursor-pointer">
-                                        <span id="status_rig_2" class="bg-[#144840] text-[#00E6A6] px-3 py-1 rounded-lg text-xs">Monitorado</span>
-                                    </button>
-                                    <!-- <button onclick="dispositivoabrir('Sessão Bloco A' , 1)" class="text-xs bg-[#00E6A6]/10 border border-[#00E6A6] text-[#00E6A6] px-2.5 py-1.5 rounded-lg hover:bg-[#00E6A6] hover:text-black cursor-pointer">
-                                        Máquinas <i class="fa-solid fa-arrow-right"></i>
-                                    </button> -->
-                                    <button onclick="mostrarmodaleditarcomponente('CPU 2' , 83 , 95 , 'sim' , 2)" class="text-xs text-[#00E6A6] hover:text-[#00c992] cursor-pointer">
-                                        <i class="fa-solid fa-pen-to-square"></i>
-                                    </button>
-                                    <button onclick="mostrarmodalexcluircomponente(2)" class="text-xs text-red-400 hover:text-red-300 cursor-pointer">
-                                        <i class="fa-solid fa-trash-can"></i>
-                                    </button>
-                                </div>
-
-                                
-                            </div>
-
-
-
-                             <div class="flex justify-between items-center bg-[#101b18] p-3 rounded-xl border border-[#207F70]/40">
-                                <div>
-                                    <p class="text-sm text-white">GPU 1</p>
-                                    <p class="text-xs text-gray-400">Lim min: 87</p>
-                                    <p class="text-xs text-gray-400">Lim max: 98</p>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <button onclick="statusrig(3)" class="cursor-pointer">
-                                        <span id="status_rig_3" class="bg-[#144840] text-[#00E6A6] px-3 py-1 rounded-lg text-xs">Monitorado</span>
-                                    </button>
-                                    <!-- <button onclick="dispositivoabrir('Sessão Bloco A' , 1)" class="text-xs bg-[#00E6A6]/10 border border-[#00E6A6] text-[#00E6A6] px-2.5 py-1.5 rounded-lg hover:bg-[#00E6A6] hover:text-black cursor-pointer">
-                                        Máquinas <i class="fa-solid fa-arrow-right"></i>
-                                    </button> -->
-                                    <button onclick="mostrarmodaleditarcomponente('GPU 1' , 87 , 98 , 'sim' , 3)" class="text-xs text-[#00E6A6] hover:text-[#00c992] cursor-pointer">
-                                        <i class="fa-solid fa-pen-to-square"></i>
-                                    </button>
-                                    <button onclick="mostrarmodalexcluircomponente(3)" class="text-xs text-red-400 hover:text-red-300 cursor-pointer">
-                                        <i class="fa-solid fa-trash-can"></i>
-                                    </button>
-                                </div>
-
-                                
-                            </div>
-
-
-
-                             <div class="flex justify-between items-center bg-[#101b18] p-3 rounded-xl border border-[#207F70]/40">
-                                <div>
-                                    <p class="text-sm text-white">RAM 1</p>
-                                    <p class="text-xs text-gray-400">Lim min: 78</p>
-                                    <p class="text-xs text-gray-400">Lim max: 92</p>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <button onclick="statusrig(4)" class="cursor-pointer">
-                                        <span id="status_rig_4" class="bg-[#144840] text-[#00E6A6] px-3 py-1 rounded-lg text-xs">Monitorado</span>
-                                    </button>
-                                    <!-- <button onclick="dispositivoabrir('Sessão Bloco A' , 1)" class="text-xs bg-[#00E6A6]/10 border border-[#00E6A6] text-[#00E6A6] px-2.5 py-1.5 rounded-lg hover:bg-[#00E6A6] hover:text-black cursor-pointer">
-                                        Máquinas <i class="fa-solid fa-arrow-right"></i>
-                                    </button> -->
-                                    <button onclick="mostrarmodaleditarcomponente('RAM 1' , 78 , 92 ,'sim' , 4)" class="text-xs text-[#00E6A6] hover:text-[#00c992] cursor-pointer">
-                                        <i class="fa-solid fa-pen-to-square"></i>
-                                    </button>
-                                    <button onclick="mostrarmodalexcluircomponente(4)" class="text-xs text-red-400 hover:text-red-300 cursor-pointer">
-                                        <i class="fa-solid fa-trash-can"></i>
-                                    </button>
-                                </div>
-
-                                
-                            </div>
-
-
-
-                             <div class="flex justify-between items-center bg-[#101b18] p-3 rounded-xl border border-[#207F70]/40">
-                                <div>
-                                    <p class="text-sm text-white">DISCO 1</p>
-                                    <p class="text-xs text-gray-400">Lim min: 500</p>
-                                    <p class="text-xs text-gray-400">Lim max: 900</p>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <button onclick="statusrig(5)" class="cursor-pointer">
-                                        <span id="status_rig_5" class="bg-[#144840] text-[#00E6A6] px-3 py-1 rounded-lg text-xs">Monitorado</span>
-                                    </button>
-                                    <!-- <button onclick="dispositivoabrir('Sessão Bloco A' , 1)" class="text-xs bg-[#00E6A6]/10 border border-[#00E6A6] text-[#00E6A6] px-2.5 py-1.5 rounded-lg hover:bg-[#00E6A6] hover:text-black cursor-pointer">
-                                        Máquinas <i class="fa-solid fa-arrow-right"></i>
-                                    </button> -->
-                                    <button onclick="mostrarmodaleditarcomponente('DISCO 1' , 500 , 900 , 'sim', 5)" class="text-xs text-[#00E6A6] hover:text-[#00c992] cursor-pointer">
-                                        <i class="fa-solid fa-pen-to-square"></i>
-                                    </button>
-                                    <button onclick="mostrarmodalexcluircomponente(5)" class="text-xs text-red-400 hover:text-red-300 cursor-pointer">
-                                        <i class="fa-solid fa-trash-can"></i>
-                                    </button>
-                                </div>
-
-                                
-                            </div>
-
-
-                            
-
-                        </div>
-                    </div>
-                </div>
-
-                <div class="flex gap-2">
-                    <button onclick="mostrarmodaleditardispositivo('01:01:01:01:01:01' , 'Antminer' , 'Bitmain', 'Asic', 1)" class="flex-1 py-2 rounded-lg bg-[#144840] border border-[#207F70]/40 hover:bg-[#1a5e54] text-[#00E6A6] text-xs cursor-pointer flex items-center justify-center gap-1.5">
-                        <i class="fa-solid fa-pen-to-square"></i> Editar Dispositivo
-                    </button>
-                    <button onclick="mostrarmodalexcluirdispositivo(1)" class="flex-1 py-2 rounded-lg bg-[#7A0015]/30 border border-[#E00027]/40 hover:bg-red-900/50 text-red-400 text-xs cursor-pointer flex items-center justify-center gap-1.5">
-                        <i class="fa-solid fa-trash-can"></i> Excluir Dispositivo
-                    </button>
-                </div>
-            </div>
-
+        <div id="piddispositivos" class="flex flex-wrap gap-6">
+           
         </div>
 
 
@@ -254,7 +86,7 @@
             <div>
                 <h1 class="font-bold text-white">Certeza que deseja excluir esse componente?</h1>
                 <div class="flex justify-between gap-4">
-                    <button class="p-3 mt-5 text-white bg-[#00E6A6] rounded-2xl font-bold" onclick="modal_excluir_componente.close() ; excluircomponente()">EXCLUIR</button>
+                    <button class="p-3 mt-5 text-white bg-[#00E6A6] rounded-2xl font-bold" onclick="excluircomponente()">EXCLUIR</button>
                     <button class="p-3 mt-5 rounded-2xl border border-[#207F70]/60 text-[#A0B5AC] hover:text-white font-bold cursor-pointer" onclick="modal_excluir_componente.close()">CANCELAR</button>
                 </div>
             </div>
@@ -301,7 +133,7 @@
             <h2 class="text-2xl text-white font-bold pb-2">Adicionar Componente</h2>
             <div>
                 <label class="text-white">Componente</label>
-                <input placeholder="CPU" id="iptcomponentecomponente" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+                <select id="iptcomponentecomponente" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60"></select>
             </div>
             <div class="flex gap-6">
                  <div>
@@ -317,13 +149,13 @@
             <div> 
                 <label class="text-white">Monitorado</label> 
                 <select id="iptcomponentemonitorado" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
-                    <option value="sim" class="bg-[#0C1F19]">Monitorado</option>
-                    <option value="nao" class="bg-[#0C1F19]">Não Monitorado</option>
+                    <option value="1" class="bg-[#0C1F19]">Monitorado</option>
+                    <option value="0" class="bg-[#0C1F19]">Não Monitorado</option>
                 </select>
             </div> 
 
              <div class="flex justify-between">
-                <button class="p-3 mt-5 text-white bg-[#00E6A6] rounded-2xl font-bold" onclick="modal_adicionar_componente.close() ; adicionarcomponente()">CADASTRAR</button>
+                <button class="p-3 mt-5 text-white bg-[#00E6A6] rounded-2xl font-bold" onclick="adicionarcomponente()">CADASTRAR</button>
                 <button class="p-3 mt-5 rounded-2xl border border-[#207F70]/60 text-[#A0B5AC] hover:text-white font-bold cursor-pointer transition-colors" onclick="modal_adicionar_componente.close()">CANCELAR</button>
             </div>
         </dialog>
@@ -335,7 +167,7 @@
             <h2 class="text-2xl text-white font-bold pb-2">Editar Componente</h2>
             <div>
                 <label class="text-white">Componente</label>
-                <input placeholder="CPU" id="iptcomponentecomponenteeditado" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+                <input placeholder="CPU" id="iptcomponentecomponenteeditado" readonly class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
             </div>
             <div class="flex gap-6">
                  <div>
@@ -351,14 +183,43 @@
             <div> 
                 <label class="text-white">Monitorado</label> 
                 <select id="iptcomponentemonitoradoeditado" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
-                    <option value="sim" class="bg-[#0C1F19]">Monitorado</option>
-                    <option value="nao" class="bg-[#0C1F19]">Não Monitorado</option>
+                    <option value="1" class="bg-[#0C1F19]">Monitorado</option>
+                    <option value="0" class="bg-[#0C1F19]">Não Monitorado</option>
                 </select>
             </div> 
 
              <div class="flex justify-between">
-                <button class="p-3 mt-5 text-white bg-[#00E6A6] rounded-2xl font-bold" onclick="modal_editar_componente.close() ; editarcomponente()">EDITAR</button>
+                <button class="p-3 mt-5 text-white bg-[#00E6A6] rounded-2xl font-bold" onclick="editarcomponente()">EDITAR</button>
                 <button class="p-3 mt-5 rounded-2xl border border-[#207F70]/60 text-[#A0B5AC] hover:text-white font-bold cursor-pointer transition-colors" onclick="modal_editar_componente.close()">CANCELAR</button>
+            </div>
+        </dialog>
+
+
+        <dialog id="modal_cripto" class="w-full max-w-sm m-auto p-6 bg-[#0C1F19] text-white border border-[#207F70]/50 rounded-2xl backdrop:bg-black/60">
+
+            <h2 class="text-lg font-bold mb-1">Criptomoeda</h2>
+
+            <p class="text-sm text-gray-400 mb-5">
+                Selecione a criptomoeda do dispositivo.
+            </p>
+
+            <select id="select_cripto"
+                class="w-full bg-[#101b18] text-white p-3 rounded-lg border border-[#207F70]/50">
+                <option value="">Selecione uma criptomoeda</option>
+            </select>
+
+            <div class="flex justify-end gap-2 mt-5">
+                <button type="button"
+                    onclick="document.getElementById('modal_cripto').close()"
+                    class="px-4 py-2 rounded-lg text-sm text-gray-400 hover:text-white">
+                    Cancelar
+                </button>
+
+                <button type="button"
+                    onclick="salvarCriptoFront()"
+                    class="px-4 py-2 rounded-lg text-sm font-bold bg-[#00E6A6] text-[#0C1F19]">
+                    Salvar
+                </button>
             </div>
         </dialog>
 
@@ -378,9 +239,77 @@
         pid.innerHTML = `Gerenciamento de dispositivos da ${sessao}`
     }
     nomessessao()
+
     function voltarfarm(){
         window.location.href = 'farm.html'
     }
+
+    function listardispositivos() {
+        fetch(`/dispositivos/listar/${id_sessao}`)
+            .then(function (resposta) {
+               if(resposta.ok){
+                resposta.json().then((dispositivos) => {
+
+                     piddispositivos.innerHTML = "";
+
+                if (dispositivos.length == 0) {
+                    vazio.style.display = "block";
+                    return;
+                }
+                vazio.style.display = "none";
+
+                for (let i = 0; i < dispositivos.length; i++) {
+                    piddispositivos.innerHTML += `
+                    <div class="dispositivo w-100 p-6 bg-[#0C1F19] border border-[#207F70] rounded-2xl flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center">
+                                <h2 class="text-xl font-bold text-white">${dispositivos[i].modelo}</h2>
+                                <button onclick="abrirModalCripto(${dispositivos[i].id})" class="w-8 h-8 flex items-center justify-center rounded-md bg-[#144840] border border-[#207F70]/50 text-[#00E6A6] text-lg font-bold hover:bg-[#207F70] transition cursor-pointer">
+                                    $
+                                </button>
+                            </div>
+                            <p class="text-sm text-gray-400">MAC: ${dispositivos[i].mac_address}</p>
+                            <div id="criptos_${dispositivos[i].id}" class="flex flex-wrap gap-1 mt-1"></div>
+                            <p class="text-xs text-gray-400">${dispositivos[i].tipo}</p>
+                            <p class="text-xs text-gray-400">${dispositivos[i].fabricante}</p>
+                            <p class="text-xs text-gray-400">Criado em: ${dispositivos[i].criacao}</p>
+
+                            <div class="pt-4 mb-4">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-xs font-bold text-[#00E6A6]">Componentes do dispositivo</span>
+                                    <button onclick="mostrarmodaladicionarcomponente(${dispositivos[i].id})" class="text-xs bg-[#144840] hover:bg-[#1a5e54] text-[#00E6A6] px-2.5 py-1 rounded-lg cursor-pointer">
+                                        + Novo componente
+                                    </button>
+                                </div>
+                                <div id="componentes_${dispositivos[i].id}" class="flex flex-col gap-3 max-h-[180px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-[#207F70]">
+                                    <p class="text-xs text-gray-400">Nenhum componente cadastrado</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-2">
+                            <button onclick="mostrarmodaleditardispositivo('${dispositivos[i].mac_address}', '${dispositivos[i].modelo}', '${dispositivos[i].fabricante}', '${dispositivos[i].tipo}', ${dispositivos[i].id})" class="flex-1 py-2 rounded-lg bg-[#144840] border border-[#207F70]/40 hover:bg-[#1a5e54] text-[#00E6A6] text-xs cursor-pointer flex items-center justify-center gap-1.5">
+                                <i class="fa-solid fa-pen-to-square"></i> Editar Dispositivo
+                            </button>
+                            <button onclick="mostrarmodalexcluirdispositivo(${dispositivos[i].id})" class="flex-1 py-2 rounded-lg bg-[#7A0015]/30 border border-[#E00027]/40 hover:bg-red-900/50 text-red-400 text-xs cursor-pointer flex items-center justify-center gap-1.5">
+                                <i class="fa-solid fa-trash-can"></i> Excluir Dispositivo
+                            </button>
+                        </div>
+                    </div>`;
+
+                    listarcomponente(dispositivos[i].id)
+                    listarcriptos(dispositivos[i].id)
+                }
+
+                })
+               };
+            }).catch((erro) => {
+                console.log("Deu erro no listar")
+            })
+            
+    }
+
+    listardispositivos();
 
     function validarmac(){
         mac = iptmacdispositivo.value.replace(/[^0-9A-Fa-f]/g, "").toUpperCase();
@@ -447,7 +376,7 @@
     }
 
      function buscar(){
-           let texto = inputbusca.value.toLowerCase();
+            let texto = inputbusca.value.toLowerCase();
             let itens = document.querySelectorAll('.dispositivo');
             let visiveis = 0;
 
@@ -477,36 +406,387 @@
         }
 
 
-
+        let iddispositivoeditado = null
         function mostrarmodaleditardispositivo(mac , modelo , fabricante , tipo , id){
             iptmacdispositivoeditado.value = mac;
             iptmodelodispositivoeditado.value = modelo;
             iptfabricantedispositivoeditado.value = fabricante;
             ipttipodispositivoeditado.value = tipo;
 
+            iddispositivoeditado = id
+
             modal_editar_dispositivo.showModal()
         }
+
+        
+        let idcomponenteexcluido = null;
+
+        function mostrarmodalexcluircomponente(id) {
+            idcomponenteexcluido = id;
+            console.log("ID do componente selecionado:", idcomponenteexcluido);
+
+            modal_excluir_componente.showModal();
+        }
+
+        function excluircomponente() {
+            fetch(`/dispositivos/excluircomponente/${idcomponenteexcluido}`, { method: "DELETE" })
+            .then((resposta) => {
+                if (resposta.ok) {
+                    alert("componente excluido");
+                    modal_excluir_componente.close()
+                    listardispositivos();
+                } 
+            })
+            .catch((erro) =>  {
+                alert("Erro excluir");
+            });
+        
+        }
+
+
+
+        let iddispositivodeletado = null
+        function mostrarmodalexcluirdispositivo(id){
+            iddispositivodeletado = id
+            modal_excluir_dispositivo.showModal()
+        }
+
+
+        function excluirdispositivo() {
+            fetch(`/dispositivos/excluir/${iddispositivodeletado}`, { method: "DELETE" })
+            .then((resposta) => {
+                if (resposta.ok) {
+                    alert("dispositivo excluido");
+                    listardispositivos();
+                } 
+            })
+            .catch((erro) =>  {
+                alert("Erro excluir");
+            });
+        }
+
+        function editardispositivo(){
+            let mac = iptmacdispositivoeditado.value.trim();
+            let modelo = iptmodelodispositivoeditado.value.trim();
+            let fabricante = iptfabricantedispositivoeditado.value.trim();
+            let tipo = ipttipodispositivoeditado.value.trim();
+
+            if (mac.length !== 17 || modelo == "" || fabricante == "" || tipo == "") {
+                alert("Preencha todos os campos corretamente (MAC com 17 caracteres).");
+                return;
+            }
+
+            fetch(`/dispositivos/atualizar/${iddispositivoeditado}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    mac_address: mac,
+                    modelo: modelo,
+                    fabricante: fabricante,
+                    tipo: tipo
+                })
+            }).then((resposta) => {
+                if (resposta.ok) {
+                    alert("dispositivo atualizado");
+                    listardispositivos()
+                } else {
+                    resposta.text().then(texto => alert("Erro ao editar: " + texto));
+                }
+            }).catch((erro) => {
+                console.log(erro);
+                alert("erro editar")
+            })
+        }
+
+
+        function catalogocomponente(){
+            fetch(`/dispositivos/catalogocomponente`)
+                .then((resposta) => {
+                    if (resposta.ok) {
+                        resposta.json().then((catalogo) => {
+                            iptcomponentecomponente.innerHTML = "";
+                            for (let i = 0; i < catalogo.length; i++) {
+                                iptcomponentecomponente.innerHTML += `<option value="${catalogo[i].id}" class="bg-[#0C1F19]">${catalogo[i].nome}</option>`;
+                            }
+                        });
+                    }
+                })
+                .catch((erro) => {
+                    console.log(erro);
+            });
+        }
+
+        catalogocomponente()
+
+        let iddispositivocomponente = null
+        function mostrarmodaladicionarcomponente(id) {
+            iddispositivocomponente = id;
+            modal_adicionar_componente.showModal();
+        }
+
+
+        function adicionarcomponente() {
+            let idcomponente = iptcomponentecomponente.value.trim();
+            let limmin = iptcomponentelimmin.value.trim();
+            let limmax = iptcomponentelimmax.value.trim();
+            let monitorado = iptcomponentemonitorado.value.trim();
+
+            if (idcomponente == "" || limmin == "" || limmax == "") {
+                alert("Preencha todos os campos.");
+                return;
+            }
+
+            fetch(`/dispositivos/cadastrarcomponente/${iddispositivocomponente}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    idcomponente: idcomponente,
+                    limmin: limmin,
+                    limmax: limmax,
+                    monitorado: monitorado
+                })
+            })
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    alert("componente cadastrado com sucesso!");
+                    modal_adicionar_componente.close();
+                    iptcomponentelimmin.value = "";
+                    iptcomponentelimmax.value = "";
+                    listardispositivos();
+                } else {
+                    resposta.text().then(texto => alert("Erro ao cadastrar: " + texto));
+                }
+            })
+            .catch(function (erro) {
+                console.log(erro);
+                alert("Erro de conexão com o servidor.");
+            });
+        }
+
+        function listarcomponente(iddispositivocomponente){
+            fetch(`/dispositivos/listarcomponente/${iddispositivocomponente}`).then((resposta) => {
+                if(resposta.ok){
+                    resposta.json().then((resposta) => {
+                        spancomponente = document.getElementById(`componentes_${iddispositivocomponente}`);
+                        spancomponente.innerHTML = ""
+                        for(let i = 0 ; i < resposta.length ; i++){
+                            let statusTexto = resposta[i].monitorado == 1 ? "Monitorado" : "Não Monitorado";
+                            let statusCor = resposta[i].monitorado == 1 ? "text-[#00E6A6] bg-[#144840]" : "text-gray-400 bg-gray-800";
+
+                            spancomponente.innerHTML += `
+                                <div class="bg-[#101b18] p-2.5 rounded-xl border border-[#207F70]/40 flex justify-between items-center text-xs">
+                                    <div>
+                                        <p class="font-bold text-white">${resposta[i].nome} - ${resposta[i].id}</p>
+                                        <p class="text-gray-400">Min: ${resposta[i].limite_min} | Máx: ${resposta[i].limite_max}</p>
+                                        <button onclick="switchmonitorado(${resposta[i].id})" class="cursor-pointer inline-block px-2 py-0.5 rounded text-[10px] mt-1 ${statusCor}">${statusTexto}</button>
+                                    </div>
+                                    <div class="flex gap-1.5">
+                                        <button onclick="mostrarmodaleditarcomponente('${resposta[i].nome}', ${resposta[i].limite_min}, ${resposta[i].limite_max}, ${resposta[i].monitorado}, ${resposta[i].id})" class="p-1.5 bg-[#144840] hover:bg-[#1a5e54] text-[#00E6A6] rounded cursor-pointer">
+                                            <i class="fa-solid fa-pen"></i>
+                                        </button>
+                                        <button onclick="mostrarmodalexcluircomponente(${resposta[i].id})" class="p-1.5 bg-red-900/30 hover:bg-red-900/50 text-red-400 rounded cursor-pointer">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            `;
+                            
+                        }
+                    })
+
+                }
+            }).catch((erro) => {
+                console.log(erro)
+                alert("erro no listar do componente")
+            })
+        }
+
+        
+        function switchmonitorado(idcomponente){
+            fetch(`/dispositivos/vermonitorado/${idcomponente}`).then((resposta) => {
+                if(resposta.ok){
+                    resposta.json().then((dado) => {
+                        if(dado.length > 0){
+                            if(dado[0].monitorado == 1){
+                                fetch(`/dispositivos/switchnaomonitorado/${idcomponente}`, {
+                                    method: "PUT",
+                                    headers: { "Content-Type": "application/json" },
+                                })
+                                .then((resposta1) => {
+                                    if(resposta1.ok){
+                                        listardispositivos();
+                                    }
+                                }).catch((erro) => {
+                                    console.log(erro);
+                                });
+
+                            }else{
+                                fetch(`/dispositivos/switchmonitorado/${idcomponente}`, {
+                                    method: "PUT",
+                                    headers: { "Content-Type": "application/json" },
+                                })
+                                .then((resposta2) => {
+                                    if(resposta2.ok){
+                                        listardispositivos();
+                                    }
+                                }).catch((erro) => {
+                                    console.log(erro);
+                                });
+                            }
+                        }
+                    });
+                }
+            }).catch((erro) => {
+                console.log(erro);
+            });
+        }
+
+        let idcomponenteeditado = null;
 
         function mostrarmodaleditarcomponente(nome , min , max , monitorado , id){
             iptcomponentecomponenteeditado.value = nome
             iptcomponentelimmineditado.value = min
             iptcomponentelimmaxeditado.value = max
-            iptcomponentemonitoradoeditado.value = monitorado
+            iptcomponentemonitoradoeditado.value = String(monitorado)
+
+
+            idcomponenteeditado = id
 
             modal_editar_componente.showModal()
 
         }
 
-        function mostrarmodalexcluircomponente(id){
-            // deixando mais facil pro back
 
-            modal_excluir_componente.showModal()
+        function editarcomponente(){
+            let limmineditado = iptcomponentelimmineditado.value.trim();
+            let limmaxeditado = iptcomponentelimmaxeditado.value.trim();
+            let monitoradoeditado = iptcomponentemonitoradoeditado.value.trim();
+            
+            fetch(`/dispositivos/editarcomponente/${idcomponenteeditado}` , {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    limmin: Number(limmineditado),
+                    limmax: Number(limmaxeditado),
+                    monitorado: Number(monitoradoeditado)
+                })
+            }).then((resposta) => {
+                if(resposta.ok) {
+                    resposta.json().then((dados) => {
+                        alert("componente editado")
+                        modal_editar_componente.close()
+                        listardispositivos()
+                    })
+                }
+            }).catch((erro) => {
+                console.log(erro)
+            })
+
 
         }
 
-        function mostrarmodalexcluirdispositivo(id){
 
-            modal_excluir_dispositivo.showModal()
+
+let idDispositivoCripto = null;
+
+
+function catalogocripto() {
+    fetch(`/dispositivos/catalogocripto`)
+        .then((resposta) => {
+            if (resposta.ok) {
+                resposta.json().then(function (catalogo) {
+                    select_cripto.innerHTML =
+                        '<option value="">Selecione uma criptomoeda</option>';
+
+                    for (let i = 0; i < catalogo.length; i++) {
+                        select_cripto.innerHTML += `
+                            <option value="${catalogo[i].id}">
+                                ${catalogo[i].nome}
+                            </option>
+                        `;
+                    }
+                });
+            }
+        })
+        .catch(function (erro) {
+            console.log(erro);
+        });
+}
+
+catalogocripto()
+
+function abrirModalCripto(id) {
+    idDispositivoCripto = id;
+    select_cripto.value = "";
+    modal_cripto.showModal();
+}
+
+function listarcriptos(iddispositivo) {
+    fetch(`/dispositivos/listarcripto/${iddispositivo}`)
+        .then((resposta) => {
+            if (resposta.ok) {
+                resposta.json().then((criptos) => {
+                    let div = document.getElementById(`criptos_${iddispositivo}`);
+                    div.innerHTML = "";
+
+                    if (criptos.length == 0) {
+                        div.innerHTML = `<span class="text-xs text-gray-400">Nenhuma criptomoeda</span>`;
+                        return;
+                    }
+
+                    for (let i = 0; i < criptos.length; i++) {
+                        div.innerHTML += `
+                        <span class="text-xs bg-[#144840] text-[#00E6A6] px-2 py-0.5 rounded-lg flex items-center gap-1">
+                            ${criptos[i].simbolo}
+                            <button onclick="removercripto(${criptos[i].id})" class="cursor-pointer text-red-400">×</button>
+                        </span>`;
+                    }
+                });
+            }
+        })
+        .catch((erro) => console.log(erro));
+}
+
+function salvarCriptoFront() {
+    let idCripto = select_cripto.value;
+
+    if (idCripto === "") {
+        alert("Selecione uma criptomoeda!");
+        return;
+    }
+
+    fetch(`/dispositivos/adicionarcripto/${idDispositivoCripto}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ idcripto: idCripto })
+    })
+    .then((resposta) => {
+        if (resposta.ok) {
+            modal_cripto.close();
+            listarcriptos(idDispositivoCripto);
+        } else {
+            resposta.text().then(texto => alert("Erro ao salvar: " + texto));
         }
+    })
+    .catch((erro) => {
+        console.log(erro);
+        alert("Erro de conexão com o servidor.");
+    });
+}
+
+function removercripto(idligacao) {
+    fetch(`/dispositivos/removercripto/${idligacao}`, { method: "DELETE" })
+        .then((resposta) => {
+            if (resposta.ok) {
+                listardispositivos();
+            }
+        })
+        .catch((erro) => console.log(erro));
+}
+
+
+
 
 </script>

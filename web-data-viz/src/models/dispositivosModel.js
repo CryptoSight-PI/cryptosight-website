@@ -9,6 +9,112 @@ function cadastrar(sessaoId, mac_address, modelo , fabricante, tipo) {
   return database.executar(instrucaoSql);
 }
 
-module.exports = {
-    cadastrar
+
+function listar(sessaoId) {
+    var instrucaoSql = `select id, mac_address, modelo, fabricante, tipo, criacao from maquina where id_sessao = ${sessaoId} order by id;`;
+    return database.executar(instrucaoSql);
+}
+
+
+
+function excluir(iddispositivo) {
+    var instrucaoSql = `
+        DELETE FROM maquina_componente
+        WHERE id_maquina = ${iddispositivo};
+    `;
+
+    return database.executar(instrucaoSql)
+        .then(() => {
+            var instrucaoExcluirMaquina = `
+                DELETE FROM maquina
+                WHERE id = ${iddispositivo};
+            `;
+
+            return database.executar(instrucaoExcluirMaquina);
+        });
+}
+
+
+function atualizar(iddispositivo , mac_addresseditado , modeloeditado , fabricanteeditado , tipoeditado){
+    var instrucaoSql = `update maquina set mac_address = '${mac_addresseditado}' , modelo = '${modeloeditado}' , fabricante = '${fabricanteeditado}' , tipo = '${tipoeditado}' where id = ${iddispositivo} ;`;
+    return database.executar(instrucaoSql);
+}
+
+function catalogocomponente() {
+    var instrucaoSql = `select id, nome from componente order by nome;`;
+    return database.executar(instrucaoSql);
+}
+function cadastrarcomponente(iddispositivocomponente, idcomponentecomponente, limmin, limmax, monitorado) {
+    var instrucaoSql = `insert into maquina_componente (id_maquina, id_componente, limite_min, limite_max, monitorado) values (${iddispositivocomponente}, ${idcomponentecomponente}, ${limmin}, ${limmax}, '${monitorado}');`;
+    return database.executar(instrucaoSql);
+}
+
+function listarcomponente(iddispositivocomponente) {
+    var instrucaoSql = `select mc.id, c.nome , mc.id_maquina, mc.id_componente, mc.limite_min, mc.limite_max, mc.monitorado , mc.criacao from maquina_componente mc join componente c on mc.id_componente = c.id where id_maquina = ${iddispositivocomponente} order by id;`;
+    return database.executar(instrucaoSql);
+}
+
+function vermonitorado(idcomponente){
+    var instrucaoSql = `select monitorado from maquina_componente where id = ${idcomponente};`
+    return database.executar(instrucaoSql);
+}
+
+function switchmonitorado(idcomponente){
+    var instrucaoSql = `update maquina_componente set monitorado = 1 where id = ${idcomponente};`
+    return database.executar(instrucaoSql);
+}
+
+function switchnaomonitorado(idcomponente){
+    var instrucaoSql = `update maquina_componente set monitorado = 0 where id = ${idcomponente};`
+    return database.executar(instrucaoSql);
+}
+
+function excluircomponente(idcomponenteexcluido){
+    var instrucaoSql = `delete from maquina_componente where id = ${idcomponenteexcluido};`
+    return database.executar(instrucaoSql);
+}
+
+function editarcomponente(idcomponenteeditado , limmineditado , limmaxeditado , monitoradoeditado){
+    var instrucaoSql = `update maquina_componente set limite_min = ${limmineditado} , limite_max = ${limmaxeditado} , monitorado = ${monitoradoeditado} where id = ${idcomponenteeditado};`
+    return database.executar(instrucaoSql);
+}
+
+function catalogocripto() {
+    var instrucaoSql = `select id, nome , simbolo from criptomoeda order by nome;`;
+    return database.executar(instrucaoSql);
+}
+
+function listarcripto(iddispositivo) {
+    var instrucaoSql = `select mc.id, c.nome, c.simbolo from maquina_criptomoeda mc join criptomoeda c on c.id = mc.id_criptomoeda where mc.id_maquina = ${iddispositivo};`;
+    return database.executar(instrucaoSql);
+}
+
+function adicionarcripto(iddispositivo, idcripto) {
+    var instrucaoSql = `insert into maquina_criptomoeda (id_maquina, id_criptomoeda) values (${iddispositivo}, ${idcripto});`;
+    return database.executar(instrucaoSql);
+}
+
+function removercripto(idligacao) {
+    var instrucaoSql = `delete from maquina_criptomoeda where id = ${idligacao};`;
+    return database.executar(instrucaoSql);
+}
+
+
+module.exports = {  
+    cadastrar,
+    listar,
+    excluir,
+    atualizar,
+    catalogocomponente,
+    cadastrarcomponente,
+    listarcomponente,
+    vermonitorado,
+    switchmonitorado,
+    switchnaomonitorado,
+    excluircomponente,
+    editarcomponente,
+    catalogocripto,
+    listarcripto,
+    adicionarcripto,
+    removercripto
 };
