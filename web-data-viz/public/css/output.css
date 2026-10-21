@@ -1020,6 +1020,7 @@ header {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  line-height: 1;
 }
 .oqe {
   font-family: 'Inter';
@@ -1185,7 +1186,7 @@ header {
   font-size: 50pt;
   position: absolute;
   z-index: 99;
-  top: 6vh;
+  top: 2vh;
   left: 10vw;
   text-shadow: none;
   filter: drop-shadow(10px 10px 5px black);
@@ -1211,9 +1212,6 @@ header {
   backdrop-filter: blur(2.3px);
   border: 1px solid #00E6A6;
   transition: all .2s;
-  p {
-    text-indent: 2vw;
-  }
 }
 .oqueE {
   font-size: 20pt;
@@ -1411,7 +1409,7 @@ header {
   width: 100vw;
 }
 .titulomaquina {
-  padding-left: 10%;
+  padding-left: 9%;
   font-family: 'IBM Plex Sans';
   font-weight: 800;
   text-transform: uppercase;
@@ -1459,8 +1457,7 @@ header {
   color: #cefff8;
   font-weight: 700;
   font-size: 20pt;
-  padding-left: 10%;
-  margin-left: 20%;
+  padding-left: 30%;
 }
 .maquinaDescricao::before {
   content: "•";
@@ -1738,12 +1735,9 @@ model-viewer {
 }
 footer {
   height: 200px;
-  width: 100%;
+  width: 100vw;
   background: linear-gradient(45deg, #09483f, #0f6b5d, #13685b);
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  gap: 15vw;
+  position: relative;
   padding: 0 10%;
 }
 .copy {
@@ -1751,13 +1745,20 @@ footer {
   font-weight: 600;
   font-size: 20pt;
   color: white;
+  position: absolute;
+  right: 10%;
+  top: 50%;
+  transform: translateY(-50%);
 }
 .cta {
   display: flex;
-  align-items: center;
   flex-direction: column;
-  justify-content: space-evenly;
   gap: 3vh;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  align-items: center;
+  transform: translate(-50%, -50%);
   h3 {
     font-family: 'Manrope';
     font-weight: 1000;
@@ -1772,12 +1773,18 @@ footer {
   padding: 2vh 2vw;
   border: none;
   border-radius: 15px;
+  color: white;
   background: linear-gradient(45deg, #207F70, #00E6A6);
   text-decoration: none;
-  color: white;
 }
-.logo-footer img {
-  height: 100px;
+.logo-footer {
+  position: absolute;
+  left: 10%;
+  top: 50%;
+  transform: translateY(-50%);
+  img {
+    height: 100px;
+  }
 }
 footer {
   display: flex;
@@ -2502,7 +2509,6 @@ footer {
   }
   .titulomaquina {
     width: 90%;
-    padding-right: 0;
     text-align: center;
     font-size: clamp(32px, 8vw, 60pt);
     line-height: 1.1;
@@ -2525,7 +2531,7 @@ footer {
   .maquinaDescricao {
     width: 100%;
     margin-left: 0;
-    padding: 0 5%;
+    padding: 0 10%;
     font-size: clamp(16px, 4vw, 20pt);
     text-align: center;
   }
