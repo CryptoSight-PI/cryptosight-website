@@ -79,6 +79,26 @@ function editarcomponente(idcomponenteeditado , limmineditado , limmaxeditado , 
     return database.executar(instrucaoSql);
 }
 
+function catalogocripto() {
+    var instrucaoSql = `select id, nome , simbolo from criptomoeda order by nome;`;
+    return database.executar(instrucaoSql);
+}
+
+function listarcripto(iddispositivo) {
+    var instrucaoSql = `select mc.id, c.nome, c.simbolo from maquina_criptomoeda mc join criptomoeda c on c.id = mc.id_criptomoeda where mc.id_maquina = ${iddispositivo};`;
+    return database.executar(instrucaoSql);
+}
+
+function adicionarcripto(iddispositivo, idcripto) {
+    var instrucaoSql = `insert into maquina_criptomoeda (id_maquina, id_criptomoeda) values (${iddispositivo}, ${idcripto});`;
+    return database.executar(instrucaoSql);
+}
+
+function removercripto(idligacao) {
+    var instrucaoSql = `delete from maquina_criptomoeda where id = ${idligacao};`;
+    return database.executar(instrucaoSql);
+}
+
 
 module.exports = {  
     cadastrar,
@@ -92,5 +112,9 @@ module.exports = {
     switchmonitorado,
     switchnaomonitorado,
     excluircomponente,
-    editarcomponente
+    editarcomponente,
+    catalogocripto,
+    listarcripto,
+    adicionarcripto,
+    removercripto
 };

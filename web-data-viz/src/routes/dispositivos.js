@@ -52,4 +52,18 @@ router.put("/editarcomponente/:idcomponenteeditado" , function(req , res) {
     dispositivosController.editarcomponente(req , res);
 })
 
+router.get("/catalogocripto", function (req, res) {
+    dispositivosController.catalogocripto(req, res);
+});
+
+router.get("/listarcripto/:iddispositivo", function (req, res) {
+    dispositivosController.listarcripto(req, res);
+});
+router.post("/adicionarcripto/:iddispositivo", function (req, res) {
+    dispositivosController.adicionarcripto(req, res);
+});
+router.delete("/removercripto/:idligacao", function (req, res) {
+    dispositivosController.removercripto(req, res);
+});
+
 module.exports = router;

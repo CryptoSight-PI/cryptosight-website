@@ -241,6 +241,40 @@ function editarcomponente(req, res) {
     });
 }
 
+function catalogocripto(req, res) {
+    dispositivosModel.catalogocripto()
+        .then((resultado) => {
+            res.status(200).json(resultado);
+        })
+        .catch((erro) => {
+            console.log(erro);
+            res.status(500).json(erro.sqlMessage);
+        });
+}
+
+function listarcripto(req, res) {
+    dispositivosModel.listarcripto(req.params.iddispositivo)
+        .then((resultado) => res.status(200).json(resultado))
+        .catch((erro) => res.status(500).json(erro.sqlMessage));
+}
+
+function adicionarcripto(req, res) {
+    var idcripto = req.body.idcripto;
+    if (idcripto == undefined) {
+        res.status(400).send("idcripto está undefined!");
+    } else {
+        dispositivosModel.adicionarcripto(req.params.iddispositivo, idcripto)
+            .then((resultado) => res.status(201).json(resultado))
+            .catch((erro) => res.status(500).json(erro.sqlMessage));
+    }
+}
+
+function removercripto(req, res) {
+    dispositivosModel.removercripto(req.params.idligacao)
+        .then((resultado) => res.status(200).json(resultado))
+        .catch((erro) => res.status(500).json(erro.sqlMessage));
+}
+
 
 module.exports = {
     cadastrar,
@@ -254,5 +288,9 @@ module.exports = {
     switchmonitorado,
     switchnaomonitorado,
     excluircomponente,
-    editarcomponente
+    editarcomponente,
+    catalogocripto,
+    listarcripto,
+    adicionarcripto,
+    removercripto
 };

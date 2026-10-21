@@ -195,6 +195,35 @@
         </dialog>
 
 
+        <dialog id="modal_cripto" class="w-full max-w-sm m-auto p-6 bg-[#0C1F19] text-white border border-[#207F70]/50 rounded-2xl backdrop:bg-black/60">
+
+            <h2 class="text-lg font-bold mb-1">Criptomoeda</h2>
+
+            <p class="text-sm text-gray-400 mb-5">
+                Selecione a criptomoeda do dispositivo.
+            </p>
+
+            <select id="select_cripto"
+                class="w-full bg-[#101b18] text-white p-3 rounded-lg border border-[#207F70]/50">
+                <option value="">Selecione uma criptomoeda</option>
+            </select>
+
+            <div class="flex justify-end gap-2 mt-5">
+                <button type="button"
+                    onclick="document.getElementById('modal_cripto').close()"
+                    class="px-4 py-2 rounded-lg text-sm text-gray-400 hover:text-white">
+                    Cancelar
+                </button>
+
+                <button type="button"
+                    onclick="salvarCriptoFront()"
+                    class="px-4 py-2 rounded-lg text-sm font-bold bg-[#00E6A6] text-[#0C1F19]">
+                    Salvar
+                </button>
+            </div>
+        </dialog>
+
+
 
 
 
@@ -240,6 +269,7 @@
                                 </button>
                             </div>
                             <p class="text-sm text-gray-400">MAC: ${dispositivos[i].mac_address}</p>
+                            <div id="criptos_${dispositivos[i].id}" class="flex flex-wrap gap-1 mt-1"></div>
                             <p class="text-xs text-gray-400">${dispositivos[i].tipo}</p>
                             <p class="text-xs text-gray-400">${dispositivos[i].fabricante}</p>
                             <p class="text-xs text-gray-400">Criado em: ${dispositivos[i].criacao}</p>
@@ -268,6 +298,7 @@
                     </div>`;
 
                     listarcomponente(dispositivos[i].id)
+                    listarcriptos(dispositivos[i].id)
                 }
 
                 })
@@ -375,7 +406,7 @@
         }
 
 
-
+        let iddispositivoeditado = null
         function mostrarmodaleditardispositivo(mac , modelo , fabricante , tipo , id){
             iptmacdispositivoeditado.value = mac;
             iptmodelodispositivoeditado.value = modelo;
@@ -487,7 +518,7 @@
 
         catalogocomponente()
 
-        iddispositivocomponente = null
+        let iddispositivocomponente = null
         function mostrarmodaladicionarcomponente(id) {
             iddispositivocomponente = id;
             modal_adicionar_componente.showModal();
@@ -655,6 +686,105 @@
 
 
         }
+
+
+
+let idDispositivoCripto = null;
+
+
+function catalogocripto() {
+    fetch(`/dispositivos/catalogocripto`)
+        .then((resposta) => {
+            if (resposta.ok) {
+                resposta.json().then(function (catalogo) {
+                    select_cripto.innerHTML =
+                        '<option value="">Selecione uma criptomoeda</option>';
+
+                    for (let i = 0; i < catalogo.length; i++) {
+                        select_cripto.innerHTML += `
+                            <option value="${catalogo[i].id}">
+                                ${catalogo[i].nome}
+                            </option>
+                        `;
+                    }
+                });
+            }
+        })
+        .catch(function (erro) {
+            console.log(erro);
+        });
+}
+
+catalogocripto()
+
+function abrirModalCripto(id) {
+    idDispositivoCripto = id;
+    select_cripto.value = "";
+    modal_cripto.showModal();
+}
+
+function listarcriptos(iddispositivo) {
+    fetch(`/dispositivos/listarcripto/${iddispositivo}`)
+        .then((resposta) => {
+            if (resposta.ok) {
+                resposta.json().then((criptos) => {
+                    let div = document.getElementById(`criptos_${iddispositivo}`);
+                    div.innerHTML = "";
+
+                    if (criptos.length == 0) {
+                        div.innerHTML = `<span class="text-xs text-gray-400">Nenhuma criptomoeda</span>`;
+                        return;
+                    }
+
+                    for (let i = 0; i < criptos.length; i++) {
+                        div.innerHTML += `
+                        <span class="text-xs bg-[#144840] text-[#00E6A6] px-2 py-0.5 rounded-lg flex items-center gap-1">
+                            ${criptos[i].simbolo}
+                            <button onclick="removercripto(${criptos[i].id})" class="cursor-pointer text-red-400">×</button>
+                        </span>`;
+                    }
+                });
+            }
+        })
+        .catch((erro) => console.log(erro));
+}
+
+function salvarCriptoFront() {
+    let idCripto = select_cripto.value;
+
+    if (idCripto === "") {
+        alert("Selecione uma criptomoeda!");
+        return;
+    }
+
+    fetch(`/dispositivos/adicionarcripto/${idDispositivoCripto}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ idcripto: idCripto })
+    })
+    .then((resposta) => {
+        if (resposta.ok) {
+            modal_cripto.close();
+            listarcriptos(idDispositivoCripto);
+        } else {
+            resposta.text().then(texto => alert("Erro ao salvar: " + texto));
+        }
+    })
+    .catch((erro) => {
+        console.log(erro);
+        alert("Erro de conexão com o servidor.");
+    });
+}
+
+function removercripto(idligacao) {
+    fetch(`/dispositivos/removercripto/${idligacao}`, { method: "DELETE" })
+        .then((resposta) => {
+            if (resposta.ok) {
+                listardispositivos();
+            }
+        })
+        .catch((erro) => console.log(erro));
+}
 
 
 
