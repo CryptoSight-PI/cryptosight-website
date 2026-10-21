@@ -1,4 +1,4 @@
-var dispositivosModel = require("../models/dispositivosModel.js");
+var sessoesModel = require("../models/sessoesModel.js");
 
 
 function cadastrar(req, res) {
@@ -16,7 +16,7 @@ function cadastrar(req, res) {
   }else {
 
     
-    dispositivosModel.cadastrar(idfarm, nomesessao, descsessao).then((resultado) => {
+    sessoesModel.cadastrar(idfarm, nomesessao, descsessao).then((resultado) => {
         res.status(201).json(resultado);
     })
     .catch((erro) => {
@@ -38,7 +38,7 @@ function listar(req, res) {
     if (idfarm == undefined) {
         res.status(400).send("idfarm está undefined!");
     } else {
-        dispositivosModel.listar(idfarm)
+        sessoesModel.listar(idfarm)
             .then((resultado) => {
                 res.status(200).json(resultado);
             })
@@ -56,7 +56,7 @@ function excluir(req , res){
     if (idsessao == undefined) {
         res.status(400).send("iddispositivo undefined");
     } else {
-        dispositivosModel.excluir(idsessao)
+        sessoesModel.excluir(idsessao)
             .then((resultado) => {
                 res.status(200).json(resultado);
             }).catch((erro) => {
@@ -68,7 +68,7 @@ function excluir(req , res){
 }
 
 function atualizar(req , res){
-    var idsessaoeditado = req.params.idsessaoeditado;
+    var idsessaoeditado = req.params.idsessao;
     var nomesessaoeditado = req.body.nomesessaoeditado;
     var descsessaoeditado = req.body.descsessaoeditado;
     
@@ -83,7 +83,7 @@ function atualizar(req , res){
 
 
 
-        dispositivosModel.atualizar(idsessaoeditado , nomesessaoeditado , descsessaoeditado).then((resultado) => {
+        sessoesModel.atualizar(idsessaoeditado , nomesessaoeditado , descsessaoeditado).then((resultado) => {
             res.status(201).json(resultado);
         }).catch((erro) => {
             res.status(400).send(erro.sqlMessage)

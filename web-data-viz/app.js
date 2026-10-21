@@ -22,6 +22,7 @@ var empresasRouter = require("./src/routes/empresas");
 var ufsRouter = require("./src/routes/ufs");
 var dispositivosRouter = require("./src/routes/dispositivos");
 var farmsRouter = require("./src/routes/farms");
+var sessoesRouter = require("./src/routes/sessoes");
 
 
 app.use(express.json());
@@ -36,6 +37,7 @@ app.use("/empresas", empresasRouter);
 app.use("/ufs", ufsRouter);
 app.use("/dispositivos", dispositivosRouter);
 app.use("/farms", farmsRouter);
+app.use("/sessoes" , sessoesRouter);
 
 
 app.listen(PORTA_APP, function () {

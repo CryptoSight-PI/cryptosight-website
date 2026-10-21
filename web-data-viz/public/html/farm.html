@@ -99,7 +99,7 @@
             </div>
 
             <div class="flex justify-between">
-                <button class="p-3 mt-5 text-white bg-[#00E6A6] rounded-2xl font-bold" onclick="modal_adicionar_sessao.close() ; adicionarsessao()">CADASTRAR</button>
+                <button class="p-3 mt-5 text-white bg-[#00E6A6] rounded-2xl font-bold" onclick="adicionarsessao()">CADASTRAR</button>
                 <button class="p-3 mt-5 rounded-2xl border border-[#207F70]/60 text-[#A0B5AC] hover:text-white font-bold cursor-pointer transition-colors" onclick="modal_adicionar_sessao.close()">CANCELAR</button>
             </div>
         </dialog>
@@ -119,7 +119,7 @@
             </div>
 
             <div class="flex justify-between">
-                <button class="p-3 mt-5 text-white bg-[#00E6A6] rounded-2xl font-bold" onclick="modal_editar_sessao.close() ; editarsessao()">EDITAR</button>
+                <button class="p-3 mt-5 text-white bg-[#00E6A6] rounded-2xl font-bold" onclick="editarsessao()">EDITAR</button>
                 <button class="p-3 mt-5 rounded-2xl border border-[#207F70]/60 text-[#A0B5AC] hover:text-white font-bold cursor-pointer transition-colors" onclick="modal_editar_sessao.close()">CANCELAR</button>
             </div>
         </dialog>
@@ -206,6 +206,10 @@
     let id_empresa = sessionStorage.ID_EMPRESA;
 
     let farms = [];
+    let sessoes = [];
+    let idfarmSessao = null;
+    let idsessaoeditada = null;
+    let idsessaoexcluida = null;
 
     function listarfarms() {
         fetch(`/farms/list/${id_empresa}`)
@@ -237,7 +241,7 @@
                                     <div class="pt-4 mb-4">
                                         <div class="flex justify-between items-center mb-2">
                                             <span class="text-xs font-bold text-[#00E6A6]">SESSÕES DA FARM</span>
-                                            <button onclick="modal_adicionar_sessao.showModal()" class="text-xs bg-[#144840] hover:bg-[#1a5e54] text-[#00E6A6] px-2.5 py-1 rounded-lg cursor-pointer">
+                                            <button onclick="abrirModalAdicionarSessao(${f.id})" class="text-xs bg-[#144840] hover:bg-[#1a5e54] text-[#00E6A6] px-2.5 py-1 rounded-lg cursor-pointer">
                                                 + Nova Sessão
                                             </button>
                                         </div>
@@ -254,6 +258,7 @@
                                     </button>
                                 </div>
                             </div>`;
+                            listarsessoes(f.id);
                         }
                     });
                 }
@@ -433,7 +438,8 @@
                     modal_excluir_farm.close();
                     listarfarms();
                 } else {
-                    resposta.text().then((t) => alert("Erro ao excluir: " + t));
+                    resposta.text().then((resposta) => 
+                    alert(resposta));
                 }
             })
             .catch((erro) => {
@@ -441,6 +447,209 @@
                 alert("Erro de conexão com o servidor.");
             });
     }
+
+    function listarsessoes(idfarm) {
+        fetch(`/sessoes/listar/${idfarm}`)
+            .then(resposta => {
+                if (!resposta.ok) {
+                    throw new Error("Erro ao buscar sessões");
+                }
+
+                return resposta.json();
+            })
+            .then(lista => {
+                sessoes = sessoes.filter(s => s.id_farm != idfarm);
+                sessoes.push(...lista);
+
+                let pid = document.getElementById(`sessoes_${idfarm}`);
+
+            
+                pid.innerHTML = "";
+
+                if (lista.length === 0) {
+                    pid.innerHTML = `
+                        <p class="text-xs text-gray-500">
+                            Nenhuma sessão cadastrada.
+                        </p>
+                    `;
+                    return;
+                }
+
+                lista.forEach(s => {
+                    pid.innerHTML += `
+                        <div class="flex justify-between items-center gap-3
+                            bg-[#101b18] p-3 rounded-xl border border-[#207F70]/40">
+
+                            <div class="min-w-0">
+                                <p class="text-sm text-white font-semibold">
+                                    ${s.nome}
+                                </p>
+                                <p class="text-xs text-gray-400">
+                                    ${s.descricao || ""}
+                                </p>
+                            </div>
+
+                            <div class="flex items-center gap-2 shrink-0">
+                                <button
+                                    onclick="dispositivoabrir(${Number(s.id)})"
+                                    class="text-xs bg-[#00E6A6]/10 border border-[#00E6A6]
+                                    text-[#00E6A6] px-2.5 py-1.5 rounded-lg
+                                    hover:bg-[#00E6A6] hover:text-black cursor-pointer">
+                                    Máquinas <i class="fa-solid fa-arrow-right"></i>
+                                </button>
+
+                                <button
+                                    onclick="mostrarmodaleditarsessao(${Number(s.id)})"
+                                    class="text-xs text-[#00E6A6] hover:text-[#00c992] cursor-pointer">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </button>
+
+                                <button
+                                    onclick="mostrarmodalexcluirsessao(${Number(s.id)})"
+                                    class="text-xs text-red-400 hover:text-red-300 cursor-pointer">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+            }).catch(erro => {
+                console.error(erro);
+
+                let pid = document.getElementById(`sessoes_${idfarm}`); 
+                    pid.innerHTML = `
+                        <p class="text-xs text-red-400">
+                            Não foi possível carregar as sessões.
+                        </p>
+                    `;
+                
+            });
+    }
+
+    
+function abrirModalAdicionarSessao(idfarm) {
+    idfarmSessao = idfarm;
+
+    document.getElementById("iptnomesessao").value = "";
+    document.getElementById("iptdescsessao").value = "";
+    document.getElementById("modal_adicionar_sessao").showModal();
+}
+
+function adicionarsessao() {
+    let nome = document.getElementById("iptnomesessao").value.trim();
+    let descricao = document.getElementById("iptdescsessao").value.trim();
+
+    if (!idfarmSessao || !nome || !descricao) {
+        alert("Selecione uma farm e preencha os campos.");
+        return;
+    }
+
+    fetch(`/sessoes/cadastrar/${idfarmSessao}`, { method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            nomesessao: nome,
+            descsessao: descricao
+        })
+    }).then((resposta) => {
+        if(resposta.ok){
+            return resposta.text();
+        }
+    }).then(() => {
+        document.getElementById("modal_adicionar_sessao").close();
+        listarsessoes(idfarmSessao);
+        alert("Sessão cadastrada!");
+    })
+    .catch((erro) => {
+        console.error(erro);
+    });
+}
+
+function mostrarmodaleditarsessao(id) {
+    const sessao = sessoes.find(s => s.id == id);
+
+    if (!sessao) {
+        alert("Sessão não encontrada.");
+        return;
+    }
+
+    idsessaoeditada = id;
+
+    document.getElementById("iptnomesessaoeditada").value = sessao.nome;
+    document.getElementById("iptdescsessaoeditada").value = sessao.descricao || "";
+    document.getElementById("modal_editar_sessao").showModal();
+}
+
+function editarsessao() {
+    const nome = document.getElementById("iptnomesessaoeditada").value.trim();
+    const descricao = document.getElementById("iptdescsessaoeditada").value.trim();
+
+    const sessao = sessoes.find(s => s.id == idsessaoeditada);
+
+    if (!sessao || !nome) {
+        alert("Preencha o nome da sessão.");
+        return;
+    }
+
+    fetch(`/sessoes/atualizar/${idsessaoeditada}`, { method: "PUT", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+            nomesessaoeditado: nome, 
+            descsessaoeditado: descricao 
+        })
+    }).then((resposta) => {
+        if (resposta.ok) {
+            return resposta.text();
+        }
+        
+    }).then(() => {
+        document.getElementById("modal_editar_sessao").close();
+        listarsessoes(sessao.id_farm);
+        alert("Sessão editada com sucesso!");
+    })
+    .catch((erro) => {
+        console.error(erro);
+       
+    });
+}
+
+
+function mostrarmodalexcluirsessao(id) {
+    idsessaoexcluida = id;
+    document.getElementById("modal_excluir_sessao").showModal();
+}
+
+function excluirsessao() {
+    let sessao = sessoes.find(s => s.id == idsessaoexcluida);
+
+    if (!sessao) {
+        alert("Sessão não encontrada.");
+        return;
+    }
+
+    fetch(`/sessoes/excluir/${idsessaoexcluida}`, {
+        method: "DELETE"
+    })
+    .then((resposta) => {
+        if(resposta.ok){
+            return resposta.text();
+        }
+        
+    })
+    .then(() => {
+        document.getElementById("modal_excluir_sessao").close();
+        listarsessoes(sessao.id_farm);
+        alert("Sessão excluída!");
+    })
+    .catch((erro) => {
+       console.log(erro)
+    });
+}
+
+function dispositivoabrir(id) {
+    let sessao = sessoes.find(s => s.id == id);
+
+    window.location.href =
+        `dispositivos.html?sessao=${encodeURIComponent(sessao.nome)}&id=${sessao.id}`;
+}
+
     </script>
 </body>
 </html>
