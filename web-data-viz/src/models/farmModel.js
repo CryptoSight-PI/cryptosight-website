@@ -6,9 +6,9 @@ var SELECT_FARM = `
            e.id AS id_endereco, e.cep, e.numero, e.complemento,
            c.logradouro, c.bairro, c.cidade, c.id_uf, u.sigla
     FROM farm f
-    JOIN endereco e ON e.id = f.id_endereco
-    JOIN cep c ON c.cep = e.cep
-    JOIN uf u ON u.id = c.id_uf
+    LEFT JOIN endereco e ON e.id = f.id_endereco
+    LEFT JOIN cep c ON c.cep = e.cep
+    LEFT JOIN uf u ON u.id = c.id_uf
 `;
 
 function ensureCep(cep, logradouro, bairro, cidade, id_uf) {
