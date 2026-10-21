@@ -131,10 +131,10 @@ function remove(req, res) {
 
 
                 return farmModel.countSessions(id).then(function (count) {
-                    if (count[0].total > 0) {
-                        res.status(409).send("Não é possível excluir: a farm ainda possui sessões. Exclua as sessões primeiro.");
-                        return;
-                    }
+                    // if (count[0].total > 0) {
+                    //     res.status(409).send("Não é possível excluir: a farm ainda possui sessões. Exclua as sessões primeiro.");
+                    //     return;
+                    // }
                     return farmModel.remove(id, id_endereco).then(function () {
                         res.json({ mensagem: "Farm excluída com sucesso!" });
                     });

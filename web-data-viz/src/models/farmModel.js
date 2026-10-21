@@ -74,11 +74,17 @@ function countSessions(id_farm) {
 }
 
 function remove(id, id_endereco) {
+    var cryptoMachinesSql = mysql.format(`DELETE mc FROM maquina_criptomoeda mc JOIN maquina m ON mc.id_maquina = m.id JOIN sessao s ON m.id_sessao = s.id WHERE s.id_farm = ?;`, [id]);
+    var machinesSql = mysql.format(`DELETE m FROM maquina m JOIN sessao s ON m.id_sessao = s.id WHERE s.id_farm = ?;`, [id]);
+    var sessionsSql = mysql.format(`DELETE FROM sessao WHERE id_farm = ?;`, [id]);
     var linksSql = mysql.format(`DELETE FROM usuario_farm WHERE id_farm = ?;`, [id]);
     var farmSql = mysql.format(`DELETE FROM farm WHERE id = ?;`, [id]);
     var addressSql = mysql.format(`DELETE FROM endereco WHERE id = ?;`, [id_endereco]);
 
-    return database.executar(linksSql)
+    return database.executar(cryptoMachinesSql)
+        .then(function () { return database.executar(machinesSql); })
+        .then(function () { return database.executar(sessionsSql); })
+        .then(function () { return database.executar(linksSql); })
         .then(function () { return database.executar(farmSql); })
         .then(function () { return database.executar(addressSql); });
 }
