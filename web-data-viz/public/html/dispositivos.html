@@ -259,6 +259,7 @@
                 vazio.style.display = "none";
 
                 for (let i = 0; i < dispositivos.length; i++) {
+                    let data = new Date(dispositivos[i].criacao).toLocaleDateString("pt-BR");
                     piddispositivos.innerHTML += `
                     <div class="dispositivo w-100 p-6 bg-[#0C1F19] border border-[#207F70] rounded-2xl flex flex-col justify-between">
                         <div>
@@ -272,7 +273,7 @@
                             <div id="criptos_${dispositivos[i].id}" class="flex flex-wrap gap-1 mt-1"></div>
                             <p class="text-xs text-gray-400">${dispositivos[i].tipo}</p>
                             <p class="text-xs text-gray-400">${dispositivos[i].fabricante}</p>
-                            <p class="text-xs text-gray-400">Criado em: ${dispositivos[i].criacao}</p>
+                            <p class="text-xs text-gray-400">Criado em: ${data}</p>
 
                             <div class="pt-4 mb-4">
                                 <div class="flex justify-between items-center mb-2">
