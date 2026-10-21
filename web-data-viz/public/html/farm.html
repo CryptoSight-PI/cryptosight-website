@@ -260,6 +260,24 @@
     let idsessaoeditada = null;
     let idsessaoexcluida = null;
 
+    function buscar(){
+            let texto = inputbusca.value.toLowerCase();
+            let itens = document.querySelectorAll('.farm');
+            let visiveis = 0;
+
+            for (let i = 0; i < itens.length; i++) {
+                
+                if (itens[i].textContent.toLowerCase().includes(texto)) {
+                    itens[i].style.display = "";
+                    visiveis++;
+                } else {
+                    itens[i].style.display = "none";
+                }
+            }
+            vazio.style.display = visiveis > 0 ? "none" : "block";
+        }
+
+
     function listarfarms() {
         fetch(`/farms/list/${id_empresa}`)
             .then((resposta) => {
