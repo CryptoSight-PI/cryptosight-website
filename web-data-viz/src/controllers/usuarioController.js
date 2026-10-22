@@ -20,7 +20,7 @@ function normalizarCargo(cargo) {
     var c = String(cargo || "").trim();
     if (c.length == 0 || c.length > 30) return null;
     var semEspaco = c.toLowerCase().replace(/\s/g, "");
-    if (semEspaco == "superadmin") return null;
+    if (semEspaco == "superadmin") return "SuperAdmin";
     if (semEspaco == "administrador") return "Administrador";
     return c;
 }
@@ -68,7 +68,7 @@ async function cadastrarSuperAdmin(req, res) {
 
     try {
         var r = await usuarioModel.contarSuperAdmin(idEmpresa);
-        if (r[0].total > 0) {
+        if (r[0].total > 1) {
             return res.status(403).send("Essa empresa já possui um Super Admin");
         }
         await usuarioModel.cadastrarSuperAdmin(nome, cpf, email, senha, idEmpresa);
@@ -185,8 +185,8 @@ async function excluir(req, res) {
 
         var alvo = await buscarAlvo(req.params.id, admin);
         if (!alvo) return res.status(404).send("Usuário não encontrado");
-        if (alvo.cargo == "SuperAdmin") {
-            return res.status(403).send("O Super Admin não pode ser excluído");
+        if (alvo.cargo == "SuperAdmin" && admin.cargo != "SuperAdmin" ) {
+            return res.status(403).send("Você não tem permissão de excluir (Super Admin)");
         }
         if (alvo.id == admin.id) {
             return res.status(403).send("Você não pode excluir a si mesmo");
