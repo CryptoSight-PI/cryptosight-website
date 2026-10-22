@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciamento de Usuários</title>
+    <link rel="icon" href="../assets/imgs/logo.png">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/output.css">
+</head>
+<body class="pl-20 h-screen w-screen bg-linear-135 from-[#0d1412] via-[#09483f] to-[#0d1412]">
+    <main class="flex-1 p-10">
+    <div>
+
+        <div class="flex items-center justify-center mb-10">
+            <div>
+                <h1 class="text-2xl flex items-center justify-center font-bold text-white">Gerenciamento de Usuários</h1>
+                <p class="text-white flex items-center justify-center text-sm">Cadastre e administre usuários</p>
+            </div>
+        </div>
+
+        <div class="mb-8 flex justify-between">
+            <input id="inputbusca" oninput="buscar()" type="text" placeholder="Pesquisar por nome, cargo ou e-mail..." class="w-80 bg-[#0C1F19] text-white px-5 py-3 rounded-xl border  border-[#207F70] text-sm">
+            <button onclick="modal_adicionar.showModal()" class=" bg-[#00E6A6] px-6 py-3 rounded-xl cursor-pointer">
+                + Novo usuário
+            </button>
+        </div>
+
+         <div class="flex flex-col">
+
+            <div class="usuario bg-[#0C1F19] border border-[#207F70] rounded-2xl p-5 flex gap-10">
+
+                <div class="flex items-center gap-4 flex-1">
+                   
+                    <div>
+                        <div>
+                            <span class="text-white">Jeff Smith</span>
+                            <span class="bg-[#144840] text-[#00E6A6] px-3 py-1 rounded-lg text-xs border border-[#207F70]">Administrador</span>
+                        </div>
+                        <p class="text-sm text-gray-400">Jeff@cryptosight.com</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-10">
+                    <div>
+                        <p class="text-xs text-gray-400">CPF</p>
+                        <p class="text-white">123.456.789-01</p>
+                    </div>
+                
+                    <div>
+                        <p class="text-xs text-gray-400">Criação</p>
+                        <p class="text-white">16/10/2026 10:00</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-4">
+                    <button onclick="modal_editar.showModal()" class="px-5 py-2.5 rounded-lg bg-[#144840] border border-[#207F70]/40 hover:bg-[#1a5e54] text-[#00E6A6] text-sm cursor-pointer">Editar</button>
+                    <button onclick="modal_excluir.showModal()" class="px-5 py-2.5 rounded-lg bg-[#7A0015]/39 border border-[#E00027] hover:bg-red-900 text-red-400 text-sm cursor-pointer">Excluir</button>
+                </div>
+            </div>
+
+        </div>
+    
+        <p id="vazio" class="hidden text-center text-[#A0B5AC] py-10">Nenhum usuário encontrado.</p>
+
+        <dialog id="modal_adicionar" class="w-full p-15 m-auto max-w-xl bg-[#0C1F19] border border-[#207F70]/60 rounded-2xl backdrop:backdrop-blur-sm">
+            <h2 class="text-2xl text-white font-bold pb-10">Novo usuário</h2>
+            <div>
+                <label class="text-white">nome completo</label>
+                <input id="iptnome" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+            </div>
+
+            <div>
+                <label class="text-white">CPF</label>
+                <input type="text" id="iptcpf" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+            </div>
+
+            <div>
+                <label class="text-white">Cargo</label>
+                <input type="text" id="iptcargo" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+            </div>
+
+            <div>
+                <label class="text-white">E-Mail</label>
+                <input type="text" id="iptemail" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+            </div>
+            
+            <div class="flex justify-between">
+                <button class="p-3 mt-5 text-white bg-[#00E6A6] rounded-2xl font-bold" onclick="modal_adicionar.close() ; adicionar()">CADASTRAR</button>
+                <button class="p-3 mt-5 rounded-2xl border border-[#207F70]/60 text-[#A0B5AC] hover:text-white font-bold cursor-pointer transition-colors" onclick="modal_adicionar.close()">CANCELAR</button>
+            </div>
+            
+        </dialog>
+
+
+        <dialog id="modal_editar" class="w-full p-15 m-auto max-w-xl bg-[#0C1F19] border border-[#207F70]/60 rounded-2xl backdrop:backdrop-blur-sm">
+            <h2 class="text-2xl text-white font-bold pb-10">Editar usuário</h2>
+            <div>
+                <label class="text-white">nome completo</label>
+                <input id="iptnomeeditado" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+            </div>
+
+            <div>
+                <label class="text-white">CPF</label>
+                <input type="text" id="iptcpfeditado" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+            </div>
+
+            <div>
+                <label class="text-white">Cargo</label>
+                <input type="text" id="iptcargoeditado" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+            </div>
+
+            <div>
+                <label class="text-white">E-Mail</label>
+                <input type="text" id="iptemaileditado" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+            </div>
+            
+            <div class="flex justify-between">
+                <button class="p-3 mt-5 text-white bg-[#00E6A6] rounded-2xl font-bold" onclick="modal_editar.close() ; editar()">CADASTRAR</button>
+                <button class="p-3 mt-5 rounded-2xl border border-[#207F70]/60 text-[#A0B5AC] hover:text-white font-bold cursor-pointer transition-colors" onclick="modal_editar.close()">CANCELAR</button>
+            </div>
+            
+        </dialog>
+
+
+
+        <dialog id="modal_excluir" class="m-auto max-w-xl p-5 bg-[#0C1F19] border border-[#207F70]/60 rounded-2xl backdrop:backdrop-blur-sm">
+            <div>
+                <h1 class="font-bold text-white">Certeza que deseja excluir?</h1>
+                <div class="flex justify-between gap-4">
+                    <button class="p-3 mt-5 text-white bg-[#00E6A6] rounded-2xl font-bold" onclick="modal_excluir.close() ; excluir()">EXCLUIR</button>
+                    <button class="p-3 mt-5 rounded-2xl border border-[#207F70]/60 text-[#A0B5AC] hover:text-white font-bold cursor-pointer" onclick="modal_excluir.close()">CANCELAR</button>
+                </div>
+            </div>
+        </dialog>
+
+    </div>
+    </main>
+
+   
+
+    <script>
+        function buscar(){
+           let texto = inputbusca.value.toLowerCase();
+            let itens = document.querySelectorAll('.dispositivo');
+            let visiveis = 0;
+
+            for (let i = 0; i < itens.length; i++) {
+                
+                if (itens[i].textContent.toLowerCase().includes(texto)) {
+                    itens[i].style.display = "";
+                    visiveis++;
+                } else {
+                    itens[i].style.display = "none";
+                }
+            }
+            vazio.style.display = visiveis > 0 ? "none" : "block";
+        }
+
+        function adicionar(){
+            alert("adicionado")
+        }
+
+        function editar(){
+            alert("editado")
+        }
+
+        function excluir(){
+            alert("excluido")
+        }
+        
+
+    </script>
+</body>
+</html>
