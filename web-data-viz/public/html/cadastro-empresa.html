@@ -14,6 +14,7 @@
 </head>
 
 <body onload="listar()">
+  
   <div class="quadrados">
     <div class="union">
       <img src="../assets/imgs/Union.png" alt="" class="union-normal">
@@ -219,6 +220,7 @@
 
     console.log("Validações passaram! Enviando fetch para o back-end...");
 
+    await fetch("/empresas/cadastrar-cep")
 
     fetch("/empresas/cadastrar", {
       method: "POST",

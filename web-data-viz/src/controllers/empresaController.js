@@ -103,7 +103,7 @@ function autenticarEmpresa(req, res) {
                 } else if (resultadoAutenticar.length == 0) {
                     res.status(403).send("CNPJ e/ou senha inválido(s)");
                 } else {
-                    res.status(403).send("Mais de um cadastro com o mesmo login e senha!");
+                    res.status(403).send("Mais de um   com o mesmo login e senha!");
                 }
             })
             .catch(function (erro) {

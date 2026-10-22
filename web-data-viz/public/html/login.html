@@ -44,11 +44,7 @@
                     <span class="campo">Senha:</span>
                     <input type="password" id="senha_input" placeholder="Digite sua senha..">
                 </label>
-<<<<<<< HEAD
-                <div class="conta">Ainda não possui uma <a href="login-empresa.html">conta</a>?</div>
-=======
                 <div class="conta">Ainda não possui uma <a href="cadastro.html">conta</a>?</div>
->>>>>>> feature/user-register
 
                 <button class="submit" onclick="entrar()">ENTRAR</button>
             </div>
@@ -108,7 +104,7 @@
                         if (json.cargo == "SuperAdmin" || json.cargo == "Administrador") {
                             window.location = "user-register.html";
                         } else {
-                            window.location = "dashboard.html";
+                            window.location = "./dash-analista/dashboard-geral.html";
                         }
                     }, 1000);
 
