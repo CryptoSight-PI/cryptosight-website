@@ -94,7 +94,7 @@
             <span class="campo">Complemento:</span>
             <input id="complemento_input" type="text" placeholder="Opcional" />
           </label>
-          <div class="conta">Já possui uma <a href="loginEmpresa.html">conta</a>?</div>
+          <div class="conta">Já possui uma <a href="login-empresa.html">conta</a>?</div>
           <button class="submit" onclick="cadastrarEmpresa()">CADASTRAR</button>
         </div>
       </div>
@@ -248,7 +248,7 @@
         if (resposta.ok) {
           console.log("Cadastro realizado com sucesso!");
           setTimeout(() => {
-            window.location = "loginEmpresa.html";
+            window.location = "login-empresa.html";
           }, 2000);
         } else {
           return resposta.json().then(function (dados) {
