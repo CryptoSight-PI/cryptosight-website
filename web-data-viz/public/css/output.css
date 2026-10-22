@@ -219,6 +219,9 @@
   .mt-7 {
     margin-top: calc(var(--spacing) * 7);
   }
+  .mt-10 {
+    margin-top: calc(var(--spacing) * 10);
+  }
   .mt-30 {
     margin-top: calc(var(--spacing) * 30);
   }
@@ -386,6 +389,22 @@
     border-style: var(--tw-border-style);
     border-width: 1px;
   }
+  .border-2 {
+    border-style: var(--tw-border-style);
+    border-width: 2px;
+  }
+  .border-3 {
+    border-style: var(--tw-border-style);
+    border-width: 3px;
+  }
+  .border-5 {
+    border-style: var(--tw-border-style);
+    border-width: 5px;
+  }
+  .border-10 {
+    border-style: var(--tw-border-style);
+    border-width: 10px;
+  }
   .border-r {
     border-right-style: var(--tw-border-style);
     border-right-width: 1px;
@@ -399,6 +418,12 @@
   }
   .border-\[\#207F70\] {
     border-color: #207F70;
+  }
+  .border-\[\#144840\] {
+    border-color: #144840;
+  }
+  .border-white {
+    border-color: var(--color-white);
   }
   .bg-\[\#0C1F19\] {
     background-color: #0C1F19;
