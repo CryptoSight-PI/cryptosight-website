@@ -160,6 +160,7 @@ main{
     font-weight: 800;
     color: white;
     gap: 1vh;
+    padding: 3vh 1vw;
     .campo{
         padding-left: 1vw;
         width: 35vw;
@@ -180,6 +181,7 @@ main{
         transition: .1s ease-in-out;
         transform: scale(1.03);
     }
+
     select{
         padding-left: 1vw;
         outline: none;

@@ -1,18 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Blinker:wght@100;200;300;400;600;700;800;900&family=Inter:ital,wght@0,100..900;1,100..900&family=Play:wght@400;700&family=Sora:wght@100..800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
 @import "tailwindcss";
-/* 
-* {
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
-} */
+
+@theme{
+    --font-ibm-mono: "IBM Plex Mono";
+    --font-space-mono: "Space Mono"
+}
 
 html {
     scroll-behavior: smooth;
 }
 
-body {
+.body-index {
     width: 100%;
     margin: 0 auto;
     background-color: #101b18;
@@ -24,6 +24,7 @@ body {
     background-size: 30px 30px;
     scroll-behavior: smooth;
 }
+
 
 .blur-topo {
     position: absolute;
@@ -300,6 +301,7 @@ header {
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
+    line-height: 1
 }
 
 .oqe {
@@ -493,7 +495,7 @@ header {
     font-size: 50pt;
     position: absolute;
     z-index: 99;
-    top: 6vh;
+    top: 2vh;
     left: 10vw;
     text-shadow: none;
     filter: drop-shadow(10px 10px 5px black);
@@ -521,10 +523,6 @@ header {
     backdrop-filter: blur(2.3px);
     border: 1px solid #00E6A6;
     transition: all .2s;
-
-    p {
-        text-indent: 2vw;
-    }
 }
 
 .oqueE {
@@ -758,7 +756,7 @@ header {
 }
 
 .titulomaquina {
-    padding-left: 10%;
+    padding-left: 9%;
     font-family: 'IBM Plex Sans';
     font-weight: 800;
     text-transform: uppercase;
@@ -813,8 +811,7 @@ header {
     color: #cefff8;
     font-weight: 700;
     font-size: 20pt;
-    padding-left: 10%;
-    margin-left: 20%;
+    padding-left: 30%;
 }
 
 .maquinaDescricao::before {
@@ -1144,12 +1141,9 @@ model-viewer {
 
 footer {
     height: 200px;
-    width: 100%;
+    width: 100vw;
     background: linear-gradient(45deg, #09483f, #0f6b5d, #13685b);
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    gap: 15vw;
+    position: relative;
     padding: 0 10%;
 }
 
@@ -1158,15 +1152,21 @@ footer {
     font-weight: 600;
     font-size: 20pt;
     color: white;
+    position: absolute;
+    right: 10%;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .cta {
     display: flex;
-    align-items: center;
     flex-direction: column;
-    justify-content: space-evenly;
     gap: 3vh;
-
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    align-items: center;
+    transform: translate(-50%, -50%);
     h3 {
         font-family: 'Manrope';
         font-weight: 1000;
@@ -1184,12 +1184,14 @@ footer {
     border-radius: 15px;
     color: white;
     background: linear-gradient(45deg, #207F70, #00E6A6);
-        text-decoration: none;
-        color: white;
-
+    text-decoration: none;
 }
 
 .logo-footer {
+    position: absolute;
+    left: 10%;
+    top: 50%;
+    transform: translateY(-50%);
     img {
         height: 100px;
     }
@@ -1671,7 +1673,7 @@ footer{
         height: 40px !important;
     }
 
-    body {
+    .body-index {
         width: 100%;
         min-width: 0;
         overflow-x: hidden;
@@ -2092,7 +2094,6 @@ footer{
 
     .titulomaquina {
         width: 90%;
-        padding-right: 0;
         text-align: center;
         font-size: clamp(32px, 8vw, 60pt);
         line-height: 1.1;
@@ -2118,7 +2119,7 @@ footer{
     .maquinaDescricao {
         width: 100%;
         margin-left: 0;
-        padding: 0 5%;
+        padding: 0 10%;
         font-size: clamp(16px, 4vw, 20pt);
         text-align: center;
     }
@@ -2601,3 +2602,45 @@ footer{
     }
 }
 
+.filtro-selecionado{
+    background: #235347;
+    color: #00E6A6;
+    border-color: #00E6A6;
+}
+
+.filtro{
+    background: #0C1F19;
+    color: white;
+    border-color: #207F70;
+}
+
+.filtro:hover{
+    background: #235347;
+    color: #00E6A6;
+    border-color: #00E6A6;
+}
+
+.saudavel{
+    background: #0D3831;
+    border-color: #207F70;
+}
+
+.atencao{
+    background: #D08E0024;
+    border-color: #FFAE00;
+}
+
+.critico{
+    background: #7A001539;
+    border-color: #E00027;
+}
+
+.offline{
+    background: #747F7A28;
+    border-color: #81988D;
+}
+
+.rig-selecionada{
+    border-width: 2px !important;
+    border-color: #00E6A6 !important; 
+}
