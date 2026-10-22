@@ -1,28 +1,79 @@
-var database = require("../database/config")
+var database = require("../database/config");
 
 function autenticar(email, senha) {
-    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ", email, senha)
-    var instrucaoSql = `
-        SELECT id, nome, email FROM usuario WHERE email = '${email}' AND senha = '${senha}';
-    `;
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
+    var sql = `select id, nome, email, cargo, id_empresa as idEmpresa
+               from usuario where email = ? and senha = ?;`;
+    return database.executar(sql, [email, senha]);
 }
 
-// Coloque os mesmos parâmetros aqui. Vá para a var instrucaoSql
-function cadastrar(nome, cargo, cpf, email, senha, idEmpresa) {
-    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", nome, email, senha);
+function buscarPorId(id) {
+    var sql = `select id, cargo, id_empresa as idEmpresa from usuario where id = ?;`;
+    return database.executar(sql, [id]);
+}
 
-    // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
-    //  e na ordem de inserção dos dados.
-    var instrucaoSql = `
-    INSERT INTO usuario (nome, cargo, cpf, email, senha, id_empresa) VALUES ('${nome}', '${cargo}', '${cpf}', '${email}', '${senha}', '${idEmpresa}');
-`;
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
+function contarSuperAdmin(idEmpresa) {
+    var sql = `select count(*) as total from usuario where id_empresa = ? and cargo = 'SuperAdmin';`;
+    return database.executar(sql, [idEmpresa]);
+}
+
+function cadastrarSuperAdmin(nome, cpf, email, senha, idEmpresa) {
+    var sql = `insert into usuario (nome, cargo, cpf, email, senha, id_empresa)
+               values (?, 'SuperAdmin', ?, ?, ?, ?);`;
+    return database.executar(sql, [nome, cpf, email, senha, idEmpresa]);
+}
+
+
+function cadastrarPendente(nome, cargo, cpf, email, idEmpresa) {
+    var sql = `insert into usuario (nome, cargo, cpf, email, id_empresa)
+               values (?, ?, ?, ?, ?);`;
+    return database.executar(sql, [nome, cargo, cpf, email, idEmpresa]);
+}
+
+
+function finalizarCadastro(cpf, senha) {
+    var sql = `update usuario set senha = ?
+               where cpf = ? and senha is null;`;
+    return database.executar(sql, [senha, cpf]);
+}
+
+function buscarPendentePorCpf(cpf) {
+    var sql = `select nome, cargo, email from usuario where cpf = ? and senha is null;`;
+    return database.executar(sql, [cpf]);
+}
+
+function listar(idEmpresa) {
+    var sql = `select id, nome, cargo, cpf, email,
+                      date_format(criacao, '%d/%m/%Y %H:%i') as criacao
+               from usuario
+               where id_empresa = ?
+               order by nome;`;
+    return database.executar(sql, [idEmpresa]);
+}
+
+function editar(id, nome, cargo, cpf, email) {
+    var sql = `update usuario set nome = ?, cargo = ?, cpf = ?, email = ? where id = ?;`;
+    return database.executar(sql, [nome, cargo, cpf, email, id]);
+}
+
+
+function excluirVinculos(id) {
+    return database.executar(`delete from usuario_farm where id_usuario = ?;`, [id]);
+}
+
+function excluir(id) {
+    return database.executar(`delete from usuario where id = ?;`, [id]);
 }
 
 module.exports = {
     autenticar,
-    cadastrar
+    buscarPorId,
+    contarSuperAdmin,
+    cadastrarSuperAdmin,
+    cadastrarPendente,
+    finalizarCadastro,
+    buscarPendentePorCpf,
+    listar,
+    editar,
+    excluirVinculos,
+    excluir
 };

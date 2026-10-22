@@ -245,12 +245,16 @@
       .then(function (resposta) {
         console.log("Resposta recebida do servidor: ", resposta);
 
-        if (resposta.ok) {
-          console.log("Cadastro realizado com sucesso!");
-          setTimeout(() => {
-            window.location = "login-empresa.html";
-          }, 2000);
-        } else {
+          if (resposta.ok) {
+               resposta.json().then(function (dados) {
+              sessionStorage.ID_EMPRESA = dados.idEmpresa;
+              setTimeout(() => {
+                window.location = "cadastroAdmin.html";
+              }, 2000);
+          });
+          
+        } 
+         else {
           return resposta.json().then(function (dados) {
             console.log("Erro retornado pela API:", dados);
           });

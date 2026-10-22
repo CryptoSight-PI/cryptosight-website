@@ -56,7 +56,7 @@ function cadastrar(req, res) {
                   var idEndereco = resultadoEndereco.insertId;
                   empresaModel.cadastrar(razaoSocial, telefone, email, nomeFantasia, cnpj, senha, idEndereco)
                     .then(function (resultadoEmpresa) {
-                      res.status(201).json(resultadoEmpresa);
+                      res.status(201).json({ idEmpresa: resultadoEmpresa.insertId });
                     })
                     .catch(function (erro) {
                       console.log(erro);

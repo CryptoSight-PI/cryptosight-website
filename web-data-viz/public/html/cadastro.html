@@ -13,7 +13,7 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 </head>
 
-<body>
+<body onload="inicializarBloqueio()">
   <div class="quadrados">
     <div class="union">
       <img src="../assets/imgs/Union.png" alt="" class="union-normal">
@@ -36,25 +36,27 @@
             <div class="titulo" id="titulo">Cadastre-se</div>
             <div class="form">
               <div id="mensagem"></div>
+              
                 <label class="campos esq">
                     <span class="campo">Nome:</span>
-                    <input type="text" id="nome_input" placeholder="Digite seu nome..">
+                    <input type="text" id="nome_input"  disabled>
                 </label>
                 <label class="campos esq">
                     <span>Cargo:</span>
-                    <select name="" id="cargo_input">
-                      <option value="" disabled selected hidden>Selecione</option>
+                    <select name="" id="cargo_input" disabled>
+                      <option value="" disabled selected hidden></option>
                       <option value="Administrador">Administrador</option>
                       <option value="UsuarioComum">Usuário Padrão</option>
                     </select>
+              
                 </label>
                     <label class="campos dir">
                     <span class="campo">CPF:</span>
-                    <input type="text" id="cpf_input"  placeholder="Digite seu cpf.."  maxlength="12">
+                    <input type="text" id="cpf_input" placeholder="Digite seu cpf.."  maxlength="11">
                 </label>
                 <label class="campos dir">
                     <span class="campo">Email:</span>
-                    <input type="email" id="email_input" placeholder="Digite seu email..">
+                    <input type="email" id="email_input" disabled>
                 </label>
                 <label class="campos esq">
                     <span class="campo">Senha:</span>
@@ -76,69 +78,125 @@
 
 <script>
   if(window.innerWidth<=1024){
-  function virar() {
-    gira.style.transform = "rotateY(180deg)";
+    function virar() {
+      gira.style.transform = "rotateY(180deg)";
+    }
   }
-}
+
+  function inicializarBloqueio() {
+    nome_input.disabled = true;
+    cargo_input.disabled = true;
+    email_input.disabled = true;
+  }
+
+  function limparDados() {
+    nome_input.value = "";
+    cargo_input.value = "";
+    email_input.value = "";
+    nome_input.disabled = true;
+    cargo_input.disabled = true;
+    email_input.disabled = true;
+  }
+
+  function buscarCpf() {
+    var cpfVar = cpf_input.value.trim();
+
+    if (cpfVar.length != 11 || isNaN(cpfVar)) {
+      limparDados();
+      return;
+    }
+
+    fetch(`/usuarios/buscarPorCpf/${cpfVar}`)
+      .then(function (resposta) {
+        if (resposta.ok) {
+          resposta.json().then(function (dados) {
+            nome_input.value = dados.nome;
+            email_input.value = dados.email;
+
+            var existe = false;
+            for (var i = 0; i < cargo_input.options.length; i++) {
+              if (cargo_input.options[i].value == dados.cargo) {
+                existe = true;
+              }
+            }
+            if (!existe) {
+              var opcao = document.createElement("option");
+              opcao.value = dados.cargo;
+              opcao.text = dados.cargo;
+              cargo_input.appendChild(opcao);
+            }
+            cargo_input.value = dados.cargo;
+
+           
+            nome_input.disabled = true;
+            cargo_input.disabled = true;
+            email_input.disabled = true;
+            mensagem.innerHTML = "";
+          });
+        } else {
+          limparDados();
+          resposta.text().then(function (texto) {
+            mensagem.innerHTML = texto;
+          });
+        }
+      })
+      .catch(function (erro) {
+        console.log(`#ERRO: ${erro}`);
+      });
+  }
+
+  cpf_input.addEventListener("input", buscarCpf);
+
   function cadastrar() {
-    
+   
     var nomeVar = nome_input.value;
     var cargoVar = cargo_input.value;
     var cpfVar = cpf_input.value;
     var emailVar = email_input.value;
     var senhaVar = senha_input.value;
     var confirmacaoSenhaVar = confirmacao_senha_input.value;
-    var idEmpresaVar = sessionStorage.ID_EMPRESA; 
 
-    
     if (
       nomeVar.trim() == "" ||
       cargoVar.trim() == "" ||
       cpfVar.trim() == "" ||
       emailVar.trim() == "" ||
       senhaVar.trim() == "" ||
-      confirmacaoSenhaVar.trim() == "" 
+      confirmacaoSenhaVar.trim() == ""
     ) {
-      
       mensagem.innerHTML = "Preencha todos os campos"
       return false;
-    } 
+    }
     if(cpfVar.length != 11) {
-
       mensagem.innerHTML = "CPF precisa ter 11 caracteres"
       return false;
     }
     if(senhaVar != confirmacaoSenhaVar){
-
         mensagem.innerHTML = "Confirmação de senha falhou"
         return false;
     }
 
-    fetch("/usuarios/cadastrar", {
+    fetch("/usuarios/finalizarCadastro", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-   
-        nomeServer: nomeVar,
-        cargoServer: cargoVar,
-        cpfServer: cpfVar,
-        emailServer: emailVar,
-        senhaServer: senhaVar,
-        idEmpresaServer: idEmpresaVar
+        cpf: cpfVar,
+        senha: senhaVar
       }),
     })
       .then(function (resposta) {
         console.log("resposta: ", resposta);
 
         if (resposta.ok) {
-     
           setTimeout(() => {
             window.location = "login.html";
           }, "2000");
-
         } else {
+          resposta.text().then(function (texto) {
+            mensagem.innerHTML = texto;
+          });
           throw "Houve um erro ao tentar realizar o cadastro!";
         }
       })
@@ -148,6 +206,4 @@
 
     return false;
   }
-
-
 </script>
