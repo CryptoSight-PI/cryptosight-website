@@ -25,9 +25,26 @@ function cadastrar(razaoSocial, telefone, email, nomeFantasia, cnpj, senha, idEn
 }
 
 function cadastrarEndereco(cep, uf, cidade, bairro, logradouro, numero, complemento, sede) {
-  var instrucaoSql = `INSERT INTO endereco (cep, id_uf, cidade, bairro, logradouro, numero, complemento, sede) VALUES ('${cep}', '${uf}', '${cidade}', '${bairro}','${logradouro}', '${numero}', '${complemento}', ${sede})`;
+  var buscarCep = `SELECT cep FROM cep WHERE cep = '${cep}'`;
 
-  return database.executar(instrucaoSql);
+  return database.executar(buscarCep).then(function (resultadoCep) {
+
+    if (resultadoCep.length > 0) {
+      return;
+    }
+    var inserirCep = `
+      INSERT INTO cep (cep, logradouro, bairro, cidade, id_uf)
+      VALUES ('${cep}', '${logradouro}', '${bairro}', '${cidade}', '${uf}')
+    `;
+    return database.executar(inserirCep);
+  })
+  .then(function () {
+    var inserirEndereco = `
+      INSERT INTO endereco (cep, numero, complemento, sede)
+      VALUES ('${cep}', '${numero}', '${complemento}', ${sede})
+    `;
+    return database.executar(inserirEndereco);
+  });
 }
 
 function autenticarEmpresa(cnpj, senha) {
