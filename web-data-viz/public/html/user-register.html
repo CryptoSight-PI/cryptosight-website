@@ -27,43 +27,10 @@
             </button>
         </div>
 
-         <div class="flex flex-col">
-
-            <div class="usuario bg-[#0C1F19] border border-[#207F70] rounded-2xl p-5 flex gap-10">
-
-                <div class="flex items-center gap-4 flex-1">
-                   
-                    <div>
-                        <div>
-                            <span class="text-white">Jeff Smith</span>
-                            <span class="bg-[#144840] text-[#00E6A6] px-3 py-1 rounded-lg text-xs border border-[#207F70]">Administrador</span>
-                        </div>
-                        <p class="text-sm text-gray-400">Jeff@cryptosight.com</p>
-                        <p id="farmsusuario" class="text-xs text-gray-400">Farm X, Farm Y</p>
-                    </div>
-                </div>
-
-                <div class="flex gap-10 items-center">
-                    <div>
-                        <p class="text-xs text-gray-400">CPF</p>
-                        <p class="text-white">123.456.789-01</p>
-                    </div>
-                
-                    <div>
-                        <p class="text-xs text-gray-400">Criação</p>
-                        <p class="text-white">16/10/2026 10:00</p>
-                    </div>
-                </div>
-
-                <div class="flex gap-4">
-                    <button onclick="abrirfarms()" title="Atribuir farms" class="px-5 py-2.5 rounded-lg bg-[#144840] border border-[#207F70]/40 hover:bg-[#1a5e54] text-[#00E6A6] text-sm cursor-pointer"><i class="fa-solid fa-warehouse"></i></button>
-                    <button onclick="modal_editar.showModal()" class="px-5 py-2.5 rounded-lg bg-[#144840] border border-[#207F70]/40 hover:bg-[#1a5e54] text-[#00E6A6] text-sm cursor-pointer">Editar</button>
-                    <button onclick="modal_excluir.showModal()" class="px-5 py-2.5 rounded-lg bg-[#7A0015]/39 border border-[#E00027] hover:bg-red-900 text-red-400 text-sm cursor-pointer">Excluir</button>
-                </div>
-            </div>
+         <div id="lista" class="flex flex-col">
 
         </div>
-    
+
         <p id="vazio" class="hidden text-center text-[#A0B5AC] py-10">Nenhum usuário encontrado.</p>
 
         <dialog id="modal_adicionar" class="w-full p-15 m-auto max-w-xl bg-[#0C1F19] border border-[#207F70]/60 rounded-2xl backdrop:backdrop-blur-sm">
@@ -87,12 +54,12 @@
                 <label class="text-white">E-Mail</label>
                 <input type="text" id="iptemail" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
             </div>
-            
+
             <div class="flex justify-between">
                 <button class="p-3 mt-5 text-white bg-[#00E6A6] rounded-2xl font-bold" onclick="modal_adicionar.close() ; adicionar()">CADASTRAR</button>
                 <button class="p-3 mt-5 rounded-2xl border border-[#207F70]/60 text-[#A0B5AC] hover:text-white font-bold cursor-pointer transition-colors" onclick="modal_adicionar.close()">CANCELAR</button>
             </div>
-            
+
         </dialog>
 
 
@@ -117,12 +84,12 @@
                 <label class="text-white">E-Mail</label>
                 <input type="text" id="iptemaileditado" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
             </div>
-            
+
             <div class="flex justify-between">
                 <button class="p-3 mt-5 text-white bg-[#00E6A6] rounded-2xl font-bold" onclick="modal_editar.close() ; editar()">CADASTRAR</button>
                 <button class="p-3 mt-5 rounded-2xl border border-[#207F70]/60 text-[#A0B5AC] hover:text-white font-bold cursor-pointer transition-colors" onclick="modal_editar.close()">CANCELAR</button>
             </div>
-            
+
         </dialog>
 
         <dialog id="modal_farms" class="w-full p-15 m-auto max-w-xl bg-[#0C1F19] border border-[#207F70]/60 rounded-2xl backdrop:backdrop-blur-sm">
@@ -148,9 +115,16 @@
     </div>
     </main>
 
-   
+
 
     <script>
+    
+        var idsolicitante = sessionStorage.ID_USUARIO
+        var cargologado = sessionStorage.CARGO_USUARIO
+
+        let usuarios = []
+        let idselecionado = null
+
         // ficar mais facil pro back dps troca os mockado
         let idusuario = 1
         let farms = [
@@ -165,7 +139,7 @@
             let visiveis = 0;
 
             for (let i = 0; i < itens.length; i++) {
-                
+
                 if (itens[i].textContent.toLowerCase().includes(texto)) {
                     itens[i].style.display = "";
                     visiveis++;
@@ -176,7 +150,7 @@
             vazio.style.display = visiveis > 0 ? "none" : "block";
         }
 
-        
+
 
         function abrirfarms() {
             desenharfarms()
@@ -228,20 +202,227 @@
             }
             farmsusuario.textContent = nomes
         }
-        mostrarfarms()
 
+        
+        if (!idsolicitante || (cargologado != 'SuperAdmin' && cargologado != 'Administrador')) {
+            alert('Acesso restrito a administradores.')
+            window.location = 'login.html'
+        } else {
+            carregar()
+        }
+
+        function esc(texto) {
+            let div = document.createElement('div')
+            div.textContent = texto == null ? '' : texto
+            return div.innerHTML
+        }
+
+        function formatarcpf(cpf) {
+            return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4')
+        }
+
+        function carregar() {
+            fetch(`/usuarios/listar/${idsolicitante}`)
+                .then(function (resposta) {
+                    if (!resposta.ok) {
+                        throw 'Erro ao listar usuários'
+                    }
+                    return resposta.json()
+                })
+                .then(function (dados) {
+                    usuarios = dados
+                    desenhar()
+                })
+                .catch(function (erro) {
+                    console.log(erro)
+                    alert('Não foi possível carregar os usuários.')
+                })
+        }
+
+        function desenhar() {
+            let html = ''
+
+            for (let i = 0; i < usuarios.length; i++) {
+                let u = usuarios[i]
+                let cargo = u.cargo == 'SuperAdmin' ? 'Super Admin' : u.cargo
+
+                // coloquei que o super admin não pode ser excluido -YasminEloitaNascimento
+                let botoes = `<button onclick="abrirfarms()" title="Atribuir farms" class="px-5 py-2.5 rounded-lg bg-[#144840] border border-[#207F70]/40 hover:bg-[#1a5e54] text-[#00E6A6] text-sm cursor-pointer"><i class="fa-solid fa-warehouse"></i></button>`
+                if (u.cargo != 'SuperAdmin') {
+                    botoes += `
+                    <button onclick="abrirEditar(${u.id})" class="px-5 py-2.5 rounded-lg bg-[#144840] border border-[#207F70]/40 hover:bg-[#1a5e54] text-[#00E6A6] text-sm cursor-pointer">Editar</button>
+                    <button onclick="abrirExcluir(${u.id})" class="px-5 py-2.5 rounded-lg bg-[#7A0015]/39 border border-[#E00027] hover:bg-red-900 text-red-400 text-sm cursor-pointer">Excluir</button>`
+                }
+
+                
+                let idfarm = i == 0 ? 'id="farmsusuario"' : ''
+
+                html += `
+            <div class="usuario bg-[#0C1F19] border border-[#207F70] rounded-2xl p-5 flex gap-10">
+
+                <div class="flex items-center gap-4 flex-1">
+
+                    <div>
+                        <div>
+                            <span class="text-white">${esc(u.nome)}</span>
+                            <span class="bg-[#144840] text-[#00E6A6] px-3 py-1 rounded-lg text-xs border border-[#207F70]">${esc(cargo)}</span>
+                        </div>
+                        <p class="text-sm text-gray-400">${esc(u.email)}</p>
+                        <p ${idfarm} class="text-xs text-gray-400">Nenhuma farm</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-10 items-center">
+                    <div>
+                        <p class="text-xs text-gray-400">CPF</p>
+                        <p class="text-white">${esc(formatarcpf(u.cpf))}</p>
+                    </div>
+
+                    <div>
+                        <p class="text-xs text-gray-400">Criação</p>
+                        <p class="text-white">${esc(u.criacao)}</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-4">${botoes}
+                </div>
+            </div>`
+            }
+
+            lista.innerHTML = html
+            buscar()
+        }
+
+        function buscarusuario(id) {
+            for (let i = 0; i < usuarios.length; i++) {
+                if (usuarios[i].id == id) {
+                    return usuarios[i]
+                }
+            }
+        }
+
+        function validar(nome, cpf, cargo, email) {
+            if (nome == '' || cpf == '' || cargo == '' || email == '') {
+                alert('Preencha todos os campos')
+                return false
+            }
+            if (cpf.length != 11 || isNaN(cpf)) {
+                alert('CPF precisa ter 11 números')
+                return false
+            }
+            if (email.indexOf('@') == -1) {
+                alert('E-mail inválido')
+                return false
+            }
+            return true
+        }
+
+       
         function adicionar(){
-            alert("adicionado")
+            let nome = iptnome.value.trim()
+            let cpf = iptcpf.value.trim()
+            let cargo = iptcargo.value.trim()
+            let email = iptemail.value.trim()
+
+            if (!validar(nome, cpf, cargo, email)) {
+                return
+            }
+
+            fetch('/usuarios/cadastrarPendente', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    nome: nome,
+                    cpf: cpf,
+                    cargo: cargo,
+                    email: email,
+                    idSolicitante: idsolicitante
+                })
+            }).then(function (resposta) {
+                if (resposta.ok) {
+                    iptnome.value = ''
+                    iptcpf.value = ''
+                    iptcargo.value = ''
+                    iptemail.value = ''
+                    carregar()
+                } else {
+                    resposta.text().then(function (texto) {
+                        alert(texto)
+                    })
+                }
+            }).catch(function (erro) {
+                console.log(erro)
+                alert('Erro de conexão')
+            })
+        }
+
+      
+        function abrirEditar(id) {
+            let u = buscarusuario(id)
+            idselecionado = id
+            iptnomeeditado.value = u.nome
+            iptcpfeditado.value = u.cpf
+            iptcargoeditado.value = u.cargo
+            iptemaileditado.value = u.email
+            modal_editar.showModal()
         }
 
         function editar(){
-            alert("editado")
+            let nome = iptnomeeditado.value.trim()
+            let cpf = iptcpfeditado.value.trim()
+            let cargo = iptcargoeditado.value.trim()
+            let email = iptemaileditado.value.trim()
+
+            if (!validar(nome, cpf, cargo, email)) {
+                return
+            }
+
+            fetch(`/usuarios/${idselecionado}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    nome: nome,
+                    cpf: cpf,
+                    cargo: cargo,
+                    email: email,
+                    idSolicitante: idsolicitante
+                })
+            }).then(function (resposta) {
+                if (resposta.ok) {
+                    carregar()
+                } else {
+                    resposta.text().then(function (texto) {
+                        alert(texto)
+                    })
+                }
+            }).catch(function (erro) {
+                console.log(erro)
+                alert('Erro de conexão')
+            })
+        }
+
+       
+        function abrirExcluir(id) {
+            idselecionado = id
+            modal_excluir.showModal()
         }
 
         function excluir(){
-            alert("excluido")
+            fetch(`/usuarios/${idselecionado}?idSolicitante=${idsolicitante}`, {
+                method: 'DELETE'
+            }).then(function (resposta) {
+                if (resposta.ok) {
+                    carregar()
+                } else {
+                    resposta.text().then(function (texto) {
+                        alert(texto)
+                    })
+                }
+            }).catch(function (erro) {
+                console.log(erro)
+                alert('Erro de conexão')
+            })
         }
-        
 
     </script>
 </body>
