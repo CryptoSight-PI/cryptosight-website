@@ -276,7 +276,8 @@
     let id_sessao = new URLSearchParams(location.search).get('id')
     console.log(id_sessao)
     function nomessessao(){
-        pid.innerHTML = `Gerenciamento de dispositivos da ${sessionStorage.getItem("NOME_FANTASIA")}`
+        // pid.innerHTML = `Gerenciamento de dispositivos da ${sessionStorage.getItem("NOME_FANTASIA")}`
+        pid.innerHTML = `Gerenciamento de dispositivos da ${sessao}`
     }
     nomessessao()
 
