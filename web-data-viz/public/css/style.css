@@ -2620,7 +2620,7 @@ footer{
     border-color: #00E6A6;
 }
 
-.saudavel{
+.ok{
     background: #0D3831;
     border-color: #207F70;
 }
@@ -2638,6 +2638,22 @@ footer{
 .offline{
     background: #747F7A28;
     border-color: #81988D;
+}
+
+.texto_ok{
+    color:#207F70
+}
+
+.texto_atencao{
+    color:#FFAE00
+}
+
+.texto_critico{
+    color:#E00027
+}
+
+.texto_offline{
+    color: #81988D;
 }
 
 .rig-selecionada{
