@@ -421,6 +421,9 @@
   .border-\[\#207F70\] {
     border-color: #207F70;
   }
+  .border-white {
+    border-color: var(--color-white);
+  }
   .bg-\[\#0C1F19\] {
     background-color: #0C1F19;
   }
