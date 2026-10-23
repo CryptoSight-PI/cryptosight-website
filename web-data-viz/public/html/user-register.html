@@ -171,7 +171,7 @@
 
         function buscar(){
            let texto = inputbusca.value.toLowerCase();
-            let itens = document.querySelectorAll('.dispositivo');
+            let itens = document.querySelectorAll('.usuario');
             let visiveis = 0;
 
             for (let i = 0; i < itens.length; i++) {
@@ -267,6 +267,11 @@
                 })
                 .then(function (dados) {
                     usuarios = dados
+                    if (usuarios.length == 0) {
+                        vazio.style.display = "block";
+                        return;
+                    }
+                    vazio.style.display = "none"
                     desenhar()
                 })
                 .catch(function (erro) {
