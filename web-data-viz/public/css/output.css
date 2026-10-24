@@ -2850,9 +2850,10 @@ footer {
   }
   #setima {
     width: 100%;
-    height: 100vh;
-    min-height: 700px;
+    height: auto;
+    min-height: 0;
     overflow: hidden;
+    padding: 12vh 0 6vh;
   }
   .titulo-setima {
     position: absolute;
@@ -2862,13 +2863,13 @@ footer {
   }
   .cards-carrossel {
     width: 90%;
-    height: 70%;
-    margin-top: 10vh;
+    height: auto;
+    margin-top: 0;
   }
   .card-carrossel {
     flex: 0 0 100%;
     width: 100%;
-    height: 100%;
+    height: auto;
     object-fit: contain;
   }
   .cards-carrossel::scroll-button(right), .cards-carrossel::scroll-button(left) {
