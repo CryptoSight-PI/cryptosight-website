@@ -2439,6 +2439,8 @@ footer {
     justify-content: center;
   }
   .logo {
+    margin-top: 20px;
+    margin-left: 10px;
     gap: 2vw;
     padding-bottom: 0;
     justify-content: center;
@@ -2854,13 +2856,11 @@ footer {
     display: none;
   }
   .cards-metricas {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+    overflow: hidden;
     width: 100%;
     height: 180px;
     min-height: 180px;
     padding: 4vh 4vw;
-    overflow: scroll;
   }
   .cards-metricas:hover {
     height: 180px;
@@ -2960,6 +2960,7 @@ footer {
     padding: 0 6vw;
   }
   .logo img {
+    margin-left: 20px;
     height: 65px;
   }
   .logo .crypto {
@@ -3112,11 +3113,12 @@ footer {
     gap: 20px;
   }
   .cards-metricas {
-    height: 180px;
-    min-height: 180px;
+    overflow: hidden;
+    height: fit-content;
   }
   .cards-metricas:hover {
-    height: 180px;
+    overflow: hidden;
+    height: fit-content;
   }
   .titulo-card {
     font-size: 25px;
