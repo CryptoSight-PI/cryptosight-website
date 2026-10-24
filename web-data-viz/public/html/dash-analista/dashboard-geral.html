@@ -81,27 +81,53 @@
     </div>
 
     <!-- Visão geral -->
-    <p class="ml-10 mr-15 mt-7 mb-8 text-3xl font-ibm-mono font-semibold">Visão geral das farms</p>
+    <p class="ml-10 mr-15 mt-7 mb-8 text-3xl font-ibm-mono font-semibold">Visão geral das farms<span class="text-[#808080] text-sm p-2">(nos últimos 30 dias)</span></p>
     <div class="bg-linear-to-r from-[#0C1F19] to-[#0E3226] border border-[#207F70] rounded-2xl ml-10 mr-15 pr-10 pl-10 pb-9 pt-9">
         <div class="mb-7 justify-between flex flex-row">
             <div>
-                <p class="text-sm font-inter">Rigs online</p>
+                <p class="text-sm font-inter">Uptime total</p>
+                <div class="flex flex-row">
+                    <img src="../../assets/icones-dash/seta.svg">
+                    <img src="../../assets/icones-dash/seta-baixo.svg" class="hidden">
+                    <p class="text-2xl font-bold text-[#207F70] font-ibm-mono"><span id="uptime" class="text-3xl text-white pr-1">98</span>%</p>
+                </div>
+                <p class="text-[#808080] text-sm p-2 font-ibm-mono -mt-2 pl-0">Ideal: <span id="uptime_ideal">100</span>%</p>
             </div>
             <div>
                 <p class="text-sm font-inter">Alertas em atividade</p>
-                <p class="text-2xl font-bold text-[#207F70] font-ibm-mono"><span id="alertas_ativos" class="text-3xl text-[#FFAE00]">11</span></p>
+                <div class="flex flex-row">
+                    <img src="../../assets/icones-dash/seta-baixo.svg">
+                    <img src="../../assets/icones-dash/seta.svg" class="hidden">
+                    <p class="text-2xl font-bold text-[#207F70] font-ibm-mono"><span id="alertas_ativos" class="text-3xl text-white">11</span></p>
+                </div>
+                <p class="text-[#808080] text-sm p-2 font-ibm-mono -mt-2 pl-0">Ideal: <span id="alertas_ideal">0</span></p>
             </div>
             <div>
                 <p class="text-sm font-inter">Hashrate total</p>
-                <p class="text-2xl font-bold text-[#207F70] font-ibm-mono"><span id="hashrate_total" class="text-3xl text-white">7.70</span> PH/s</span></p>
+                <div class="flex flex-row">
+                    <img src="../../assets/icones-dash/seta.svg">
+                    <img src="../../assets/icones-dash/seta-baixo.svg" class="hidden">
+                    <p class="text-2xl font-bold text-[#207F70] font-ibm-mono"><span id="hashrate_total" class="text-3xl text-white pr-1">7.70</span>PH/s</span></p>
+                </div>
+                <p class="text-[#808080] text-sm p-2 font-ibm-mono -mt-2 pl-0">Ideal: <span id="hashrate_ideal">0</span> PH/s</p>
             </div>
             <div>
                 <p class="text-sm font-inter">Consumo total</p>
-                <p class="text-2xl font-bold text-[#207F70] font-ibm-mono"><span id="consumo_total" class="text-3xl text-white">130.0</span> kW</p>
+                <div class="flex flex-row">
+                    <img src="../../assets/icones-dash/seta.svg" class="hidden">
+                    <img src="../../assets/icones-dash/seta-baixo.svg">
+                    <p class="text-2xl font-bold text-[#207F70] font-ibm-mono"><span id="consumo_total" class="text-3xl text-white pr-1">130.0</span>kW</p>
+                </div>
+                <p class="text-[#808080] text-sm p-2 font-ibm-mono -mt-2 pl-0">Ideal: <span id="consumo_ideal">0</span> kW</p>
             </div>
             <div>
-                <p class="text-sm font-inter">Temperatura média</p>
-                <p class="text-2xl font-bold text-[#207F70] font-ibm-mono"><span id="temperatura_media" class="text-3xl text-white">66</span> °C</p>
+                <p class="text-sm font-inter">Eficiencia media aproximada</p>
+                <div class="flex flex-row">
+                    <img src="../../assets/icones-dash/seta.svg" class="hidden">
+                    <img src="../../assets/icones-dash/seta-baixo.svg">
+                    <p class="text-2xl font-bold text-[#207F70] font-ibm-mono"><span id="eficiencia_rig" class="text-3xl text-white pr-1">66</span>J/TH</p>
+                </div>
+                <p class="text-[#808080] text-sm p-2 font-ibm-mono -mt-2 pl-0">Ideal: <span id="eficiencia_ideal">0</span> J/TH</p>
             </div>
         </div>
         <div>
@@ -357,8 +383,31 @@
         rigs_ativas.innerHTML = listaTodas.length-listaOff.length
         rigs_total.innerHTML = listaTodas.length
         rigs_com_alertas.innerHTML = listaTodas.length-listaOk.length
+        alertas_ativos.innerHTML = listaIncidente.length
 
         let numColunas = Math.floor(listaIncidente.length/7)
+        let somaHash = 0
+        let somaConsumo = 0
+
+        listaTodas.forEach(elemento => {
+            somaHash += Number(elemento.hash)
+            somaConsumo += Number(elemento.consumo)
+        });
+
+        let eficienciaRigs = (somaConsumo*1000)/somaHash
+        eficienciaRigs /= listaTodas.length
+        let eficienciaIdeal = ((2*42)*1000)/(120*42)
+        eficienciaIdeal /= listaTodas.length
+
+
+
+        hashrate_total.innerHTML = (somaHash/1000).toFixed(2)
+        consumo_total.innerHTML = somaConsumo.toFixed(2)
+        eficiencia_rig.innerHTML = eficienciaRigs.toFixed(2)
+        hashrate_ideal.innerHTML = ((120*42)/1000).toFixed(2)
+        consumo_ideal.innerHTML = (2*42).toFixed(2)
+        eficiencia_ideal.innerHTML = `< ${eficienciaIdeal.toFixed(2)}`
+
 
         let coluna;
         coluna = document.createElement("div")
@@ -428,6 +477,7 @@
             listaSelect = JSON.parse(JSON.stringify(listaOff))
         }
 
+        let statusCard = listaSelect[i].status == "critico"? "Crítico" : listaSelect[i].status == "offline" ? "Offline" : listaSelect[i].status == "atencao"? "Atenção" : "Ok"
         console.log(nomeLista)
         console.log(listaSelect)
 
@@ -439,7 +489,7 @@
                         <p id="modelo_selecionado" class="font-space-mono font-semibold text-xl">${listaSelect[i].nome}</p>
                         <p class="font-inter text-sm font-medium"><span id="farm_selecionada">Farm ${listaSelect[i].farm}</span> · São Paulo
                     </div>
-                    <p id="status_selecionada" class="border border-[#7A0015] bg-[#7A001542] text-[#E00027] text-sm pl-2 pr-2 pt-1 pb-1 rounded-2xl h-fit ${listaSelect[i].status} texto_${listaSelect[i].status}">${listaSelect[i].status}</p>
+                    <p id="status_selecionada" class="border border-[#7A0015] bg-[#7A001542] text-[#E00027] text-sm pl-2 pr-2 pt-1 pb-1 rounded-2xl h-fit ${listaSelect[i].status} texto_${listaSelect[i].status}">${statusCard}</p>
                 </div>
                 <div class="grid grid-cols-2 grid-rows-2 gap-2 mt-3 text-[#D5D5D5]">
                     <div class="border border-[#207F70] rounded-2xl pt-2.5 pb-2.5 pr-3 pl-3 flex flex-row justify-between">
@@ -487,7 +537,7 @@
             critico_hash.classList.add("hidden")
         }
 
-        if(listaSelect[i].temperatura >= 60 && listaSelect[i].temperatura < 80){
+        if(listaSelect[i].temperatura >= 65 && listaSelect[i].temperatura < 80){
             atencao_temperatura.classList.remove("hidden")
         } else if (listaSelect[i].temperatura > 80){
             critico_temperatura.classList.remove("hidden")
