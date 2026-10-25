@@ -64,6 +64,29 @@ function excluir(id) {
     return database.executar(`delete from usuario where id = ?;`, [id]);
 }
 
+function buscarFarmsDoUsuario(idUsuario) {
+    var instrucaoSql = `
+        select id_farm as id from usuario_farm where id_usuario = ${idUsuario};
+    `;
+    return database.executar(instrucaoSql);
+}
+
+function deletarFarmsDoUsuario(idUsuario) {
+    var instrucaoSql = `
+        delete from usuario_farm WHERE id_usuario = ${idUsuario};
+    `;
+    return database.executar(instrucaoSql);
+}
+
+function inserirFarmUsuario(idUsuario, idFarm) {
+    var instrucaoSql = `
+        insert into usuario_farm (id_usuario, id_farm) values (${idUsuario}, ${idFarm});
+    `;
+    return database.executar(instrucaoSql);
+}
+
+
+
 module.exports = {
     autenticar,
     buscarPorId,
@@ -75,5 +98,8 @@ module.exports = {
     listar,
     editar,
     excluirVinculos,
-    excluir
+    excluir,
+    buscarFarmsDoUsuario,
+    deletarFarmsDoUsuario,
+    inserirFarmUsuario
 };
