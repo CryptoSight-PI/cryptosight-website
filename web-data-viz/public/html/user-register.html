@@ -157,17 +157,17 @@
     
         var idsolicitante = sessionStorage.ID_USUARIO
         var cargologado = sessionStorage.CARGO_USUARIO
+        var idempresa = sessionStorage.ID_EMPRESA
 
         let usuarios = []
         let idselecionado = null
 
         // ficar mais facil pro back dps troca os mockado
-        let idusuario = 1
-        let farms = [
-            { id: 1, nome: 'Farm X', tem: true },
-            { id: 2, nome: 'Farm Y', tem: true },
-            { id: 3, nome: 'Farm Z', tem: false }
-        ]
+        // let idusuario = 1
+        let farms = [];
+        let farmsempresa = []
+
+        
 
         function buscar(){
            let texto = inputbusca.value.toLowerCase();
@@ -186,11 +186,126 @@
             vazio.style.display = visiveis > 0 ? "none" : "block";
         }
 
+        function carregarFarmsDoBanco(idUsuario) {
+            fetch(`/farms/list/${idempresa}`)
+                .then( (resposta) => {
+                    if(resposta.ok){
+                        resposta.json().then( (dadosFarms) => {
+                        farmsempresa = dadosFarms;
+                        fetch(`/usuarios/${idUsuario}/farms`)
+                            .then( (resposta2) => {
+                                if(resposta2.ok){
+                                    resposta2.json().then( (farmsDoUsuario) => {
+                                    farms = [];
+                                    for (let i = 0; i < dadosFarms.length; i++) {
+                                        let possuiFarm = false;
 
+                                        for (let j = 0; j < farmsDoUsuario.length; j++) {
+                                            if (farmsDoUsuario[j].id_farm == dadosFarms[i].id) {
+                                                possuiFarm = true;
+                                                break;
+                                            }
+                                        }
+                                    farms.push({
+                                        id: dadosFarms[i].id,
+                                        nome: dadosFarms[i].nome,
+                                        tem: possuiFarm
+                                    });
+                                }
+                            desenharfarms();
+                            modal_farms.showModal();
+                        });
+                        }})
+                    })
+                    }}).catch( (erro) => {
+                    console.error(erro);
+                });
+        }
 
-        function abrirfarms() {
-            desenharfarms()
-            modal_farms.showModal()
+      function carregarFarmsDoBanco(idUsuario) {
+            fetch(`/farms/list/${idempresa}`)
+                .then( (resposta) => {
+                    if (resposta.ok) {
+                        resposta.json().then( (dadosFarms) => {
+                            farmsempresa = dadosFarms;
+                            
+                            fetch(`/usuarios/${idUsuario}/farms`)
+                                .then( (resposta2) => {
+                                    if (resposta2.ok) {
+                                        resposta2.json().then( (farmsDoUsuario) => {
+                                            farms = [];
+                                            for (let i = 0; i < dadosFarms.length; i++) {
+                                                let possuiFarm = false;
+
+                                                for (let j = 0; j < farmsDoUsuario.length; j++) {
+                                                    if (farmsDoUsuario[j].id_farm == dadosFarms[i].id || farmsDoUsuario[j].id == dadosFarms[i].id || farmsDoUsuario[j].idFarm == dadosFarms[i].id) {
+                                                        possuiFarm = true;
+                                                        break;
+                                                    }
+                                                }
+
+                                                farms.push({
+                                                    id: dadosFarms[i].id,
+                                                    nome: dadosFarms[i].nome,
+                                                    tem: possuiFarm
+                                                });
+                                            }
+                                            desenharfarms();
+                                            modal_farms.showModal();
+                                        });
+                                    }
+                                });
+                        });
+                    }
+                })
+                .catch( (erro) => {
+                    console.error(erro);
+                });
+        }
+
+        function carregarFarmsDoUsuarioNaLista(idUsuario) {
+            fetch(`/farms/list/${idempresa}`)
+                .then( (resposta) => {
+                    if (resposta.ok) {
+                        resposta.json().then( (dadosFarms) => {
+                            farmsempresa = dadosFarms;
+
+                            fetch(`/usuarios/${idUsuario}/farms`)
+                                .then( (resposta2) => {
+                                    if (resposta2.ok) {
+                                        resposta2.json().then( (farmsDoUsuario) => {
+                                            let nomes = [];
+
+                                            for (let i = 0; i < dadosFarms.length; i++) {
+                                                for (let j = 0; j < farmsDoUsuario.length; j++) {
+                                                    if (farmsDoUsuario[j].id_farm == dadosFarms[i].id || farmsDoUsuario[j].id == dadosFarms[i].id || farmsDoUsuario[j].idFarm == dadosFarms[i].id) {
+                                                        nomes.push(dadosFarms[i].nome);
+                                                        break;
+                                                    }
+                                                }
+                                            }
+
+                                            let elemento = document.getElementById(`farmsusuario_${idUsuario}`);
+                                            elemento.textContent = nomes.length > 0 ? nomes.join(', ') : 'Nenhuma farm';
+                                            
+                                        });
+                                    }
+                                });
+                        });
+                    }
+                })
+                .catch( (erro) => {
+                    console.error(erro);
+                });
+        }
+        // function abrirfarms() {
+        //     desenharfarms()
+        //     modal_farms.showModal()
+        // }
+
+        function abrirfarms(idUsuario) {
+            idselecionado = idUsuario;
+            carregarFarmsDoBanco(idUsuario);
         }
 
         function desenharfarms() {
@@ -211,16 +326,34 @@
             desenharfarms()
         }
 
+        
         function salvarfarms() {
-            let ids = []
+            let idsFarmsSelecionadas = []
             for (let i = 0; i < farms.length; i++) {
                 if (farms[i].tem) {
-                    ids.push(farms[i].id)
+                    idsFarmsSelecionadas.push(farms[i].id)
                 }
             }
 
-            mostrarfarms()
-            modal_farms.close()
+            fetch(`/usuarios/${idselecionado}/farms`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ farms: idsFarmsSelecionadas })
+            })
+            .then((resposta) => {
+                if (resposta.ok) {
+                    mostrarfarms()
+                    modal_farms.close()
+                } else {
+                    resposta.text().then((texto) => {
+                        alert(texto || 'Erro ao salvar farms')
+                    })
+                }
+            })
+            .catch((erro) => {
+                console.error(erro)
+                alert('Erro de conexão')
+            })
         }
 
         function mostrarfarms() {
@@ -236,7 +369,9 @@
             if (nomes == '') {
                 nomes = 'Nenhuma farm'
             }
-            farmsusuario.textContent = nomes
+            if(document.getElementById(`farmsusuario_${idselecionado}`)) {
+                document.getElementById(`farmsusuario_${idselecionado}`).textContent = nomes;
+            }
         }
 
         
@@ -288,7 +423,7 @@
                 let cargo = u.cargo == 'SuperAdmin' ? 'Super Admin' : u.cargo
 
                 // coloquei que o super admin não pode ser excluido -YasminEloitaNascimento
-                let botoes = `<button onclick="abrirfarms()" title="Atribuir farms" class="px-5 py-2.5 rounded-lg bg-[#144840] border border-[#207F70]/40 hover:bg-[#1a5e54] text-[#00E6A6] text-sm cursor-pointer"><i class="fa-solid fa-warehouse"></i></button>`
+                let botoes = `<button onclick="abrirfarms(${u.id})" title="Atribuir farms" class="px-5 py-2.5 rounded-lg bg-[#144840] border border-[#207F70]/40 hover:bg-[#1a5e54] text-[#00E6A6] text-sm cursor-pointer"><i class="fa-solid fa-warehouse"></i></button>`
                 if (u.cargo != 'SuperAdmin') {
                     botoes += `
                     <button onclick="abrirEditar(${u.id})" class="px-5 py-2.5 rounded-lg bg-[#144840] border border-[#207F70]/40 hover:bg-[#1a5e54] text-[#00E6A6] text-sm cursor-pointer">Editar</button>
@@ -296,7 +431,7 @@
                 }
 
                 
-                let idfarm = i == 0 ? 'id="farmsusuario"' : ''
+                // let idfarm = i == 0 ? 'id="farmsusuario"' : ''
 
                 html += `
             <div class="usuario bg-[#0C1F19] border border-[#207F70] rounded-2xl p-5 flex gap-10 mb-2">
@@ -309,7 +444,7 @@
                             <span class="bg-[#144840] text-[#00E6A6] px-3 py-1 rounded-lg text-xs border border-[#207F70]">${esc(cargo)}</span>
                         </div>
                         <p class="text-sm text-gray-400">${esc(u.email)}</p>
-                        <p ${idfarm} class="text-xs text-gray-400">Nenhuma farm</p>
+                        <p id ="farmsusuario_${u.id}" class="text-xs text-gray-400">Nenhuma farm</p>
                     </div>
                 </div>
 
@@ -331,6 +466,9 @@
             }
 
             lista.innerHTML = html
+            for (let i = 0; i < usuarios.length; i++) {
+                carregarFarmsDoUsuarioNaLista(usuarios[i].id);
+            }
             buscar()
         }
 

@@ -14,4 +14,12 @@ router.get("/buscarPorCpf/:cpf", usuarioController.buscarPorCpf);
 router.put("/:id", usuarioController.editar);
 router.delete("/:id", usuarioController.excluir);
 
+router.get("/:idUsuario/farms", function (req, res) {
+    usuarioController.buscarFarmsDoUsuario(req, res);
+});
+
+router.post("/:idUsuario/farms", function (req, res) {
+    usuarioController.salvarFarmsUsuario(req, res);
+});
+
 module.exports = router;

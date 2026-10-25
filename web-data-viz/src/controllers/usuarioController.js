@@ -198,6 +198,42 @@ async function excluir(req, res) {
     } catch (e) { erro(res, e); }
 }
 
+
+function buscarFarmsDoUsuario(req, res) {
+    var idUsuario = req.params.idUsuario;
+
+    usuarioModel.buscarFarmsDoUsuario(idUsuario)
+        .then( (resultado) => {
+            res.status(200).json(resultado);
+        })
+        .catch( (erro) => {
+            console.log(erro);
+            res.status(500).json(erro);
+        });
+}
+
+
+async function salvarFarmsUsuario(req, res) {
+    var idUsuario = req.params.idUsuario;
+    var listaFarms = req.body.farms;
+
+    try {
+        await usuarioModel.deletarFarmsDoUsuario(idUsuario);
+
+        for (let i = 0; i < listaFarms.length; i++) {
+            await usuarioModel.inserirFarmUsuario(idUsuario, listaFarms[i]);
+        }
+
+        res.status(200).json({ ok: true });
+
+    } catch (erro) {
+        console.log(erro);
+        res.status(500).send("Erro ao salvar farms");
+    }
+}
+
+
+
 module.exports = {
     autenticar,
     cadastrarSuperAdmin,
@@ -206,5 +242,7 @@ module.exports = {
     buscarPorCpf,
     listar,
     editar,
-    excluir
+    excluir, 
+    buscarFarmsDoUsuario,
+    salvarFarmsUsuario
 };
