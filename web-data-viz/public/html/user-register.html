@@ -48,24 +48,37 @@
     </dialog>
     <main class="flex-1 p-10">
     <div>
+        
 
         <div class="flex items-center justify-center mb-10">
+            
             <div>
                 <h1 class="text-2xl flex items-center justify-center font-bold text-white">Gerenciamento de Usuários</h1>
                 <p class="text-white flex items-center justify-center text-sm">Cadastre e administre usuários</p>
+                
             </div>
         </div>
+        
 
         <div class="mb-8 flex justify-between">
+            <!-- so tirar esse botao e colocar na dash -->
+            <button onclick="abrirJira()" class="bg-[#144840] border border-[#207F70] hover:bg-[#1a5e54] text-[#00E6A6] px-6 py-3 rounded-xl cursor-pointer transition-colors">
+                <i class="fa-brands fa-jira mr-2"></i>Integração Jira
+            </button>
             <input id="inputbusca" oninput="buscar()" type="text" placeholder="Pesquisar por nome, cargo ou e-mail..." class="w-80 bg-[#0C1F19] text-white px-5 py-3 rounded-xl border  border-[#207F70] text-sm">
             <button onclick="modal_adicionar.showModal()" class=" bg-[#00E6A6] px-6 py-3 rounded-xl cursor-pointer">
                 + Novo usuário
             </button>
+            
         </div>
+
+        
 
          <div id="lista" class="flex flex-col">
 
         </div>
+
+        
 
         <p id="vazio" class="hidden text-center text-[#A0B5AC] py-10">Nenhum usuário encontrado.</p>
 
@@ -145,6 +158,44 @@
                     <button class="p-3 mt-5 text-white bg-[#00E6A6] rounded-2xl font-bold" onclick="modal_excluir.close() ; excluir()">EXCLUIR</button>
                     <button class="p-3 mt-5 rounded-2xl border border-[#207F70]/60 text-[#A0B5AC] hover:text-white font-bold cursor-pointer" onclick="modal_excluir.close()">CANCELAR</button>
                 </div>
+            </div>
+        </dialog>
+
+
+        <dialog id="modal_jira" class="w-full p-15 m-auto max-w-xl bg-[#0C1F19] border border-[#207F70]/60 rounded-2xl backdrop:backdrop-blur-sm">
+            <h2 class="text-2xl text-white font-bold pb-6">
+                Integração com Jira
+            </h2>
+            <a href="../assets/docs/jiratutorial.pdf" download="Tutorial-Jira.pdf" class="flex items-center gap-4 mb-6 p-4 rounded-xl bg-[#144840]/50  hover:bg-[#144840] transition-colors cursor-pointer">
+                <i class="fa-solid fa-file-pdf text-3xl text-[#00E6A6]"></i>
+                <div>
+                    <p class="text-white text-sm font-bold">Como gerar a URL e o token</p>
+                    <p class="text-xs text-gray-400">Baixe o passo a passo em PDF</p>
+                </div>
+                <i class="fa-solid fa-download ml-auto text-[#00E6A6]"></i>
+            </a>
+
+            <div class="mb-4">
+                <label class="text-white">URL do Jira</label>
+                <input id="ipturljira" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+            </div>
+
+            <div class="mb-2">
+                <label class="text-white">Token do Jira</label>
+                <div class="relative">
+                    <input id="ipttokenjira" type="password" class="w-full bg-[#101b18] text-white px-3 py-2 pr-10 rounded-xl border border-[#207F70]/60">
+                </div>
+            </div>
+
+            <div class="flex justify-between items-center">
+                <div class="flex gap-3">
+                    <button class="p-3 mt-5 text-white bg-[#00E6A6] rounded-2xl font-bold cursor-pointer" onclick="salvarJira()">
+                       SALVAR
+                    </button>
+                </div>
+                <button class="p-3 mt-5 rounded-2xl border border-[#207F70]/60 text-[#A0B5AC] hover:text-white font-bold cursor-pointer transition-colors" onclick="modal_jira.close()">
+                    CANCELAR
+                </button>
             </div>
         </dialog>
 
@@ -606,6 +657,50 @@
                 alert('Erro de conexão')
             })
         }
+
+
+
+        // jogar as 2 funcoes de baixo para a tela final
+        
+        function abrirJira() {
+            modal_jira.showModal();
+        }
+
+
+
+
+        function salvarJira() {
+            let url_jira = ipturljira.value;
+            let token_jira = ipttokenjira.value;
+
+            if (!url_jira || !token_jira) {
+                alert('Preencha a URL e o token do Jira.');
+                return;
+            }
+
+            fetch('/empresas/salvarjira', { method: 'PUT', headers: { 'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    idempresa: idempresa,
+                    url_jira: url_jira,
+                    token_jira: token_jira
+                })
+            })
+            .then( (resposta) => {
+            if(resposta.ok){
+                    resposta.json().then( dados => {
+                        alert("jira cadastrado")
+                        ipttokenjira.value = '';
+                        modal_jira.close();
+                    })
+            }else{
+                alert("teste")
+            }}).catch( (erro) => {
+                console.error(erro);
+            });
+        }
+
+
+        
 
     </script>
 </body>
