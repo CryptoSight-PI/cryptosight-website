@@ -466,9 +466,13 @@
             }
 
             lista.innerHTML = html
-            for (let i = 0; i < usuarios.length; i++) {
+
+            setTimeout( () => {
+                for (let i = 0; i < usuarios.length; i++) {
                 carregarFarmsDoUsuarioNaLista(usuarios[i].id);
             }
+            } , 50 )
+            
             buscar()
         }
 

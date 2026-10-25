@@ -220,6 +220,10 @@ async function salvarFarmsUsuario(req, res) {
     try {
         await usuarioModel.deletarFarmsDoUsuario(idUsuario);
 
+        if (!listaFarms || listaFarms.length == 0) {
+            return res.status(200).json({ ok: true });
+        }
+
         for (let i = 0; i < listaFarms.length; i++) {
             await usuarioModel.inserirFarmUsuario(idUsuario, listaFarms[i]);
         }
