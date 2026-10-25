@@ -113,10 +113,35 @@ function autenticarEmpresa(req, res) {
           }
 }
 
+function salvarjira(req , res){
+     var idempresa = req.body.idempresa;
+    var urlJira = req.body.url_jira;
+    var tokenJira = req.body.token_jira;
+    
+
+    if (idempresa == undefined) {
+        res.status(400).send("idempresa está undefined!");
+    } else if (urlJira == undefined) {
+        res.status(400).send("urljira está undefined!");
+    } else if (tokenJira == undefined) {
+        res.status(400).send("tokenjira esta undefined")
+    }else {
+
+
+
+        empresaModel.salvarjira(idempresa , urlJira , tokenJira).then((resultado) => {
+            res.status(201).json(resultado);
+        }).catch((erro) => {
+            res.status(400).send(erro.sqlMessage)
+        })
+
+    }
+}
 
 module.exports = {
   buscarPorCnpj,
   buscarPorId,
   cadastrar,
-  autenticarEmpresa
+  autenticarEmpresa,
+  salvarjira
 };

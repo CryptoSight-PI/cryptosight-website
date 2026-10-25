@@ -56,4 +56,10 @@ function autenticarEmpresa(cnpj, senha) {
     return database.executar(instrucaoSql);
 }
 
-module.exports = { buscarPorEmail, buscarPorCnpj, buscarPorId, cadastrar, cadastrarEndereco, autenticarEmpresa };
+
+function salvarjira(idempresa , url_jira , token_jira){
+    var instrucaoSql = `update empresa set url_jira = '${url_jira}' , token_jira = '${token_jira}' where id = ${idempresa} ;`;
+    return database.executar(instrucaoSql);
+}
+
+module.exports = { buscarPorEmail, buscarPorCnpj, buscarPorId, cadastrar, cadastrarEndereco, autenticarEmpresa , salvarjira };
