@@ -96,7 +96,14 @@
 
             <div>
                 <label class="text-white">Cargo</label>
-                <input type="text" id="iptcargo" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+                <select name="" id="iptcargo" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+                      <option value="" disabled selected hidden></option>
+                      <option value="Superadmin">SuperAdmin</option>
+                      <option value="Administrador">Administrador</option>
+                      <option value="UsuarioComum">Usuário Padrão</option>
+                    
+                    </select>
+                
             </div>
 
             <div>
@@ -474,7 +481,7 @@
                 let cargo = u.cargo == 'SuperAdmin' ? 'Super Admin' : u.cargo
 
                 // coloquei que o super admin não pode ser excluido -YasminEloitaNascimento
-                let botoes = `<button onclick="abrirfarms(${u.id})" title="Atribuir farms" class="px-5 py-2.5 rounded-lg bg-[#144840] border border-[#207F70]/40 hover:bg-[#1a5e54] text-[#00E6A6] text-sm cursor-pointer"><i class="fa-solid fa-warehouse"></i></button>`
+                let botoes = `<button onclick="abrirfarms()" title="Atribuir farms" class="px-5 py-2.5 rounded-lg bg-[#144840] border border-[#207F70]/40 hover:bg-[#1a5e54] text-[#00E6A6] text-sm cursor-pointer"><i class="fa-solid fa-warehouse"></i></button>`
                 if (u.cargo != 'SuperAdmin') {
                     botoes += `
                     <button onclick="abrirEditar(${u.id})" class="px-5 py-2.5 rounded-lg bg-[#144840] border border-[#207F70]/40 hover:bg-[#1a5e54] text-[#00E6A6] text-sm cursor-pointer">Editar</button>
@@ -485,7 +492,7 @@
                 // let idfarm = i == 0 ? 'id="farmsusuario"' : ''
 
                 html += `
-            <div class="usuario bg-[#0C1F19] border border-[#207F70] rounded-2xl p-5 flex gap-10 mb-2">
+            <div class="usuario bg-[#0C1F19] border border-[#207F70] rounded-2xl p-5 flex gap-10">
 
                 <div class="flex items-center gap-4 flex-1">
 
