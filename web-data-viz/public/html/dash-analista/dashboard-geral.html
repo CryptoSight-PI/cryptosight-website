@@ -16,20 +16,20 @@
         <img src="../../assets/imgs/logo.png" class="absolute self-center-safe justify-self-center-safe h-10 group-hover:h-15 transition-all duration-300 ease-in-out">
         <a href="">
         <div class="rounded-2xl flex flex-row pl-2 pr-2 pt-3 pb-3 ml-2 mr-2 mt-30 mb-2 hover:cursor-pointer w-10.5 group-hover:w-64 transition-all duration-300 ease-out bg-[#144840]">
-            <img src="../../assets/icones-dash/geral-verde.svg" class="h-5">
-            <p class="hidden group-hover:block text-[#00E6A6] justify-center self-center text-sm ml-3 text-nowrap font-ibm-mono font-semibold">Visão Geral</p>
+            <img src="../../assets/icones-dash/geral-verde.svg">
+            <p class="hidden group-hover:block text-[#00E6A6] justify-center self-center text-sm ml-3 text-nowrap font-inter font-semibold">Visão Geral</p>
         </div>
         </a>
         <a href="">
         <div class="rounded-2xl flex flex-row pl-2 pr-2 pt-3 pb-3 ml-2 w-13 hover:cursor-pointer">
-            <img src="../../assets/icones-dash/maquinas.svg" class="h-5">
-            <p class="hidden group-hover:block text-[#A0B5AC] justify-center self-center text-sm ml-3 text-nowrap font-ibm-mono font-semibold">Máquinas</p>
+            <img src="../../assets/icones-dash/maquinas.svg">
+            <p class="hidden group-hover:block text-[#A0B5AC] justify-center self-center text-sm ml-3 text-nowrap font-inter font-semibold">Máquinas</p>
         </div>
         </a>
         <a href="">
         <div class="rounded-2xl flex flex-row pl-2 pr-2 pt-3 pb-3 ml-2 w-13 hover:cursor-pointer">
-            <img src="../../assets/icones-dash/alertas.svg" class="h-5">
-            <p class="hidden group-hover:block text-[#A0B5AC] justify-center self-center text-sm ml-3 text-nowrap font-ibm-mono font-semibold">Alertas</p>
+            <img src="../../assets/icones-dash/alertas.svg">
+            <p class="hidden group-hover:block text-[#A0B5AC] justify-center self-center text-sm ml-3 text-nowrap font-inter font-semibold">Alertas</p>
         </div>
         </a>
 <!-- 
@@ -37,27 +37,27 @@
 
         <a href="">
         <div class="rounded-2xl flex flex-row pl-2 pr-2 pt-3 pb-3 ml-2 w-13 hover:cursor-pointer">
-            <img src="../../assets/icones-dash/house-plus.svg" class="h-5">
-            <p class="hidden group-hover:block text-[#A0B5AC] justify-center self-center text-sm ml-3 text-nowrap font-ibm-mono font-semibold">Adicionar Farm</p>
+            <img src="../../assets/icones-dash/house-plus.svg">
+            <p class="hidden group-hover:block text-[#A0B5AC] justify-center self-center text-sm ml-3 text-nowrap font-inter font-semibold">Adicionar Farm</p>
         </div>
         </a>
         <a href="">
         <div class="rounded-2xl flex flex-row pl-2 pr-2 pt-3 pb-3 ml-2 w-13 hover:cursor-pointer">
-            <img src="../../assets/icones-dash/server-plus.svg" class="h-5">
-            <p class="hidden group-hover:block text-[#A0B5AC] justify-center self-center text-sm ml-3 text-nowrap font-ibm-mono font-semibold">Adicionar Rig</p>
+            <img src="../../assets/icones-dash/server-plus.svg">
+            <p class="hidden group-hover:block text-[#A0B5AC] justify-center self-center text-sm ml-3 text-nowrap font-inter font-semibold">Adicionar Rig</p>
         </div>
         </a>
         <a href="">
         <div class="rounded-2xl flex flex-row pl-2 pr-2 pt-3 pb-3 ml-2 w-13 hover:cursor-pointer">
-            <img src="../../assets/icones-dash/user-plus.svg" class="h-5">
-            <p class="hidden group-hover:block text-[#A0B5AC] justify-center self-center text-sm ml-3 text-nowrap font-ibm-mono font-semibold">Adicionar Usuário</p>
+            <img src="../../assets/icones-dash/user-plus.svg">
+            <p class="hidden group-hover:block text-[#A0B5AC] justify-center self-center text-sm ml-3 text-nowrap font-inter font-semibold">Adicionar Usuário</p>
         </div>
         </a> -->
 
         <a href="../../index.html">
         <div class="absolute rounded-2xl flex flex-row pl-2 pr-2 pt-3 pb-3 ml-3 w-13 hover:cursor-pointer bottom-3">
-            <img src="../../assets/icones-dash/sair.svg" class="h-5">
-            <p class="hidden group-hover:block text-[#A0B5AC] justify-center self-center text-sm ml-3 text-nowrap font-ibm-mono font-semibold">Logout</p>
+            <img src="../../assets/icones-dash/sair.svg">
+            <p class="hidden group-hover:block text-[#A0B5AC] justify-center self-center text-sm ml-3 text-nowrap font-inter font-semibold">Logout</p>
         </div>
         </a>
     </dialog>
@@ -81,37 +81,62 @@
     </div>
 
     <!-- Visão geral -->
-    <p class="ml-10 mr-15 mt-7 mb-8 mt-3 text-3xl font-ibm-mono font-semibold">Visão geral das farms</p>
+    <p class="ml-10 mr-15 mt-7 mb-8 text-3xl font-ibm-mono font-semibold">Visão geral das farms<span class="text-[#808080] text-sm p-2">(nos últimos 30 dias)</span></p>
     <div class="bg-linear-to-r from-[#0C1F19] to-[#0E3226] border border-[#207F70] rounded-2xl ml-10 mr-15 pr-10 pl-10 pb-9 pt-9">
         <div class="mb-7 justify-between flex flex-row">
             <div>
-                <p class="text-sm font-inter">Rigs online</p>
-                <p class="text-2xl font-bold text-[#207F70] font-ibm-mono"><span id="rigs_ativas" class="text-3xl text-white">40</span><span id="rigs_total">/42</span></p>
+                <p class="text-sm font-inter">Uptime total</p>
+                <div class="flex flex-row">
+                    <img src="../../assets/icones-dash/seta.svg">
+                    <img src="../../assets/icones-dash/seta-baixo.svg" class="hidden">
+                    <p class="text-2xl font-bold text-[#207F70] font-ibm-mono"><span id="uptime" class="text-3xl text-white pr-1">98</span>%</p>
+                </div>
+                <p class="text-[#808080] text-sm p-2 font-ibm-mono -mt-2 pl-0">Ideal: <span id="uptime_ideal">100</span>%</p>
             </div>
             <div>
                 <p class="text-sm font-inter">Alertas em atividade</p>
-                <p class="text-2xl font-bold text-[#207F70] font-ibm-mono"><span id="alertas_ativos" class="text-3xl text-[#FFAE00]">11</span></p>
+                <div class="flex flex-row">
+                    <img src="../../assets/icones-dash/seta-baixo.svg">
+                    <img src="../../assets/icones-dash/seta.svg" class="hidden">
+                    <p class="text-2xl font-bold text-[#207F70] font-ibm-mono"><span id="alertas_ativos" class="text-3xl text-white">11</span></p>
+                </div>
+                <p class="text-[#808080] text-sm p-2 font-ibm-mono -mt-2 pl-0">Ideal: <span id="alertas_ideal">0</span></p>
             </div>
             <div>
                 <p class="text-sm font-inter">Hashrate total</p>
-                <p class="text-2xl font-bold text-[#207F70] font-ibm-mono"><span id="hashrate_total" class="text-3xl text-white">7.70</span> PH/s</span></p>
+                <div class="flex flex-row">
+                    <img src="../../assets/icones-dash/seta.svg">
+                    <img src="../../assets/icones-dash/seta-baixo.svg" class="hidden">
+                    <p class="text-2xl font-bold text-[#207F70] font-ibm-mono"><span id="hashrate_total" class="text-3xl text-white pr-1">7.70</span>PH/s</span></p>
+                </div>
+                <p class="text-[#808080] text-sm p-2 font-ibm-mono -mt-2 pl-0">Ideal: <span id="hashrate_ideal">0</span> PH/s</p>
             </div>
             <div>
                 <p class="text-sm font-inter">Consumo total</p>
-                <p class="text-2xl font-bold text-[#207F70] font-ibm-mono"><span id="consumo_total" class="text-3xl text-white">130.0</span> kW</p>
+                <div class="flex flex-row">
+                    <img src="../../assets/icones-dash/seta.svg" class="hidden">
+                    <img src="../../assets/icones-dash/seta-baixo.svg">
+                    <p class="text-2xl font-bold text-[#207F70] font-ibm-mono"><span id="consumo_total" class="text-3xl text-white pr-1">130.0</span>kW</p>
+                </div>
+                <p class="text-[#808080] text-sm p-2 font-ibm-mono -mt-2 pl-0">Ideal: <span id="consumo_ideal">0</span> kW</p>
             </div>
             <div>
-                <p class="text-sm font-inter">Temperatura média</p>
-                <p class="text-2xl font-bold text-[#207F70] font-ibm-mono"><span id="temperatura_media" class="text-3xl text-white">66</span> °C</p>
+                <p class="text-sm font-inter">Eficiencia media aproximada</p>
+                <div class="flex flex-row">
+                    <img src="../../assets/icones-dash/seta.svg" class="hidden">
+                    <img src="../../assets/icones-dash/seta-baixo.svg">
+                    <p class="text-2xl font-bold text-[#207F70] font-ibm-mono"><span id="eficiencia_rig" class="text-3xl text-white pr-1">66</span>J/TH</p>
+                </div>
+                <p class="text-[#808080] text-sm p-2 font-ibm-mono -mt-2 pl-0">Ideal: <span id="eficiencia_ideal">0</span> J/TH</p>
             </div>
         </div>
         <div>
             <div class="flex flex-row justify-between gap-1 font-space-mono mb-2">
                 <p>Saúde das Rigs</p>
-                <p> <span id="num_ok">29</span> Ok · 
-                    <span id="num_atencao">8</span> Atenção · 
-                    <span id="num_critica">3</span> Crítica · 
-                    <span id="num_offline">2</span> Offline</p>
+                <p> <span id="num_ok"></span> Ok · 
+                    <span id="num_atencao"></span> Atenção · 
+                    <span id="num_critica"></span> Crítica · 
+                    <span id="num_offline"></span> Offline</p>
             </div>
             <div class="h-5 overflow-hidden flex flex-row rounded-md">
                 <div role="progressbar" id="porcento_ok" style="width: 69%;" class="bg-[#00E6A6]"></div>
@@ -124,515 +149,21 @@
 
     <!-- Filtros -->
     <div class="flex flex-row ml-10 mr-15 mt-5">
-        <button class="text-sm rounded-2xl pl-3 pr-3 p-2 border ml-2 hover:cursor-pointer filtro-selecionado transition-colors duration-100 ease-in-out"  id="filtro_total">Todas <span id="rigs_total_filtro">42</span></button>
-        <button class="text-sm rounded-2xl pl-3 pr-3 p-2 border ml-2 hover:cursor-pointer filtro transition-colors duration-100 ease-in-out"  id="filtro_saudaveis">Saudáveis <span id="rigs_saudaveis_filtro">29</span></button>
-        <button class="text-sm rounded-2xl pl-3 pr-3 p-2 border ml-2 hover:cursor-pointer filtro transition-colors duration-100 ease-in-out"  id="filtro_atencao">Atenção <span id="rigs_atencao_filtro">8</span></button>
-        <button class="text-sm rounded-2xl pl-3 pr-3 p-2 border ml-2 hover:cursor-pointer filtro transition-colors duration-100 ease-in-out"  id="filtro_criticas">Críticas <span id="rigs_criticas_filtro">3</span></button>
-        <button class="text-sm rounded-2xl pl-3 pr-3 p-2 border ml-2 hover:cursor-pointer filtro transition-colors duration-100 ease-in-out"  id="filtro_offline">Offline <span id="rigs_offline_filtro">2</span></button>
+        <button onclick="filtro(listaIncidente,'listaIncidente', 'Rigs com Incidentes', 'filtro_total')" class="text-sm rounded-2xl pl-3 pr-3 p-2 border ml-2 hover:cursor-pointer filtro-selecionado transition-colors duration-100 ease-in-out"  id="filtro_total">Incidentes <span id="rigs_incidente_filtro"></span></button>        
+        <button onclick="filtro(listaCritica,'listaCritica', 'Rigs em estado Crítico','filtro_criticas')" class="text-sm rounded-2xl pl-3 pr-3 p-2 border ml-2 hover:cursor-pointer filtro transition-colors duration-100 ease-in-out"  id="filtro_criticas">Críticas <span id="rigs_criticas_filtro"></span></button>
+        <button onclick="filtro(listaOff,'listaOff', 'Rigs Offline','filtro_offline')" class="text-sm rounded-2xl pl-3 pr-3 p-2 border ml-2 hover:cursor-pointer filtro transition-colors duration-100 ease-in-out"  id="filtro_offline">Offline <span id="rigs_offline_filtro"></span></button>
+        <button onclick="filtro(listaAtencao,'listaAtencao', 'Rigs que necessitam atenção','filtro_atencao')" class="text-sm rounded-2xl pl-3 pr-3 p-2 border ml-2 hover:cursor-pointer filtro transition-colors duration-100 ease-in-out"  id="filtro_atencao">Atenção <span id="rigs_atencao_filtro"></span></button>
+        <button onclick="filtro(listaTodas,'listaTodas', 'Todas as Rigs','filtro_saudaveis')" class="text-sm rounded-2xl pl-3 pr-3 p-2 border ml-2 hover:cursor-pointer filtro transition-colors duration-100 ease-in-out"  id="filtro_saudaveis">Todas <span id="rigs_total_filtro"></span></button>
     </div>
 
     <!-- Restante -->
-    <div class="grid grid-cols-3 ml-10 mr-15 mt-3 gap-5">
+    <div class="lg:grid grid-cols-3 ml-10 mr-15 mt-3 gap-5">
         <div class="col-span-2">
     <!-- Fazenda A -->
-            <div class="bg-[#0C1F19] border border-[#207F70] pb-8 pt-8 pl-10 pr-10 rounded-2xl mb-10">
+            <div id="area_rigs" class="bg-[#0C1F19] border border-[#207F70] pb-8 pt-8 pl-10 pr-10 rounded-2xl mb-10">
                 <div class="flex flex-row justify-between">
-                    <div>
-                        <p id="farm1_nome" class="font-semibold font-inter text-2xl">Farm A</p>
-                        <p id="farm1_local" class="text-sm font-space-mono">São Paulo · SP</p>
-                    </div>
-                    <p class="font-space-mono text-sm"><span id="farm1_rigs_ativas">19</span>/<span id="farm1_rigs">21</span> online · <span id="farm1_hashrate">2,69</span> PH/s · <span id="farm1_energia">45,5</span> kW · <span id="farm1_alertas">4</span> alertas</p>
-                </div>
-                <p class="mt-7 font-space-mono mb-3">SESSÃO 1</p>
-
-                <div class="grid grid-cols-7 gap-2 font-space-mono text-[#A0B5AC]" id="farm1_sessao1">
-                    <div id="cardA1_1" class="saudavel border p-3 rounded-2xl">
-                        <div class="flex flex-row pb-2">
-                            <div class="relative flex size-2 place-self-center">
-                                <span class="absolute h-2 w-2 not-in-[.offline]:animate-ping rounded-full not-in-[.offline]:bg-[#00E6A6] opacity-75"></span>
-                                <span class="relative size-2 rounded-full not-in-[.offline]:bg-[#00f1ad] bg-[#A0B5AC]"></span>
-                            </div>
-                            <p class="pl-2">MR01-01</p>
-                        </div>
-                        <p class="pb-2"><span id="temperaturaA1_1" class="text-white text-xl font-bold">58</span>°C</p>
-                        <p class="text-sm"><span id="hashrateA1_1">195</span> TH/s</p>
-                    </div>
-                    <div id="cardA1_2" class="offline border p-3 rounded-2xl">
-                        <div class="flex flex-row pb-2">
-                            <div class="relative flex size-2 place-self-center">
-                                <span class="absolute h-2 w-2 not-in-[.offline]:animate-ping rounded-full not-in-[.offline]:bg-[#00E6A6] opacity-75"></span>
-                                <span class="relative size-2 rounded-full not-in-[.offline]:bg-[#00f1ad] bg-[#A0B5AC]"></span>
-                            </div>
-                            <p class="pl-2">MR01-02</p>
-                        </div>
-                        <p class="pb-2"><span id="temperaturaA1_2" class="text-white text-xl font-bold">0</span>°C</p>
-                        <p class="text-sm"><span id="hashrateA1_2">0</span> TH/s</p>
-                    </div>
-                    <div id="cardA1_3" class="saudavel border p-3 rounded-2xl">
-                        <div class="flex flex-row pb-2">
-                            <div class="relative flex size-2 place-self-center">
-                                <span class="absolute h-2 w-2 not-in-[.offline]:animate-ping rounded-full not-in-[.offline]:bg-[#00E6A6] opacity-75"></span>
-                                <span class="relative size-2 rounded-full not-in-[.offline]:bg-[#00f1ad] bg-[#A0B5AC]"></span>
-                            </div>
-                            <p class="pl-2">MR01-03</p>
-                        </div>
-                        <p class="pb-2"><span id="temperaturaA1_3" class="text-white text-xl font-bold">58</span>°C</p>
-                        <p class="text-sm"><span id="hashrateA1_3">195</span> TH/s</p>
-                    </div>
-                    <div id="cardA1_4" class="saudavel border p-3 rounded-2xl">
-                        <div class="flex flex-row pb-2">
-                            <div class="relative flex size-2 place-self-center">
-                                <span class="absolute h-2 w-2 not-in-[.offline]:animate-ping rounded-full not-in-[.offline]:bg-[#00E6A6] opacity-75"></span>
-                                <span class="relative size-2 rounded-full not-in-[.offline]:bg-[#00f1ad] bg-[#A0B5AC]"></span>
-                            </div>
-                            <p class="pl-2">MR01-04</p>
-                        </div>
-                        <p class="pb-2"><span id="temperaturaA1_4" class="text-white text-xl font-bold">58</span>°C</p>
-                        <p class="text-sm"><span id="hashrateA1_4">195</span> TH/s</p>
-                    </div>
-                    <div id="cardA1_5" class="saudavel border p-3 rounded-2xl">
-                        <div class="flex flex-row pb-2">
-                            <div class="relative flex size-2 place-self-center">
-                                <span class="absolute h-2 w-2 not-in-[.offline]:animate-ping rounded-full not-in-[.offline]:bg-[#00E6A6] opacity-75"></span>
-                                <span class="relative size-2 rounded-full not-in-[.offline]:bg-[#00f1ad] bg-[#A0B5AC]"></span>
-                            </div>
-                            <p class="pl-2">MR01-05</p>
-                        </div>
-                        <p class="pb-2"><span id="temperaturaA1_5" class="text-white text-xl font-bold">58</span>°C</p>
-                        <p class="text-sm"><span id="hashrateA1_5">195</span> TH/s</p>
-                    </div>
-                    <div id="cardA1_6" class="saudavel border p-3 rounded-2xl">
-                        <div class="flex flex-row pb-2">
-                            <div class="relative flex size-2 place-self-center">
-                                <span class="absolute h-2 w-2 not-in-[.offline]:animate-ping rounded-full not-in-[.offline]:bg-[#00E6A6] opacity-75"></span>
-                                <span class="relative size-2 rounded-full not-in-[.offline]:bg-[#00f1ad] bg-[#A0B5AC]"></span>
-                            </div>
-                            <p class="pl-2">MR01-06</p>
-                        </div>
-                        <p class="pb-2"><span id="temperaturaA1_6" class="text-white text-xl font-bold">58</span>°C</p>
-                        <p class="text-sm"><span id="hashrateA1_6">195</span> TH/s</p>
-                    </div>
-                    <div id="cardA1_7" class="saudavel border p-3 rounded-2xl">
-                        <div class="flex flex-row pb-2">
-                            <div class="relative flex size-2 place-self-center">
-                                <span class="absolute h-2 w-2 not-in-[.offline]:animate-ping rounded-full not-in-[.offline]:bg-[#00E6A6] opacity-75"></span>
-                                <span class="relative size-2 rounded-full not-in-[.offline]:bg-[#00f1ad] bg-[#A0B5AC]"></span>
-                            </div>
-                            <p class="pl-2">MR01-07</p>
-                        </div>
-                        <p class="pb-2"><span id="temperaturaA1_7" class="text-white text-xl font-bold">58</span>°C</p>
-                        <p class="text-sm"><span id="hashrateA1_7">195</span> TH/s</p>
-                    </div>
-                </div>
-                <p class="mt-7 font-space-mono ono mb-3">SESSÃO 2</p>
-                <div class="grid grid-cols-7 gap-2 font-space-mono text-[#A0B5AC]" id="farm1_sessao1">
-                    <div id="cardA2_1" class="saudavel border p-3 rounded-2xl">
-                        <div class="flex flex-row pb-2">
-                            <div class="relative flex size-2 place-self-center">
-                                <span class="absolute h-2 w-2 not-in-[.offline]:animate-ping rounded-full not-in-[.offline]:bg-[#00E6A6] opacity-75"></span>
-                                <span class="relative size-2 rounded-full not-in-[.offline]:bg-[#00f1ad] bg-[#A0B5AC]"></span>
-                            </div>
-                            <p class="pl-2">MR02-01</p>
-                        </div>
-                        <p class="pb-2"><span id="temperaturaA2_1" class="text-white text-xl font-bold">58</span>°C</p>
-                        <p class="text-sm"><span id="hashrateA2_1">195</span> TH/s</p>
-                    </div>
-                    <div id="cardA2_2" class="saudavel border p-3 rounded-2xl">
-                        <div class="flex flex-row pb-2">
-                            <div class="relative flex size-2 place-self-center">
-                                <span class="absolute h-2 w-2 not-in-[.offline]:animate-ping rounded-full not-in-[.offline]:bg-[#00E6A6] opacity-75"></span>
-                                <span class="relative size-2 rounded-full not-in-[.offline]:bg-[#00f1ad] bg-[#A0B5AC]"></span>
-                            </div>
-                            <p class="pl-2">MR02-02</p>
-                        </div>
-                        <p class="pb-2"><span id="temperaturaA2_2" class="text-white text-xl font-bold">58</span>°C</p>
-                        <p class="text-sm"><span id="hashrateA2_2">195</span> TH/s</p>
-                    </div>
-                    <div id="cardA2_3" class="saudavel border p-3 rounded-2xl">
-                        <div class="flex flex-row pb-2">
-                            <div class="relative flex size-2 place-self-center">
-                                <span class="absolute h-2 w-2 not-in-[.offline]:animate-ping rounded-full not-in-[.offline]:bg-[#00E6A6] opacity-75"></span>
-                                <span class="relative size-2 rounded-full not-in-[.offline]:bg-[#00f1ad] bg-[#A0B5AC]"></span>
-                            </div>
-                            <p class="pl-2">MR02-03</p>
-                        </div>
-                        <p class="pb-2"><span id="temperaturaA2_3" class="text-white text-xl font-bold">58</span>°C</p>
-                        <p class="text-sm"><span id="hashrateA2_3">195</span> TH/s</p>
-                    </div>
-                    <div id="cardA2_4" class="saudavel border p-3 rounded-2xl">
-                        <div class="flex flex-row pb-2">
-                            <div class="relative flex size-2 place-self-center">
-                                <span class="absolute h-2 w-2 not-in-[.offline]:animate-ping rounded-full not-in-[.offline]:bg-[#00E6A6] opacity-75"></span>
-                                <span class="relative size-2 rounded-full not-in-[.offline]:bg-[#00f1ad] bg-[#A0B5AC]"></span>
-                            </div>
-                            <p class="pl-2">MR02-04</p>
-                        </div>
-                        <p class="pb-2"><span id="temperaturaA2_4" class="text-white text-xl font-bold">58</span>°C</p>
-                        <p class="text-sm"><span id="hashrateA2_4">195</span> TH/s</p>
-                    </div>
-                    <div id="cardA2_5" class="saudavel border p-3 rounded-2xl">
-                        <div class="flex flex-row pb-2">
-                            <div class="relative flex size-2 place-self-center">
-                                <span class="absolute h-2 w-2 not-in-[.offline]:animate-ping rounded-full not-in-[.offline]:bg-[#00E6A6] opacity-75"></span>
-                                <span class="relative size-2 rounded-full not-in-[.offline]:bg-[#00f1ad] bg-[#A0B5AC]"></span>
-                            </div>
-                            <p class="pl-2">MR02-05</p>
-                        </div>
-                        <p class="pb-2"><span id="temperaturaA2_5" class="text-white text-xl font-bold">58</span>°C</p>
-                        <p class="text-sm"><span id="hashrateA2_5">195</span> TH/s</p>
-                    </div>
-                    <div id="cardA2_6" class="saudavel border p-3 rounded-2xl">
-                        <div class="flex flex-row pb-2">
-                            <div class="relative flex size-2 place-self-center">
-                                <span class="absolute h-2 w-2 not-in-[.offline]:animate-ping rounded-full not-in-[.offline]:bg-[#00E6A6] opacity-75"></span>
-                                <span class="relative size-2 rounded-full not-in-[.offline]:bg-[#00f1ad] bg-[#A0B5AC]"></span>
-                            </div>
-                            <p class="pl-2">MR02-06</p>
-                        </div>
-                        <p class="pb-2"><span id="temperaturaA2_6" class="text-white text-xl font-bold">58</span>°C</p>
-                        <p class="text-sm"><span id="hashrateA2_6">195</span> TH/s</p>
-                    </div>
-                    <div id="cardA2_7" class="saudavel border p-3 rounded-2xl">
-                        <div class="flex flex-row pb-2">
-                            <div class="relative flex size-2 place-self-center">
-                                <span class="absolute h-2 w-2 not-in-[.offline]:animate-ping rounded-full not-in-[.offline]:bg-[#00E6A6] opacity-75"></span>
-                                <span class="relative size-2 rounded-full not-in-[.offline]:bg-[#00f1ad] bg-[#A0B5AC]"></span>
-                            </div>
-                            <p class="pl-2">MR02-07</p>
-                        </div>
-                        <p class="pb-2"><span id="temperaturaA2_7" class="text-white text-xl font-bold">58</span>°C</p>
-                        <p class="text-sm"><span id="hashrateA2_7">195</span> TH/s</p>
-                    </div>
-                </div>
-                <p class="mt-7 font-space-mono ono mb-3">SESSÃO 3</p>
-                <div class="grid grid-cols-7 gap-2 font-space-mono text-[#A0B5AC]" id="farm1_sessao1">
-                    <div id="cardA3_1" class="saudavel border p-3 rounded-2xl">
-                        <div class="flex flex-row pb-2">
-                            <div class="relative flex size-2 place-self-center">
-                                <span class="absolute h-2 w-2 not-in-[.offline]:animate-ping rounded-full not-in-[.offline]:bg-[#00E6A6] opacity-75"></span>
-                                <span class="relative size-2 rounded-full not-in-[.offline]:bg-[#00f1ad] bg-[#A0B5AC]"></span>
-                            </div>
-                            <p class="pl-2">MR03-01</p>
-                        </div>
-                        <p class="pb-2"><span id="temperaturaA3_1" class="text-white text-xl font-bold">58</span>°C</p>
-                        <p class="text-sm"><span id="hashrateA3_1">195</span> TH/s</p>
-                    </div>
-                    <div id="cardA3_2" class="saudavel border p-3 rounded-2xl">
-                        <div class="flex flex-row pb-2">
-                            <div class="relative flex size-2 place-self-center">
-                                <span class="absolute h-2 w-2 not-in-[.offline]:animate-ping rounded-full not-in-[.offline]:bg-[#00E6A6] opacity-75"></span>
-                                <span class="relative size-2 rounded-full not-in-[.offline]:bg-[#00f1ad] bg-[#A0B5AC]"></span>
-                            </div>
-                            <p class="pl-2">MR03-02</p>
-                        </div>
-                        <p class="pb-2"><span id="temperaturaA3_2" class="text-white text-xl font-bold">58</span>°C</p>
-                        <p class="text-sm"><span id="hashrateA3_2">195</span> TH/s</p>
-                    </div>
-                    <div id="cardA3_3" class="saudavel border p-3 rounded-2xl">
-                        <div class="flex flex-row pb-2">
-                            <div class="relative flex size-2 place-self-center">
-                                <span class="absolute h-2 w-2 not-in-[.offline]:animate-ping rounded-full not-in-[.offline]:bg-[#00E6A6] opacity-75"></span>
-                                <span class="relative size-2 rounded-full not-in-[.offline]:bg-[#00f1ad] bg-[#A0B5AC]"></span>
-                            </div>
-                            <p class="pl-2">MR03-03</p>
-                        </div>
-                        <p class="pb-2"><span id="temperaturaA3_3" class="text-white text-xl font-bold">58</span>°C</p>
-                        <p class="text-sm"><span id="hashrateA3_3">195</span> TH/s</p>
-                    </div>
-                    <div id="cardA3_4" class="saudavel border p-3 rounded-2xl">
-                        <div class="flex flex-row pb-2">
-                            <div class="relative flex size-2 place-self-center">
-                                <span class="absolute h-2 w-2 not-in-[.offline]:animate-ping rounded-full not-in-[.offline]:bg-[#00E6A6] opacity-75"></span>
-                                <span class="relative size-2 rounded-full not-in-[.offline]:bg-[#00f1ad] bg-[#A0B5AC]"></span>
-                            </div>
-                            <p class="pl-2">MR03-04</p>
-                        </div>
-                        <p class="pb-2"><span id="temperaturaA3_4" class="text-white text-xl font-bold">58</span>°C</p>
-                        <p class="text-sm"><span id="hashrateA3_4">195</span> TH/s</p>
-                    </div>
-                    <div id="cardA3_5" class="saudavel border p-3 rounded-2xl">
-                        <div class="flex flex-row pb-2">
-                            <div class="relative flex size-2 place-self-center">
-                                <span class="absolute h-2 w-2 not-in-[.offline]:animate-ping rounded-full not-in-[.offline]:bg-[#00E6A6] opacity-75"></span>
-                                <span class="relative size-2 rounded-full not-in-[.offline]:bg-[#00f1ad] bg-[#A0B5AC]"></span>
-                            </div>
-                            <p class="pl-2">MR03-05</p>
-                        </div>
-                        <p class="pb-2"><span id="temperaturaA3_5" class="text-white text-xl font-bold">58</span>°C</p>
-                        <p class="text-sm"><span id="hashrateA3_5">195</span> TH/s</p>
-                    </div>
-                    <div id="cardA3_6" class="saudavel border p-3 rounded-2xl">
-                        <div class="flex flex-row pb-2">
-                            <div class="relative flex size-2 place-self-center">
-                                <span class="absolute h-2 w-2 not-in-[.offline]:animate-ping rounded-full not-in-[.offline]:bg-[#00E6A6] opacity-75"></span>
-                                <span class="relative size-2 rounded-full not-in-[.offline]:bg-[#00f1ad] bg-[#A0B5AC]"></span>
-                            </div>
-                            <p class="pl-2">MR03-06</p>
-                        </div>
-                        <p class="pb-2"><span id="temperaturaA3_6" class="text-white text-xl font-bold">58</span>°C</p>
-                        <p class="text-sm"><span id="hashrateA3_6">195</span> TH/s</p>
-                    </div>
-                    <div id="cardA3_7" class="saudavel border p-3 rounded-2xl">
-                        <div class="flex flex-row pb-2">
-                            <div class="relative flex size-2 place-self-center">
-                                <span class="absolute h-2 w-2 not-in-[.offline]:animate-ping rounded-full not-in-[.offline]:bg-[#00E6A6] opacity-75"></span>
-                                <span class="relative size-2 rounded-full not-in-[.offline]:bg-[#00f1ad] bg-[#A0B5AC]"></span>
-                            </div>
-                            <p class="pl-2">MR03-07</p>
-                        </div>
-                        <p class="pb-2"><span id="temperaturaA3_7" class="text-white text-xl font-bold">58</span>°C</p>
-                        <p class="text-sm"><span id="hashrateA3_7">195</span> TH/s</p>
-                    </div>
-                </div>
-            </div>
-    <!-- Fazenda B -->
-            <div class="bg-[#0C1F19] border border-[#207F70] pl-10 pr-10 pb-8 pt-8 rounded-2xl">
-                <div class="flex flex-row justify-between">
-                    <div>
-                        <p id="farm2_nome" class="font-semibold font-inter text-2xl">Farm B</p>
-                        <p id="farm2_local" class="text-sm font-space-mono">São Paulo · SP</p>
-                    </div>
-                    <p class="font-space-mono text-sm"><span id="farm1_rigs_ativas">19</span>/<span id="farm1_rigs">21</span> online · <span id="farm1_hashrate">2,69</span> PH/s · <span id="farm1_energia">45,5</span> kW · <span id="farm1_alertas">4</span> alertas</p>
-                </div>
-                <p class="mt-7 font-space-mono ono mb-3">SESSÃO 1</p>
-                <div class="grid grid-cols-7 gap-2 font-space-mono text-[#A0B5AC]" id="farm1_sessao1">
-                    <div id="cardA1_1" class="saudavel border p-3 rounded-2xl">
-                        <div class="flex flex-row pb-2">
-                            <div class="relative flex size-2 place-self-center">
-                                <span class="absolute h-2 w-2 not-in-[.offline]:animate-ping rounded-full not-in-[.offline]:bg-[#00E6A6] opacity-75"></span>
-                                <span class="relative size-2 rounded-full not-in-[.offline]:bg-[#00f1ad] bg-[#A0B5AC]"></span>
-                            </div>
-                            <p class="pl-2">MR01-01</p>
-                        </div>
-                        <p class="pb-2"><span id="temperaturaB1_1" class="text-white text-xl font-bold">58</span>°C</p>
-                        <p class="text-sm"><span id="hashrateB1_1">195</span> TH/s</p>
-                    </div>
-                    <div id="cardB1_2" class="offline border p-3 rounded-2xl">
-                        <div class="flex flex-row pb-2">
-                            <div class="relative flex size-2 place-self-center">
-                                <span class="absolute h-2 w-2 not-in-[.offline]:animate-ping rounded-full not-in-[.offline]:bg-[#00E6A6] opacity-75"></span>
-                                <span class="relative size-2 rounded-full not-in-[.offline]:bg-[#00f1ad] bg-[#A0B5AC]"></span>
-                            </div>
-                            <p class="pl-2">MR01-02</p>
-                        </div>
-                        <p class="pb-2"><span id="temperaturaB1_2" class="text-white text-xl font-bold">0</span>°C</p>
-                        <p class="text-sm"><span id="hashrateB1_2">0</span> TH/s</p>
-                    </div>
-                    <div id="cardB1_3" class="saudavel border p-3 rounded-2xl">
-                        <div class="flex flex-row pb-2">
-                            <div class="relative flex size-2 place-self-center">
-                                <span class="absolute h-2 w-2 not-in-[.offline]:animate-ping rounded-full not-in-[.offline]:bg-[#00E6A6] opacity-75"></span>
-                                <span class="relative size-2 rounded-full not-in-[.offline]:bg-[#00f1ad] bg-[#A0B5AC]"></span>
-                            </div>
-                            <p class="pl-2">MR01-03</p>
-                        </div>
-                        <p class="pb-2"><span id="temperaturaB1_3" class="text-white text-xl font-bold">58</span>°C</p>
-                        <p class="text-sm"><span id="hashrateB1_3">195</span> TH/s</p>
-                    </div>
-                    <div id="cardB1_4" class="saudavel border p-3 rounded-2xl">
-                        <div class="flex flex-row pb-2">
-                            <div class="relative flex size-2 place-self-center">
-                                <span class="absolute h-2 w-2 not-in-[.offline]:animate-ping rounded-full not-in-[.offline]:bg-[#00E6A6] opacity-75"></span>
-                                <span class="relative size-2 rounded-full not-in-[.offline]:bg-[#00f1ad] bg-[#A0B5AC]"></span>
-                            </div>
-                            <p class="pl-2">MR01-04</p>
-                        </div>
-                        <p class="pb-2"><span id="temperaturaB1_4" class="text-white text-xl font-bold">58</span>°C</p>
-                        <p class="text-sm"><span id="hashrateB1_4">195</span> TH/s</p>
-                    </div>
-                    <div id="cardB1_5" class="saudavel border p-3 rounded-2xl">
-                        <div class="flex flex-row pb-2">
-                            <div class="relative flex size-2 place-self-center">
-                                <span class="absolute h-2 w-2 not-in-[.offline]:animate-ping rounded-full not-in-[.offline]:bg-[#00E6A6] opacity-75"></span>
-                                <span class="relative size-2 rounded-full not-in-[.offline]:bg-[#00f1ad] bg-[#A0B5AC]"></span>
-                            </div>
-                            <p class="pl-2">MR01-05</p>
-                        </div>
-                        <p class="pb-2"><span id="temperaturaB1_5" class="text-white text-xl font-bold">58</span>°C</p>
-                        <p class="text-sm"><span id="hashrateB1_5">195</span> TH/s</p>
-                    </div>
-                    <div id="cardB1_6" class="saudavel border p-3 rounded-2xl">
-                        <div class="flex flex-row pb-2">
-                            <div class="relative flex size-2 place-self-center">
-                                <span class="absolute h-2 w-2 not-in-[.offline]:animate-ping rounded-full not-in-[.offline]:bg-[#00E6A6] opacity-75"></span>
-                                <span class="relative size-2 rounded-full not-in-[.offline]:bg-[#00f1ad] bg-[#A0B5AC]"></span>
-                            </div>
-                            <p class="pl-2">MR01-06</p>
-                        </div>
-                        <p class="pb-2"><span id="temperaturaB1_6" class="text-white text-xl font-bold">58</span>°C</p>
-                        <p class="text-sm"><span id="hashrateB1_6">195</span> TH/s</p>
-                    </div>
-                    <div id="cardB1_7" class="saudavel border p-3 rounded-2xl">
-                        <div class="flex flex-row pb-2">
-                            <div class="relative flex size-2 place-self-center">
-                                <span class="absolute h-2 w-2 not-in-[.offline]:animate-ping rounded-full not-in-[.offline]:bg-[#00E6A6] opacity-75"></span>
-                                <span class="relative size-2 rounded-full not-in-[.offline]:bg-[#00f1ad] bg-[#A0B5AC]"></span>
-                            </div>
-                            <p class="pl-2">MR01-07</p>
-                        </div>
-                        <p class="pb-2"><span id="temperaturaB1_7" class="text-white text-xl font-bold">58</span>°C</p>
-                        <p class="text-sm"><span id="hashrateB1_7">195</span> TH/s</p>
-                    </div>
-                </div>
-                <p class="mt-7 font-space-mono ono mb-3">SESSÃO 2</p>
-                <div class="grid grid-cols-7 gap-2 font-space-mono text-[#A0B5AC]" id="farm1_sessao1">
-                    <div id="cardB2_1" class="saudavel border p-3 rounded-2xl">
-                        <div class="flex flex-row pb-2">
-                            <div class="relative flex size-2 place-self-center">
-                                <span class="absolute h-2 w-2 not-in-[.offline]:animate-ping rounded-full not-in-[.offline]:bg-[#00E6A6] opacity-75"></span>
-                                <span class="relative size-2 rounded-full not-in-[.offline]:bg-[#00f1ad] bg-[#A0B5AC]"></span>
-                            </div>
-                            <p class="pl-2">MR02-01</p>
-                        </div>
-                        <p class="pb-2"><span id="temperaturaB2_1" class="text-white text-xl font-bold">58</span>°C</p>
-                        <p class="text-sm"><span id="hashrateB2_1">195</span> TH/s</p>
-                    </div>
-                    <div id="cardB2_2" class="saudavel border p-3 rounded-2xl">
-                        <div class="flex flex-row pb-2">
-                            <div class="relative flex size-2 place-self-center">
-                                <span class="absolute h-2 w-2 not-in-[.offline]:animate-ping rounded-full not-in-[.offline]:bg-[#00E6A6] opacity-75"></span>
-                                <span class="relative size-2 rounded-full not-in-[.offline]:bg-[#00f1ad] bg-[#A0B5AC]"></span>
-                            </div>
-                            <p class="pl-2">MR02-02</p>
-                        </div>
-                        <p class="pb-2"><span id="temperaturaB2_2" class="text-white text-xl font-bold">58</span>°C</p>
-                        <p class="text-sm"><span id="hashrateB2_2">195</span> TH/s</p>
-                    </div>
-                    <div id="cardB2_3" class="saudavel border p-3 rounded-2xl">
-                        <div class="flex flex-row pb-2">
-                            <div class="relative flex size-2 place-self-center">
-                                <span class="absolute h-2 w-2 not-in-[.offline]:animate-ping rounded-full not-in-[.offline]:bg-[#00E6A6] opacity-75"></span>
-                                <span class="relative size-2 rounded-full not-in-[.offline]:bg-[#00f1ad] bg-[#A0B5AC]"></span>
-                            </div>
-                            <p class="pl-2">MR02-03</p>
-                        </div>
-                        <p class="pb-2"><span id="temperaturaB2_3" class="text-white text-xl font-bold">58</span>°C</p>
-                        <p class="text-sm"><span id="hashrateB2_3">195</span> TH/s</p>
-                    </div>
-                    <div id="cardB2_4" class="saudavel border p-3 rounded-2xl">
-                        <div class="flex flex-row pb-2">
-                            <div class="relative flex size-2 place-self-center">
-                                <span class="absolute h-2 w-2 not-in-[.offline]:animate-ping rounded-full not-in-[.offline]:bg-[#00E6A6] opacity-75"></span>
-                                <span class="relative size-2 rounded-full not-in-[.offline]:bg-[#00f1ad] bg-[#A0B5AC]"></span>
-                            </div>
-                            <p class="pl-2">MR02-04</p>
-                        </div>
-                        <p class="pb-2"><span id="temperaturaB2_4" class="text-white text-xl font-bold">58</span>°C</p>
-                        <p class="text-sm"><span id="hashrateB2_4">195</span> TH/s</p>
-                    </div>
-                    <div id="cardB2_5" class="saudavel border p-3 rounded-2xl">
-                        <div class="flex flex-row pb-2">
-                            <div class="relative flex size-2 place-self-center">
-                                <span class="absolute h-2 w-2 not-in-[.offline]:animate-ping rounded-full not-in-[.offline]:bg-[#00E6A6] opacity-75"></span>
-                                <span class="relative size-2 rounded-full not-in-[.offline]:bg-[#00f1ad] bg-[#A0B5AC]"></span>
-                            </div>
-                            <p class="pl-2">MR02-05</p>
-                        </div>
-                        <p class="pb-2"><span id="temperaturaB2_5" class="text-white text-xl font-bold">58</span>°C</p>
-                        <p class="text-sm"><span id="hashrateB2_5">195</span> TH/s</p>
-                    </div>
-                    <div id="cardB2_6" class="saudavel border p-3 rounded-2xl">
-                        <div class="flex flex-row pb-2">
-                            <div class="relative flex size-2 place-self-center">
-                                <span class="absolute h-2 w-2 not-in-[.offline]:animate-ping rounded-full not-in-[.offline]:bg-[#00E6A6] opacity-75"></span>
-                                <span class="relative size-2 rounded-full not-in-[.offline]:bg-[#00f1ad] bg-[#A0B5AC]"></span>
-                            </div>
-                            <p class="pl-2">MR02-06</p>
-                        </div>
-                        <p class="pb-2"><span id="temperaturaB2_6" class="text-white text-xl font-bold">58</span>°C</p>
-                        <p class="text-sm"><span id="hashrateB2_6">195</span> TH/s</p>
-                    </div>
-                    <div id="cardB2_7" class="saudavel border p-3 rounded-2xl">
-                        <div class="flex flex-row pb-2">
-                            <div class="relative flex size-2 place-self-center">
-                                <span class="absolute h-2 w-2 not-in-[.offline]:animate-ping rounded-full not-in-[.offline]:bg-[#00E6A6] opacity-75"></span>
-                                <span class="relative size-2 rounded-full not-in-[.offline]:bg-[#00f1ad] bg-[#A0B5AC]"></span>
-                            </div>
-                            <p class="pl-2">MR02-07</p>
-                        </div>
-                        <p class="pb-2"><span id="temperaturaB2_7" class="text-white text-xl font-bold">58</span>°C</p>
-                        <p class="text-sm"><span id="hashrateB2_7">195</span> TH/s</p>
-                    </div>
-                </div>
-                <p class="mt-7 font-space-mono ono mb-3">SESSÃO 3</p>
-                <div class="grid grid-cols-7 gap-2 font-space-mono text-[#A0B5AC]" id="farm1_sessao1">
-                    <div id="cardB3_1" class="saudavel border p-3 rounded-2xl">
-                        <div class="flex flex-row pb-2">
-                            <div class="relative flex size-2 place-self-center">
-                                <span class="absolute h-2 w-2 not-in-[.offline]:animate-ping rounded-full not-in-[.offline]:bg-[#00E6A6] opacity-75"></span>
-                                <span class="relative size-2 rounded-full not-in-[.offline]:bg-[#00f1ad] bg-[#A0B5AC]"></span>
-                            </div>
-                            <p class="pl-2">MR03-01</p>
-                        </div>
-                        <p class="pb-2"><span id="temperaturaB3_1" class="text-white text-xl font-bold">58</span>°C</p>
-                        <p class="text-sm"><span id="hashrateB3_1">195</span> TH/s</p>
-                    </div>
-                    <div id="cardB3_2" class="saudavel border p-3 rounded-2xl">
-                        <div class="flex flex-row pb-2">
-                            <div class="relative flex size-2 place-self-center">
-                                <span class="absolute h-2 w-2 not-in-[.offline]:animate-ping rounded-full not-in-[.offline]:bg-[#00E6A6] opacity-75"></span>
-                                <span class="relative size-2 rounded-full not-in-[.offline]:bg-[#00f1ad] bg-[#A0B5AC]"></span>
-                            </div>
-                            <p class="pl-2">MR03-02</p>
-                        </div>
-                        <p class="pb-2"><span id="temperaturaB3_2" class="text-white text-xl font-bold">58</span>°C</p>
-                        <p class="text-sm"><span id="hashrateB3_2">195</span> TH/s</p>
-                    </div>
-                    <div id="cardB3_3" class="saudavel border p-3 rounded-2xl">
-                        <div class="flex flex-row pb-2">
-                            <div class="relative flex size-2 place-self-center">
-                                <span class="absolute h-2 w-2 not-in-[.offline]:animate-ping rounded-full not-in-[.offline]:bg-[#00E6A6] opacity-75"></span>
-                                <span class="relative size-2 rounded-full not-in-[.offline]:bg-[#00f1ad] bg-[#A0B5AC]"></span>
-                            </div>
-                            <p class="pl-2">MR03-03</p>
-                        </div>
-                        <p class="pb-2"><span id="temperaturaB3_3" class="text-white text-xl font-bold">58</span>°C</p>
-                        <p class="text-sm"><span id="hashrateB3_3">195</span> TH/s</p>
-                    </div>
-                    <div id="cardB3_4" class="saudavel border p-3 rounded-2xl">
-                        <div class="flex flex-row pb-2">
-                            <div class="relative flex size-2 place-self-center">
-                                <span class="absolute h-2 w-2 not-in-[.offline]:animate-ping rounded-full not-in-[.offline]:bg-[#00E6A6] opacity-75"></span>
-                                <span class="relative size-2 rounded-full not-in-[.offline]:bg-[#00f1ad] bg-[#A0B5AC]"></span>
-                            </div>
-                            <p class="pl-2">MR03-04</p>
-                        </div>
-                        <p class="pb-2"><span id="temperaturaB3_4" class="text-white text-xl font-bold">58</span>°C</p>
-                        <p class="text-sm"><span id="hashrateB3_4">195</span> TH/s</p>
-                    </div>
-                    <div id="cardB3_5" class="saudavel border p-3 rounded-2xl">
-                        <div class="flex flex-row pb-2">
-                            <div class="relative flex size-2 place-self-center">
-                                <span class="absolute h-2 w-2 not-in-[.offline]:animate-ping rounded-full not-in-[.offline]:bg-[#00E6A6] opacity-75"></span>
-                                <span class="relative size-2 rounded-full not-in-[.offline]:bg-[#00f1ad] bg-[#A0B5AC]"></span>
-                            </div>
-                            <p class="pl-2">MR03-05</p>
-                        </div>
-                        <p class="pb-2"><span id="temperaturaB3_5" class="text-white text-xl font-bold">58</span>°C</p>
-                        <p class="text-sm"><span id="hashrateB3_5">195</span> TH/s</p>
-                    </div>
-                    <div id="cardB3_6" class="saudavel border p-3 rounded-2xl">
-                        <div class="flex flex-row pb-2">
-                            <div class="relative flex size-2 place-self-center">
-                                <span class="absolute h-2 w-2 not-in-[.offline]:animate-ping rounded-full not-in-[.offline]:bg-[#00E6A6] opacity-75"></span>
-                                <span class="relative size-2 rounded-full not-in-[.offline]:bg-[#00f1ad] bg-[#A0B5AC]"></span>
-                            </div>
-                            <p class="pl-2">MR03-06</p>
-                        </div>
-                        <p class="pb-2"><span id="temperaturaB3_6" class="text-white text-xl font-bold">58</span>°C</p>
-                        <p class="text-sm"><span id="hashrateB3_6">195</span> TH/s</p>
-                    </div>
-                    <div id="cardB3_7" class="saudavel border p-3 rounded-2xl">
-                        <div class="flex flex-row pb-2">
-                            <div class="relative flex size-2 place-self-center">
-                                <span class="absolute h-2 w-2 not-in-[.offline]:animate-ping rounded-full not-in-[.offline]:bg-[#00E6A6] opacity-75"></span>
-                                <span class="relative size-2 rounded-full not-in-[.offline]:bg-[#00f1ad] bg-[#A0B5AC]"></span>
-                            </div>
-                            <p class="pl-2">MR03-07</p>
-                        </div>
-                        <p class="pb-2"><span id="temperaturaB3_7" class="text-white text-xl font-bold">58</span>°C</p>
-                        <p class="text-sm"><span id="hashrateB3_7">195</span> TH/s</p>
-                    </div>
+                    <p id="nome_card" class="font-semibold font-inter text-2xl mb-10">Rigs com incidentes</p>
+                    <p class="font-space-mono text-sm"><span id="rigs_ativas"></span>/<span id="rigs_total"></span> online · <span id="rigs_com_alertas"></span> alertas</p>
                 </div>
             </div>
         </div>
@@ -640,178 +171,415 @@
     <!-- Alertas e mais informações -->
 
         <div>
-            <div class="bg-[#0C1F19] border border-[#207F70] pb-6 pt-6 pr-6 pl-6 rounded-2xl mb-5">
-                <div class="flex flex-row justify-between">
-                    <div>
-                        <p class="font-inter text-sm mb-5 font-medium">Rig selecionada</p>
-                        <p id="modelo_selecionado" class="font-space-mono font-semibold text-xl">MR01-02</p>
-                        <p class="font-inter text-sm font-medium"><span id="farm_selecionada">Farm A</span> · <span id="sessao_selecono mb-3">Sessão 2</span></p>
-                    </div>
-                    <p id="status_selecionada" class="border border-[#7A0015] bg-[#7A001542] text-[#E00027] text-sm pl-2 pr-2 pt-1 pb-1 rounded-2xl h-fit">Crítica</p>
-                </div>
-                <div class="grid grid-cols-2 grid-rows-2 gap-2 mt-3 text-[#D5D5D5]">
-                    <div class="border border-[#207F70] rounded-2xl pt-2.5 pb-2.5 pr-3 pl-3">
-                        <p class="text-xs font-inter">Hashrate</p>
-                        <p class="font-ibm-mono font-bold"><span id="hash_selecionada">140.5</span> TH/s</p>
-                    </div>
-                    <div class="border border-[#207F70] rounded-2xl pt-2.5 pb-2.5 pr-3 pl-3">
-                        <p class="text-xs font-inter">Temperatura</p>
-                        <p class="font-ibm-mono font-bold"><span id="temperatura_selecionada">140.5</span> °C</p>
-                    </div>
-                    <div class="border border-[#207F70] rounded-2xl pt-2.5 pb-2.5 pr-3 pl-3">
-                        <p class="text-xs font-inter">Consumo</p>
-                        <p class="font-ibm-mono font-bold"><span id="consumo_selecionada">140.5</span> W</p>
-                    </div>
-                    <div class="border border-[#207F70] rounded-2xl pt-2.5 pb-2.5 pr-3 pl-3">
-                        <p class="text-xs font-inter">CPU / RAM</p>
-                        <p class="font-ibm-mono font-bold"><span id="cpu_selecionada">140.5</span>% / <span id="ram_selecionada">140.5</span>%</p>
-                    </div>
-                </div>
-                <button class="bg-[#0D3831] border border-[#207F70] rounded-xl font-inter font-medium w-full p-2 mt-3 hover:cursor-pointer hover:bg-[#207F7025] transition-colors duration-100 ease-in-out">Abrir Dashboard da Rig</button>
-            </div>
-            
-            <div class="bg-[#0C1F19] border border-[#207F70] pb-6 pt-6 pr-6 pl-6 rounded-2xl mb-5">
-                <div class="flex flex-row justify-between">
-                    <p class="font-ibm-mono font-semibold">Alertas ativos</p>
-                    <p id="total_alertas" class="border border-[#207F70] rounded-2xl text-sm pt-1 pb-1 pl-3 pr-3 text-[#A0B5AC]">11</p>
-                </div>
-                <div id="avisos" class="mt-5">
-                    <div class="flex flex-row border rounded-2xl critico p-2 mt-2">
-                        <div class="size-2 rounded-full bg-[#E00027] mt-2"></div>
-                        <div class="flex flex-row justify-between ml-2 w-full font-inter text-sm">
-                            <div>
-                                <p class="font-ibm-mono text-[#EFEFEF]">MR02-05 · Farm B</p>
-                                <p class="text-white font-medium">Temperatura crítica (86 °C)</p>
-                            </div>
-                            <p class="text-[#A0B5AC] text-xs">há 35min</p>
-                        </div>
-                    </div>
-                    <div class="flex flex-row border rounded-2xl critico p-2 mt-2">
-                        <div class="size-2 rounded-full bg-[#E00027] mt-2"></div>
-                        <div class="flex flex-row justify-between ml-2 w-full font-inter text-sm">
-                            <div>
-                                <p class="font-ibm-mono text-[#EFEFEF]">MR02-05 · Farm B</p>
-                                <p class="text-white font-medium">Temperatura crítica (86 °C)</p>
-                            </div>
-                            <p class="text-[#A0B5AC] text-xs">há 35min</p>
-                        </div>
-                    </div>
-                    <div class="flex flex-row border rounded-2xl critico p-2 mt-2">
-                        <div class="size-2 rounded-full bg-[#E00027] mt-2"></div>
-                        <div class="flex flex-row justify-between ml-2 w-full font-inter text-sm">
-                            <div>
-                                <p class="font-ibm-mono text-[#EFEFEF]">MR02-05 · Farm B</p>
-                                <p class="text-white font-medium">Temperatura crítica (86 °C)</p>
-                            </div>
-                            <p class="text-[#A0B5AC] text-xs">há 35min</p>
-                        </div>
-                    </div>
-                    <div class="flex flex-row border rounded-2xl offline p-2 mt-2">
-                        <div class="size-2 rounded-full bg-[#A0B5AC] mt-2"></div>
-                        <div class="flex flex-row justify-between ml-2 w-full font-inter text-sm">
-                            <div>
-                                <p class="font-ibm-mono text-[#EFEFEF]">MR01-02 · Farm A</p>
-                                <p class="text-white font-medium">Sem resposta da API</p>
-                            </div>
-                            <p class="text-[#A0B5AC] text-xs">há 35min</p>
-                        </div>
-                    </div>
-                    <div class="flex flex-row border rounded-2xl offline p-2 mt-2">
-                        <div class="size-2 rounded-full bg-[#A0B5AC] mt-2"></div>
-                        <div class="flex flex-row justify-between ml-2 w-full font-inter text-sm">
-                            <div>
-                                <p class="font-ibm-mono text-[#EFEFEF]">MR02-05 · Farm B</p>
-                                <p class="text-white font-medium">Sem resposta da API</p>
-                            </div>
-                            <p class="text-[#A0B5AC] text-xs">há 35min</p>
-                        </div>
-                    </div>
-                    <div class="flex flex-row border rounded-2xl atencao p-2 mt-2">
-                        <div class="size-2 rounded-full bg-[#FFAE00] mt-2"></div>
-                        <div class="flex flex-row justify-between ml-2 w-full font-inter text-sm">
-                            <div>
-                                <p class="font-ibm-mono text-[#EFEFEF]">MR02-05 · Farm B</p>
-                                <p class="text-white font-medium">Temperatura crítica (86 °C)</p>
-                            </div>
-                            <p class="text-[#A0B5AC] text-xs">há 35min</p>
-                        </div>
-                    </div>
-                    <div class="flex flex-row border rounded-2xl atencao p-2 mt-2">
-                        <div class="size-2 rounded-full bg-[#FFAE00] mt-2"></div>
-                        <div class="flex flex-row justify-between ml-2 w-full font-inter text-sm">
-                            <div>
-                                <p class="font-ibm-mono text-[#EFEFEF]">MR02-05 · Farm B</p>
-                                <p class="text-white font-medium">Temperatura crítica (86 °C)</p>
-                            </div>
-                            <p class="text-[#A0B5AC] text-xs">há 35min</p>
-                        </div>
-                    </div>
-                    <div class="flex flex-row border rounded-2xl atencao p-2 mt-2">
-                        <div class="size-2 rounded-full bg-[#FFAE00] mt-2"></div>
-                        <div class="flex flex-row justify-between ml-2 w-full font-inter text-sm">
-                            <div>
-                                <p class="font-ibm-mono text-[#EFEFEF]">MR02-05 · Farm B</p>
-                                <p class="text-white font-medium">Temperatura crítica (86 °C)</p>
-                            </div>
-                            <p class="text-[#A0B5AC] text-xs">há 35min</p>
-                        </div>
-                    </div>
-                    <div class="flex flex-row border rounded-2xl atencao p-2 mt-2">
-                        <div class="size-2 rounded-full bg-[#FFAE00] mt-2"></div>
-                        <div class="flex flex-row justify-between ml-2 w-full font-inter text-sm">
-                            <div>
-                                <p class="font-ibm-mono text-[#EFEFEF]">MR02-05 · Farm B</p>
-                                <p class="text-white font-medium">Temperatura crítica (86 °C)</p>
-                            </div>
-                            <p class="text-[#A0B5AC] text-xs">há 35min</p>
-                        </div>
-                    </div>
-                    <div class="flex flex-row border rounded-2xl atencao p-2 mt-2">
-                        <div class="size-2 rounded-full bg-[#FFAE00] mt-2"></div>
-                        <div class="flex flex-row justify-between ml-2 w-full font-inter text-sm">
-                            <div>
-                                <p class="font-ibm-mono text-[#EFEFEF]">MR02-05 · Farm B</p>
-                                <p class="text-white font-medium">Temperatura crítica (86 °C)</p>
-                            </div>
-                            <p class="text-[#A0B5AC] text-xs">há 35min</p>
-                        </div>
-                    </div>
-                    <div class="flex flex-row border rounded-2xl atencao p-2 mt-2">
-                        <div class="size-2 rounded-full bg-[#FFAE00] mt-2"></div>
-                        <div class="flex flex-row justify-between ml-2 w-full font-inter text-sm">
-                            <div>
-                                <p class="font-ibm-mono text-[#EFEFEF]">MR02-05 · Farm B</p>
-                                <p class="text-white font-medium">Temperatura crítica (86 °C)</p>
-                            </div>
-                            <p class="text-[#A0B5AC] text-xs">há 35min</p>
-                        </div>
-                    </div>
-                    <div class="flex flex-row border rounded-2xl atencao p-2 mt-2">
-                        <div class="size-2 rounded-full bg-[#FFAE00] mt-2"></div>
-                        <div class="flex flex-row justify-between ml-2 w-full font-inter text-sm">
-                            <div>
-                                <p class="font-ibm-mono text-[#EFEFEF]">MR02-05 · Farm B</p>
-                                <p class="text-white font-medium">Temperatura crítica (86 °C)</p>
-                            </div>
-                            <p class="text-[#A0B5AC] text-xs">há 35min</p>
-                        </div>
-                    </div>
-                    <div class="flex flex-row border rounded-2xl atencao p-2 mt-2">
-                        <div class="size-2 rounded-full bg-[#FFAE00] mt-2"></div>
-                        <div class="flex flex-row justify-between ml-2 w-full font-inter text-sm">
-                            <div>
-                                <p class="font-ibm-mono text-[#EFEFEF]">MR02-05 · Farm B</p>
-                                <p class="text-white font-medium">Temperatura crítica (86 °C)</p>
-                            </div>
-                            <p class="text-[#A0B5AC] text-xs">há 35min</p>
-                        </div>
-                    </div>
-                </div>
+            <div id="rig_individual" class="bg-[#0C1F19] border border-[#207F70] pb-6 pt-6 pr-6 pl-6 rounded-2xl">
+                <p>Clique em um dos cards para selecionar uma Rig</p>
             </div>
         </div>
     </div>
 </body>
 </html>
 <script>
+    let lista = []
+    let listaTodas = []
+    let listaIncidente = []
+    let listaAtencao = []
+    let listaCritica = []
+    let listaOff = []
+    let listaOk = []
+    let filtroSelec = "filtro_total"
 
+    window.onload = carregarDadosSite()
+
+    function sortearJSON(){
+        let contador = 0;
+        let contaFarm = 0
+        let setor = 1
+        let idRig = 1
+        let problemas = 10
+        let offlines = 3
+
+        while (contador < 42){
+            contador++
+            let rng = problemas > 0 ? Math.round(Math.random()*(4-1)+1) : 4
+            let problema = Number((Math.random()*(4-1)+1).toFixed(0))
+
+            let farm = contaFarm <= 21? "A":"B"
+            let status = rng == 1? "critico" : rng == 2? "offline" : rng == 3? "atencao" : "ok"
+            let hash = 0
+            let gpu = 0
+            let temperatura = 0
+            let consumo = 0
+            let atualizada = Math.ceil(Math.random()*(120-1)+1)
+            
+            let nomeRig = ""
+
+            if (rng == 1){
+                problemas--
+                if (problema == 1){
+                    // Caso 1 - Alta Temperatura
+                    console.log("Critico 1")
+                    hash = parseFloat((Math.random()*(120-100)+100).toFixed(1))
+                    gpu = Math.ceil(Math.random()*(100-95)+95)
+                    temperatura = Math.ceil(Math.random()*(98-85)+85)
+                    consumo = parseFloat((Math.random()*(3.5-2)+2).toFixed(1))
+
+                } else if (problema == 2){
+                    // Caso 2 - GPU com defeito
+                    console.log("Critico 2")
+                    hash = parseFloat((Math.random()*(50-40)+40).toFixed(1))
+                    gpu = Math.ceil(Math.random()*(70-60)+60)
+                    temperatura = Math.ceil(Math.random()*(65-45)+45)
+                    consumo = parseFloat((Math.random()*(3.5-2)+2).toFixed(1))
+
+                } else if (problema == 3){
+                    // Caso 3 - Hash coletado anormal
+                    console.log("Critico 3")
+                    hash = parseFloat((Math.random()*(12-10)+10).toFixed(1))
+                    gpu = Math.ceil(Math.random()*(100-95)+95)
+                    temperatura = Math.ceil(Math.random()*(65-45)+45)
+                    consumo = parseFloat((Math.random()*(3.5-2)+2).toFixed(1))
+
+                } else if (problema == 4){
+                    // Caso 4 - Gasto excessivo de energia
+                    console.log("Critico 4")
+                    hash = parseFloat((Math.random()*(120-100)+100).toFixed(1))
+                    gpu = Math.ceil(Math.random()*(100-95)+95)
+                    temperatura = Math.ceil(Math.random()*(65-45)+45)
+                    consumo = parseFloat((Math.random()*(10.5-9)+9).toFixed(1))
+                }
+            } else if (rng == 2){
+                if(offlines == 0){
+                    contador--
+                    continue
+                }
+                problemas--
+                offlines--
+                console.log("Offline")
+                status = "offline"
+            } else if (rng == 3){
+                problemas--
+                if (problema == 1){
+                    // Caso 1 - Rig esquentando
+                    console.log("Atencao 1")
+                    hash = parseFloat((Math.random()*(120-100)+100).toFixed(1))
+                    gpu = Math.ceil(Math.random()*(100-95)+95)
+                    temperatura = Math.ceil(Math.random()*(80-71)+71)
+                    consumo = parseFloat((Math.random()*(3.5-2)+2).toFixed(1))
+
+                } else if (problema == 2){
+                    // Caso 2 - GPU anormal
+                    console.log("Atencao 2")
+                    hash = parseFloat((Math.random()*(100-90)+90).toFixed(1))
+                    gpu = Math.ceil(Math.random()*(80-75)+80)
+                    temperatura = Math.ceil(Math.random()*(65-45)+45)
+                    consumo = parseFloat((Math.random()*(3.5-2)+2).toFixed(1))
+
+                } else if (problema == 3){
+                    // Caso 3 - Hash coletado anormal
+                    console.log("Atencao 3")
+                    hash = parseFloat((Math.random()*(90-80)+80).toFixed(1))
+                    gpu = Math.ceil(Math.random()*(100-95)+95)
+                    temperatura = Math.ceil(Math.random()*(65-45)+45)
+                    consumo = parseFloat((Math.random()*(3.5-2)+2).toFixed(1))
+
+                } else if (problema == 4){
+                    // Caso 4 - Gasto excessivo de energia
+                    console.log("Atencao 4")
+                    hash = parseFloat((Math.random()*(120-100)+100).toFixed(1))
+                    gpu = Math.ceil(Math.random()*(100-95)+95)
+                    temperatura = Math.ceil(Math.random()*(65-45)+45)
+                    consumo = parseFloat((Math.random()*(8-4)+4).toFixed(1))
+                }
+            } else {
+                console.log("Ok")
+                hash = parseFloat((Math.random()*(120-100)+100).toFixed(1))
+                gpu = Math.ceil(Math.random()*(100-95)+95)
+                temperatura = Math.ceil(Math.random()*(65-45)+45)
+                consumo = parseFloat((Math.random()*(3.5-2)+2).toFixed(1))
+            }
+
+            if(setor <= 3){
+                if (idRig <= 7){
+                    nomeRig = `MR0${setor}-0${idRig}${farm}`
+                    idRig++
+                } else {
+                    idRig = 1
+                    nomeRig = `MR0${setor}-0${idRig}${farm}`
+                    setor++
+                }
+            } else {
+                setor = 1
+                nomeRig = `MR0${setor}-0${idRig}${farm}`
+            }
+
+            rig = {
+                "nome": nomeRig,
+                "farm": farm,
+                "status": status,
+                "hash": hash,
+                "gpu": gpu,
+                "temperatura": temperatura,
+                "consumo": consumo,
+                "atualizada": atualizada
+            }
+
+            console.log(rig)
+
+            lista.push(rig);
+            contaFarm++
+        }
+
+        lista.forEach(farm => {
+            if (farm.status == "offline"){
+                listaOff.push(farm)
+            } else if (farm.status == "critico"){
+                listaCritica.push(farm)
+            } else if (farm.status == "atencao"){
+                listaAtencao.push(farm)
+            } else if (farm.status == "ok"){
+                listaOk.push(farm)
+            }
+        });
+
+        listaCritica.forEach(rig => {
+            listaIncidente.push(rig)
+            listaTodas.push(rig)
+        })
+
+        listaOff.forEach(rig => {
+            listaIncidente.push(rig)
+            listaTodas.push(rig)
+        })
+
+        listaAtencao.forEach(rig => {
+            listaIncidente.push(rig)
+            listaTodas.push(rig)
+        })
+
+        listaOk.forEach(rig => {
+            listaTodas.push(rig)
+        })
+    }
+
+    function carregarDadosSite(){
+        sortearJSON()
+
+        rigs_total.innerHTML = listaTodas.length
+        rigs_alertas = listaTodas.length-listaOk.length
+        num_ok.innerHTML = listaOk.length
+        num_atencao.innerHTML = listaAtencao.length
+        num_critica.innerHTML = listaCritica.length
+        num_offline.innerHTML = listaOff.length
+        porcento_ok.style.width = `${(100*listaOk.length)/listaTodas.length}%`
+        porcento_atencao.style.width = `${(100*listaAtencao.length)/listaTodas.length}%`
+        porcento_critica.style.width = `${(100*listaCritica.length)/listaTodas.length}%`
+        porcento_offline.style.width = `${(100*listaOff.length)/listaTodas.length}%`
+        rigs_incidente_filtro.innerHTML = listaIncidente.length
+        rigs_criticas_filtro.innerHTML = listaCritica.length
+        rigs_offline_filtro.innerHTML = listaOff.length
+        rigs_atencao_filtro.innerHTML = listaAtencao.length
+        rigs_total_filtro.innerHTML = listaTodas.length
+        console.log(listaTodas.length-listaOff.length)
+        rigs_ativas.innerHTML = listaTodas.length-listaOff.length
+        rigs_total.innerHTML = listaTodas.length
+        rigs_com_alertas.innerHTML = listaTodas.length-listaOk.length
+        alertas_ativos.innerHTML = listaIncidente.length
+
+        let numColunas = Math.floor(listaIncidente.length/7)
+        let somaHash = 0
+        let somaConsumo = 0
+
+        listaTodas.forEach(elemento => {
+            somaHash += Number(elemento.hash)
+            somaConsumo += Number(elemento.consumo)
+        });
+
+        let eficienciaRigs = (somaConsumo*1000)/somaHash
+        eficienciaRigs /= listaTodas.length
+        let eficienciaIdeal = ((2*42)*1000)/(120*42)
+        eficienciaIdeal /= listaTodas.length
+
+
+
+        hashrate_total.innerHTML = (somaHash/1000).toFixed(2)
+        consumo_total.innerHTML = somaConsumo.toFixed(2)
+        eficiencia_rig.innerHTML = eficienciaRigs.toFixed(2)
+        hashrate_ideal.innerHTML = ((120*42)/1000).toFixed(2)
+        consumo_ideal.innerHTML = (2*42).toFixed(2)
+        eficiencia_ideal.innerHTML = `< ${eficienciaIdeal.toFixed(2)}`
+
+
+        let coluna;
+        coluna = document.createElement("div")
+        coluna.id = "caixa_cards"
+        coluna.className = 'md:grid grid-cols-6 mb-2 gap-2 font-space-mono text-[#A0B5AC] transition-all duration-300 ease-in-out max-h-150 overflow-auto scroll-smooth scrollbar-track-transparent scrollbar-thumb-[#207F7035]'
+        for ( let i = 0; i < listaIncidente.length; i++){
+        coluna.innerHTML += `<div  onclick="selecionar('listaIncidente', ${i}, this)" id="${listaIncidente[i].nome}" class=" hover:rig-selecionada cursor-pointer ${listaIncidente[i].status} border h-fit p-3 rounded-2xl">
+    <div class="flex flex-row pb-2">
+        <div class="relative flex size-2 place-self-center">
+            <span class="absolute h-2 w-2 not-in-[.offline]:animate-ping rounded-full not-in-[.offline]:bg-[#00E6A6] opacity-75"></span>
+            <span class="relative size-2 rounded-full not-in-[.offline]:bg-[#00f1ad] bg-[#A0B5AC]"></span>
+        </div>
+        <p class="pl-2">${listaIncidente[i].nome}</p>
+    </div>
+    <p class="pb-2"><span class="text-white text-xl font-bold">${listaIncidente[i].temperatura}</span>°C</p>
+    <p class="text-sm">${listaIncidente[i].hash} TH/s</p>
+    <p class="text-sm mt-3 mb">Farm ${lista[i].farm} · <br> São Paulo</p>
+    <p class="text-xs">há ${listaIncidente[i].atualizada} min</p>
+</div>`
+
+            if (i == listaIncidente.length-1 && coluna.innerHTML != ""){
+                area_rigs.appendChild(coluna)
+            }
+        }
+        area_rigs.appendChild(coluna)
+    }
+
+    function filtro(listaEscolhida,nomeLista,i,filtroEscolhido){
+
+        antiga = document.getElementsByClassName("filtro-selecionado")[0]
+        nova = document.getElementById(filtroEscolhido)
+
+        antiga.classList.toggle('filtro-selecionado')
+        antiga.classList.toggle('filtro')
+        nova.classList.toggle('filtro-selecionado')
+        nova.classList.toggle('filtro')
+
+        caixa_cards.innerHTML = ''
+        for(let i = 0; i < lista.length;i++){
+            caixa_cards.innerHTML += `<div onclick="selecionar('${nomeLista}', ${i}, this)" id="${listaEscolhida[i].nome}" class="${listaEscolhida[i].status} border h-fit p-3 rounded-2xl">
+    <div class="flex flex-row pb-2">
+        <div class="relative flex size-2 place-self-center">
+            <span class="absolute h-2 w-2 not-in-[.offline]:animate-ping rounded-full not-in-[.offline]:bg-[#00E6A6] opacity-75"></span>
+            <span class="relative size-2 rounded-full not-in-[.offline]:bg-[#00f1ad] bg-[#A0B5AC]"></span>
+        </div>
+        <p class="pl-2">${listaEscolhida[i].nome}</p>
+    </div>
+    <p class="pb-2"><span class="text-white text-xl font-bold">${listaEscolhida[i].temperatura}</span>°C</p>
+    <p class="text-sm">${listaEscolhida[i].hash} TH/s</p>
+    <p class="text-sm mt-3 mb">Farm ${listaEscolhida[i].farm} · <br> São Paulo</p>
+    <p class="text-xs">há ${listaEscolhida[i].atualizada} min</p>
+</div>`
+        }
+    }
+
+    function selecionar(nomeLista, i, elemento){
+        let listaSelect = []
+        if(nomeLista == "listaCritica"){
+            listaSelect = JSON.parse(JSON.stringify(listaCritica))
+        } else if(nomeLista == "listaAtencao"){
+            listaSelect = JSON.parse(JSON.stringify(listaAtencao))
+        } else if(nomeLista == "listaTodas"){
+            listaSelect = JSON.parse(JSON.stringify(listaTodas))
+        } else if(nomeLista == "listaIncidente"){
+            listaSelect = JSON.parse(JSON.stringify(listaIncidente))
+        } else if(nomeLista == "listaOff"){
+            listaSelect = JSON.parse(JSON.stringify(listaOff))
+        }
+
+        let statusCard = listaSelect[i].status == "critico"? "Crítico" : listaSelect[i].status == "offline" ? "Offline" : listaSelect[i].status == "atencao"? "Atenção" : "Ok"
+        console.log(nomeLista)
+        console.log(listaSelect)
+
+        let card = document.createElement("div")
+        rig_individual.innerHTML = ""
+        card.innerHTML = `<div class="flex flex-row justify-between">
+                    <div>
+                        <p class="font-inter text-sm mb-5 font-medium">Rig selecionada</p>
+                        <p id="modelo_selecionado" class="font-space-mono font-semibold text-xl">${listaSelect[i].nome}</p>
+                        <p class="font-inter text-sm font-medium"><span id="farm_selecionada">Farm ${listaSelect[i].farm}</span> · São Paulo
+                    </div>
+                    <p id="status_selecionada" class="border border-[#7A0015] bg-[#7A001542] text-[#E00027] text-sm pl-2 pr-2 pt-1 pb-1 rounded-2xl h-fit ${listaSelect[i].status} texto_${listaSelect[i].status}">${statusCard}</p>
+                </div>
+                <div class="flex flex-col gap-2 mt-7 mb-7 text-[#D5D5D5]">
+                    <div class="border border-[#207F70] rounded-2xl pt-2.5 pb-2.5 pr-3 pl-3 flex flex-row justify-between">
+                        <div>
+                            <p class="text-xs font-inter">Hashrate</p>
+                            <p class="font-ibm-mono font-bold"><span id="hash_selecionada">${listaSelect[i].hash}</span> TH/s</p>
+                        </div>
+                        <img src="../../assets/icones-dash/alerta-atencao.svg" id="atencao_hash" class="place-self-center hidden h-5">
+                        <img src="../../assets/icones-dash/alerta-critico.svg" id="critico_hash" class="place-self-center hidden h-5">
+                    </div>
+                    <div class="border border-[#207F70] rounded-2xl pt-2.5 pb-2.5 pr-3 pl-3 flex flex-row justify-between">
+                        <div>
+                            <p class="text-xs font-inter">Temperatura</p>
+                            <p class="font-ibm-mono font-bold"><span id="temperatura_selecionada">${listaSelect[i].temperatura}</span> °C</p>
+                        </div>
+                        <img src="../../assets/icones-dash/alerta-atencao.svg" id="atencao_temperatura" class="place-self-center hidden h-5">
+                        <img src="../../assets/icones-dash/alerta-critico.svg" id="critico_temperatura" class="place-self-center hidden h-5">
+                    </div>
+                    <div class="border border-[#207F70] rounded-2xl pt-2.5 pb-2.5 pr-3 pl-3 flex flex-row justify-between">
+                        <div>
+                            <p class="text-xs font-inter">Consumo</p>
+                            <p class="font-ibm-mono font-bold"><span id="consumo_selecionada">${listaSelect[i].consumo}</span> W</p>
+                        </div>
+                        <img src="../../assets/icones-dash/alerta-atencao.svg" id="atencao_consumo" class="place-self-center hidden h-5">
+                        <img src="../../assets/icones-dash/alerta-critico.svg" id="critico_consumo" class="place-self-center hidden h-5">
+                    </div>
+                    <div class="border border-[#207F70] rounded-2xl pt-2.5 pb-2.5 pr-3 pl-3 flex flex-row justify-between">
+                        <div>
+                            <p class="text-xs font-inter">GPU</p>
+                            <p class="font-ibm-mono font-bold"><span id="gpu_selecionada">${listaSelect[i].gpu}</span>%</p>
+                        </div>
+                        <img src="../../assets/icones-dash/alerta-atencao.svg" id="atencao_gpu" class="place-self-center hidden h-5">
+                        <img src="../../assets/icones-dash/alerta-critico.svg" id="critico_gpu" class="place-self-center hidden h-5">
+                    </div>
+                </div>
+                <button class="bg-[#0D3831] border border-[#207F70] rounded-xl font-inter font-medium w-full p-2 hover:cursor-pointer hover:bg-[#207F7025] transition-colors duration-100 ease-in-out">Abrir Dashboard da Rig</button>`
+        rig_individual.appendChild(card)
+
+        if(listaSelect[i].hash >= 80 && listaSelect[i].hash < 100){
+            atencao_hash.classList.remove("hidden")
+        } else if (listaSelect[i].hash < 80){
+            critico_hash.classList.remove("hidden")
+        } else {
+            atencao_hash.classList.add("hidden")
+            critico_hash.classList.add("hidden")
+        }
+
+        if(listaSelect[i].temperatura >= 65 && listaSelect[i].temperatura < 80){
+            atencao_temperatura.classList.remove("hidden")
+        } else if (listaSelect[i].temperatura > 80){
+            critico_temperatura.classList.remove("hidden")
+        } else {
+            atencao_temperatura.classList.add("hidden")
+            critico_temperatura.classList.add("hidden")
+        }
+
+        if(listaSelect[i].consumo >= 3.6 && listaSelect[i].consumo < 6){
+            atencao_consumo.classList.remove("hidden")
+        } else if (listaSelect[i].consumo > 6){
+            critico_consumo.classList.remove("hidden")
+        } else {
+            atencao_consumo.classList.add("hidden")
+            critico_consumo.classList.add("hidden")
+        }
+
+        if(listaSelect[i].gpu >= 71 && listaSelect[i].gpu < 85){
+            atencao_gpu.classList.remove("hidden")
+        } else if (listaSelect[i].gpu < 71){
+            critico_gpu.classList.remove("hidden")
+        } else {
+            atencao_gpu.classList.add("hidden")
+            critico_gpu.classList.add("hidden")
+        }
+
+        if(listaSelect[i].status == 'offline'){
+            atencao_hash.classList.add("hidden")
+            critico_hash.classList.add("hidden")
+            atencao_temperatura.classList.add("hidden")
+            critico_temperatura.classList.add("hidden")
+            atencao_consumo.classList.add("hidden")
+            critico_consumo.classList.add("hidden")
+            atencao_gpu.classList.add("hidden")
+            critico_gpu.classList.add("hidden")
+        }
+        
+        elementoAtual = document.getElementsByClassName("rig-selecionada")
+        if(elementoAtual.length > 0){
+            elementoAtual[0].classList.remove("rig-selecionada")
+        }
+        elemento.classList.add("rig-selecionada")
+        rig_individual.classList.add("h-full p-5")
+    }
 </script>
