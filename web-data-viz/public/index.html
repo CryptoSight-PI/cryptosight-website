@@ -48,15 +48,15 @@
                 <li class="secoes"><a href="#sexta">Monitoramento</a></li>
             </ul>
             <div class="menu" id="trocar2">
-                <button class="botaomenu">=</button>
-                <div class="conteudodomenut">
-                    <li class="secoes"><a href="">Home</a></li>
-                    <li class="secoes"><a href="#primeira">Sobre nós</a></li>
-                    <li class="secoes"><a href="#quarta">Solução</a></li>
-                    <li class="secoes"><a href="#quinta">Como funciona</a></li>
-                    <li class="secoes"><a href="#sexta">Monitoramento</a></li>
-                    <li class="secoes"><a href="./html/login.html">Entrar</a></li>
-                    <li class="secoes"><a href="./html/cadastro-empresa.html">Fazer cadastro</a></li>
+                <button class="botaomenu" onclick="abrir()">=</button>
+                <div class="conteudodomenut" id="conteudo_menu">
+                    <a href=""><li class="secoes">Home</li></a>
+                    <a href="#primeira"><li class="secoes">Sobre nós</li></a>
+                    <a href="#quarta"><li class="secoes">Solução</li></a>
+                    <a href="#quinta"><li class="secoes">Como funciona</li></a>
+                    <a href="#sexta"><li class="secoes">Monitoramento</li></a>
+                    <a href="./html/login.html"><li class="secoes">Entrar</li></a>
+                    <a href="./html/cadastro-empresa.html"><li class="secoes">Fazer cadastro</li></a>
                 </div>
             </div>
         </nav>
@@ -340,3 +340,12 @@
 
 <script src="./js/animations.js"></script>
 <script src="./js/modelos.js"></script>
+<script>
+    function abrir(){
+        if (conteudo_menu.style.display == 'block'){
+            conteudo_menu.style.display = 'none'
+        } else {
+            conteudo_menu.style.display = 'block'
+        }
+    }
+</script>
