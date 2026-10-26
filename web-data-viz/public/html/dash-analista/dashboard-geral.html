@@ -171,7 +171,7 @@
     <!-- Alertas e mais informações -->
 
         <div>
-            <div id="rig_individual" class="bg-[#0C1F19] border border-[#207F70] pb-6 pt-6 pr-6 pl-6 rounded-2xl mb-5">
+            <div id="rig_individual" class="bg-[#0C1F19] border border-[#207F70] pb-6 pt-6 pr-6 pl-6 rounded-2xl">
                 <p>Clique em um dos cards para selecionar uma Rig</p>
             </div>
         </div>
@@ -491,7 +491,7 @@
                     </div>
                     <p id="status_selecionada" class="border border-[#7A0015] bg-[#7A001542] text-[#E00027] text-sm pl-2 pr-2 pt-1 pb-1 rounded-2xl h-fit ${listaSelect[i].status} texto_${listaSelect[i].status}">${statusCard}</p>
                 </div>
-                <div class="grid grid-cols-2 grid-rows-2 gap-2 mt-3 text-[#D5D5D5]">
+                <div class="flex flex-col gap-2 mt-7 mb-7 text-[#D5D5D5]">
                     <div class="border border-[#207F70] rounded-2xl pt-2.5 pb-2.5 pr-3 pl-3 flex flex-row justify-between">
                         <div>
                             <p class="text-xs font-inter">Hashrate</p>
@@ -525,7 +525,7 @@
                         <img src="../../assets/icones-dash/alerta-critico.svg" id="critico_gpu" class="place-self-center hidden h-5">
                     </div>
                 </div>
-                <button class="bg-[#0D3831] border border-[#207F70] rounded-xl font-inter font-medium w-full p-2 mt-3 hover:cursor-pointer hover:bg-[#207F7025] transition-colors duration-100 ease-in-out">Abrir Dashboard da Rig</button>`
+                <button class="bg-[#0D3831] border border-[#207F70] rounded-xl font-inter font-medium w-full p-2 hover:cursor-pointer hover:bg-[#207F7025] transition-colors duration-100 ease-in-out">Abrir Dashboard da Rig</button>`
         rig_individual.appendChild(card)
 
         if(listaSelect[i].hash >= 80 && listaSelect[i].hash < 100){
@@ -580,5 +580,6 @@
             elementoAtual[0].classList.remove("rig-selecionada")
         }
         elemento.classList.add("rig-selecionada")
+        rig_individual.classList.add("h-full p-5")
     }
 </script>
