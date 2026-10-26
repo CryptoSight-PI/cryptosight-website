@@ -1644,19 +1644,20 @@ footer{
     margin-top: 50px;
 }
 
+.conteudodomenut li{
+    list-style-type: none;
+}
+
 .conteudodomenut a {
     color: white;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
+    font-family: "Inter";
 }
 
 .conteudodomenut a:hover {
     background-color: #00E6A6;
-}
-
-.menu:hover .conteudodomenut {
-    display: block;
 }
 
 /* Fonts */
@@ -1755,12 +1756,14 @@ footer{
 
     @keyframes diminuir1 {
         0% {
+            margin: 10vh 10vw;
             height: 100px;
         }
     }
 
     @keyframes diminuir2 {
         0% {
+            margin: 10vh 10vw;
             font-size: 50px;
         }
     }
@@ -2344,6 +2347,10 @@ footer{
         justify-content: center;
     }
 
+    .body-index{
+        overflow-x: hidden;
+    }
+
     .esquerdaH {
         height: 65%;
         padding: 0 6vw;
@@ -2359,12 +2366,14 @@ footer{
 
     @keyframes diminuir1 {
         0% {
+            margin: 10vh 10vw;
             height: 65px;
         }
     }
 
     @keyframes diminuir2 {
         0% {
+            margin: 10vh 10vw;
             font-size: 30px;
         }
     }
@@ -2576,6 +2585,10 @@ footer{
 }
 
 @media (max-width: 430px) {
+    .body-index{
+        overflow-x: hidden;
+    }
+
     .logo {
         gap: 8px;
     }
@@ -2592,12 +2605,24 @@ footer{
         0% {
             height: 55px;
         }
+
+        100% {
+            margin-left: 10vw;
+            margin-top: 2vh;
+        }
     }
 
     @keyframes diminuir2 {
         0% {
             font-size: 25px;
         }
+        100% {
+            margin-top: 2vh;
+        }
+    }
+
+    .metodos{
+        margin-left: 0px;
     }
 
     .slogan {
