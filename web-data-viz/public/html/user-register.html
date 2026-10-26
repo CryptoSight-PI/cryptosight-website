@@ -481,7 +481,7 @@
                 let cargo = u.cargo == 'SuperAdmin' ? 'Super Admin' : u.cargo
 
                 // coloquei que o super admin não pode ser excluido -YasminEloitaNascimento
-                let botoes = `<button onclick="abrirfarms()" title="Atribuir farms" class="px-5 py-2.5 rounded-lg bg-[#144840] border border-[#207F70]/40 hover:bg-[#1a5e54] text-[#00E6A6] text-sm cursor-pointer"><i class="fa-solid fa-warehouse"></i></button>`
+                let botoes = `<button onclick="abrirfarms(${u.id})" title="Atribuir farms" class="px-5 py-2.5 rounded-lg bg-[#144840] border border-[#207F70]/40 hover:bg-[#1a5e54] text-[#00E6A6] text-sm cursor-pointer"><i class="fa-solid fa-warehouse"></i></button>`
                 if (u.cargo != 'SuperAdmin') {
                     botoes += `
                     <button onclick="abrirEditar(${u.id})" class="px-5 py-2.5 rounded-lg bg-[#144840] border border-[#207F70]/40 hover:bg-[#1a5e54] text-[#00E6A6] text-sm cursor-pointer">Editar</button>
