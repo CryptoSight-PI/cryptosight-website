@@ -3,6 +3,18 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
 @import "tailwindcss";
 
+:root {
+  --bg-color: #0b0f12;
+  --card-bg: rgba(18, 26, 31, 0.7);
+  --border-color: rgba(255, 255, 255, 0.08);
+  --accent-green: #00e676;
+  --accent-green-glow: rgba(0, 230, 118, 0.15);
+  --accent-warning: #ffb300;
+  --text-main: #e2e8f0;
+  --text-muted: #94a3b8;
+}
+
+
 @theme{
     --font-ibm-mono: "IBM Plex Mono";
     --font-space-mono: "Space Mono"
@@ -644,6 +656,7 @@ header {
     position: relative;
     display: flex;
     padding: 0% 8%;
+    overflow-x: clip;
 }
 
 .tituloSolus {
@@ -665,7 +678,7 @@ header {
 
 .solucoes {
     display: grid;
-    grid-template-rows: 1fr 1fr 1fr;
+    gap: 2vh;
 }
 
 .solucao {
@@ -734,15 +747,23 @@ header {
     border-radius: 11px;
     min-width: 0;
     min-height: 0;
+    overflow: hidden;
+}
 
-    img {
-        height: 100%;
-        width: 100%;
-        object-fit: contain;
-        border: 1px solid #00E6A6;
-        background-color: #00E6A6;
-        border-radius: 10px;
-    }
+.solucao img,
+#detec img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 12;
+    align-self: center;
+    object-fit: cover;
+    border: 1px solid #00E6A6;
+    background-color: #00E6A6;
+    border-radius: 10px;
+}#detec img {
+    aspect-ratio: 16 / 12;
+    height: auto;
+    object-fit: fill;
 }
 
 #quinta {
@@ -1037,12 +1058,14 @@ model-viewer {
 }
 
 #setima {
-    height: 100vh;
-    width: 100%;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    gap: 4vh;
+    width: 100%;
+    height: auto;
     position: relative;
+    padding: 12vh 0 8vh;
 }
 
 .titulo-setima {
@@ -1052,10 +1075,7 @@ model-viewer {
     color: transparent;
     font-weight: 900;
     font-size: 50pt;
-    position: absolute;
-    z-index: 99;
-    top: -0.5vh;
-    left: 10vw;
+    text-align: center;
     text-shadow: none;
     filter: drop-shadow(10px 10px 5px black);
 }
@@ -1066,13 +1086,12 @@ model-viewer {
     flex-direction: row;
     align-items: center;
     gap: 1vw;
-    height: 80%;
-    width: 80%;
+    width: min(90%, 800px);
+    height: auto;
     scroll-behavior: smooth;
     anchor-name: --carrossel;
     scroll-snap-type: x mandatory;
     scroll-marker-group: after;
-
 }
 
 .cards-carrossel::-webkit-scrollbar {
@@ -1082,25 +1101,30 @@ model-viewer {
 .cards-carrossel::scroll-button(right),
 .cards-carrossel::scroll-button(left) {
     content: "→";
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    line-height: 1;
     border: none;
     background-color: #00E6A6;
     color: white;
-    font-size: 32pt;
+    font-size: 28pt;
     height: 60px;
     width: 60px;
     border-radius: 50%;
-    padding-bottom: 10%;
     cursor: pointer;
     position: fixed;
     position-anchor: --carrossel;
     position-area: right center;
-    translate: -50%;
+    translate: 12px;
 }
 
 .cards-carrossel::scroll-button(left) {
     content: "←";
     position-area: left center;
-    translate: 50%;
+    translate: -12px;
 }
 
 .cards-carrossel::scroll-button(right):disabled,
@@ -1118,7 +1142,8 @@ model-viewer {
 .card-carrossel {
     flex: 0 0 100%;
     width: 100%;
-    height: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
     object-fit: contain;
     border-radius: 20px;
     border: 1px solid rgba(255, 255, 255, 0.3);
@@ -2022,6 +2047,7 @@ footer{
         display: flex;
         flex-direction: column;
         padding-top: 10vh;
+        overflow-x: clip;
     }
 
     .tituloSolus {
@@ -2060,19 +2086,26 @@ footer{
         flex-direction: column;
     }
 
-    .solucao img,
+    .solucao img {
+        width: 100%;
+        height: auto;
+        max-height: none;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+    }
+
     #detec img {
         width: 100%;
         height: auto;
-        max-height: 50vh;
-        object-fit: contain;
+        max-height: none;
+        aspect-ratio: 16 / 9;
+        object-fit: fill;
     }
-
     .textoSolu {
         height: auto;
-        min-height: 300px;
+        min-height: 0;
         padding: 8%;
-        gap: 4vh;
+        gap: 3vh;
     }
 
     .tituloSolu {
@@ -2227,20 +2260,18 @@ footer{
         font-size: clamp(15px, 3.5vw, 20pt);
     }
 
-    #setima {
-        width: 100%;
-        height: 100vh;
-        min-height: 700px;
-        overflow: hidden;
-    }
-
-    .titulo-setima {
-        position: absolute;
-        top: 5vh;
-        left: 5vw;
-        font-size: clamp(32px, 8vw, 50pt);
-    }
-
+  #setima {
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    overflow: hidden;
+    padding: 12vh 0 6vh;
+    gap: 3vh;
+  }
+  .titulo-setima {
+    position: static;
+    font-size: clamp(32px, 8vw, 50pt);
+  }
     .cards-carrossel {
         width: 90%;
         height: 70%;
@@ -2296,6 +2327,15 @@ footer{
         left: auto;
         font-size: 14pt;
         text-align: center;
+    }
+    @keyframes delado {
+        from { opacity: 0; transform: translateX(-30%); }
+        to { opacity: 1; transform: translateX(0%); }
+    }
+
+    @keyframes deladoD {
+        from { opacity: 0; transform: translateX(30%); }
+        to { opacity: 1; transform: translateX(0%); }
     }
 }
 
@@ -2432,7 +2472,7 @@ footer{
     }
 
     .textoSolu {
-        min-height: 320px;
+        min-height: 0;
         padding: 8%;
     }
 
@@ -2518,17 +2558,8 @@ footer{
         line-height: 1.5;
     }
 
-    #setima {
-        min-height: 650px;
-    }
-
     .titulo-setima {
         font-size: 36px;
-    }
-
-    .cards-carrossel {
-        width: 90%;
-        height: 65%;
     }
 
     footer {
@@ -2643,4 +2674,220 @@ footer{
 .rig-selecionada{
     border-width: 2px !important;
     border-color: #00E6A6 !important; 
+}
+
+body {
+  background-color: var(--bg-color);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: var(--text-main);
+  margin: 0;
+}
+
+.how-it-works {
+  padding: 80px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-header {
+  margin-bottom: 48px;
+}
+
+.section-header .badge {
+  color: var(--accent-green);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.section-header h2 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin: 12px 0;
+  color: #ffffff;
+}
+
+.section-header p {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0;
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.step-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  backdrop-filter: blur(12px);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.step-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(0, 230, 118, 0.3);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 20px var(--accent-green-glow);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.step-number {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.15);
+  line-height: 1;
+}
+
+.step-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(0, 230, 118, 0.1);
+  border: 1px solid rgba(0, 230, 118, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-green);
+}
+
+.step-card h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 12px 0;
+}
+
+.step-card p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0 0 24px 0;
+}
+
+.step-card p strong {
+  color: var(--accent-green);
+}
+
+.card-footer-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.03);
+  padding: 6px 12px;
+  border-radius: 20px;
+  width: fit-content;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--accent-green);
+  box-shadow: 0 0 8px var(--accent-green);
+}
+
+.dot.warning {
+  background-color: var(--accent-warning);
+  box-shadow: 0 0 8px var(--accent-warning);
+}
+
+.site-footer {
+  /* garante que regras antigas do seletor "footer" (altura fixa, largura 100vw, etc.) não interfiram */
+  display: block;
+  position: relative;
+  width: 100%;
+  height: auto;
+  min-height: 0;
+ 
+  background: linear-gradient(180deg, rgba(6, 36, 26, 0) 0%, #06241a 55%, #06241a 100%);
+  border-top: none;
+  box-shadow: none;
+  padding: 120px 20px 48px; /* o padding de cima maior faz o degradê "começar mais cedo" */
+  color: #e2e8f0;
+}
+ 
+/* Tudo empilhado e centralizado */
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 32px;
+}
+ 
+.footer-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+ 
+/* Antes o seletor era img.logo-footer, mas a imagem do HTML não tem essa classe */
+.footer-brand img {
+  width: 80px;
+  height: auto;
+  max-height: 80px;
+  object-fit: contain;
+}
+ 
+.footer-cta {
+  text-align: center;
+}
+ 
+.footer-cta h3 {
+  margin: 0 0 16px 0;
+  font-size: 1.5rem;
+  color: #ffffff;
+}
+ 
+.btn-contract {
+  background-color: #00e676;
+  color: #0b0f12;
+  padding: 12px 32px;
+  border-radius: 8px;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-block;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 0 20px rgba(0, 230, 118, 0.3);
+}
+ 
+.btn-contract:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(0, 230, 118, 0.5);
+}
+ 
+.footer-copy {
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+ 
+.footer-copy p {
+  margin: 0;
 }
