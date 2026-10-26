@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/cadstyle.css">
+  <link rel="icon" href="../assets/imgs/logo.png">
+  <title>Cadastro</title>
+</head>
+
+<body>
+  <div class="quadrados">
+    <div class="union">
+      <img src="../assets/imgs/Union.png" alt="" class="union-normal">
+      <img src="../assets/imgs/union-bright.png" alt="" class="union-bright">
+    </div>
+
+  </div>
+  <main id="gira">
+    <div class="esquerda" >
+      <div class="seta" onclick="history.back()">
+        <img src="../assets/imgs/seta.png" alt="">
+      </div>
+      <div class="logo" onclick="virar()">
+        <img src="../assets/imgs/logo.png" alt=""
+          class="icone">
+        <div class="crypto">CryptoSight</div>
+      </div>
+    </div>
+        <div class="direita">
+            <div class="titulo" id="titulo">Cadastro Administrador Principal</div>
+            <div class="form">
+              <div id="mensagem"></div>
+                <label class="campos esq">
+                    <span class="campo">Nome:</span>
+                    <input type="text" id="nome_input" placeholder="Digite seu nome..">
+                </label>
+                    <label class="campos dir">
+                    <span class="campo">CPF:</span>
+                    <input type="text" id="cpf_input"  placeholder="Digite seu cpf.."  maxlength="12">
+                </label>
+                <label class="campos dir">
+                    <span class="campo">Email:</span>
+                    <input type="email" id="email_input" placeholder="Digite seu email..">
+                </label>
+                <label class="campos esq">
+                    <span class="campo">Senha:</span>
+                    <input type="password" id="senha_input" placeholder="Digite sua senha..">
+                </label>
+                <label class="campos dir">
+                    <span class="campo">Confirmar senha:</span>
+                    <input type="password" id="confirmacao_senha_input" placeholder="Digite sua senha..">
+                </label>
+                <button class="submit" onclick="cadastrar()">CADASTRAR</button>
+            </div>
+        </div>
+</body>
+
+</html>
+
+<script src="../js/animations.js"></script>
+
+<script>
+  if(window.innerWidth<=1024){
+  function virar() {
+    gira.style.transform = "rotateY(180deg)";
+  }
+}
+
+
+  if (!sessionStorage.ID_EMPRESA) {
+    window.location = "cadastro-empresa.html";
+  }
+
+  function cadastrar() {
+
+    var nomeVar = nome_input.value;
+    var cpfVar = cpf_input.value;
+    var emailVar = email_input.value;
+    var senhaVar = senha_input.value;
+    var confirmacaoSenhaVar = confirmacao_senha_input.value;
+    var idEmpresaVar = sessionStorage.ID_EMPRESA;
+
+    if (!idEmpresaVar || isNaN(idEmpresaVar)) {
+      mensagem.innerHTML = "Empresa não encontrada. Cadastre a empresa novamente.";
+      return false;
+    }
+
+
+    if (
+      nomeVar.trim() == "" ||
+      cpfVar.trim() == "" ||
+      emailVar.trim() == "" ||
+      senhaVar.trim() == "" ||
+      confirmacaoSenhaVar.trim() == ""
+    ) {
+
+      mensagem.innerHTML = "Preencha todos os campos"
+      return false;
+    }
+    if(cpfVar.length != 11) {
+
+      mensagem.innerHTML = "CPF precisa ter 11 caracteres"
+      return false;
+    }
+    if(senhaVar != confirmacaoSenhaVar){
+
+        mensagem.innerHTML = "Confirmação de senha falhou"
+        return false;
+    }
+
+    fetch("/usuarios/cadastrarSuperAdmin", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+
+        nome: nomeVar,
+        cpf: cpfVar,
+        email: emailVar,
+        senha: senhaVar,
+        idEmpresa: idEmpresaVar
+      }),
+    })
+      .then(function (resposta) {
+        console.log("resposta: ", resposta);
+
+        if (resposta.ok) {
+
+          setTimeout(() => {
+            window.location = "login.html";
+          }, "2000");
+
+        } else {
+          resposta.text().then(function (texto) {
+            mensagem.innerHTML = texto;
+          });
+          throw "Houve um erro ao tentar realizar o cadastro!";
+        }
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+      });
+
+    return false;
+  }
+
+
+</script>

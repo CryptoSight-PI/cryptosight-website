@@ -25,18 +25,41 @@ function cadastrar(razaoSocial, telefone, email, nomeFantasia, cnpj, senha, idEn
 }
 
 function cadastrarEndereco(cep, uf, cidade, bairro, logradouro, numero, complemento, sede) {
-  var instrucaoSql = `INSERT INTO endereco (cep, id_uf, cidade, bairro, logradouro, numero, complemento, sede) VALUES ('${cep}', '${uf}', '${cidade}', '${bairro}','${logradouro}', '${numero}', '${complemento}', ${sede})`;
+  var buscarCep = `SELECT cep FROM cep WHERE cep = '${cep}'`;
 
-  return database.executar(instrucaoSql);
+  return database.executar(buscarCep).then(function (resultadoCep) {
+
+    if (resultadoCep.length > 0) {
+      return;
+    }
+    var inserirCep = `
+      INSERT INTO cep (cep, logradouro, bairro, cidade, id_uf)
+      VALUES ('${cep}', '${logradouro}', '${bairro}', '${cidade}', '${uf}')
+    `;
+    return database.executar(inserirCep);
+  })
+  .then(function () {
+    var inserirEndereco = `
+      INSERT INTO endereco (cep, numero, complemento, sede)
+      VALUES ('${cep}', '${numero}', '${complemento}', ${sede})
+    `;
+    return database.executar(inserirEndereco);
+  });
 }
 
 function autenticarEmpresa(cnpj, senha) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ", cnpj, senha)
     var instrucaoSql = `
-        SELECT id, cnpj FROM empresa WHERE cnpj = '${cnpj}' AND senha = '${senha}';
+        SELECT id, cnpj FROM empresa WHERE cnpj = '${cnpj}' AND senha = '${senha}';   
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
 
-module.exports = { buscarPorEmail, buscarPorCnpj, buscarPorId, cadastrar, cadastrarEndereco, autenticarEmpresa };
+
+function salvarjira(idempresa , url_jira , token_jira){
+    var instrucaoSql = `update empresa set url_jira = '${url_jira}' , token_jira = '${token_jira}' where id = ${idempresa} ;`;
+    return database.executar(instrucaoSql);
+}
+
+module.exports = { buscarPorEmail, buscarPorCnpj, buscarPorId, cadastrar, cadastrarEndereco, autenticarEmpresa , salvarjira };

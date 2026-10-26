@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="icon" href="../assets/imgs/logo.png">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/output.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body class="pl-20 min-h-screen w-screen bg-linear-135 from-[#0d1412] via-[#09483f] to-[#0d1412] text-white">
+        <!-- Navbar -->
+    <dialog class="bg-[#0C1F19] flex flex-col group h-screen w-15 hover:w-70 transition-all duration-300 ease-in-out pt-5 z-99 overflow-hidden border-r border-[#207F70]" popover="hint" open>
+        <img src="../../assets/imgs/logo.png" class="absolute self-center-safe justify-self-center-safe h-10 group-hover:h-15 transition-all duration-300 ease-in-out">
+   
+        <a href="dashboard-financeira.html">
+        <div class="rounded-2xl flex flex-row pl-2 pr-2 pt-3 pb-3 ml-2 w-13 mt-30 hover:cursor-pointer">
+            <img src="../../assets/icones-dash/dashboard-plus.svg" class="h-5">
+            <p class="hidden group-hover:block text-[#A0B5AC] justify-center self-center text-sm ml-3 text-nowrap font-ibm-mono font-semibold">Dashboard</p>
+        </div>
+        </a>
+        <a href="farm.html">
+        <div class="rounded-2xl flex flex-row pl-2 pr-2 pt-3 pb-3 ml-2 w-13 hover:cursor-pointer">
+            <img src="../../assets/icones-dash/house-plus.svg" class="h-5">
+            <p class="hidden group-hover:block text-[#A0B5AC] justify-center self-center text-sm ml-3 text-nowrap font-ibm-mono font-semibold">Gerenciar Farms</p>
+        </div>
+        </a>
+        <!-- <a href="dispositivos.html">
+        <div class="rounded-2xl flex flex-row pl-2 pr-2 pt-3 pb-3 ml-2 w-13 hover:cursor-pointer">
+            <img src="../../assets/icones-dash/server-plus.svg" class="h-5">
+            <p class="hidden group-hover:block text-[#A0B5AC] justify-center self-center text-sm ml-3 text-nowrap font-ibm-mono font-semibold">Gerenciar Máquinas</p>
+        </div>
+        </a> -->
+        <a href="user-register.html">
+        <div class="rounded-2xl flex flex-row pl-2 pr-2 pt-3 pb-3 ml-2 w-13 hover:cursor-pointer">
+            <img src="../../assets/icones-dash/user-plus.svg" class="h-5">
+            <p class="hidden group-hover:block text-[#A0B5AC] justify-center self-center text-sm ml-3 text-nowrap font-ibm-mono font-semibold">Gerenciar Usuários</p>
+        </div>
+        </a>
+
+        <a href="../../index.html">
+        <div class="absolute rounded-2xl flex flex-row pl-2 pr-2 pt-3 pb-3 ml-3 w-13 hover:cursor-pointer bottom-3">
+            <img src="../../assets/icones-dash/sair.svg" class="h-5">
+            <p class="hidden group-hover:block text-[#A0B5AC] justify-center self-center text-sm ml-3 text-nowrap font-ibm-mono font-semibold">Logout</p>
+        </div>
+        </a>
+    </dialog>
+    <main class="flex-1 p-10">
+        <div class="flex justify-between mb-10">
+            <div class="justify-center items-center m-auto">
+                <h1 class="text-3xl font-bold text-white">Gerenciamento de farms</h1>
+                <p class="text-gray-400 text-sm m-auto flex justify-center">Cadastre e gerencie suas unidades de farms</p>
+            </div>
+        </div>
+
+        <div class="mb-8 flex justify-between">
+            <input id="inputbusca" oninput="buscar()" type="text" placeholder="Pesquisar por nome da farm..." class="w-80 bg-[#0C1F19] text-white px-5 py-3 rounded-xl border border-[#207F70]">
+            <button onclick="abrirModalAdicionarFarm()" class="bg-[#00E6A6] text-black font-bold px-6 py-3 rounded-xl hover:bg-[#00c992] cursor-pointer flex items-center gap-2">
+                + Nova Farm
+            </button>
+        </div>
+
+        <div id="pidfarms" class="flex flex-wrap gap-6">
+
+        </div>
+
+        <p id="vazio" class="hidden text-center text-[#A0B5AC] py-10">Nenhuma farm encontrada.</p>
+
+        
+
+        <dialog id="modal_adicionar_farm" class="w-full p-15 m-auto max-w-xl bg-[#0C1F19] border border-[#207F70]/60 rounded-2xl backdrop:backdrop-blur-sm">
+            <h2 class="text-2xl text-white font-bold pb-4">Nova Farm</h2>
+            <div>
+                <label class="text-white">Nome da farm</label>
+                <input placeholder="Farm x" id="iptnomefarm" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+            </div>
+
+            <div>
+                <label class="text-white">CEP</label>
+                <input oninput="buscarcep('')" maxlength="8" placeholder="01234567" id="iptcepfarm" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+            </div>
+
+            <div>
+                <label class="text-white">Logradouro</label>
+                <input id="iptlogradourofarm" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+            </div>
+
+            <div class="flex justify-between gap-4">
+                <div class="w-full">
+                    <label class="text-white">Bairro</label>
+                    <input id="iptbairrofarm" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+                </div>
+                <div class="w-full">
+                    <label class="text-white">Cidade</label>
+                    <input id="iptcidadefarm" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+                </div>
+            </div>
+
+            <div class="flex justify-between gap-4">
+                <div class="w-full">
+                    <label class="text-white">UF</label>
+                    <select id="iptuffarm" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60"></select>
+                </div>
+                <div class="w-full">
+                    <label class="text-white">Número</label>
+                    <input type="number" id="iptnumerofarm" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+                </div>
+            </div>
+
+            <div>
+                <label class="text-white">Complemento</label>
+                <input id="iptcomplementofarm" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+            </div>
+                        <div class="flex justify-between">
+                <button class="p-3 mt-5 text-white bg-[#00E6A6] rounded-2xl font-bold" onclick="adicionarfarm()">CADASTRAR</button>
+                <button class="p-3 mt-5 rounded-2xl border border-[#207F70]/60 text-[#A0B5AC] hover:text-white font-bold cursor-pointer transition-colors" onclick="modal_adicionar_farm.close()">CANCELAR</button>
+            </div>
+            
+        </dialog>
+
+
+
+
+        <dialog id="modal_adicionar_sessao" class="w-full p-15 m-auto max-w-xl bg-[#0C1F19] border border-[#207F70]/60 rounded-2xl backdrop:backdrop-blur-sm">
+            <h2 class="text-2xl text-white font-bold pb-4">Nova Sessão</h2>
+            <div>
+                <label class="text-white">Nome da Sessão</label>
+                <input placeholder="Sessão A" id="iptnomesessao" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+            </div>
+
+            <div>
+                <label class="text-white">Descricão da Sessão</label>
+                <input placeholder="Sessão principal de Asics" id="iptdescsessao" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+            </div>
+
+            <div class="flex justify-between">
+                <button class="p-3 mt-5 text-white bg-[#00E6A6] rounded-2xl font-bold" onclick="adicionarsessao()">CADASTRAR</button>
+                <button class="p-3 mt-5 rounded-2xl border border-[#207F70]/60 text-[#A0B5AC] hover:text-white font-bold cursor-pointer transition-colors" onclick="modal_adicionar_sessao.close()">CANCELAR</button>
+            </div>
+        </dialog>
+
+
+
+        <dialog id="modal_editar_sessao" class="w-full p-15 m-auto max-w-xl bg-[#0C1F19] border border-[#207F70]/60 rounded-2xl backdrop:backdrop-blur-sm">
+            <h2 class="text-2xl text-white font-bold pb-4">Editar Sessão</h2>
+            <div>
+                <label class="text-white">Nome da Sessão</label>
+                <input placeholder="Sessão A" id="iptnomesessaoeditada" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+            </div>
+
+            <div>
+                <label class="text-white">Descricão da Sessão</label>
+                <input placeholder="Sessão principal de Asics" id="iptdescsessaoeditada" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+            </div>
+
+            <div class="flex justify-between">
+                <button class="p-3 mt-5 text-white bg-[#00E6A6] rounded-2xl font-bold" onclick="editarsessao()">EDITAR</button>
+                <button class="p-3 mt-5 rounded-2xl border border-[#207F70]/60 text-[#A0B5AC] hover:text-white font-bold cursor-pointer transition-colors" onclick="modal_editar_sessao.close()">CANCELAR</button>
+            </div>
+        </dialog>
+
+
+
+
+        <dialog id="modal_excluir_sessao" class="m-auto max-w-xl p-5 bg-[#0C1F19] border border-[#207F70]/60 rounded-2xl backdrop:backdrop-blur-sm">
+            <div>
+                <h1 class="font-bold text-white">Certeza que deseja excluir essa Sessão?</h1>
+                <div class="flex justify-between gap-4">
+                    <button class="p-3 mt-5 text-white bg-[#00E6A6] rounded-2xl font-bold" onclick="modal_excluir_sessao.close() ; excluirsessao()">EXCLUIR</button>
+                    <button class="p-3 mt-5 rounded-2xl border border-[#207F70]/60 text-[#A0B5AC] hover:text-white font-bold cursor-pointer" onclick="modal_excluir_sessao.close()">CANCELAR</button>
+                </div>
+            </div>
+        </dialog>
+
+
+        <dialog id="modal_editar_farm" class="w-full p-15 m-auto max-w-xl bg-[#0C1F19] border border-[#207F70]/60 rounded-2xl backdrop:backdrop-blur-sm">
+            <h2 class="text-2xl text-white font-bold pb-4">Editar Farm</h2>
+            <div>
+                <label class="text-white">Nome da farm</label>
+                <input placeholder="Farm x" id="iptnomefarmeditado" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+            </div>
+
+            <div>
+                <label class="text-white">CEP</label>
+                <input oninput="buscarcep('editado')" placeholder="01234567" id="iptcepfarmeditado" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+            </div>
+
+            <div>
+                <label class="text-white">Logradouro</label>
+                <input id="iptlogradourofarmeditado" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+            </div>
+
+            <div class="flex justify-between gap-4">
+                <div class="w-full">
+                    <label class="text-white">Bairro</label>
+                    <input id="iptbairrofarmeditado" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+                </div>
+                <div class="w-full">
+                    <label class="text-white">Cidade</label>
+                    <input placeholder="São Paulo" id="iptcidadefarmeditado" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+                </div>
+            </div>
+
+            <div class="flex justify-between gap-4">
+                <div class="w-full">
+                    <label class="text-white">UF</label>
+                    <select id="iptuffarmeditado" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60"></select>
+                </div>
+                <div class="w-full">
+                    <label class="text-white">Número</label>
+                    <input placeholder="12" type="number" id="iptnumerofarmeditado" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+                </div>
+            </div>
+
+            <div>
+                <label class="text-white">Complemento</label>
+                <input id="iptcomplementofarmeditado" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+            </div>
+
+            <div class="flex justify-between">
+                <button class="p-3 mt-5 text-white bg-[#00E6A6] rounded-2xl font-bold cursor-pointer" onclick="editarfarm()">EDITAR</button>
+                <button class="p-3 mt-5 rounded-2xl border border-[#207F70]/60 text-[#A0B5AC] hover:text-white font-bold cursor-pointer transition-colors" onclick="modal_editar_farm.close()">CANCELAR</button>
+            </div>
+        </dialog>
+
+        <dialog id="modal_excluir_farm" class="m-auto max-w-xl p-5 bg-[#0C1F19] border border-[#207F70]/60 rounded-2xl backdrop:backdrop-blur-sm">
+            <div>
+                <h1 class="font-bold text-white mb-2">Certeza que deseja excluir essa Farm?</h1>
+                <div class="flex justify-between gap-4">
+                    <button class="p-3 mt-5 text-white bg-[#00E6A6] rounded-2xl font-bold cursor-pointer" onclick="excluirfarm()">EXCLUIR</button>
+                    <button class="p-3 mt-5 rounded-2xl border border-[#207F70]/60 text-[#A0B5AC] hover:text-white font-bold cursor-pointer" onclick="document.getElementById('modal_excluir_farm').close()">CANCELAR</button>
+                </div>
+            </div>
+        </dialog>
+
+        
+
+    </main>
+
+    <script>
+    let id_empresa = sessionStorage.ID_EMPRESA;
+
+    let farms = [];
+    let sessoes = [];
+    let idfarmSessao = null;
+    let idsessaoeditada = null;
+    let idsessaoexcluida = null;
+
+    function buscar(){
+            let texto = inputbusca.value.toLowerCase();
+            let itens = document.querySelectorAll('.farm');
+            let visiveis = 0;
+
+            for (let i = 0; i < itens.length; i++) {
+                
+                if (itens[i].textContent.toLowerCase().includes(texto)) {
+                    itens[i].style.display = "";
+                    visiveis++;
+                } else {
+                    itens[i].style.display = "none";
+                }
+            }
+            vazio.style.display = visiveis > 0 ? "none" : "block";
+        }
+
+
+    function listarfarms() {
+        fetch(`/farms/list/${id_empresa}`)
+            .then((resposta) => {
+                if (resposta.ok) {
+                    resposta.json().then((lista) => {
+                        farms = lista;
+                        pidfarms.innerHTML = "";
+
+                        if (lista.length == 0) {
+                            vazio.style.display = "block";
+                            return;
+                        }
+                        vazio.style.display = "none";
+
+                        for (let i = 0; i < lista.length; i++) {
+                            let f = lista[i];
+                            let data = new Date(f.criacao).toLocaleDateString("pt-BR");
+
+                            pidfarms.innerHTML += `
+                            <div class="farm w-100 p-6 bg-[#0C1F19] border border-[#207F70] rounded-2xl flex flex-col justify-between">
+                                <div>
+                                    <h2 class="text-xl font-bold text-white">${f.nome}</h2>
+                                    <p class="text-sm text-gray-400">${f.cidade} - ${f.sigla}</p>
+                                    <p class="text-xs text-gray-400">${f.logradouro}, ${f.numero}${f.complemento ? " - " + f.complemento : ""}</p>
+                                    <p class="text-xs text-gray-400">CEP: ${f.cep}</p>
+                                    <p class="text-xs text-gray-400 mb-4">Criado em: ${data}</p>
+
+                                    <div class="pt-4 mb-4">
+                                        <div class="flex justify-between items-center mb-2">
+                                            <span class="text-xs font-bold text-[#00E6A6]">SESSÕES DA FARM</span>
+                                            <button onclick="abrirModalAdicionarSessao(${f.id})" class="text-xs bg-[#144840] hover:bg-[#1a5e54] text-[#00E6A6] px-2.5 py-1 rounded-lg cursor-pointer">
+                                                + Nova Sessão
+                                            </button>
+                                        </div>
+                                        <div id="sessoes_${f.id}" class="flex flex-col gap-3"></div>
+                                    </div>
+                                </div>
+
+                                <div class="flex gap-2">
+                                    <button onclick="mostrarmodaleditarfarm(${f.id})" class="flex-1 py-2 rounded-lg bg-[#144840] border border-[#207F70]/40 hover:bg-[#1a5e54] text-[#00E6A6] text-xs cursor-pointer flex items-center justify-center gap-1.5">
+                                        <i class="fa-solid fa-pen-to-square"></i> Editar Farm
+                                    </button>
+                                    <button onclick="mostrarmodalexcluirfarm(${f.id})" class="flex-1 py-2 rounded-lg bg-[#7A0015]/30 border border-[#E00027]/40 hover:bg-red-900/50 text-red-400 text-xs cursor-pointer flex items-center justify-center gap-1.5">
+                                        <i class="fa-solid fa-trash-can"></i> Excluir Farm
+                                    </button>
+                                </div>
+                            </div>`;
+                            listarsessoes(f.id);
+                        }
+                    });
+                }
+            })
+            .catch((erro) => console.log(erro));
+    }
+
+    listarfarms();
+
+    function buscarcep(sufixo) {
+        let cep = document.getElementById(`iptcepfarm${sufixo}`).value.replace(/\D/g, "");
+        if (cep.length !== 8) return;
+
+        fetch(`https://viacep.com.br/ws/${cep}/json/`)
+            .then((r) => r.json())
+            .then((d) => {
+                if (d.erro) {
+                    alert("CEP não encontrado.");
+                    return;
+                }
+                document.getElementById(`iptlogradourofarm${sufixo}`).value = d.logradouro;
+                document.getElementById(`iptbairrofarm${sufixo}`).value = d.bairro;
+                document.getElementById(`iptcidadefarm${sufixo}`).value = d.localidade;
+                selecionaruf(sufixo, d.uf);
+            })
+            .catch((erro) => console.log(erro));
+    }
+
+
+    let ufs = [];
+
+    function carregarufs() {
+        fetch(`/ufs/listarEstados`)   
+            .then((r) => r.json())
+            .then((lista) => {
+                ufs = lista;
+                for (let sufixo of ["", "editado"]) {
+                    let sel = document.getElementById(`iptuffarm${sufixo}`);
+                    sel.innerHTML = "";
+                    for (let i = 0; i < lista.length; i++) {
+                        sel.innerHTML += `<option value="${lista[i].id}" class="bg-[#0C1F19]">${lista[i].sigla}</option>`;
+                    }
+                }
+            })
+            .catch((erro) => console.log(erro));
+    }
+
+    carregarufs();
+
+    function selecionaruf(sufixo, sigla) {
+        let uf = ufs.find((u) => u.sigla == sigla);
+        if (uf) document.getElementById(`iptuffarm${sufixo}`).value = uf.id;
+    }
+
+    function pegarcampos(sufixo) {
+        let v = (nome) => document.getElementById(`ipt${nome}farm${sufixo}`).value.trim();
+        return {
+            nome: v("nome"),
+            cep: v("cep"),
+            logradouro: v("logradouro"),
+            bairro: v("bairro"),
+            cidade: v("cidade"),
+            id_uf: v("uf"),
+            numero: v("numero"),
+            complemento: v("complemento")
+        };
+    }
+
+    function camposvalidos(c) {
+        return c.nome != "" && c.cep.length == 8 && c.logradouro != "" && c.bairro != "" && c.cidade != "" && c.id_uf != "" && c.numero != "";
+    }
+
+    function abrirModalAdicionarFarm() {
+    document.getElementById("iptnomefarm").value = "";
+    document.getElementById("iptcepfarm").value = "";
+    document.getElementById("iptlogradourofarm").value = "";
+    document.getElementById("iptbairrofarm").value = "";
+    document.getElementById("iptcidadefarm").value = "";
+    document.getElementById("iptnumerofarm").value = "";
+    document.getElementById("iptcomplementofarm").value = "";
+    
+    document.getElementById("modal_adicionar_farm").showModal();
+}
+
+    function adicionarfarm() {
+        let campos = pegarcampos("");
+
+        if (!camposvalidos(campos)) {
+            alert("Preencha todos os campos (CEP com 8 dígitos).");
+            return;
+        }
+        campos.id_empresa = id_empresa;
+
+        fetch(`/farms/create`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(campos)
+        })
+        .then((resposta) => {
+            if (resposta.ok) {
+                alert("Farm cadastrada com sucesso!");
+                modal_adicionar_farm.close();
+                listarfarms();
+            } else {
+                resposta.text().then((t) => alert("Erro ao cadastrar: " + t));
+            }
+        })
+        .catch((erro) => {
+            console.log(erro);
+            alert("Erro de conexão com o servidor.");
+        });
+    }
+
+    let idfarmeditada = null;
+
+    function mostrarmodaleditarfarm(id) {
+        let f = farms.find((x) => x.id == id);
+        idfarmeditada = id;
+
+        iptnomefarmeditado.value = f.nome;
+        iptcepfarmeditado.value = f.cep;
+        iptlogradourofarmeditado.value = f.logradouro;
+        iptbairrofarmeditado.value = f.bairro;
+        iptcidadefarmeditado.value = f.cidade;
+        iptuffarmeditado.value = f.id_uf;
+        iptnumerofarmeditado.value = f.numero;
+        iptcomplementofarmeditado.value = f.complemento || "";
+
+        modal_editar_farm.showModal();
+    }
+
+    function editarfarm() {
+        let campos = pegarcampos("editado");
+
+        if (!camposvalidos(campos)) {
+            alert("Preencha todos os campos (CEP com 8 dígitos).");
+            return;
+        }
+
+        fetch(`/farms/update/${idfarmeditada}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(campos)
+        })
+        .then((resposta) => {
+            if (resposta.ok) {
+                alert("Farm atualizada!");
+                modal_editar_farm.close();
+                listarfarms();
+            } else {
+                resposta.text().then((t) => alert("Erro ao editar: " + t));
+            }
+        })
+        .catch((erro) => {
+            console.log(erro);
+            alert("Erro de conexão com o servidor.");
+        });
+    }
+
+    let idfarmexcluida = null;
+
+    function mostrarmodalexcluirfarm(id) {
+        idfarmexcluida = id;
+        let modalExcluir = document.getElementById("modal_excluir_farm");
+        if (modalExcluir) {
+            modalExcluir.showModal();
+        } else {
+            console.error("Modal de excluir farm não encontrado no HTML!");
+        }
+    }
+
+    function excluirfarm() {
+        fetch(`/farms/delete/${idfarmexcluida}`, { method: "DELETE" })
+            .then((resposta) => {
+                if (resposta.ok) {
+                    alert("Farm excluída!");
+                    modal_excluir_farm.close();
+                    listarfarms();
+                } else {
+                    resposta.text().then((resposta) => 
+                    alert(resposta));
+                }
+            })
+            .catch((erro) => {
+                console.log(erro);
+                alert("Erro de conexão com o servidor.");
+            });
+    }
+
+    function listarsessoes(idfarm) {
+        fetch(`/sessoes/listar/${idfarm}`)
+            .then(resposta => {
+                if (!resposta.ok) {
+                    throw new Error("Erro ao buscar sessões");
+                }
+
+                return resposta.json();
+            })
+            .then(lista => {
+                sessoes = sessoes.filter(s => s.id_farm != idfarm);
+                sessoes.push(...lista);
+
+                let pid = document.getElementById(`sessoes_${idfarm}`);
+
+            
+                pid.innerHTML = "";
+
+                if (lista.length === 0) {
+                    pid.innerHTML = `
+                        <p class="text-xs text-gray-500">
+                            Nenhuma sessão cadastrada.
+                        </p>
+                    `;
+                    return;
+                }
+
+                lista.forEach(s => {
+                    pid.innerHTML += `
+                        <div class="flex justify-between items-center gap-3
+                            bg-[#101b18] p-3 rounded-xl border border-[#207F70]/40">
+
+                            <div class="min-w-0">
+                                <p class="text-sm text-white font-semibold">
+                                    ${s.nome}
+                                </p>
+                                <p class="text-xs text-gray-400">
+                                    ${s.descricao || ""}
+                                </p>
+                            </div>
+
+                            <div class="flex items-center gap-2 shrink-0">
+                                <button
+                                    onclick="dispositivoabrir(${Number(s.id)})"
+                                    class="text-xs bg-[#00E6A6]/10 border border-[#00E6A6]
+                                    text-[#00E6A6] px-2.5 py-1.5 rounded-lg
+                                    hover:bg-[#00E6A6] hover:text-black cursor-pointer">
+                                    Máquinas <i class="fa-solid fa-arrow-right"></i>
+                                </button>
+
+                                <button
+                                    onclick="mostrarmodaleditarsessao(${Number(s.id)})"
+                                    class="text-xs text-[#00E6A6] hover:text-[#00c992] cursor-pointer">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </button>
+
+                                <button
+                                    onclick="mostrarmodalexcluirsessao(${Number(s.id)})"
+                                    class="text-xs text-red-400 hover:text-red-300 cursor-pointer">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+            }).catch(erro => {
+                console.error(erro);
+
+                let pid = document.getElementById(`sessoes_${idfarm}`); 
+                    pid.innerHTML = `
+                        <p class="text-xs text-red-400">
+                            Não foi possível carregar as sessões.
+                        </p>
+                    `;
+                
+            });
+    }
+
+    
+function abrirModalAdicionarSessao(idfarm) {
+    idfarmSessao = idfarm;
+
+    document.getElementById("iptnomesessao").value = "";
+    document.getElementById("iptdescsessao").value = "";
+    document.getElementById("modal_adicionar_sessao").showModal();
+}
+
+function adicionarsessao() {
+    let nome = document.getElementById("iptnomesessao").value.trim();
+    let descricao = document.getElementById("iptdescsessao").value.trim();
+
+    if (!idfarmSessao || !nome || !descricao) {
+        alert("Selecione uma farm e preencha os campos.");
+        return;
+    }
+
+    fetch(`/sessoes/cadastrar/${idfarmSessao}`, { method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            nomesessao: nome,
+            descsessao: descricao
+        })
+    }).then((resposta) => {
+        if(resposta.ok){
+            return resposta.text();
+        }
+    }).then(() => {
+        document.getElementById("modal_adicionar_sessao").close();
+        listarsessoes(idfarmSessao);
+        alert("Sessão cadastrada!");
+    })
+    .catch((erro) => {
+        console.error(erro);
+    });
+}
+
+function mostrarmodaleditarsessao(id) {
+    const sessao = sessoes.find(s => s.id == id);
+
+    if (!sessao) {
+        alert("Sessão não encontrada.");
+        return;
+    }
+
+    idsessaoeditada = id;
+
+    document.getElementById("iptnomesessaoeditada").value = sessao.nome;
+    document.getElementById("iptdescsessaoeditada").value = sessao.descricao || "";
+    document.getElementById("modal_editar_sessao").showModal();
+}
+
+function editarsessao() {
+    const nome = document.getElementById("iptnomesessaoeditada").value.trim();
+    const descricao = document.getElementById("iptdescsessaoeditada").value.trim();
+
+    const sessao = sessoes.find(s => s.id == idsessaoeditada);
+
+    if (!sessao || !nome) {
+        alert("Preencha o nome da sessão.");
+        return;
+    }
+
+    fetch(`/sessoes/atualizar/${idsessaoeditada}`, { method: "PUT", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+            nomesessaoeditado: nome, 
+            descsessaoeditado: descricao 
+        })
+    }).then((resposta) => {
+        if (resposta.ok) {
+            return resposta.text();
+        }
+        
+    }).then(() => {
+        document.getElementById("modal_editar_sessao").close();
+        listarsessoes(sessao.id_farm);
+        alert("Sessão editada com sucesso!");
+    })
+    .catch((erro) => {
+        console.error(erro);
+       
+    });
+}
+
+
+function mostrarmodalexcluirsessao(id) {
+    idsessaoexcluida = id;
+    document.getElementById("modal_excluir_sessao").showModal();
+}
+
+function excluirsessao() {
+    let sessao = sessoes.find(s => s.id == idsessaoexcluida);
+
+    if (!sessao) {
+        alert("Sessão não encontrada.");
+        return;
+    }
+
+    fetch(`/sessoes/excluir/${idsessaoexcluida}`, {
+        method: "DELETE"
+    })
+    .then((resposta) => {
+        if(resposta.ok){
+            return resposta.text();
+        }
+        
+    })
+    .then(() => {
+        document.getElementById("modal_excluir_sessao").close();
+        listarsessoes(sessao.id_farm);
+        alert("Sessão excluída!");
+    })
+    .catch((erro) => {
+       console.log(erro)
+    });
+}
+
+function dispositivoabrir(id) {
+    let sessao = sessoes.find(s => s.id == id);
+
+    window.location.href =
+        `dispositivos.html?sessao=${encodeURIComponent(sessao.nome)}&id=${sessao.id}`;
+}
+
+    </script>
+</body>
+</html>

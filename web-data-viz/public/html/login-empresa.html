@@ -43,8 +43,8 @@
                     <span class="campo">Senha:</span>
                     <input type="password" id="senha_input" placeholder="Digite sua senha..">
                 </label>
-                <div class="conta">Ainda não possui uma <a href="cadastroEmpresa.html">conta</a>?</div>
-
+                <div class="conta">Ainda não possui uma <a href="cadastro-empresa.html">conta</a>?</div>
+            
                 <button class="submit" onclick="entrar()">ENTRAR</button>
             </div>
         </div>
@@ -105,7 +105,7 @@
                     sessionStorage.NOME_FANTASIA = json.nomeFantasia;
 
                     setTimeout(function () {
-                        window.location = "dashboard.html";
+                        window.location = "./dash-analista/dashboard-geral.html";
                     }, 1000); // apenas para exibir o loading
 
                 });

@@ -20,5 +20,9 @@ router.post("/autenticar", function (req, res) {
     empresaController.autenticarEmpresa(req, res);
 });
 
+router.put("/salvarjira" , function(req , res) {
+    empresaController.salvarjira(req , res);
+})
+
 
 module.exports = router;

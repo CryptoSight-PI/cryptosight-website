@@ -14,6 +14,7 @@
 </head>
 
 <body onload="listar()">
+  
   <div class="quadrados">
     <div class="union">
       <img src="../assets/imgs/Union.png" alt="" class="union-normal">
@@ -64,11 +65,11 @@
             <span class="campo">Confirmar senha:</span>
             <input type="password" id="confirmacao_senha_input" placeholder="Digite sua senha..">
           </label>
-            <label class="campos dir">
+          <label class="campos dir">
             <span class="campo">Cep:</span>
-            <input id="cep_input" type="text" placeholder="Digite o CEP" />
-          </label>
-         <label class="campos dir">
+           <input id="cep_input" type="text" placeholder="Digite o CEP" oninput="cepAtivo()" maxlength="8" />
+           </label>
+            <label class="campos dir">
               <span class="campo">Estado:</span>
               <select id="uf_input">
                 <option value="" disabled selected hidden>Selecione</option>
@@ -94,7 +95,7 @@
             <span class="campo">Complemento:</span>
             <input id="complemento_input" type="text" placeholder="Opcional" />
           </label>
-          <div class="conta">Já possui uma <a href="loginEmpresa.html">conta</a>?</div>
+          <div class="conta">Já possui uma <a href="login-empresa.html">conta</a>?</div>
           <button class="submit" onclick="cadastrarEmpresa()">CADASTRAR</button>
         </div>
       </div>
@@ -103,11 +104,57 @@
 
 </html>
 
-<script src="animations.js"></script>
+<script src="../js/animations.js"></script>
 <script>
 
+  function listar() {
+    fetch("/ufs/listarEstados", {
+      method: "GET",
+    })
+      .then(function (resposta) {
+        resposta.json().then((ufs) => {
+          ufs.forEach((uf) => {
+            uf_input.innerHTML += `<option value="${uf.id}">${uf.sigla}</option>`;
+          });
+        });
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+      });
+  }
+
+ function cepAtivo() {
+    let cep = cep_input.value.replace(/\D/g, '');
+
+    if (cep.length === 8) {
+      fetch(`https://viacep.com.br/ws/${cep}/json/`)
+        .then(response => response.json())
+        .then(data => {
+          if (!('erro' in data)) {
+            document.getElementById('logradouro_input').value = data.logradouro;
+            document.getElementById('bairro_input').value = data.bairro;
+            document.getElementById('cidade_input').value = data.localidade;
+
+        
+            let selectUf = document.getElementById('uf_input');
+            for (let i = 0; i < selectUf.options.length; i++) {
+          
+              if (selectUf.options[i].text.includes(data.uf)) {
+                selectUf.selectedIndex = i;
+                break;
+              }
+            }
+          } else {
+            alert("CEP não encontrado.");
+          }
+        })
+        .catch(error => {
+          console.log("Erro ao buscar CEP:", error);
+        });
+    }
+  }
+
   function cadastrarEmpresa() {
-   
     var razaoSocialVar = razaoSocial_input.value;
     var telefoneVar = telefone_input.value;
     var emailVar = email_input.value;
@@ -117,7 +164,7 @@
     var confirmacaoSenhaVar = confirmacao_senha_input.value;
 
     var cepVar = cep_input.value;
-    var ufVar = uf_input.value;
+    var ufVar = uf_input.value; 
     var cidadeVar = cidade_input.value;
     var bairroVar = bairro_input.value;
     var logradouroVar = logradouro_input.value;
@@ -130,7 +177,9 @@
     let arroba_antes_ponto_com = indice_arroba < indice_ponto_com - 1;
     let termina_em_ponto_com = emailVar.endsWith(".com");
 
-    // Verificando se há algum campo em branco
+    console.log("Validador iniciado...");
+    console.log("UF selecionada (ID):", ufVar);
+
     if (
       razaoSocialVar.trim() == "" ||
       telefoneVar.trim() == "" ||
@@ -140,88 +189,51 @@
       senhaVar.trim() == "" ||
       confirmacaoSenhaVar.trim() == "" ||
       cepVar.trim() == "" ||
-      ufVar.trim() == "" ||
+      ufVar == "" ||
       cidadeVar.trim() == "" ||
       bairroVar.trim() == "" ||
       logradouroVar.trim() == "" ||
       numeroVar.trim() == ""
     ) {
-      // cardErro.style.display = "block";
-      // mensagem_erro.innerHTML = "Preencha todos os campos obrigatórios ";
-
-      
+      console.log("ERRO: Há campos em branco!");
+      alert("Preencha todos os campos obrigatórios!");
       return;
-
-    } else if (razaoSocialVar.trim().length < 5) {
-
-      // cardErro.style.display = "block";
-      // mensagem_erro.innerHTML = "Razão Social deve possuir no mínimo 5 caracteres";
-
+     } else if (telefoneVar.length != 11 || isNaN(telefoneVar)) {
+      console.log("ERRO: Telefone inválido");
       return;
-
-    } else if (telefoneVar.length != 11 || isNaN(telefoneVar)) {
-
-      // cardErro.style.display = "block";
-      // mensagem_erro.innerHTML = "Telefone inválido";
+    } else if (!(arroba_antes_ponto_com && indice_arroba > -1 && indice_ponto_com > -1 && termina_em_ponto_com)) {
+      console.log("ERRO: Email inválido");
       return;
-
-    } else if (!(arroba_antes_ponto_com &&
-      indice_arroba > -1 &&
-      indice_ponto_com > -1 &&
-      termina_em_ponto_com)) {
-
-      // cardErro.style.display = "block";
-      // mensagem_erro.innerHTML = "Email inválido";
-      return;
-
-    } else if (nomeFantasiaVar.trim().length < 3) {
-
-      // cardErro.style.display = "block";
-      // mensagem_erro.innerHTML = "Nome Fantasia deve possuir no mínimo 3 caracteres";
-      return;
-
     } else if (cnpjVar.length != 14 || isNaN(cnpjVar)) {
-
-      // cardErro.style.display = "block";
-      // mensagem_erro.innerHTML = "CNPJ inválido";
+      console.log("ERRO: CNPJ inválido (precisa ter 14 números sem pontos/traços)");
       return;
-
     } else if (senhaVar.length < 6) {
-
-      // cardErro.style.display = "block";
-      // mensagem_erro.innerHTML = "Senha inválida: Mínimo 6 caracteres";
+      console.log("ERRO: Senha curta");
       return;
-
     } else if (senhaVar != confirmacaoSenhaVar) {
-
-      // cardErro.style.display = "block";
-      // mensagem_erro.innerHTML = "As senhas precisam estar iguais";
+      console.log("ERRO: Senhas não conferem");
       return;
-
     } else if (cepVar.length != 8 || isNaN(cepVar)) {
-
-      // cardErro.style.display = "block";
-      // mensagem_erro.innerHTML = "CEP inválido";
+      console.log("ERRO: CEP inválido");
       return;
-
     }
 
-    // Enviando o valor da nova input
+    console.log("Validações passaram! Enviando fetch para o back-end...");
+
+
+
     fetch("/empresas/cadastrar", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        // crie um atributo que recebe o valor recuperado aqui
-        // Agora vá para o arquivo routes/usuario.js
         razaoSocial: razaoSocialVar,
         telefone: telefoneVar,
         email: emailVar,
         nomeFantasia: nomeFantasiaVar,
         cnpj: cnpjVar,
         senha: senhaVar,
-
         cep: cepVar,
         uf: ufVar,
         cidade: cidadeVar,
@@ -230,47 +242,32 @@
         numero: numeroVar,
         complemento: complementoVar,
         sede: sedeVar
-
       }),
     })
       .then(function (resposta) {
+        console.log("Resposta recebida do servidor: ", resposta);
 
-        console.log("resposta: ", resposta);
-
-        if (resposta.ok) {
-
-          // cardErro.style.display = "block";
-
-          // mensagem_erro.innerHTML =
-            // "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
-
-          setTimeout(() => {
-            window.location = "loginEmpresa.html";
-          }, 2000);
-
-
-        } else {
-
-          return resposta.json().then(function (dados) {
-
-            // cardErro.style.display = "block";
-            // mensagem_erro.innerHTML = dados.mensagem;
-
+          if (resposta.ok) {
+               resposta.json().then(function (dados) {
+              sessionStorage.ID_EMPRESA = dados.idEmpresa;
+              setTimeout(() => {
+                window.location = "cadastroAdmin.html";
+              }, 2000);
           });
-
+          
+        } 
+         else {
+          return resposta.json().then(function (dados) {
+            console.log("Erro retornado pela API:", dados);
+          });
         }
-
       })
       .catch(function (erro) {
-
-        console.log(`#ERRO: ${erro}`);
-
-
+        console.log(`#ERRO NA REQUISIÇÃO: ${erro}`);
       });
 
     return false;
   }
-
   function listar() {
     fetch("/ufs/listarEstados", {
       method: "GET",
