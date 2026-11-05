@@ -8,6 +8,7 @@
     <link rel="icon" href="../../assets/imgs/logo.png">
     <link rel="stylesheet" href="../../css/output.css">
     <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <title>Dashboard - Máquinas</title>
 
@@ -92,84 +93,466 @@
         <input id="inputbusca" type="text" placeholder="Pesquisar..." class="w-70 bg-[#0C1F19] text-white px-5 py-2 rounded-xl border border-[#207F70]">
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-5 pl-15 pr-10 mt-2">
+    <div class="grid grid-cols-5 gap-5 pl-15 pr-10 mt-2">
 
-        <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] p-5">
+        <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] border-t-4 border-solid border-t-red-500 p-5 transition-transform duration-300 hover:scale-103">
             <p class="text-sm text-white">Qtd. de picos</p>
             <p class="font-space-mono font-bold text-red-500 text-4xl mt-2"> X <span class="text-sm">24h</span>
             </p>
             <p class="text-xs text-[#A0B5AC] mt-2">Picos registrados em todas as farms</p>
         </div>
 
-        <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] p-5">
+        <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] border-t-4 border-solid border-t-red-500 p-5 transition-transform duration-300 hover:scale-103">
             <p class="text-sm text-white">Máquinas fora da faixa ideal</p>
             <p class="font-space-mono font-bold text-red-500 text-4xl mt-2"> X% </p>
             <p class="text-xs text-[#A0B5AC] mt-2">Y de Z máquinas</p>
         </div>
 
-        <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] p-5">
+        <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] border-t-4 border-solid border-t-yellow-500 p-5 transition-transform duration-300 hover:scale-103">
             <p class="text-sm text-white">Leitura mais fora da média</p>
             <p class="font-space-mono font-bold text-yellow-400 text-3xl mt-2">X </p>
             <p class="text-xs text-[#A0B5AC] mt-2">COMPONENTE X - RIG Y</p>
         </div>
 
-        <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] p-5">
+        <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] border-t-4 border-solid border-t-red-500 p-5 transition-transform duration-300 hover:scale-103">
             <p class="text-sm text-white">Comece por</p>
             <p class="font-space-mono font-bold text-red-500 text-3xl mt-2"> RIG X </p>
             <p class="text-xs text-[#A0B5AC] mt-2">Maior prioridade de atendimento</p>
         </div>
 
-        <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] p-5">
+        <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] border-t-4 border-solid border-t-yellow-500 p-5 transition-transform duration-300 hover:scale-103">
             <p class="text-sm text-white">Causa principal</p>
             <p class="font-space-mono font-bold text-orange-400 text-3xl mt-2"> Componente X</p>
             <p class="text-xs text-[#A0B5AC] mt-2">Y% dos alertas registrados</p>
         </div>
 
     </div>
-
-   
     <div class="flex flex-col xl:flex-row gap-5 pl-15 pr-10 mt-5">
         <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] p-5 flex-1 min-w-0">
-            <div class="h-96 w-full">
-                <canvas id="graficoTop7"></canvas>
+             <div class="flex flex-wrap justify-between gap-3 mb-4">
+                <div>
+                    <p class="text-lg">Picos ao longo do tempo</p>
+                    <p class="text-xs text-gray-400">Quando os picos acontecem e quais componentes os causam</p>
+                </div>
+
+                <div class="flex rounded-xl overflow-hidden border border-[#207F70]">
+                    <button class="px-3 py-2 text-xs text-[#A0B5AC] hover:bg-[#ffffff0d]">1h</button>
+                    <button class="px-3 py-2 text-xs bg-[#144840] text-[#00E6A6]">24h</button>
+                    <button class="px-3 py-2 text-xs text-[#A0B5AC] hover:bg-[#ffffff0d]">7d</button>
+                    <button class="px-3 py-2 text-xs text-[#A0B5AC] hover:bg-[#ffffff0d]">30d</button>
+                </div>
             </div>
 
+            <div class="h-120 w-full">
+                <canvas id="graficopicos"></canvas>
+            </div>
+
+            <p class="text-[11px] text-gray-400 mt-3">Detalhes</p>
         </div>
-        <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] p-5 w-full xl:w-120 shrink-0">
+
+        <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] p-5 w-120">
 
             <p class="text-lg font-semibold text-white">Mapa de saúde</p>
-            <p class="text-xs font-space-mono mb-4 text-[#A0B5AC]">
-                Farm › Sessão › Rig
-            </p>
+            <p class="text-xs font-space-mono mb-4 text-[#A0B5AC]">Farm › Sessão › Rig </p>
 
-            <p class="text-sm text-white mt-5 mb-2">Farm SLA - SP</p>
+            <div class="flex flex-col gap-4 max-h-110  overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-[#207F70]">
 
-            <div class="flex flex-col gap-1.5">
+                <div class="rounded-xl border border-[#207F70]/50 bg-[#102C24] p-4">
+                    <div class="flex items-center justify-between gap-3 mb-3">
+                        <p class="text-sm font-semibold text-white">Farm SLA - SP</p>
+                        <span class="text-[10px] font-space-mono bg-[#3A171D] text-[#FF667A] px-2 py-1 rounded-md">8 alertas abertos</span>
+                    </div>
+                    <div class="flex flex-col gap-4">
 
-                <div class="flex items-center gap-2">
-                    <span class="w-5 text-[10px] text-[#A0B5AC] font-space-mono">A</span>
-                    <div class="grid grid-cols-7 gap-1.5 flex-1">
-                        <a href="#" class="h-6 rounded-md bg-[#00E6A6] text-black text-[11px] font-bold font-space-mono flex items-center justify-center">1</a>
-                        <a href="#" class="h-6 rounded-md bg-[#FF1F3D] text-black text-[11px] font-bold font-space-mono flex items-center justify-center">2</a>
-                        <a href="#" class="h-6 rounded-md bg-[#8A8F8D] text-black text-[11px] font-bold font-space-mono flex items-center justify-center">3</a>
-                        <a href="#" class="h-6 rounded-md bg-[#FFB000] text-black text-[11px] font-bold font-space-mono flex items-center justify-center">4</a>
+                    <div>
+                        <p class="text-xs font-space-mono text-[#A0B5AC]">Sessão 1</p>
+                        <div class="flex gap-1.5 mt-1 overflow-x-auto pr-2 scrollbar-thin scrollbar-thumb-[#207F70]">
+                            <a href="#" title="MR01-02A" class="shrink-0 w-9 h-9 rounded-lg bg-[#00E6A6] text-black text-xs font-bold font-space-mono flex items-center justify-center hover:brightness-110 transition">01</a>
+                            <a href="#" title="MR02-02A" class="shrink-0 w-9 h-9 rounded-lg bg-[#FF1F3D] text-black text-xs font-bold font-space-mono flex items-center justify-center hover:brightness-110 transition">02</a>
+                            <a href="#" title="MR01-02A" class="shrink-0 w-9 h-9 rounded-lg bg-[#FFB000] text-black text-xs font-bold font-space-mono flex items-center justify-center hover:brightness-110 transition">01</a>
+                            <a href="#" title="MR02-02A" class="shrink-0 w-9 h-9 rounded-lg bg-[#00E6A6] text-black text-xs font-bold font-space-mono flex items-center justify-center hover:brightness-110 transition">02</a>
+                        </div>
+                    </div>
+
+                    <div>
+                        <p class="text-xs font-space-mono text-[#A0B5AC]">Sessão 2</p>
+                        <div class="flex gap-1.5 overflow-x-auto -mx-4 -mt-6 px-4 pt-9 pb-2 [scrollbar-width:thin] [scrollbar-color:#207F70_transparent]"> 
+                            <a href="#" title="MR01-02A" class="shrink-0 w-9 h-9 rounded-lg bg-[#FF1F3D] text-black text-xs font-bold font-space-mono flex items-center justify-center hover:brightness-110 transition">01</a>
+                            <a href="#" title="MR02-02A" class="shrink-0 w-9 h-9 rounded-lg bg-[#00E6A6] text-black text-xs font-bold font-space-mono flex items-center justify-center hover:brightness-110 transition">02</a>
+                            <a href="#" title="MR03-02A" class="shrink-0 w-9 h-9 rounded-lg bg-[#00E6A6] text-black text-xs font-bold font-space-mono flex items-center justify-center hover:brightness-110 transition">03</a>
+                            <a href="#" title="MR04-02A" class="shrink-0 w-9 h-9 rounded-lg bg-[#00E6A6] text-black text-xs font-bold font-space-mono flex items-center justify-center hover:brightness-110 transition">04</a>
+                            <a href="#" title="MR05-02A" class="shrink-0 w-9 h-9 rounded-lg bg-[#00E6A6] text-black text-xs font-bold font-space-mono flex items-center justify-center hover:brightness-110 transition">05</a>
+                            <a href="#" title="MR06-02A" class="shrink-0 w-9 h-9 rounded-lg bg-[#FFB000] text-black text-xs font-bold font-space-mono flex items-center justify-center hover:brightness-110 transition">06</a>
+                            <a href="#" title="MR07-02A" class="shrink-0 w-9 h-9 rounded-lg bg-[#00E6A6] text-black text-xs font-bold font-space-mono flex items-center justify-center hover:brightness-110 transition">07</a>
+                            <a href="#" title="MR08-02A" class="shrink-0 w-9 h-9 rounded-lg bg-[#8A8F8D] text-black text-xs font-bold font-space-mono flex items-center justify-center hover:brightness-110 transition">08</a>
+                            <a href="#" title="MR09-02A" class="shrink-0 w-9 h-9 rounded-lg bg-[#FF1F3D] text-black text-xs font-bold font-space-mono flex items-center justify-center hover:brightness-110 transition">09</a>
+                            <a href="#" title="MR10-02A" class="shrink-0 w-9 h-9 rounded-lg bg-[#8A8F8D] text-black text-xs font-bold font-space-mono flex items-center justify-center hover:brightness-110 transition">10</a>
+                            <a href="#" title="MR11-02A" class="shrink-0 w-9 h-9 rounded-lg bg-[#00E6A6] text-black text-xs font-bold font-space-mono flex items-center justify-center hover:brightness-110 transition">11</a>
+                            <a href="#" title="MR12-02A" class="shrink-0 w-9 h-9 rounded-lg bg-[#FF1F3D] text-black text-xs font-bold font-space-mono flex items-center justify-center hover:brightness-110 transition">12</a>
+                            <a href="#" title="MR13-02A" class="shrink-0 w-9 h-9 rounded-lg bg-[#00E6A6] text-black text-xs font-bold font-space-mono flex items-center justify-center hover:brightness-110 transition">13</a>
+                            <a href="#" title="MR14-02A" class="shrink-0 w-9 h-9 rounded-lg bg-[#8A8F8D] text-black text-xs font-bold font-space-mono flex items-center justify-center hover:brightness-110 transition">14</a>
+                            <a href="#" title="MR15-02A" class="shrink-0 w-9 h-9 rounded-lg bg-[#00E6A6] text-black text-xs font-bold font-space-mono flex items-center justify-center hover:brightness-110 transition">15</a>
+                            <a href="#" title="MR16-02A" class="shrink-0 w-9 h-9 rounded-lg bg-[#8A8F8D] text-black text-xs font-bold font-space-mono flex items-center justify-center hover:brightness-110 transition">16</a>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="flex gap-3 mt-5 text-xs text-[gray]">
-                <span class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-sm bg-[#00E6A6]"></span> Normal</span>
-                <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-[#FFB000]"></span> Atenção</span>
-                <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-[#FF1F3D]"></span> Crítico</span>
-                <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-[#8A8F8D]"></span> Offline</span>
+            <div class="rounded-xl border border-[#207F70] bg-[#102C24]/50 p-4">
+                    <div class="flex items-center justify-between gap-3 mb-3">
+                        <p class="text-sm font-semibold text-white">Farm SLA - SP</p>
+                        <span class="text-[10px] font-space-mono bg-[#3A171D] text-[#FF667A] px-2 py-1 rounded-md">8 alertas abertos</span>
+                    </div>
+                    <div class="flex flex-col gap-4">
+
+                    <div>
+                        <p class="text-xs font-space-mono text-[#A0B5AC]">Sessão 1</p>
+                        <div class="flex gap-1.5 mt-1 overflow-x-auto pr-2 scrollbar-thin scrollbar-thumb-[#207F70]">
+                            <a href="#" title="MR01-02A" class="shrink-0 w-9 h-9 rounded-lg bg-[#00E6A6] text-black text-xs font-bold font-space-mono flex items-center justify-center hover:brightness-110 transition">01</a>
+                            <a href="#" title="MR02-02A" class="shrink-0 w-9 h-9 rounded-lg bg-[#FF1F3D] text-black text-xs font-bold font-space-mono flex items-center justify-center hover:brightness-110 transition">02</a>
+                            <a href="#" title="MR01-02A" class="shrink-0 w-9 h-9 rounded-lg bg-[#FFB000] text-black text-xs font-bold font-space-mono flex items-center justify-center hover:brightness-110 transition">03</a>
+                            <a href="#" title="MR02-02A" class="shrink-0 w-9 h-9 rounded-lg bg-[#00E6A6] text-black text-xs font-bold font-space-mono flex items-center justify-center hover:brightness-110 transition">04</a>
+                        </div>
+                    </div>
+
+                    <div>
+                        <p class="text-xs font-space-mono text-[#A0B5AC]">Sessão 2</p>
+                        <div class="flex gap-1.5 overflow-x-auto -mx-4 -mt-6 px-4 pt-9 pb-2 [scrollbar-width:thin] [scrollbar-color:#207F70_transparent]"> 
+                            <a href="#" title="MR01-02A" class="shrink-0 w-9 h-9 rounded-lg bg-[#FF1F3D] text-black text-xs font-bold font-space-mono flex items-center justify-center hover:brightness-110 transition">01</a>
+                            <a href="#" title="MR02-02A" class="shrink-0 w-9 h-9 rounded-lg bg-[#00E6A6] text-black text-xs font-bold font-space-mono flex items-center justify-center hover:brightness-110 transition">02</a>
+                            <a href="#" title="MR03-02A" class="shrink-0 w-9 h-9 rounded-lg bg-[#00E6A6] text-black text-xs font-bold font-space-mono flex items-center justify-center hover:brightness-110 transition">03</a>
+                            <a href="#" title="MR04-02A" class="shrink-0 w-9 h-9 rounded-lg bg-[#00E6A6] text-black text-xs font-bold font-space-mono flex items-center justify-center hover:brightness-110 transition">04</a>
+                            <a href="#" title="MR05-02A" class="shrink-0 w-9 h-9 rounded-lg bg-[#00E6A6] text-black text-xs font-bold font-space-mono flex items-center justify-center hover:brightness-110 transition">05</a>
+                            <a href="#" title="MR06-02A" class="shrink-0 w-9 h-9 rounded-lg bg-[#FFB000] text-black text-xs font-bold font-space-mono flex items-center justify-center hover:brightness-110 transition">06</a>
+                            <a href="#" title="MR07-02A" class="shrink-0 w-9 h-9 rounded-lg bg-[#00E6A6] text-black text-xs font-bold font-space-mono flex items-center justify-center hover:brightness-110 transition">07</a>
+                            <a href="#" title="MR08-02A" class="shrink-0 w-9 h-9 rounded-lg bg-[#8A8F8D] text-black text-xs font-bold font-space-mono flex items-center justify-center hover:brightness-110 transition">08</a>
+                            <a href="#" title="MR09-02A" class="shrink-0 w-9 h-9 rounded-lg bg-[#FF1F3D] text-black text-xs font-bold font-space-mono flex items-center justify-center hover:brightness-110 transition">09</a>
+                            <a href="#" title="MR10-02A" class="shrink-0 w-9 h-9 rounded-lg bg-[#8A8F8D] text-black text-xs font-bold font-space-mono flex items-center justify-center hover:brightness-110 transition">10</a>
+                            <a href="#" title="MR11-02A" class="shrink-0 w-9 h-9 rounded-lg bg-[#00E6A6] text-black text-xs font-bold font-space-mono flex items-center justify-center hover:brightness-110 transition">11</a>
+                            <a href="#" title="MR12-02A" class="shrink-0 w-9 h-9 rounded-lg bg-[#FF1F3D] text-black text-xs font-bold font-space-mono flex items-center justify-center hover:brightness-110 transition">12</a>
+                            <a href="#" title="MR13-02A" class="shrink-0 w-9 h-9 rounded-lg bg-[#00E6A6] text-black text-xs font-bold font-space-mono flex items-center justify-center hover:brightness-110 transition">13</a>
+                            <a href="#" title="MR14-02A" class="shrink-0 w-9 h-9 rounded-lg bg-[#8A8F8D] text-black text-xs font-bold font-space-mono flex items-center justify-center hover:brightness-110 transition">14</a>
+                            <a href="#" title="MR15-02A" class="shrink-0 w-9 h-9 rounded-lg bg-[#00E6A6] text-black text-xs font-bold font-space-mono flex items-center justify-center hover:brightness-110 transition">15</a>
+                            <a href="#" title="MR16-02A" class="shrink-0 w-9 h-9 rounded-lg bg-[#8A8F8D] text-black text-xs font-bold font-space-mono flex items-center justify-center hover:brightness-110 transition">16</a>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+        </div>
+        
+            <div class="flex gap-3 mt-5 text-xs text-[gray]">
+                <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-[#00E6A6]"></span> Normal</span>
+                <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-[#FFB000]"></span> Atenção</span>
+                <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-[#FF1F3D]"></span> Crítico</span>
+                <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-[#8A8F8D]"></span> Offline</span>
+            </div>
+        
+    </div>
+
+    </div>
+
+
+    <!-- <div class="pl-15 pr-10 mt-5 pb-10 flex flex-col gap-5"> -->
+    <div class="pl-15 pr-10 mt-5 pb-10 flex flex-col xl:flex-row gap-5">
+
+     <!-- <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] p-5 text-left"> -->
+        <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] p-5 text-left flex-1 min-w-0">
+            <div>
+                <p class="text-lg font-semibold">Diagnóstico de monitoramento</p>
+                <p class="text-xs mt-1 mb-2"> Distribuição do estado das máquinas por componente - Últimas 24h </p>
+            </div>
+
+            <div class="flex items-center justify-between gap-4 rounded-xl bg-[#102C24] border border-[#207F70] p-4 mb-5">
+                <div class="flex-1 min-w-0 text-left">
+                    <p class="text-xs text-gray-400"> Situação geral do monitoramento</p>
+
+                    <p class="text-xl font-semibold text-red-400 mt-1">Situação X</p>
+
+                    <p class="text-xs text-gray-400 mt-1"> 13 máquinas apresentaram condição fora da faixa ideal.</p>
+                </div>
+
+                <div class="flex gap-5 shrink-0">
+
+                    <div>
+                        <p class="text-xs text-gray-400">Normais</p>
+                        <p class="text-xl font-space-mono font-bold text-[#00E6A6]">X</p>
+                    </div>
+
+                    <div>
+                        <p class="text-xs text-gray-400">Atenção</p>
+                        <p class="text-xl font-space-mono font-bold text-[#FFB000]">Y</p>
+                    </div>
+
+                    <div>
+                        <p class="text-xs text-gray-400">Críticas</p>
+                        <p class="text-xl font-space-mono font-bold text-[#FF1F3D]">Z</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="h-100 w-full">
+                <canvas id="graficoDiagnostico"></canvas>
+            </div>
+
+            <p class="text-[11px] text-gray-400 mt-3">Cada RIG é contabilizada individualmente em cada componente, podendo aparecer em mais de uma categoria.</p>
         </div>
 
-    </div>
-    </div>
-    <script>
-        
-    </script>
+       <!-- <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] p-5 w-full"> -->
+        <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] p-5 w-full xl:w-120 shrink-0 flex flex-col">
+            <div class="flex justify-between items-center mb-4">
+                <div>
+                    <p class="text-lg font-semibold">Fila de prioridade</p>
+                    <p class="text-xs text-gray-400 mt-1">Máquinas que precisam de atendimento</p>
+                </div>
 
+                <span class="text-xs font-space-mono bg-[#3A171D] text-[#FF667A] px-3 py-1.5 rounded-lg">X pendentes</span>
+            </div>
+
+                <!-- <div class="flex flex-col gap-3 overflow-y-auto pr-2 max-h-[34rem] [scrollbar-width:thin] [scrollbar-color:#207F70_transparent]">  -->
+            <div class="flex flex-col gap-3 overflow-y-auto pr-2 max-h-90 xl:max-h-none xl:flex-1 xl:basis-0 xl:min-h-0 [scrollbar-width:thin] [scrollbar-color:#207F70_transparent]">
+
+                        
+                <div class="flex items-center gap-4 p-4 rounded-xl bg-[#24191B] border-[#7A2935] border  transition-transform duration-300 hover:scale-102 cursor-pointer">
+                    <div class="w-11 h-11 rounded-lg bg-[#FF1F3D20] text-[#FF5269] flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-temperature-high"></i>
+                    </div>
+                    <div class="flex-col">
+                        <p class="font-space-mono text-sm font-bold">MR03-05C</p>
+                        <p class="text-xs text-gray-400">Temperatura elevada - Farm C / S3</p>
+                    </div>
+                        <span class="ml-auto text-[10px] font-semibold text-[#FF5269] bg-[#FF1F3D20] px-2 py-1 rounded-md">Crítico</span>
+                </div>
+                
+                <div class="flex items-center gap-4 p-4 rounded-xl bg-[#24191B] border-[#7A2935] border  transition-transform duration-300 hover:scale-102 cursor-pointer">
+                    <div class="w-11 h-11 rounded-lg bg-[#FF1F3D20] text-[#FF5269] flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-microchip"></i>
+                    </div>
+                    <div class="flex-col">
+                        <p class="font-space-mono text-sm font-bold">MR01-02A</p>
+                        <p class="text-xs text-gray-400">CPU acima do limite - Farm SLA / S1</p>
+                    </div>
+                    <span class="ml-auto text-[10px] font-semibold text-[#FF5269] bg-[#FF1F3D20] px-2 py-1 rounded-md">Crítico</span>
+                </div>
+
+                <div class="flex items-center gap-4 p-4 rounded-xl bg-[#24191B] border-[#7A2935] border  transition-transform duration-300 hover:scale-102 cursor-pointer">
+                    <div class="w-11 h-11 rounded-lg bg-[#FF1F3D20] text-[#FF5269] flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-gauge-high"></i>
+                    </div>
+                    <div class="flex-col">
+                        <p class="font-space-mono text-sm font-bold">MR02-11A</p>
+                        <p class="text-xs text-gray-400">Hashrate abaixo do esperado - Farm SLA / S2</p>
+                    </div>
+                    <span class="ml-auto text-[10px] font-semibold text-[#FF5269] bg-[#FF1F3D20] px-2 py-1 rounded-md">Crítico</span>
+                </div>
+
+                <div class="flex items-center gap-4 p-4 rounded-xl bg-[#24191B] border-[#7A2935] border  transition-transform duration-300 hover:scale-102 cursor-pointer">
+                    <div class="w-11 h-11 rounded-lg bg-[#FF1F3D20] text-[#FF5269] flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-memory"></i>
+                    </div>
+                    <div class="flex-col">
+                        <p class="font-space-mono text-sm font-bold">MR02-14A</p>
+                        <p class="text-xs text-gray-400">RAM acima do limite - Farm SLA / S2</p>
+                    </div>
+                    <span class="ml-auto text-[10px] font-semibold text-[#FF5269] bg-[#FF1F3D20] px-2 py-1 rounded-md">Crítico</span>
+                </div>
+
+                <div class="flex items-center gap-4 p-4 rounded-xl bg-[#1B2120] border-[#3F4745] border  transition-transform duration-300 hover:scale-102 cursor-pointer">
+                    <div class="w-11 h-11 rounded-lg bg-[#8A8F8D20] text-[#A0B5AC] flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-plug-circle-xmark"></i>
+                    </div>
+                    <div class="flex-col">
+                        <p class="font-space-mono text-sm font-bold">MR01-03A</p>
+                        <p class="text-xs text-gray-400">Sem comunicação - Farm SLA / S1</p>
+                    </div>
+                    <span class="ml-auto text-[10px] font-semibold text-[#A0B5AC] bg-[#8A8F8D20] px-2 py-1 rounded-md">Offline</span>
+                </div>
+
+                <div class="flex items-center gap-4 p-4 rounded-xl bg-[#1B2120] border-[#3F4745] border  transition-transform duration-300 hover:scale-102 cursor-pointer">
+                    <div class="w-11 h-11 rounded-lg bg-[#8A8F8D20] text-[#A0B5AC] flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-plug-circle-xmark"></i>
+                    </div>
+                    <div class="flex-col">
+                        <p class="font-space-mono text-sm font-bold">MR03-11C</p>
+                        <p class="text-xs text-[#A0B5AC]">Sem comunicação - Farm C / S3</p>
+                    </div>
+                    <span class="ml-auto text-[10px] font-semibold text-[#A0B5AC] bg-[#8A8F8D20] px-2 py-1 rounded-md">Offline</span>
+                </div>
+
+                <div class="flex items-center gap-4 p-4 rounded-xl bg-[#241F14] border-[#7A5A10] border  transition-transform duration-300 hover:scale-102 cursor-pointer">
+                    <div class="w-11 h-11 rounded-lg bg-[#FFB00020] text-[#FFB000] flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-fan"></i>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="font-space-mono text-sm font-bold">MR02-06A</p>
+                        <p class="text-xs text-gray-400">Ventoinha em rotação baixa - Farm SLA / S2</p>
+                    </div>
+                    <span class="ml-auto text-[10px] font-semibold text-[#FFB000] bg-[#FFB00020] px-2 py-1 rounded-md">Atenção</span>
+                </div>
+
+                <div class="flex items-center gap-4 p-4 rounded-xl bg-[#241F14] border-[#7A5A10] border  transition-transform duration-300 hover:scale-102 cursor-pointer">
+                    <div class="w-11 h-11 rounded-lg bg-[#FFB00020] text-[#FFB000] flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <div class="flex-col">
+                        <p class="font-space-mono text-sm font-bold">MR01-04A</p>
+                        <p class="text-xs text-gray-400">Consumo de energia elevado - Farm SLA / S1</p>
+                    </div>
+                    <span class="ml-auto text-[10px] font-semibold text-[#FFB000] bg-[#FFB00020] px-2 py-1 rounded-md">Atenção</span>
+                </div>
+
+                <div class="flex items-center gap-4 p-4 rounded-xl bg-[#241F14] border-[#7A5A10] border  transition-transform duration-300 hover:scale-102 cursor-pointer">
+                    <div class="w-11 h-11 rounded-lg bg-[#FFB00020] text-[#FFB000] flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-hard-drive"></i>
+                    </div>
+                    <div class="flex-col">
+                        <p class="font-space-mono text-sm font-bold">MR03-02C</p>
+                        <p class="text-xs text-gray-400">Disco quase cheio - Farm C / S3</p>
+                    </div>
+                    <span class="ml-auto text-[10px] font-semibold text-[#FFB000] bg-[#FFB00020] px-2 py-1 rounded-md">Atenção</span>
+                </div>
+
+                <div class="flex items-center gap-4 p-4 rounded-xl bg-[#241F14] border-[#7A5A10] border  transition-transform duration-300 hover:scale-102 cursor-pointer">
+                    <div class="w-11 h-11 rounded-lg bg-[#FFB00020] text-[#FFB000] flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-network-wired"></i>
+                    </div>
+                    <div class="flex-col">
+                        <p class="font-space-mono text-sm font-bold">MR01-05B</p>
+                        <p class="text-xs text-gray-400">Latência de rede alta - Farm B / S1</p>
+                    </div>
+                    <span class="ml-auto text-[10px] font-semibold text-[#FFB000] bg-[#FFB00020] px-2 py-1 rounded-md">Atenção</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let graficopicos = new Chart(document.getElementById('graficopicos'), {
+
+            type: 'bar',
+            data: {
+                labels: ['00h', '01h', '02h', '03h', '04h','05h', '06h', '07h', '08h', '09h', '10h', '11h', '12h', '13h', '14h', '15h', '16h', '17h', '18h', '19h', '20h', '21h', '22h', '23h'],
+                datasets: [
+                    {
+                        label: 'Temperatura',
+                        data: [12, 10, 8, 4, 2, 12, 0, 6 , 10 , 8 , 9, 12 , 4 , 6 , 7 , 2 , 1 , 2 , 4 , 6 , 3, 5 , 6 ,2],
+                        backgroundColor: '#FFB000',
+                        borderRadius: 4
+                    },
+
+                    {
+                        label: 'GPU',
+                        data: [9, 2, 5, 2, 1, 3, 2 , 6 , 5, 3, 1, 3 ,5 ,6 ,7 ,2 ,3 ,2 ,3 ,1 ,1 ,1 ,5 ,6],
+                        backgroundColor: '#FF1F3D',
+                        borderRadius: 4
+                    },
+
+                    {
+                        label: 'CPU',
+                        data: [7, 9, 1, 1, 2, 0, 1 , 5 ,6 ,5 ,6 ,3 ,2 ,2 ,3 ,5 ,0 ,9 ,3 ,6 ,7 ,4 ,2, 6],
+                        backgroundColor: '#E879F9',
+                        borderRadius: 4
+                    },
+
+                    {
+                        label: 'RAM',
+                        data: [0, 0, 2, 6, 4, 1, 1, 7 ,3 ,2 ,3 ,5 ,7 ,8, 2, 1, 3 ,5 ,6 ,4 ,2 ,2 ,2 ,1 ],
+                        backgroundColor: '#438BFF',
+                        borderRadius: 4
+                    },
+
+                    {
+                        label: 'DISCO',
+                        data: [0, 0, 1, 1, 1, 2, 2, 10 ,12 ,2, 4 ,6 ,7 ,3 ,5 ,6 ,2 ,2 ,2 ,1 ,1 ,5 ,6 ,3],
+                        backgroundColor: '#A78BFA',
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#A0B5AC',
+                            usePointStyle: true,
+                            pointStyle: 'circle'
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        stacked: true,
+                    },
+                    y: {
+                        stacked: true,
+                        grid: {
+                            color: '#ffffff10'
+                        }
+                    }
+
+                }
+
+            }
+
+        });
+
+
+
+        let graficoDiagnostico = new Chart(document.getElementById('graficoDiagnostico'), {
+            type: 'bar',
+            data: {
+                labels: [
+                    'Temperatura',
+                    'GPU',
+                    'CPU',
+                    'RAM',
+                    'Disco'
+                ],
+                datasets: [
+                    {
+                        label: 'Normal',
+                        data: [71, 76, 78, 79, 81],
+                        backgroundColor: '#00E6A6',
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Atenção',
+                        data: [8, 5, 4, 3, 2],
+                        backgroundColor: '#FFB000',
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Crítico',
+                        data: [5, 3, 2, 2, 1],
+                        backgroundColor: '#FF1F3D',
+                        borderRadius: 4,
+                    }
+                ]
+            },
+            options: {
+                indexAxis: 'y',
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                },
+                scales: {
+                    x: {
+                        stacked: true,
+                    },
+                    y: {
+                        stacked: true,
+                    }
+                }
+            }
+        });
+
+
+
+    </script>
+    
 </body>
 </html>
