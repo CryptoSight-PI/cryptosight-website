@@ -1,0 +1,395 @@
+
+@font-face {
+    font-family: 'inter';
+    src: url('../assets/fonts/Inter-VariableFont_opsz\,wght.ttf');
+}
+@font-face {
+    font-family: 'oi';
+    src: url('../assets/fonts/Manrope-VariableFont_wght.ttf');
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0d1412, #09483f, #131d1a);
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+/* Barra lateral */
+
+.sidebar {
+    width: 40px;
+    min-height: 100vh;
+    background: #0a211b;
+    border-right: 1px solid #174b3e;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 12px 0;
+}
+
+.logo {
+    width: 24px;
+    height: 24px;
+    border: 1px solid #00c99a;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.menu {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+}
+
+/* Área principal */
+
+.dashboard {
+    flex: 1;
+    padding: 20px 5%;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-width: 0;
+}
+
+/* Cabeçalho */
+
+.topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    min-height: 110px;
+}
+
+.perfil {
+    width: 42%;
+    height: 85px;
+}
+
+.status-financeiro {
+    width: 52%;
+    height: 68px;
+    border: 1px solid #175443;
+    border-radius: 12px;
+}
+
+/* Cards de indicadores */
+
+.indicadores {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 6px;
+    
+}
+
+.card {
+    height: 58px;
+    background: #0b211b;
+    border: 1px solid #175443;
+    border-radius: 6px;
+    padding: 50px;
+}
+
+/* Gráfico e ranking */
+
+.conteudo-principal {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 14px;
+}
+
+.grafico-receita,
+.ranking-rigs {
+    height: 155px;
+    background: #0b211b;
+    border: 1px solid #175443;
+    border-radius: 12px;
+    padding: 120px;
+}
+
+/* Título da seção PUE */
+
+.titulo-pue {
+    font-family:'inter';
+    height: 22px;
+    margin-top: 8px;
+}
+
+
+/* Monitoramento de PUE */
+
+.monitoramento-pue {
+    display: grid;
+    grid-template-columns: 1fr 1.8fr 1.8fr 1.4fr;
+    gap: 5px;
+    min-height: 155px;
+    padding: 20px;
+    border: 1px solid #175443;
+    background-color: #022822;
+    border-radius: 8px;
+}
+
+.pue-geral,
+.estatisticas-pue,
+.grafico-pue,
+.rigs-criticos {
+    min-width: 0;
+    border: 1px solid #175443;
+    height: 160px;
+    background-color: #022822;
+    border-radius: 7px;
+}
+
+.titulo_pequeno{
+    font-size: small;
+    display: flex;
+   margin-top: -45px;
+   margin-left: -40px;
+   color: rgba(240, 248, 255, 0.444);
+   font-family:'inter';
+ 
+}
+.valor{
+
+   display: flex;
+   margin-top: 10px;
+   font-size: 28px;
+   margin-left: -15px;
+   color: rgb(240, 248, 255);
+   font-family:'oi';
+}
+
+.titulo_pue{
+   font-family:'inter';
+   color:#00c99a;    
+   margin-top: 25px;
+   margin-left: 80px;
+   font-weight:bold;
+}
+
+.titulo_crit_pue{
+   font-family:'inter';
+   color:#ff7777e4;    
+   margin-top: 25px;
+   margin-left: 50px;
+   margin-bottom: 25px;
+   font-weight:bold;
+}
+
+.titulo_rigs{
+   font-family:'inter';
+   color:#feffff7a;    
+   margin-top: 15px;
+   margin-left: 20px;
+   font-size: 13px;
+}
+
+.qtd_rigs{
+   color: rgb(240, 248, 255);
+   font-family:'oi';  
+   margin-top: 3px;
+   margin-left: 35px;
+}
+
+
+.pue_atual{
+   color: rgb(240, 248, 255);
+   font-family:'oi';  
+   margin-top: 3px;
+   margin-left: 80px;
+}
+
+.pue_ideal{
+   color: rgb(240, 248, 255);
+   font-family:'oi';  
+   margin-top: 5px;
+   margin-left: 80px;
+}
+
+.pue_falta{
+   color: rgb(240, 248, 255);
+   font-family:'oi';  
+   margin-top: 5px;
+   margin-left: 90px;
+}
+
+.estimado{
+   font-size: x-small;
+   display: flex;
+   margin-top: 5px;
+   margin-left: -40px;
+   color: rgba(240, 248, 255, 0.444);
+   font-family:'inter';
+}
+
+.status-rig { 
+    display: grid;
+    grid-template-columns: 3px 0.9fr auto; 
+    align-items:center; 
+    gap: 5px;
+    margin-left: 10px; 
+    font-size: 14px; 
+    color: #bdcbc4; 
+}
+
+.text_ind{
+    font-family: 'oi';
+    margin-left: 25px;
+}
+
+
+.rigs-criticos {
+    min-width: 0;
+    border: 1px solid #175443;
+    border-radius: 8px;
+    background-color: #022822;
+    padding: 12px;
+}
+
+.titulo_crit_pue {
+    font-family: 'inter';
+    color: #ff7777e4;
+    font-size: 13px;
+    font-weight: bold;
+    margin: 1px 20px 20px;
+}
+
+.critico-rig {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 2px;
+    margin: 2px 5px;
+    font-family: 'oi';
+    font-size: 12px;
+    color: #bdcbc4;
+}
+
+.textos{
+    margin-top: 20px;
+}
+
+.text_crit,
+.critico-rig .text_ind {
+    font-family: 'oi';
+    color: #bdcbc4;
+}
+
+.critico-rig b {
+    font-family: 'oi';
+    font-size: 12px;
+    color: #cbd8d2;
+
+}
+
+.rigs-criticos{
+    width: 100%;
+    border-bottom: 1px solid #ffffff30;
+}
+
+.linha-horizontal-2{
+    width: 100%;
+    border-bottom: 1px solid #ffffff30;
+}
+
+.status-rig b { 
+    font-family: 'oi';
+    font-size: 14px;
+    color: #cbd8d2; 
+}
+
+.bolinha { 
+    margin-left: 15px;
+    width: 7px; 
+    height: 7px; 
+    border-radius: 50%; 
+}
+
+.verde-bg { 
+    background: #00c99a; 
+}
+
+.amarelo-bg { 
+    background: #d99b00; 
+}
+
+.vermelho-bg { 
+    background: #f04444; 
+}
+
+.grafico-pue { 
+    padding: 6px 8px 18px; 
+}
+
+.periodo { 
+    display: flex;
+    align-self: flex-end;
+    border: 1px solid;
+    width: 150px;
+    border-radius: 20px;
+    border-color: #a7b7b074;
+    overflow: hidden; 
+}
+
+.periodo button {
+    background: transparent; 
+    border: 0; 
+    color: #a7b7b0;
+    font-size: 8px; padding: 3px 11px;
+    cursor: pointer;
+}
+
+.periodo button:first-child {
+    background: #075b48;
+    color: #5cf0c5; 
+}
+
+.linha-horizontal {
+    margin-left: 20px;
+  width: 88%; /* Define a largura da linha */
+  border-bottom: 1px solid #ffffff54; /* Espessura, estilo e cor */
+
+}
+
+
+/* Responsividade */
+
+@media (max-width: 800px) {
+    .dashboard {
+        padding: 16px;
+    }
+
+    .indicadores {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .conteudo-principal {
+        grid-template-columns: 1fr;
+    }
+
+    .monitoramento-pue {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .topo {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .perfil,
+    .status-financeiro {
+        width: 100%;
+    }
+}
+
+

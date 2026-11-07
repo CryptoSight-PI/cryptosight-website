@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptoSight</title>
+
+    <!-- Twind: lê as classes do HTML e gera o CSS sozinho (sem arquivo .css) -->
+    <script src="https://cdn.twind.style" crossorigin></script>
+
+    <!-- Só as fontes continuam em CSS, porque precisam do @font-face -->
+    <style>
+        @font-face {
+            font-family: 'inter';
+            src: url('../assets/fonts/Inter-VariableFont_opsz,wght.ttf');
+        }
+        @font-face {
+            font-family: 'oi';
+            src: url('../assets/fonts/Manrope-VariableFont_wght.ttf');
+        }
+        .f-inter { font-family: 'inter', Arial, sans-serif; }
+        .f-oi    { font-family: 'oi', Arial, sans-serif; }
+    </style>
+</head>
+
+<body class="flex min-h-screen text-white font-sans bg-gradient-to-br from-[#0d1412] via-[#09483f] to-[#131d1a]">
+
+    <!-- Barra lateral -->
+    <div class="w-10 shrink-0 min-h-screen bg-[#0a211b] border-r border-[#174b3e] flex flex-col items-center gap-5 py-3">
+        <div class="w-6 h-6 border border-[#00c99a] rounded-full mb-2.5"></div>
+        <div class="w-5 h-5 rounded"></div>
+        <div class="w-5 h-5 rounded"></div>
+        <div class="w-5 h-5 rounded"></div>
+        <div class="w-5 h-5 rounded"></div>
+        <div class="w-5 h-5 rounded"></div>
+    </div>
+
+    <!-- Área principal -->
+    <div class="flex-1 min-w-0 flex flex-col gap-3.5 px-4 py-5 md:px-[5%]">
+
+        <!-- Cabeçalho: coluna no celular, linha a partir do md -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-5 md:min-h-[110px]">
+            <div class="w-full md:w-[42%] h-[85px]"></div>
+            <div class="w-full md:w-[52%] h-[68px] border border-[#175443] rounded-xl"></div>
+        </div>
+
+        <!-- Botões de período -->
+        <div class="flex self-end w-[150px] border border-[#a7b7b074] rounded-full overflow-hidden">
+            <button class="bg-[#075b48] text-[#5cf0c5] text-[8px] px-[11px] py-[3px] cursor-pointer">7 dias</button>
+            <button class="bg-transparent text-[#a7b7b0] text-[8px] px-[11px] py-[3px] cursor-pointer">30 dias</button>
+            <button class="bg-transparent text-[#a7b7b0] text-[8px] px-[11px] py-[3px] cursor-pointer">90 dias</button>
+        </div>
+
+        <!-- Cards: 2 colunas no celular, 3 no sm, 5 no lg -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-1.5">
+            <div class="bg-[#0b211b] border border-[#175443] rounded-md p-3">
+                <p class="text-xs text-[#f0f8ff71] f-inter">Gasto de energia</p>
+                <h2 class="mt-2.5 text-xl xl:text-[28px] font-bold text-[#f0f8ff] f-oi">R$ 1.2345,5</h2>
+                <p class="mt-1 text-[10px] text-[#f0f8ff71] f-inter">Estimado: 1.234,56</p>
+            </div>
+            <div class="bg-[#0b211b] border border-[#175443] rounded-md p-3">
+                <p class="text-xs text-[#f0f8ff71] f-inter">Gasto de energia</p>
+                <h2 class="mt-2.5 text-xl xl:text-[28px] font-bold text-[#f0f8ff] f-oi">R$ 1.2345,5</h2>
+                <p class="mt-1 text-[10px] text-[#f0f8ff71] f-inter">Estimado: 1.234,56</p>
+            </div>
+            <div class="bg-[#0b211b] border border-[#175443] rounded-md p-3">
+                <p class="text-xs text-[#f0f8ff71] f-inter">Gasto de energia</p>
+                <h2 class="mt-2.5 text-xl xl:text-[28px] font-bold text-[#f0f8ff] f-oi">R$ 1.2345,5</h2>
+                <p class="mt-1 text-[10px] text-[#f0f8ff71] f-inter">Estimado: 1.234,56</p>
+            </div>
+            <div class="bg-[#0b211b] border border-[#175443] rounded-md p-3">
+                <p class="text-xs text-[#f0f8ff71] f-inter">Gasto de energia</p>
+                <h2 class="mt-2.5 text-xl xl:text-[28px] font-bold text-[#f0f8ff] f-oi">R$ 1.2345,5</h2>
+                <p class="mt-1 text-[10px] text-[#f0f8ff71] f-inter">Estimado: 1.234,56</p>
+            </div>
+            <div class="bg-[#0b211b] border border-[#175443] rounded-md p-3">
+                <p class="text-xs text-[#f0f8ff71] f-inter">Gasto de energia</p>
+                <h2 class="mt-2.5 text-xl xl:text-[28px] font-bold text-[#f0f8ff] f-oi">R$ 1.2345,5</h2>
+                <p class="mt-1 text-[10px] text-[#f0f8ff71] f-inter">Estimado: 1.234,56</p>
+            </div>
+        </div>
+
+        <!-- Gráfico e ranking: 1 coluna no celular, 2 no lg -->
+        <div class="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-3.5">
+            <div class="h-[155px] bg-[#0b211b] border border-[#175443] rounded-xl"></div>
+            <div class="h-[155px] bg-[#0b211b] border border-[#175443] rounded-xl"></div>
+        </div>
+
+        <!-- Título da seção PUE -->
+        <div class="h-[22px] mt-2 f-inter"></div>
+
+        <!-- Monitoramento de PUE: 1 coluna, 2 no sm, 4 no xl -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-[1fr_1.8fr_1.8fr_1.4fr] gap-1.5 p-5 border border-[#175443] bg-[#022822] rounded-lg">
+
+            <!-- PUE geral -->
+            <div class="min-w-0 min-h-[160px] p-3 border border-[#175443] bg-[#022822] rounded-[7px]">
+                <p class="font-bold text-[#00c99a] f-inter">PUE atual</p>
+                <h1 class="mt-1 text-4xl font-bold text-[#f0f8ff] f-oi">1,25</h1>
+                <h5 class="mt-1 text-sm font-bold text-[#f0f8ff] f-oi">Ideal: 1,20</h5>
+                <h5 class="mt-1 text-sm font-bold text-[#f0f8ff] f-oi">↓ -0,5</h5>
+            </div>
+
+            <!-- Estatísticas -->
+            <div class="min-w-0 min-h-[160px] p-3 border border-[#175443] bg-[#022822] rounded-[7px]">
+                <p class="text-[13px] text-[#feffff7a] f-inter">Total de rigs</p>
+                <h1 class="mt-1 mb-2 text-3xl font-bold text-[#f0f8ff] f-oi">42</h1>
+
+                <div class="grid grid-cols-[8px_1fr_auto] items-center gap-2 text-sm text-[#bdcbc4] f-oi">
+                    <span class="w-[7px] h-[7px] rounded-full bg-[#00c99a]"></span>
+                    <span>Dentro do ideal</span>
+                    <b class="text-[#cbd8d2]">18 (42,86%)</b>
+                </div>
+                <div class="my-1.5 border-b border-[#ffffff54]"></div>
+
+                <div class="grid grid-cols-[8px_1fr_auto] items-center gap-2 text-sm text-[#bdcbc4] f-oi">
+                    <span class="w-[7px] h-[7px] rounded-full bg-[#d99b00]"></span>
+                    <span>Atenção</span>
+                    <b class="text-[#cbd8d2]">20 (47,62%)</b>
+                </div>
+                <div class="my-1.5 border-b border-[#ffffff54]"></div>
+
+                <div class="grid grid-cols-[8px_1fr_auto] items-center gap-2 text-sm text-[#bdcbc4] f-oi">
+                    <span class="w-[7px] h-[7px] rounded-full bg-[#f04444]"></span>
+                    <span>Níveis críticos</span>
+                    <b class="text-[#cbd8d2]">04 (9,52%)</b>
+                </div>
+            </div>
+
+            <!-- Gráfico PUE -->
+            <div class="min-w-0 min-h-[160px] p-3 border border-[#175443] bg-[#022822] rounded-[7px]">
+                <p class="font-bold text-[#00c99a] f-inter">PUE atual</p>
+            </div>
+
+            <!-- Rigs críticos -->
+            <div class="min-w-0 min-h-[160px] p-3 border border-[#175443] bg-[#022822] rounded-lg">
+                <p class="mb-3 text-[13px] font-bold text-[#ff7777e4] f-inter">Rigs com o PUE mais crítico</p>
+
+                <div class="grid grid-cols-[1fr_auto] gap-2 text-xs text-[#bdcbc4] f-oi">
+                    <span>Dentro do ideal</span><b class="text-[#cbd8d2]">18 (42,86%)</b>
+                </div>
+                <div class="my-1.5 border-b border-[#ffffff30]"></div>
+
+                <div class="grid grid-cols-[1fr_auto] gap-2 text-xs text-[#bdcbc4] f-oi">
+                    <span>Atenção</span><b class="text-[#cbd8d2]">20 (47,62%)</b>
+                </div>
+                <div class="my-1.5 border-b border-[#ffffff30]"></div>
+
+                <div class="grid grid-cols-[1fr_auto] gap-2 text-xs text-[#bdcbc4] f-oi">
+                    <span>Níveis críticos</span><b class="text-[#cbd8d2]">04 (9,52%)</b>
+                </div>
+                <div class="my-1.5 border-b border-[#ffffff30]"></div>
+
+                <div class="grid grid-cols-[1fr_auto] gap-2 text-xs text-[#bdcbc4] f-oi">
+                    <span>Níveis críticos</span><b class="text-[#cbd8d2]">04 (9,52%)</b>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
