@@ -146,8 +146,11 @@
             <div class="h-120 w-full">
                 <canvas id="graficopicos"></canvas>
             </div>
+            <div id="ondePicos" class="bg-[#102C24] border border-[#207F70]/60 rounded-xl p-4 mt-4">
+                    <p class="text-xs text-gray-400">Clique em uma barra para ver onde os picos aconteceram.</p>
+            </div>
 
-            <p class="text-[11px] text-gray-400 mt-3">Detalhes</p>
+            <!-- <p class="text-[11px] text-gray-400 mt-3">Detalhes</p> -->
         </div>
 
          <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] p-5 w-full xl:w-120 shrink-0 flex flex-col">
@@ -383,18 +386,19 @@
             <div class="h-100 w-full">
                 <canvas id="graficoDiagnostico"></canvas>
             </div>
-
+            <div id="ondeDiag" class="bg-[#102C24] border border-[#207F70]/60 rounded-xl p-4 mt-4">
+                <p class="text-xs text-gray-400">Clique em uma barra para ver onde estão as rigs.</p>
+            </div>
             <p class="text-[11px] text-gray-400 mt-3">Cada RIG é contabilizada individualmente em cada componente, podendo aparecer em mais de uma categoria.</p>
         </div>
 
        <!-- <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] p-5 w-full"> -->
-         <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] p-5 w-120">
+        <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] p-5 w-full xl:w-120 shrink-0 flex flex-col">
 
             <p class="text-lg font-semibold text-white">Mapa de saúde</p>
             <p class="text-xs font-space-mono mb-4 text-[#A0B5AC]">Farm › Sessão › Rig </p>
 
-            <div class="flex flex-col gap-4 max-h-120 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-[#207F70]">
-
+            <div class="flex flex-col gap-4 max-h-120 xl:max-h-none xl:flex-1 xl:basis-0 xl:min-h-0 overflow-y-auto pr-2 [scrollbar-width:thin] [scrollbar-color:#207F70_transparent]">
                 <div class="rounded-xl border border-[#207F70]/50 bg-[#102C24] p-4">
                     <div class="flex items-center justify-between gap-3 mb-3">
                         <p class="text-sm font-semibold text-white">Farm SLA - SP</p>
@@ -531,7 +535,7 @@
 
     <script>
         nome_usuario.innerHTML = sessionStorage.NOME_USUARIO;
-        
+
         fetch(`/empresas/buscar/${sessionStorage.ID_EMPRESA}`).then(res =>
          res.json()).then(dados => {
         nome_empresa.innerHTML = dados[0].nome_fantasia;
@@ -583,33 +587,27 @@
                 ]
             },
             options: {
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        labels: {
-                            color: '#A0B5AC',
-                            usePointStyle: true,
-                            pointStyle: 'circle'
-                        }
-                    }
-                },
-                scales: {
-                    x: {
-                        stacked: true,
-                    },
-                    y: {
-                        stacked: true,
-                        grid: {
-                            color: '#ffffff10'
-                        }
-                    }
+            maintainAspectRatio: false,
+            scales: {
+                x: { stacked: true },
+                y: { stacked: true }
+            },
+            onClick: function (evento, barras, grafico) {
+                if (barras.length == 0) return;
 
+                let hora = barras[0].index;
+                let texto = '<p class="text-xs text-gray-400 mb-2">Relatório das <b class="text-white">' + grafico.data.labels[hora] + '</b></p>';
+
+                for (let i = 0; i < grafico.data.datasets.length; i++) {
+                    let nome = grafico.data.datasets[i].label;
+                    let valor = grafico.data.datasets[i].data[hora];
+                    texto += '<p class="text-xs mb-1"><b>' + nome + ' (' + valor + ' picos)</b> - ' + "farm x - sessao y - rigx e componentex" + '</p>';
                 }
 
+                document.getElementById('ondePicos').innerHTML = texto;
             }
-
-        });
-
+        }
+    });
 
 
         let graficoDiagnostico = new Chart(document.getElementById('graficoDiagnostico'), {
@@ -643,24 +641,36 @@
                     }
                 ]
             },
-            options: {
-                indexAxis: 'y',
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false
-                    },
-                },
-                scales: {
-                    x: {
-                        stacked: true,
-                    },
-                    y: {
-                        stacked: true,
-                    }
+           options: {
+            indexAxis: 'y',
+            maintainAspectRatio: false,
+            scales: {
+                x: { stacked: true },
+                y: { stacked: true }
+            },
+            onClick: function (evento, barras, grafico) {
+                if (barras.length == 0) return;
+
+                let componente = grafico.data.labels[barras[0].index];
+                let status = grafico.data.datasets[barras[0].datasetIndex].label;
+                let quantidade = grafico.data.datasets[barras[0].datasetIndex].data[barras[0].index];
+                let texto = '<p class="text-xs text-gray-400 mb-2"><b class="text-white">' + status + '</b> em <b class="text-white">' + componente + '</b> - ' + quantidade + ' rigs</p>';
+
+                if (status == 'Crítico') {
+                    texto += '<p class="text-xs">' + "componentecriticox" + '</p>';
                 }
+                if (status == 'Atenção') {
+                    texto += '<p class="text-xs">' + "componenteatencaox" + '</p>';
+                }
+                if (status == 'Normal') {
+                    texto += '<p class="text-xs">Rigs funcionando dentro da faixa ideal.</p>';
+                }
+
+                document.getElementById('ondeDiag').innerHTML = texto;
             }
-        });
+        }
+    });
+
     </script>
     
 </body>
