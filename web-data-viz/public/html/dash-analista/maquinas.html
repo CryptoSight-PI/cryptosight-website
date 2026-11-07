@@ -65,8 +65,8 @@
 
             <div class="bg-[#207F70] rounded-2xl pl-4 pr-6 pt-3 pb-3 flex flex-row">
                 <img src="../../assets/imgs/bitdeer-logo.svg" alt="">
-                <p class="font-space-mono ml-3 font-semibold text-sm text-nowrap place-content-center">
-                    Bitdeer Technologies Group
+                <p id="nome_empresa" class="font-space-mono ml-3 font-semibold text-sm text-nowrap place-content-center">
+                
                 </p>
             </div>
 
@@ -80,8 +80,8 @@
         </div>
 
         <div class="flex flex-row align-baseline">
-            <p class="font-space-mono font-bold place-self-center mr-3 text-lg">
-                Luiz Oliveira
+            <p id="nome_usuario" class="font-space-mono font-bold place-self-center mr-3 text-lg">
+                
             </p>
             <img src="../../assets/imgs/Luiz.png" class="rounded-4xl border border-[#207F70] p-0.5" alt="">
         </div>
@@ -530,6 +530,16 @@
        
 
     <script>
+        nome_usuario.innerHTML = sessionStorage.NOME_USUARIO;
+        
+        fetch(`/empresas/buscar/${sessionStorage.ID_EMPRESA}`).then(res =>
+         res.json()).then(dados => {
+        nome_empresa.innerHTML = dados[0].nome_fantasia;
+        }).catch(() => {
+        nome_empresa.innerHTML = "Empresa";
+        });
+
+
         let graficopicos = new Chart(document.getElementById('graficopicos'), {
 
             type: 'bar',
