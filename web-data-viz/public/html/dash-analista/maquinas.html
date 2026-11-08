@@ -88,46 +88,45 @@
 
     </div>
 
-    <div class="flex justify-between items-center m-2 mr-10">
-        <p class="ml-10 mr-15 mt-7 mb-8 text-3xl font-ibm-mono font-semibold">Máquinas</p>
-        <input id="inputbusca" type="text" placeholder="Pesquisar..." class="w-70 bg-[#0C1F19] text-white px-5 py-2 rounded-xl border border-[#207F70]">
+    <div class="flex justify-between items-center  mx-2 mt-1 sm:mr-10">
+        <p class="ml-3 sm:ml-10 mr-15 mt-7 mb-8 text-xl sm:text-3xl font-ibm-mono font-semibold">Máquinas</p>
+        <input id="inputbusca" type="text" placeholder="Pesquisar..." class="w-40 sm:w-70 text-sm bg-[#0C1F19] text-white px-5 py-2 rounded-xl border border-[#207F70]">
     </div>
 
-    <div class="grid grid-cols-5 gap-5 pl-15 pr-10 mt-2">
-
-        <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] border-t-4 border-solid border-t-red-500 p-5 transition-transform duration-300 hover:scale-103">
+    <div class="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 gap-2 sm:gap-4 px-3 sm:px-5 lg:pl-15 lg:pr-10 mt-2">
+        <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] border-t-4 border-solid border-t-red-500 p-2.5 sm:p-4 transition-transform duration-300 hover:scale-103">
             <p class="text-sm text-white">Local mais crítico</p>
-            <p class="font-space-mono font-bold text-red-500 text-4xl mt-2"> Farm X <span class="text-sm">z picos</span>
+            <p class="font-space-mono font-bold text-red-500 text-2xl sm:text-4xl mt-2"> Farm X <span class="text-sm">z picos</span>
             </p>
             <p class="text-xs text-[#A0B5AC] mt-2">Sessao Z - Aumentou x%</p>
         </div>
 
-        <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] border-t-4 border-solid border-t-red-500 p-5 transition-transform duration-300 hover:scale-103">
+        <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] border-t-4 border-solid border-t-red-500 p-2.5 sm:p-4 transition-transform duration-300 hover:scale-103">
             <p class="text-sm text-white">Máquinas fora da faixa ideal</p>
-            <p class="font-space-mono font-bold text-red-500 text-4xl mt-2"> X% </p>
+            <p class="font-space-mono font-bold text-red-500 text-2xl sm:text-4xl mt-2"> X% </p>
             <p class="text-xs text-[#A0B5AC] mt-2">Y de Z máquinas</p>
         </div>
 
-        <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] border-t-4 border-solid border-t-yellow-500 p-5 transition-transform duration-300 hover:scale-103">
+        <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] border-t-4 border-solid border-t-yellow-500 p-2.5 sm:p-4 transition-transform duration-300 hover:scale-103">
             <p class="text-sm text-white">Leitura mais fora da média</p>
-            <p class="font-space-mono font-bold text-yellow-400 text-3xl mt-2">X </p>
+            <p class="font-space-mono font-bold text-yellow-400 text-2xl sm:text-3xl mt-2">X </p>
             <p class="text-xs text-[#A0B5AC] mt-2">COMPONENTE X - RIG Y</p>
         </div>
 
-        <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] border-t-4 border-solid border-t-blue-500 p-5 transition-transform duration-300 hover:scale-103">
+        <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] border-t-4 border-solid border-t-blue-500 p-2.5 sm:p-4 transition-transform duration-300 hover:scale-103">
             <p class="text-sm text-white">Próxima falha prevista</p>
-            <p class="font-space-mono font-bold text-blue-500 text-3xl mt-2"> RIG X </p>
+            <p class="font-space-mono font-bold text-blue-500 text-2xl sm:text-3xl mt-2"> RIG X </p>
             <p class="text-xs text-[#A0B5AC] mt-2">Detalhes componente y - local</p>
         </div>
 
-        <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] border-t-4 border-solid border-t-yellow-500 p-5 transition-transform duration-300 hover:scale-103">
+        <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] border-t-4 border-solid border-t-yellow-500 p-2.5 sm:p-4 transition-transform duration-300 hover:scale-103">
             <p class="text-sm text-white">Causa principal</p>
-            <p class="font-space-mono font-bold text-orange-400 text-3xl mt-2"> Componente X</p>
+            <p class="font-space-mono font-bold text-orange-400 text-2xl sm:text-3xl mt-2">X</p>
             <p class="text-xs text-[#A0B5AC] mt-2">Y% dos alertas registrados</p>
         </div>
 
     </div>
-    <div class="flex flex-col xl:flex-row gap-5 pl-15 pr-10 mt-5">
+    <div class="flex flex-col xl:flex-row gap-3 sm:gap-5 px-3 sm:px-5 lg:pl-15 lg:pr-10 mt-3 sm:mt-5">
         <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] p-5 flex-1 min-w-0">
              <div class="flex flex-wrap justify-between gap-3 mb-4">
                 <div>
@@ -143,7 +142,7 @@
                 </div>
             </div>
 
-            <div class="h-120 w-full">
+            <div class="relative h-64 sm:h-96 xl:h-120 w-full">
                 <canvas id="graficopicos"></canvas>
             </div>
             <div id="ondePicos" class="bg-[#102C24] border border-[#207F70]/60 rounded-xl p-4 mt-4">
@@ -153,7 +152,7 @@
             <!-- <p class="text-[11px] text-gray-400 mt-3">Detalhes</p> -->
         </div>
 
-         <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] p-5 w-full xl:w-120 shrink-0 flex flex-col">
+         <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] p-2.5 sm:p-5 w-full xl:w-120 shrink-0 flex flex-col">
             <div class="flex justify-between items-center mb-4">
                 <div>
                     <p class="text-lg font-semibold">Fila de prioridade</p>
