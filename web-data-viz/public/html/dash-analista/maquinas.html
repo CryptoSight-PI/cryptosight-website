@@ -123,16 +123,126 @@
             </div>
         </div>
 
-        <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] p-5 min-w-0">
-            <p class="text-lg">Estado dos componentes</p>
-            <p class="text-xs text-gray-400 mb-4">Leitura atual</p>
+      
+    
+<div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] p-5 min-w-0 flex flex-col xl:h-full">
+    <div class="flex items-center justify-between mb-4">
+        <div>
+            <h3 class="text-white text-lg font-semibold">Estado atual dos componentes</h3>
+            <p class="text-gray-400 text-sm">Condição dos recursos da máquina</p>
+        </div>
+        <span class="text-xs text-gray-400">Última coleta</span>
+    </div>
 
-            <div id="lista_estado" class="flex flex-col gap-2 max-h-120 overflow-y-auto pr-2">
+    <div class="grid grid-cols-2 gap-2 flex-1 min-h-0 xl:grid-rows-4">
 
+        <div class="rounded-xl border border-[#FF1F3D]/50 bg-[#FF1F3D]/10 p-3 flex flex-col justify-between">
+            <div class="flex items-center justify-between">
+                <span class="text-gray-300 text-sm font-medium">CPU</span>
+                <span class="text-[#FF1F3D] text-xs font-semibold">Crítico</span>
+            </div>
+            <div>
+                <p class="text-white text-2xl font-bold">X%</p>
+                <div class="h-1 bg-[#263E35] rounded-full mt-2 overflow-hidden">
+                    <div class="h-full bg-[#FF1F3D] w-[88%]"></div>
+                </div>
+                <p class="text-gray-400 text-xs mt-1">Frequência: Z GHz</p>
             </div>
         </div>
-            <!-- <p class="text-[11px] text-gray-400 mt-3">Detalhes</p> -->
-    </div>  
+
+        <div class="rounded-xl border border-[#FF1F3D]/50 bg-[#FF1F3D]/10 p-3 flex flex-col justify-between">
+            <div class="flex items-center justify-between">
+                <span class="text-gray-300 text-sm font-medium">RAM</span>
+                <span class="text-[#FF1F3D] text-xs font-semibold">Crítico</span>
+            </div>
+            <div>
+                <p class="text-white text-2xl font-bold">X%</p>
+                <div class="h-1 bg-[#263E35] rounded-full mt-2 overflow-hidden">
+                    <div class="h-full bg-[#FF1F3D] w-[88%]"></div>
+                </div>
+                <p class="text-gray-400 text-xs mt-1">Memória em uso</p>
+            </div>
+        </div>
+
+        <div class="rounded-xl border border-[#FFB000]/50 bg-[#FFB000]/5 p-3 flex flex-col justify-between">
+            <div class="flex items-center justify-between">
+                <span class="text-gray-300 text-sm font-medium">SWAP</span>
+                <span class="text-[#FFB000] text-xs font-semibold">Atenção</span>
+            </div>
+            <div>
+                <p class="text-white text-2xl font-bold">Y%</p>
+                <div class="h-1 bg-[#263E35] rounded-full mt-2 overflow-hidden">
+                    <div class="h-full bg-[#FFB000] w-[78%]"></div>
+                </div>
+                <p class="text-gray-400 text-xs mt-1">Z GB / W GB</p>
+            </div>
+        </div>
+
+        <div class="rounded-xl border border-[#FFB000]/50 bg-[#FFB000]/5 p-3 flex flex-col justify-between">
+            <div class="flex items-center justify-between">
+                <span class="text-gray-300 text-sm font-medium">Temperatura</span>
+                <span class="text-[#FFB000] text-xs font-semibold">Atenção</span>
+            </div>
+            <div>
+                <p class="text-white text-2xl font-bold">X °C</p>
+                <p class="text-gray-400 text-xs mt-1">Temperatura atual</p>
+            </div>
+        </div>
+
+        <div class="col-span-2 rounded-xl border border-[#FFB000]/50 bg-[#FFB000]/5 p-3">
+            <div class="flex items-center justify-between mb-3">
+                <span class="text-gray-300 text-sm font-medium">GPU</span>
+                <span class="text-[#FFB000] text-xs font-semibold">Atenção</span>
+            </div>
+
+            <div class="flex justify-between p-3">
+                <div>
+                    <p class="text-gray-400 text-xs">Utilização</p>
+                    <p class="text-white text-xl font-bold">Z%</p>
+                </div>
+                <div>
+                    <p class="text-gray-400 text-xs">Potência</p>
+                    <p class="text-white text-xl font-bold">Y W</p>
+                </div>
+                <div>
+                    <p class="text-gray-400 text-xs">Temperatura</p>
+                    <p class="text-white text-xl font-bold">Z °C</p>
+                </div>
+                <div>
+                    <p class="text-gray-400 text-xs">Ventoinha</p>
+                    <p class="text-white text-xl font-bold">Y%</p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="rounded-xl border border-[#207F70] bg-[#112C24] p-3 flex flex-col justify-between">
+            <div class="flex items-center justify-between">
+                <span class="text-gray-300 text-sm font-medium">Disco</span>
+                <span class="text-[#00E6A6] text-xs font-semibold">Normal</span>
+            </div>
+            <div>
+                <p class="text-white text-2xl font-bold">X GB</p>
+                <p class="text-gray-400 text-xs mt-1">Espaço livre</p>
+            </div>
+        </div>
+
+        <div class="rounded-xl border border-[#207F70] bg-[#112C24] p-3 flex flex-col justify-between">
+            <div class="flex items-center justify-between">
+                <span class="text-gray-300 text-sm font-medium">Ventoinhas</span>
+                <span class="text-[#00E6A6] text-xs font-semibold">Normal</span>
+            </div>
+            <div>
+                <p class="text-white text-2xl font-bold">Y%</p>
+                <p class="text-gray-400 text-xs mt-1">Velocidade das ventoinhas</p>
+            </div>
+        </div>
+
+        
+
+    </div>
+</div>
+
 
 
     <script>
