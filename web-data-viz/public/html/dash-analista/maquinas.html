@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../../css/style.css">
     <title>Dashboard - Maquinas</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
 <body class="min-h-screen w-screen pl-15 bg-linear-135 from-[#0d1412] via-[#09483f] to-[#0d1412] text-white bg-fixed overflow-x-hidden">
@@ -125,127 +126,179 @@
 
       
     
-<div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] p-5 min-w-0 flex flex-col xl:h-full">
-    <div class="flex items-center justify-between mb-4">
-        <div>
-            <h3 class="text-white text-lg font-semibold">Estado atual dos componentes</h3>
-            <p class="text-gray-400 text-sm">Condição dos recursos da máquina</p>
+    <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] p-5 min-w-0 flex flex-col xl:h-full">
+        <div class="flex items-center justify-between mb-4">
+            <div>
+                <h3 class="text-white text-lg font-semibold">Estado atual dos componentes</h3>
+                <p class="text-gray-400 text-xs">Clique em um card para ver 24h, 7d e 30d</p>
+            </div>
+            <span class="text-xs text-gray-400"><i class="fa-regular fa-clock mr-1"></i>Última coleta</span>
         </div>
-        <span class="text-xs text-gray-400">Última coleta</span>
+
+        <div class="grid grid-cols-2 grid-rows-4 gap-2 flex-1 min-h-0">
+            <div class="cursor-pointer min-h-0" onclick="this.firstElementChild.classList.toggle('rotate-y-180')">
+                <div class="relative h-full transform-3d transition-transform duration-500">
+                    <div class="absolute inset-0 backface-hidden rounded-xl border border-[#7A2935] bg-[#24191B] p-3 flex flex-col justify-between">
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-300 text-sm"><i class="fa-solid fa-microchip mr-2 text-[#FF5269]"></i>CPU</span>
+                            <span class="text-[#FF5269] text-xs font-semibold">Crítico</span>
+                        </div>
+                        <div>
+                            <p class="text-white text-2xl font-bold">X%</p>
+                            <div class="h-1 bg-[#263E35] rounded-full mt-1 overflow-hidden"><div class="h-full bg-[#FF1F3D] w-[88%]"></div></div>
+                            <p class="text-gray-400 text-xs mt-1">Z GHz</p>
+                        </div>
+                        <p class="text-xs text-[#FFB000]"><i class="fa-solid fa-wrench mr-1"></i>Ação sugerida: verificar refrigeração</p>
+                    </div>
+                    <div class="absolute inset-0 backface-hidden rotate-y-180 rounded-xl border border-[#207F70] bg-[#112C24] p-3 flex flex-col justify-center gap-1">
+                        <div class="grid grid-cols-5 text-[11px] text-gray-400"><span></span><span>Média</span><span>Máx</span><span>Mín</span><span>Desv.</span></div>
+                        <div class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">24h</span><span>71%</span><span>94%</span><span>38%</span><span>±8</span></div>
+                        <div class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">7d</span><span>64%</span><span>97%</span><span>22%</span><span>±11</span></div>
+                        <div class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">30d</span><span>59%</span><span>99%</span><span>15%</span><span>±13</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cursor-pointer min-h-0" onclick="this.firstElementChild.classList.toggle('rotate-y-180')">
+                <div class="relative h-full transform-3d transition-transform duration-500">
+                    <div class="absolute inset-0 backface-hidden rounded-xl border border-[#7A2935] bg-[#24191B] p-3 flex flex-col justify-between">
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-300 text-sm"><i class="fa-solid fa-memory mr-2 text-[#FF5269]"></i>RAM</span>
+                            <span class="text-[#FF5269] text-xs font-semibold">Crítico</span>
+                        </div>
+                        <div>
+                            <p class="text-white text-2xl font-bold">x%</p>
+                            <div class="h-1 bg-[#263E35] rounded-full mt-1 overflow-hidden"><div class="h-full bg-[#FF1F3D] w-[88%]"></div></div>
+                            <p class="text-gray-400 text-xs mt-1">Memória em uso</p>
+                        </div>
+                        <p class="text-xs text-[#FFB000]"><i class="fa-solid fa-wrench mr-1"></i>Ação sugerida: checar processos e swap</p>
+                    </div>
+                    <div class="absolute inset-0 backface-hidden rotate-y-180 rounded-xl border border-[#207F70] bg-[#112C24] p-3 flex flex-col justify-center gap-1">
+                        <div class="grid grid-cols-5 text-[11px] text-gray-400"><span></span><span>Média</span><span>Máx</span><span>Mín</span><span>Desv.</span></div>
+                        <div class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">24h</span><span>81%</span><span>93%</span><span>60%</span><span>±6</span></div>
+                        <div class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">7d</span><span>77%</span><span>96%</span><span>48%</span><span>±9</span></div>
+                        <div class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">30d</span><span>72%</span><span>98%</span><span>35%</span><span>±10</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cursor-pointer min-h-0" onclick="this.firstElementChild.classList.toggle('rotate-y-180')">
+                <div class="relative h-full transform-3d transition-transform duration-500">
+                    <div class="absolute inset-0 backface-hidden rounded-xl border border-[#7A5A10] bg-[#241F14] p-3 flex flex-col justify-between">
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-300 text-sm"><i class="fa-solid fa-right-left mr-2 text-[#FFB000]"></i>SWAP</span>
+                            <span class="text-[#FFB000] text-xs font-semibold">Atenção</span>
+                        </div>
+                        <div>
+                            <p class="text-white text-2xl font-bold">x%</p>
+                            <div class="h-1 bg-[#263E35] rounded-full mt-1 overflow-hidden"><div class="h-full bg-[#FFB000] w-[78%]"></div></div>
+                            <p class="text-gray-400 text-xs mt-1">y / z GB</p>
+                        </div>
+                        <p class="text-xs text-[#FFB000]"><i class="fa-solid fa-wrench mr-1"></i>Ação sugerida: liberar memória</p>
+                    </div>
+                    <div class="absolute inset-0 backface-hidden rotate-y-180 rounded-xl border border-[#207F70] bg-[#112C24] p-3 flex flex-col justify-center gap-1">
+                        <div class="grid grid-cols-5 text-[11px] text-gray-400"><span></span><span>Média</span><span>Máx</span><span>Mín</span><span>Desv.</span></div>
+                        <div class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">24h</span><span>70%</span><span>82%</span><span>55%</span><span>±5</span></div>
+                        <div class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">7d</span><span>62%</span><span>85%</span><span>30%</span><span>±10</span></div>
+                        <div class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">30d</span><span>51%</span><span>90%</span><span>12%</span><span>±15</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cursor-pointer min-h-0" onclick="this.firstElementChild.classList.toggle('rotate-y-180')">
+                <div class="relative h-full transform-3d transition-transform duration-500">
+                    <div class="absolute inset-0 backface-hidden rounded-xl border border-[#7A5A10] bg-[#241F14] p-3 flex flex-col justify-between">
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-300 text-sm"><i class="fa-solid fa-temperature-high mr-2 text-[#FFB000]"></i>Temperatura</span>
+                            <span class="text-[#FFB000] text-xs font-semibold">Atenção</span>
+                        </div>
+                        <div>
+                            <p class="text-white text-2xl font-bold">X °C</p>
+                            <div class="h-1 bg-[#263E35] rounded-full mt-1 overflow-hidden"><div class="h-full bg-[#FFB000] w-[74%]"></div></div>
+                            <p class="text-gray-400 text-xs mt-1">Temperatura atual</p>
+                        </div>
+                        <p class="text-xs text-[#FFB000]"><i class="fa-solid fa-wrench mr-1"></i>Ação sugerida: checar ventoinhas</p>
+                    </div>
+                    <div class="absolute inset-0 backface-hidden rotate-y-180 rounded-xl border border-[#207F70] bg-[#112C24] p-3 flex flex-col justify-center gap-1">
+                        <div class="grid grid-cols-5 text-[11px] text-gray-400"><span></span><span>Média</span><span>Máx</span><span>Mín</span><span>Desv.</span></div>
+                        <div class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">24h</span><span>69°</span><span>78°</span><span>58°</span><span>±4</span></div>
+                        <div class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">7d</span><span>66°</span><span>84°</span><span>49°</span><span>±6</span></div>
+                        <div class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">30d</span><span>63°</span><span>91°</span><span>41°</span><span>±8</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-span-2 cursor-pointer min-h-0" onclick="this.firstElementChild.classList.toggle('rotate-y-180')">
+                <div class="relative h-full transform-3d transition-transform duration-500">
+                    <div class="absolute inset-0 backface-hidden rounded-xl border border-[#7A5A10] bg-[#241F14] p-3 flex flex-col justify-between">
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-300 text-sm"><i class="fa-solid fa-gauge-high mr-2 text-[#FFB000]"></i>GPU</span>
+                            <span class="text-[#FFB000] text-xs font-semibold">Atenção</span>
+                        </div>
+                        <div class="flex justify-between px-2">
+                            <div><p class="text-gray-400 text-xs">Uso</p><p class="text-white text-lg font-bold">X%</p></div>
+                            <div><p class="text-gray-400 text-xs">Potência</p><p class="text-white text-lg font-bold">Y W</p></div>
+                            <div><p class="text-gray-400 text-xs">Temp.</p><p class="text-white text-lg font-bold">Z °C</p></div>
+                            <div><p class="text-gray-400 text-xs">Ventoinha</p><p class="text-white text-lg font-bold">W%</p></div>
+                        </div>
+                        <p class="text-xs text-[#FFB000]"><i class="fa-solid fa-wrench mr-1"></i>Ação sugerida: revisar consumo e minerador</p>
+                    </div>
+                    <div class="absolute inset-0 backface-hidden rotate-y-180 rounded-xl border border-[#207F70] bg-[#112C24] p-3 flex flex-col justify-center gap-1">
+                        <div class="grid grid-cols-5 text-[11px] text-gray-400"><span>GPU uso</span><span>Média</span><span>Máx</span><span>Mín</span><span>Desv.</span></div>
+                        <div class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">24h</span><span>91%</span><span>99%</span><span>70%</span><span>±5</span></div>
+                        <div class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">7d</span><span>89%</span><span>100%</span><span>52%</span><span>±7</span></div>
+                        <div class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">30d</span><span>86%</span><span>100%</span><span>40%</span><span>±9</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cursor-pointer min-h-0" onclick="this.firstElementChild.classList.toggle('rotate-y-180')">
+                <div class="relative h-full transform-3d transition-transform duration-500">
+                    <div class="absolute inset-0 backface-hidden rounded-xl border border-[#207F70] bg-[#112C24] p-3 flex flex-col justify-between">
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-300 text-sm"><i class="fa-solid fa-hard-drive mr-2 text-[#00E6A6]"></i>Disco</span>
+                            <span class="text-[#00E6A6] text-xs font-semibold">Normal</span>
+                        </div>
+                        <div>
+                            <p class="text-white text-2xl font-bold">X GB</p>
+                            <p class="text-gray-400 text-xs mt-1">Espaço livre</p>
+                        </div>
+                        <p class="text-xs text-[#00E6A6]"><i class="fa-solid fa-circle-check mr-1"></i>Ação sugerida: nenhuma</p>
+                    </div>
+                    <div class="absolute inset-0 backface-hidden rotate-y-180 rounded-xl border border-[#207F70] bg-[#112C24] p-3 flex flex-col justify-center gap-1">
+                        <div class="grid grid-cols-5 text-[11px] text-gray-400"><span></span><span>Média</span><span>Máx</span><span>Mín</span><span>Desv.</span></div>
+                        <div class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">24h</span><span>415</span><span>418</span><span>410</span><span>±2</span></div>
+                        <div class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">7d</span><span>421</span><span>430</span><span>408</span><span>±6</span></div>
+                        <div class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">30d</span><span>438</span><span>460</span><span>405</span><span>±12</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cursor-pointer min-h-0" onclick="this.firstElementChild.classList.toggle('rotate-y-180')">
+                <div class="relative h-full transform-3d transition-transform duration-500">
+                    <div class="absolute inset-0 backface-hidden rounded-xl border border-[#207F70] bg-[#112C24] p-3 flex flex-col justify-between">
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-300 text-sm"><i class="fa-solid fa-fan mr-2 text-[#00E6A6]"></i>Ventoinhas</span>
+                            <span class="text-[#00E6A6] text-xs font-semibold">Normal</span>
+                        </div>
+                        <div>
+                            <p class="text-white text-2xl font-bold">X%</p>
+                            <p class="text-gray-400 text-xs mt-1">Velocidade</p>
+                        </div>
+                        <p class="text-xs text-[#00E6A6]"><i class="fa-solid fa-circle-check mr-1"></i>Ação sugerida: nenhuma</p>
+                    </div>
+                    <div class="absolute inset-0 backface-hidden rotate-y-180 rounded-xl border border-[#207F70] bg-[#112C24] p-3 flex flex-col justify-center gap-1">
+                        <div class="grid grid-cols-5 text-[11px] text-gray-400"><span></span><span>Média</span><span>Máx</span><span>Mín</span><span>Desv.</span></div>
+                        <div class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">24h</span><span>55%</span><span>68%</span><span>42%</span><span>±4</span></div>
+                        <div class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">7d</span><span>57%</span><span>75%</span><span>38%</span><span>±6</span></div>
+                        <div class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">30d</span><span>58%</span><span>82%</span><span>30%</span><span>±7</span></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
-
-    <div class="grid grid-cols-2 gap-2 flex-1 min-h-0 xl:grid-rows-4">
-
-        <div class="rounded-xl border border-[#FF1F3D]/50 bg-[#FF1F3D]/10 p-3 flex flex-col justify-between">
-            <div class="flex items-center justify-between">
-                <span class="text-gray-300 text-sm font-medium">CPU</span>
-                <span class="text-[#FF1F3D] text-xs font-semibold">Crítico</span>
-            </div>
-            <div>
-                <p class="text-white text-2xl font-bold">X%</p>
-                <div class="h-1 bg-[#263E35] rounded-full mt-2 overflow-hidden">
-                    <div class="h-full bg-[#FF1F3D] w-[88%]"></div>
-                </div>
-                <p class="text-gray-400 text-xs mt-1">Frequência: Z GHz</p>
-            </div>
-        </div>
-
-        <div class="rounded-xl border border-[#FF1F3D]/50 bg-[#FF1F3D]/10 p-3 flex flex-col justify-between">
-            <div class="flex items-center justify-between">
-                <span class="text-gray-300 text-sm font-medium">RAM</span>
-                <span class="text-[#FF1F3D] text-xs font-semibold">Crítico</span>
-            </div>
-            <div>
-                <p class="text-white text-2xl font-bold">X%</p>
-                <div class="h-1 bg-[#263E35] rounded-full mt-2 overflow-hidden">
-                    <div class="h-full bg-[#FF1F3D] w-[88%]"></div>
-                </div>
-                <p class="text-gray-400 text-xs mt-1">Memória em uso</p>
-            </div>
-        </div>
-
-        <div class="rounded-xl border border-[#FFB000]/50 bg-[#FFB000]/5 p-3 flex flex-col justify-between">
-            <div class="flex items-center justify-between">
-                <span class="text-gray-300 text-sm font-medium">SWAP</span>
-                <span class="text-[#FFB000] text-xs font-semibold">Atenção</span>
-            </div>
-            <div>
-                <p class="text-white text-2xl font-bold">Y%</p>
-                <div class="h-1 bg-[#263E35] rounded-full mt-2 overflow-hidden">
-                    <div class="h-full bg-[#FFB000] w-[78%]"></div>
-                </div>
-                <p class="text-gray-400 text-xs mt-1">Z GB / W GB</p>
-            </div>
-        </div>
-
-        <div class="rounded-xl border border-[#FFB000]/50 bg-[#FFB000]/5 p-3 flex flex-col justify-between">
-            <div class="flex items-center justify-between">
-                <span class="text-gray-300 text-sm font-medium">Temperatura</span>
-                <span class="text-[#FFB000] text-xs font-semibold">Atenção</span>
-            </div>
-            <div>
-                <p class="text-white text-2xl font-bold">X °C</p>
-                <p class="text-gray-400 text-xs mt-1">Temperatura atual</p>
-            </div>
-        </div>
-
-        <div class="col-span-2 rounded-xl border border-[#FFB000]/50 bg-[#FFB000]/5 p-3">
-            <div class="flex items-center justify-between mb-3">
-                <span class="text-gray-300 text-sm font-medium">GPU</span>
-                <span class="text-[#FFB000] text-xs font-semibold">Atenção</span>
-            </div>
-
-            <div class="flex justify-between p-3">
-                <div>
-                    <p class="text-gray-400 text-xs">Utilização</p>
-                    <p class="text-white text-xl font-bold">Z%</p>
-                </div>
-                <div>
-                    <p class="text-gray-400 text-xs">Potência</p>
-                    <p class="text-white text-xl font-bold">Y W</p>
-                </div>
-                <div>
-                    <p class="text-gray-400 text-xs">Temperatura</p>
-                    <p class="text-white text-xl font-bold">Z °C</p>
-                </div>
-                <div>
-                    <p class="text-gray-400 text-xs">Ventoinha</p>
-                    <p class="text-white text-xl font-bold">Y%</p>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="rounded-xl border border-[#207F70] bg-[#112C24] p-3 flex flex-col justify-between">
-            <div class="flex items-center justify-between">
-                <span class="text-gray-300 text-sm font-medium">Disco</span>
-                <span class="text-[#00E6A6] text-xs font-semibold">Normal</span>
-            </div>
-            <div>
-                <p class="text-white text-2xl font-bold">X GB</p>
-                <p class="text-gray-400 text-xs mt-1">Espaço livre</p>
-            </div>
-        </div>
-
-        <div class="rounded-xl border border-[#207F70] bg-[#112C24] p-3 flex flex-col justify-between">
-            <div class="flex items-center justify-between">
-                <span class="text-gray-300 text-sm font-medium">Ventoinhas</span>
-                <span class="text-[#00E6A6] text-xs font-semibold">Normal</span>
-            </div>
-            <div>
-                <p class="text-white text-2xl font-bold">Y%</p>
-                <p class="text-gray-400 text-xs mt-1">Velocidade das ventoinhas</p>
-            </div>
-        </div>
-
-        
-
-    </div>
-</div>
-
-
-
-    <script>
+<script>
         let idEmpresa = sessionStorage.ID_EMPRESA
         let params = new URLSearchParams(location.search);
         let idRig = params.get("id");
@@ -341,7 +394,7 @@
 
 
         
-    </script>
+</script>
 </body>
 
 </html>
