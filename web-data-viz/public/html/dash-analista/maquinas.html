@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../../css/output.css">
     <link rel="stylesheet" href="../../css/style.css">
     <title>Dashboard - Maquinas</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body class="min-h-screen w-screen pl-15 bg-linear-135 from-[#0d1412] via-[#09483f] to-[#0d1412] text-white bg-fixed overflow-x-hidden">
@@ -59,7 +60,6 @@
         </div>
     </div>
 
-
     <!-- <p class="ml-10 mr-15 mt-7 mb-8 text-3xl font-ibm-mono font-semibold">Máquinas</p> -->
     <div class="ml-10 mt-7 mr-15 mb-6 flex flex-row items-center gap-2 text-sm font-space-mono text-[#A0B5AC]">
     <!-- <span class="text-3xl">Farm</span> -->
@@ -71,6 +71,68 @@
     <span class="text-2xl text-white font-semibold">Rig</span>
     <span id="id_rig" class="text-white font-semibold text-2xl"></span>
     </div>
+
+    <div class="grid grid-cols-4 gap-4 px-3 sm:px-5 lg:pl-15 lg:pr-10 mt-2">        
+        <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] border-t-4 border-solid border-t-red-500 p-2.5 sm:p-4 transition-transform duration-300 hover:scale-103">
+            <p class="text-sm text-white">Status</p>
+            <p class="font-space-mono font-bold text-red-500 text-2xl sm:text-4xl mt-2"> X </p>
+            <p class="text-xs text-[#A0B5AC] mt-2">Detalhes</p>
+        </div>
+
+        <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] border-t-4 border-solid border-t-yellow-500 p-2.5 sm:p-4 transition-transform duration-300 hover:scale-103">
+            <p class="text-sm text-white">Causa principal</p>
+            <p class="font-space-mono font-bold text-orange-400 text-2xl sm:text-3xl mt-2">X</p>
+            <p class="text-xs text-[#A0B5AC] mt-2">Y% dos alertas registrados</p>
+        </div>
+
+        <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] border-t-4 border-solid border-t-blue-500 p-2.5 sm:p-4 transition-transform duration-300 hover:scale-103">
+            <p class="text-sm text-white">Próxima falha prevista</p>
+            <p class="font-space-mono font-bold text-blue-500 text-2xl sm:text-3xl mt-2"> RIG X </p>
+            <p class="text-xs text-[#A0B5AC] mt-2">Detalhes componente y - local</p>
+        </div>
+
+
+        <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] border-t-4 border-solid border-t-yellow-500 p-2.5 sm:p-4 transition-transform duration-300 hover:scale-103">
+            <p class="text-sm text-white">Leitura mais fora da média</p>
+            <p class="font-space-mono font-bold text-yellow-400 text-2xl sm:text-3xl mt-2">X </p>
+            <p class="text-xs text-[#A0B5AC] mt-2">COMPONENTE X - RIG Y</p>
+        </div>      
+    </div>
+
+    <div class="grid grid-cols-1 xl:grid-cols-2 gap-4 px-3 sm:px-5 lg:pl-15 lg:pr-10 mt-4 mb-10">
+        <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] p-5 min-w-0">
+            <div class="flex flex-wrap justify-between gap-3 mb-4">
+                <div>
+                    <p class="text-lg">Picos ao longo do tempo</p>
+                    <p class="text-xs text-gray-400">Quando os picos acontecem e quais componentes os causam</p>
+                </div>
+
+                <div class="flex rounded-xl overflow-hidden border border-[#207F70]">
+                    <!-- <button class="px-3 py-2 text-xs text-[#A0B5AC] hover:bg-[#ffffff0d]">1h</button> -->
+                    <button class="px-3 py-2 text-xs bg-[#144840] text-[#00E6A6]">24h</button>
+                    <button class="px-3 py-2 text-xs text-[#A0B5AC] hover:bg-[#ffffff0d]">7d</button>
+                    <button class="px-3 py-2 text-xs text-[#A0B5AC] hover:bg-[#ffffff0d]">30d</button>
+                </div>
+            </div>
+
+            <div class="relative h-54 sm:h-76 xl:h-120 w-full">
+                <canvas id="graficopicos"></canvas>
+            </div>
+            <div id="ondePicos" class="bg-[#102C24] border border-[#207F70]/60 rounded-xl p-4 mt-4">
+                    <p class="text-xs text-gray-400">Clique em uma barra para ver onde os picos aconteceram.</p>
+            </div>
+        </div>
+
+        <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] p-5 min-w-0">
+            <p class="text-lg">Estado dos componentes</p>
+            <p class="text-xs text-gray-400 mb-4">Leitura atual</p>
+
+            <div id="lista_estado" class="flex flex-col gap-2 max-h-120 overflow-y-auto pr-2">
+
+            </div>
+        </div>
+            <!-- <p class="text-[11px] text-gray-400 mt-3">Detalhes</p> -->
+    </div>  
 
 
     <script>
@@ -99,6 +161,74 @@
                 }
             }
         })
+
+
+
+    let graficopicos = new Chart(document.getElementById('graficopicos'), {
+
+            type: 'bar',
+            data: {
+                labels: ['00h', '01h', '02h', '03h', '04h','05h', '06h', '07h', '08h', '09h', '10h', '11h', '12h', '13h', '14h', '15h', '16h', '17h', '18h', '19h', '20h', '21h', '22h', '23h'],
+                datasets: [
+                    {
+                        label: 'Temperatura',
+                        data: [12, 10, 8, 4, 2, 12, 0, 6 , 10 , 8 , 9, 12 , 4 , 6 , 7 , 2 , 1 , 2 , 4 , 6 , 3, 5 , 6 ,2],
+                        backgroundColor: '#FFB000',
+                        borderRadius: 4
+                    },
+
+                    {
+                        label: 'GPU',
+                        data: [9, 2, 5, 2, 1, 3, 2 , 6 , 5, 3, 1, 3 ,5 ,6 ,7 ,2 ,3 ,2 ,3 ,1 ,1 ,1 ,5 ,6],
+                        backgroundColor: '#FF1F3D',
+                        borderRadius: 4
+                    },
+
+                    {
+                        label: 'CPU',
+                        data: [7, 9, 1, 1, 2, 0, 1 , 5 ,6 ,5 ,6 ,3 ,2 ,2 ,3 ,5 ,0 ,9 ,3 ,6 ,7 ,4 ,2, 6],
+                        backgroundColor: '#E879F9',
+                        borderRadius: 4
+                    },
+
+                    {
+                        label: 'RAM',
+                        data: [0, 0, 2, 6, 4, 1, 1, 7 ,3 ,2 ,3 ,5 ,7 ,8, 2, 1, 3 ,5 ,6 ,4 ,2 ,2 ,2 ,1 ],
+                        backgroundColor: '#438BFF',
+                        borderRadius: 4
+                    },
+
+                    {
+                        label: 'DISCO',
+                        data: [0, 0, 1, 1, 1, 2, 2, 10 ,12 ,2, 4 ,6 ,7 ,3 ,5 ,6 ,2 ,2 ,2 ,1 ,1 ,5 ,6 ,3],
+                        backgroundColor: '#A78BFA',
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+            maintainAspectRatio: false,
+            scales: {
+                x: { stacked: true },
+                y: { stacked: true }
+            },
+            onClick: function (evento, barras, grafico) {
+                if (barras.length == 0) return;
+
+                let hora = barras[0].index;
+                let texto = '<p class="text-xs text-gray-400 mb-2">Relatório das <b class="text-white">' + grafico.data.labels[hora] + '</b></p>';
+
+                for (let i = 0; i < grafico.data.datasets.length; i++) {
+                    let nome = grafico.data.datasets[i].label;
+                    let valor = grafico.data.datasets[i].data[hora];
+                    texto += '<div class="flex items-center gap-2 text-xs py-1.5 border-t border-[#207F70]/30">' + '<span class="w-2.5 h-2.5 rounded-full shrink-0" style="background:' + grafico.data.datasets[i].backgroundColor + '"></span>' + '<b class="w-24">' + nome + '</b>' + '<span class="text-gray-400">' + valor + ' picos - farm x - sessao y - rigx e componentex</span>' + '</div>';                }
+
+                document.getElementById('ondePicos').innerHTML = texto;
+            }
+        }
+    });
+
+
 
         
     </script>
