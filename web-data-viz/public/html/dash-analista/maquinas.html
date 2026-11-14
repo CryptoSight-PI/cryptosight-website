@@ -400,7 +400,7 @@
             if (c === vazio || c.style.display == "none") continue;
 
             c.style.gridColumn = "";
-            c.style.order = "0";
+            // c.style.order = "0";
 
             if (c === gpu) {
                 temGpu = true;
@@ -422,7 +422,7 @@
 
         if (temGpu) {
             gpu.style.gridColumn = "span 2";
-            gpu.style.order = "1";
+            // gpu.style.order = "1";
         }
 
         let linhas = Math.ceil(normais.length / 2) + (temGpu ? 1 : 0);
@@ -556,6 +556,7 @@
                                                 let acao_critico_texto = cardsStatus[j].acao_critico_texto
 
                                                 if (status == "critico") {
+                                                    cardsStatus[j].card.style.order = 0;
                                                     frente.style.backgroundColor = "#24191B";
                                                     frente.style.borderColor = "#FF1F3D";
                                                     texto.style.color = "#FF5269";
@@ -567,6 +568,7 @@
                                                         barra.style.backgroundColor = "#FF5269"
                                                     }
                                                 } else if (status == "atencao") {
+                                                    cardsStatus[j].card.style.order = 1;
                                                     frente.style.backgroundColor = "#241F14";
                                                     frente.style.borderColor = "#FFB000";
                                                     texto.style.color = "#FFB000";
@@ -578,6 +580,7 @@
                                                         barra.style.backgroundColor = "#FFB000"
                                                     }
                                                 } else {
+                                                    cardsStatus[j].card.style.order = 2;
                                                     frente.style.backgroundColor = "#112C24";
                                                     frente.style.borderColor = "#207F70";
                                                     texto.style.color = "#00E6A6";
