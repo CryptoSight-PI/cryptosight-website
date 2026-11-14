@@ -62,48 +62,48 @@
         </div>
     </div>
 
-    <div class="grid grid-cols-3 ml-5 mr-5">
+    <div class="grid grid-cols-5 ml-5 mr-5">
         <select class="bg-[#0C1F19] border-[#207F70] border rounded-2xl m-5 p-2">
             <option value="">Todas as farms</option>
         </select>
-        <div></div>
-        <div class="bg-[#0C1F19] border-[#207F70] border rounded-2xl m-5 grid grid-cols-3 place-content-center">
-            <span class="flex flex-row justify-center rounded-2xl filtro-selecionado border border-transparent p-1">7 dias</span>
-            <span class="flex flex-row justify-center rounded-2xl border border-transparent p-1">30 dias</span>
-            <span class="flex flex-row justify-center rounded-2xl border border-transparent p-1">90 dias</span>
+        <div></div><div></div><div></div>
+        <div class="bg-[#0C1F19] border-[#207F70] border m-5 grid grid-cols-3 place-content-center">
+            <span class="flex flex-row justify-center filtro-selecionado border border-transparent p-1 hover:cursor-pointer hover:bg-[#235347] hover:text-[#00E6A6] hover:border-[#00E6A6] hover:border">7 dias</span>
+            <span class="flex flex-row justify-center border border-transparent p-1 hover:cursor-pointer hover:bg-[#235347] hover:text-[#00E6A6] hover:border-[#00E6A6] hover:border transition-all duration-100 ease-in-out">30 dias</span>
+            <span class="flex flex-row justify-center border border-transparent p-1 hover:cursor-pointer hover:bg-[#235347] hover:text-[#00E6A6] hover:border-[#00E6A6] hover:border transition-all duration-100 ease-in-out">90 dias</span>
         </div>
     </div>
 
     <div class="grid grid-cols-5 ml-5 mr-5 h-fit">
-        <div class="bg-[#0C1F19] border-[#207F70] border rounded-2xl my-5 mr-5 p-5">
+        <div class="bg-[#0C1F19] border-[#207F70] border rounded-2xl m-5 p-5 border-t-4 border-t-[#00E6A6]">
             <p>Rendimento:</p>
             <p class="flex flex-row text-3xl text-white pr-1 font-bold font-ibm-mono">
                 <img src="../assets/icones-dash/cima-bom.svg">
                 <img src="../assets/icones-dash/baixo-ruim.svg" class="hidden">
                  R$<span id="rendimento_farm">40.000,00</span></p>
         </div>
-        <div class="bg-[#0C1F19] border-[#207F70] border rounded-2xl m-5 p-5">
+        <div class="bg-[#0C1F19] border-[#207F70] border rounded-2xl m-5 p-5 border-t-4 border-t-[#E00027]">
             <p>Gastos:</p>
             <p class="flex flex-row text-3xl text-white pr-1 font-bold font-ibm-mono">
                 <img src="../assets/icones-dash/cima-ruim.svg">
                 <img src="../assets/icones-dash/baixo-bom.svg" class="hidden">
                 R$<span>20.000,00</span></p>
         </div>
-        <div class="bg-[#0C1F19] border-[#207F70] border rounded-2xl m-5 p-5">
+        <div class="bg-[#0C1F19] border-[#207F70] border rounded-2xl m-5 p-5 border-t-4 border-t-[#E00027]">
             <p>Lucro líquido:</p>
             <p class="flex flex-row text-3xl text-white pr-1 font-bold font-ibm-mono">
                 <img src="../assets/icones-dash/cima-bom.svg" class="hidden">
                 <img src="../assets/icones-dash/baixo-ruim.svg"> 
                 R$<span>20.000,00</span></p>
         </div>
-        <div class="bg-[#0C1F19] border-[#207F70] border rounded-2xl m-5 p-5">
+        <div class="bg-[#0C1F19] border-[#207F70] border rounded-2xl m-5 p-5 border-t-4 border-t-[#00E6A6]">
             <p>ROI:</p>
             <p class="flex flex-row text-3xl text-white pr-1 font-bold font-ibm-mono">
                 <img src="../assets/icones-dash/cima-bom.svg">
                 <img src="../assets/icones-dash/baixo-ruim.svg" class="hidden">
                  <span>100</span>%</p>
         </div>
-        <div class="bg-[#0C1F19] border-[#207F70] border rounded-2xl ml-5 my-5 p-5">
+        <div class="bg-[#0C1F19] border-[#207F70] border rounded-2xl m-5 p-5 border-t-4 border-t-[#00E6A6]">
             <p>Hasrate:</p>
             <p class="flex flex-row text-3xl text-white pr-1 font-bold font-ibm-mono">
                 <img src="../assets/icones-dash/cima-bom.svg">
@@ -112,19 +112,90 @@
         </div>
     </div>
 
-    <div class="grid grid-cols-2 gap-5">
+    <div class="grid grid-cols-2 mx-5">
         <div class="bg-[#0C1F19] border-[#207F70] border rounded-2xl m-5 p-5">
+            <p class="text-2xl font-bold mb-3">Rendimento x Gasto</p>
             <canvas id="grafico"></canvas>
         </div>
         <div class="bg-[#0C1F19] border-[#207F70] border rounded-2xl m-5 p-5">
-            b
+            <p class="text-2xl font-bold mb-3">Sessões:</p>
+            <div class="grid grid-cols-6 text-[#207F70]">
+                <p>Nº Sessão</p>
+                <p>Nome Farm</p>
+                <p>Ganho(R$)</p>
+                <p>Gasto(R$)</p>
+                <p>ROI Individual</p>
+                <p>Hashrate</p>
+            </div>
+            <div>
+                <div onclick="rank_rigs.showModal()" class="grid grid-cols-6 border border-x-transparent first:border-t-transparent last:border-b-transparent p-5 hover:cursor-pointer hover:bg-[#235347] hover:border-[#00E6A6] hover:border transition-all duration-100 ease-in-out">
+                    <p>01</p>
+                    <p>A</p>
+                    <div class="flex flex-row"><img src="../assets/icones-dash/cima-bom.svg" alt="">13.000,00</div>
+                    <div class="flex flex-row"><img src="../assets/icones-dash/baixo-bom.svg" alt="">7.000,00</div>
+                    <div class="flex flex-row"><img src="../assets/icones-dash/baixo-bom.svg" alt="">100%</div>
+                    <div class="flex flex-row"><img src="../assets/icones-dash/baixo-bom.svg" alt="">1 PH/s</div>
+                </div>
+                <div class="grid grid-cols-6 border border-x-transparent first:border-t-transparent last:border-b-transparent p-5 hover:cursor-pointer hover:bg-[#235347] hover:border-[#00E6A6] hover:border transition-all duration-100 ease-in-out">
+                    <p>01</p>
+                    <p>A</p>
+                    <div class="flex flex-row"><img src="../assets/icones-dash/cima-bom.svg" alt="">13.000,00</div>
+                    <div class="flex flex-row"><img src="../assets/icones-dash/baixo-bom.svg" alt="">7.000,00</div>
+                    <div class="flex flex-row"><img src="../assets/icones-dash/baixo-bom.svg" alt="">100%</div>
+                    <div class="flex flex-row"><img src="../assets/icones-dash/baixo-bom.svg" alt="">1 PH/s</div>
+                </div>
+                <div class="grid grid-cols-6 border border-x-transparent first:border-t-transparent last:border-b-transparent p-5 hover:cursor-pointer hover:bg-[#235347] hover:border-[#00E6A6] hover:border transition-all duration-100 ease-in-out">
+                    <p>01</p>
+                    <p>A</p>
+                    <div class="flex flex-row"><img src="../assets/icones-dash/cima-bom.svg" alt="">13.000,00</div>
+                    <div class="flex flex-row"><img src="../assets/icones-dash/baixo-bom.svg" alt="">7.000,00</div>
+                    <div class="flex flex-row"><img src="../assets/icones-dash/baixo-bom.svg" alt="">100%</div>
+                    <div class="flex flex-row"><img src="../assets/icones-dash/baixo-bom.svg" alt="">1 PH/s</div>
+                </div>
+
+                <dialog id="rank_rigs" class="w-fit p-15 m-auto bg-[#0C1F19] border border-[#207F70] rounded-2xl backdrop:backdrop-blur-sm" popover="hint">
+                    <div class="flex flex-row justify-between">
+                        <p class="text-2xl font-bold">Rigs da sessão</p>
+                        <p onclick="rank_rigs.close()" class="hover:cursor-pointer text-2xl font-bold">X</p>
+                    </div>
+                    <div class="grid grid-cols-5 mt-10 w-5xl text-[#207F70]">
+                    <p>Rig</p>
+                    <p>Ganho(R$)</p>
+                    <p>Gasto(R$)</p>
+                    <p>ROI Individual</p>
+                    <p>Hashrate</p>
+                </div>
+                <div>
+                    <div class="grid grid-cols-5 border border-x-transparent first:border-t-transparent last:border-b-transparent p-5 hover:cursor-pointer hover:bg-[#235347] hover:border-[#00E6A6] hover:border transition-all duration-100 ease-in-out">
+                        <p>01</p>
+                        <div class="flex flex-row"><img src="../assets/icones-dash/cima-bom.svg" alt="">13.000,00</div>
+                        <div class="flex flex-row"><img src="../assets/icones-dash/baixo-bom.svg" alt="">7.000,00</div>
+                        <div class="flex flex-row"><img src="../assets/icones-dash/baixo-bom.svg" alt="">100%</div>
+                        <div class="flex flex-row"><img src="../assets/icones-dash/baixo-bom.svg" alt="">1 PH/s</div>
+                    </div>
+                    <div class="grid grid-cols-5 border border-x-transparent first:border-t-transparent last:border-b-transparent p-5 hover:cursor-pointer hover:bg-[#235347] hover:border-[#00E6A6] hover:border transition-all duration-100 ease-in-out">
+                        <p>01</p>
+                        <div class="flex flex-row"><img src="../assets/icones-dash/cima-bom.svg" alt="">13.000,00</div>
+                        <div class="flex flex-row"><img src="../assets/icones-dash/baixo-bom.svg" alt="">7.000,00</div>
+                        <div class="flex flex-row"><img src="../assets/icones-dash/baixo-bom.svg" alt="">100%</div>
+                        <div class="flex flex-row"><img src="../assets/icones-dash/baixo-bom.svg" alt="">1 PH/s</div>
+                    </div>
+                    <div class="grid grid-cols-5 border border-x-transparent first:border-t-transparent last:border-b-transparent p-5 hover:cursor-pointer hover:bg-[#235347] hover:border-[#00E6A6] hover:border transition-all duration-100 ease-in-out">
+                        <p>01</p>
+                        <div class="flex flex-row"><img src="../assets/icones-dash/cima-bom.svg" alt="">13.000,00</div>
+                        <div class="flex flex-row"><img src="../assets/icones-dash/baixo-bom.svg" alt="">7.000,00</div>
+                        <div class="flex flex-row"><img src="../assets/icones-dash/baixo-bom.svg" alt="">100%</div>
+                        <div class="flex flex-row"><img src="../assets/icones-dash/baixo-bom.svg" alt="">1 PH/s</div>
+                    </div>
+                </dialog>
+            </div>
         </div>
     </div>
 </body>
 </html>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    Chart.defaults.color = '#81988D'
+    Chart.defaults.color = '#FFF'
     const ctx = document.getElementById('grafico');
 
     new Chart(ctx, {
@@ -175,17 +246,6 @@
             }
         },
         plugins: {
-            title: {
-                display: true,
-                fullSize: true,
-                align: "start",
-                color: "#FFF",
-                text: 'Rendimento x Gastos nesse período',
-                font:{
-                    size:20,
-                    family: "Inter"
-                }
-            },
             legend: {
                 align: "end",
                 labels: {color: "#FFF"}
