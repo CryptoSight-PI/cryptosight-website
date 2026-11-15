@@ -82,11 +82,13 @@
             <p class="text-xs text-[#A0B5AC] mt-2">Y% dos alertas registrados</p>
         </div>
 
-        <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] border-t-4 border-solid border-t-blue-500 p-2.5 sm:p-4 transition-transform duration-300 hover:scale-103">
-            <p class="text-sm text-white">Próxima falha prevista</p>
-            <p class="font-space-mono font-bold text-blue-500 text-2xl sm:text-3xl mt-2"> RIG X </p>
-            <p class="text-xs text-[#A0B5AC] mt-2">Detalhes componente y - local</p>
+        
+        <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] border-t-4 border-solid border-t-blue-500 p-2.5 sm:p-4 transition-transform duration-300 hover:scale-103 min-w-0">
+            <p class="text-sm text-white truncate">Próxima falha prevista</p>
+            <p id="previsao_horas" class="font-space-mono font-bold text-blue-500 text-2xl sm:text-3xl mt-2 truncate">X HORAS</p>
+            <p id="previsao_detalhe" class="text-xs text-[#A0B5AC] mt-2 truncate whitespace-nowrap">componente - valor - timestamp</p>
         </div>
+
 
         <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] border-t-4 border-solid border-t-yellow-500 p-2.5 sm:p-4 transition-transform duration-300 hover:scale-103">
             <p class="text-sm text-white">Leitura mais fora da média</p>
@@ -398,7 +400,6 @@
             if (c === vazio || c.style.display == "none") continue;
 
             c.style.gridColumn = "";
-            // c.style.order = "0";
 
             if (c === gpu) {
                 temGpu = true;
@@ -420,7 +421,6 @@
 
         if (temGpu) {
             gpu.style.gridColumn = "span 2";
-            // gpu.style.order = "1";
         }
 
         let linhas = Math.ceil(normais.length / 2) + (temGpu ? 1 : 0);
@@ -428,9 +428,8 @@
     }
 
     function preencherJanela(link, janela, metricastras) {
-        fetch(`${link}/janelas/${janela}/metricas.json`, { cache: "no-store" })
-            .then(resposta => resposta.json())
-            .then(dados => {
+        fetch(`${link}/janelas/${janela}/metricas.json`, { cache: "no-store" }).then(resposta =>
+         resposta.json()).then(dados => {
                 for (let nome in metricastras) {
                     let kpi = dados.dados.kpis[metricastras[nome]];
 
@@ -456,7 +455,6 @@
             let link = `${url}/${idEmpresa}/${resposta[0].nome_fantasia}/operacional/especifico/farm=${idFarm}/sessao=${idSessao}/maquina=${idRig}`;
             let linkmonitora = `${url}/${idEmpresa}/${resposta[0].nome_fantasia}/operacional/catalogo/limites.json`;
 
-            // as 21 janelas começam já, sem esperar atual/limites/status
             let janelas = ["24h", "7d", "30d"];
             let metricastras = {
                 cpu: "cpu_percent",
