@@ -70,9 +70,9 @@
     </div>
 
     <div class="grid grid-cols-4 gap-4 px-3 sm:px-5 lg:pl-15 lg:pr-10 mt-2">
-        <div id="kpi_status" class="rounded-2xl border border-[#207F70] bg-[#0C1F19] border-t-4 border-solid border-t-red-500 p-2.5 sm:p-4 transition-transform duration-300 hover:scale-103">
-            <p class="text-sm text-white">Status</p>
-            <p id="pico_status" class="font-space-mono font-bold text-red-500 text-2xl sm:text-4xl mt-2"> ... </p>
+        <div id="kpi_status" class="rounded-2xl border border-[#207F70] bg-[#0C1F19] border-t-4 border-solid p-2.5 sm:p-4 transition-transform duration-300 hover:scale-103">
+            <p class="text-sm text-gray-500">Status</p>
+            <p id="pico_status" class="font-space-mono font-bold text-2xl sm:text-4xl mt-2"> ... </p>
             <p class="text-xs text-[#A0B5AC] mt-2">Detalhes</p>
         </div>
 
@@ -127,8 +127,7 @@
                 <span id="ultima_coleta" class="text-xs text-gray-400"><i class="fa-regular fa-clock mr-1"></i>Última coleta </span>
             </div>
 
-            <!-- As linhas e colunas são calculadas por ajustarGrade(): os cards visíveis sempre preenchem todo o espaço -->
-            <div id="grade_componentes" hidden class="flex-1" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0.5rem;min-height:22rem">
+            <div id="grade_componentes" class="flex-1" style="display:none;grid-template-columns:repeat(2,minmax(0,1fr));gap:0.5rem;min-height:22rem">
 
                 <div id="sem_componentes" style="display:none;grid-column:1 / -1;flex-direction:column;align-items:center;justify-content:center;gap:0.75rem;text-align:center;padding:1.5rem" class="rounded-xl border border-dashed border-[#626B66] bg-[#202725]">
                     <p class="text-gray-300 font-semibold">Nenhum componente monitorado</p>
@@ -151,9 +150,9 @@
                         </div>
                         <div class="absolute inset-0 backface-hidden rotate-y-180 rounded-xl border border-[#207F70] bg-[#112C24] p-3 flex flex-col justify-center gap-1">
                             <div class="grid grid-cols-5 text-[11px] text-gray-400"><span></span><span>Média</span><span>Máx</span><span>Mín</span><span>Desv.</span></div>
-                            <div class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">24h</span><span>71%</span><span>94%</span><span>38%</span><span>±8</span></div>
-                            <div class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">7d</span><span>64%</span><span>97%</span><span>22%</span><span>±11</span></div>
-                            <div class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">30d</span><span>59%</span><span>99%</span><span>15%</span><span>±13</span></div>
+                            <div id="linha_cpu_24h" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">24h</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
+                            <div id="linha_cpu_7d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">7d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
+                            <div id="linha_cpu_30d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">30d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
                         </div>
                     </div>
                 </div>
@@ -174,9 +173,9 @@
                         </div>
                         <div class="absolute inset-0 backface-hidden rotate-y-180 rounded-xl border border-[#207F70] bg-[#112C24] p-3 flex flex-col justify-center gap-1">
                             <div class="grid grid-cols-5 text-[11px] text-gray-400"><span></span><span>Média</span><span>Máx</span><span>Mín</span><span>Desv.</span></div>
-                            <div class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">24h</span><span>81%</span><span>93%</span><span>60%</span><span>±6</span></div>
-                            <div class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">7d</span><span>77%</span><span>96%</span><span>48%</span><span>±9</span></div>
-                            <div class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">30d</span><span>72%</span><span>98%</span><span>35%</span><span>±10</span></div>
+                            <div id="linha_ram_24h" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">24h</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
+                            <div id="linha_ram_7d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">7d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
+                            <div id="linha_ram_30d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">30d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
                         </div>
                     </div>
                 </div>
@@ -197,9 +196,9 @@
                         </div>
                         <div class="absolute inset-0 backface-hidden rotate-y-180 rounded-xl border border-[#207F70] bg-[#112C24] p-3 flex flex-col justify-center gap-1">
                             <div class="grid grid-cols-5 text-[11px] text-gray-400"><span></span><span>Média</span><span>Máx</span><span>Mín</span><span>Desv.</span></div>
-                            <div class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">24h</span><span>70%</span><span>82%</span><span>55%</span><span>±5</span></div>
-                            <div class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">7d</span><span>62%</span><span>85%</span><span>30%</span><span>±10</span></div>
-                            <div class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">30d</span><span>51%</span><span>90%</span><span>12%</span><span>±15</span></div>
+                            <div id="linha_swap_24h" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">24h</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
+                            <div id="linha_swap_7d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">7d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
+                            <div id="linha_swap_30d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">30d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
                         </div>
                     </div>
                 </div>
@@ -219,9 +218,9 @@
                         </div>
                         <div class="absolute inset-0 backface-hidden rotate-y-180 rounded-xl border border-[#207F70] bg-[#112C24] p-3 flex flex-col justify-center gap-1">
                             <div class="grid grid-cols-5 text-[11px] text-gray-400"><span></span><span>Média</span><span>Máx</span><span>Mín</span><span>Desv.</span></div>
-                            <div class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">24h</span><span>69°</span><span>78°</span><span>58°</span><span>±4</span></div>
-                            <div class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">7d</span><span>66°</span><span>84°</span><span>49°</span><span>±6</span></div>
-                            <div class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">30d</span><span>63°</span><span>91°</span><span>41°</span><span>±8</span></div>
+                            <div id="linha_temperatura_24h" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">24h</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
+                            <div id="linha_temperatura_7d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">7d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
+                            <div id="linha_temperatura_30d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">30d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
                         </div>
                     </div>
                 </div>
@@ -243,9 +242,9 @@
                         </div>
                         <div class="absolute inset-0 backface-hidden rotate-y-180 rounded-xl border border-[#207F70] bg-[#112C24] p-3 flex flex-col justify-center gap-1">
                             <div class="grid grid-cols-5 text-[11px] text-gray-400"><span>GPU uso</span><span>Média</span><span>Máx</span><span>Mín</span><span>Desv.</span></div>
-                            <div class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">24h</span><span>91%</span><span>99%</span><span>70%</span><span>±5</span></div>
-                            <div class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">7d</span><span>89%</span><span>100%</span><span>52%</span><span>±7</span></div>
-                            <div class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">30d</span><span>86%</span><span>100%</span><span>40%</span><span>±9</span></div>
+                            <div id="linha_gpu_24h" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">24h</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
+                            <div id="linha_gpu_7d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">7d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
+                            <div id="linha_gpu_30d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">30d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
                         </div>
                     </div>
                 </div>
@@ -265,9 +264,9 @@
                         </div>
                         <div class="absolute inset-0 backface-hidden rotate-y-180 rounded-xl border border-[#207F70] bg-[#112C24] p-3 flex flex-col justify-center gap-1">
                             <div class="grid grid-cols-5 text-[11px] text-gray-400"><span></span><span>Média</span><span>Máx</span><span>Mín</span><span>Desv.</span></div>
-                            <div class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">24h</span><span>415</span><span>418</span><span>410</span><span>±2</span></div>
-                            <div class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">7d</span><span>421</span><span>430</span><span>408</span><span>±6</span></div>
-                            <div class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">30d</span><span>438</span><span>460</span><span>405</span><span>±12</span></div>
+                            <div id="linha_disco_24h" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">24h</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
+                            <div id="linha_disco_7d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">7d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
+                            <div id="linha_disco_30d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">30d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
                         </div>
                     </div>
                 </div>
@@ -287,9 +286,9 @@
                         </div>
                         <div class="absolute inset-0 backface-hidden rotate-y-180 rounded-xl border border-[#207F70] bg-[#112C24] p-3 flex flex-col justify-center gap-1">
                             <div class="grid grid-cols-5 text-[11px] text-gray-400"><span></span><span>Média</span><span>Máx</span><span>Mín</span><span>Desv.</span></div>
-                            <div class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">24h</span><span>55%</span><span>68%</span><span>42%</span><span>±4</span></div>
-                            <div class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">7d</span><span>57%</span><span>75%</span><span>38%</span><span>±6</span></div>
-                            <div class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">30d</span><span>58%</span><span>82%</span><span>30%</span><span>±7</span></div>
+                            <div id="linha_ventoinha_24h" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">24h</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
+                            <div id="linha_ventoinha_7d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">7d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
+                            <div id="linha_ventoinha_30d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">30d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
                         </div>
                     </div>
                 </div>
@@ -429,6 +428,23 @@
         grade.style.gridTemplateRows = `repeat(${linhas}, minmax(96px, 1fr))`;
     }
 
+    function preencherJanela(link, janela, nome, metrica) {
+        fetch(`${link}/janelas/${janela}/metricas.json`, { cache: "no-store" }).then(resposta =>
+        resposta.json()).then(dados => {
+        
+                if (!dados.dados.kpis[metrica] || dados.dados.kpis[metrica].avg == null) return;
+
+                let desvio = dados.dados.kpis[metrica].desvio_padrao == null ? "--" : "±" + dados.dados.kpis[metrica].desvio_padrao.toFixed(1);
+
+                document.getElementById(`linha_${nome}_${janela}`).innerHTML =
+                    `<span class="text-gray-400">${janela}</span>
+                    <span>${dados.dados.kpis[metrica].avg.toFixed(1)}</span>
+                    <span>${dados.dados.kpis[metrica].max.toFixed(1)}</span>
+                    <span>${dados.dados.kpis[metrica].min.toFixed(1)}</span>
+                    <span>${desvio}</span>`;
+        })
+    }
+
     let url = "https://bucket-gold-marcelo-sptech.s3.us-east-1.amazonaws.com";
 
     fetch(`/empresas/buscar/${idEmpresa}`).then((dados) => {
@@ -522,7 +538,24 @@
                             }
 
                             ajustarGrade();
-                            document.getElementById("grade_componentes").hidden = false;
+
+                            let janelas = ["24h", "7d", "30d"];
+                            let metricastras = {
+                                cpu: "cpu_percent",
+                                ram: "ram_percent",
+                                swap: "swap_memory_percent",
+                                temperatura: "temperature",
+                                gpu: "gpu_usage",
+                                disco: "disk",
+                                ventoinha: "fans_speed"
+                            };
+
+                            for (let i in metricastras) {
+                                for (let j = 0; j < janelas.length; j++) {
+                                    preencherJanela(link, janelas[j], i, metricastras[i]);
+                                }
+                            }
+                            // document.getElementById("grade_componentes").hidden = false;
 
                             fetch(`${link}/tempo_real/status.json`, { cache: "no-store" }).then((dadosstatus) => {
                                 dadosstatus.json().then((resposta3) => {
@@ -606,6 +639,10 @@
                                         pico_status.style.color = '#00E6A6'
                                         kpi_status.style.borderTopColor = '#00E6A6'
                                     }
+
+
+                                    // usado para nao piscar o mockado (pretendo ainda mudar a logica)
+                                    document.getElementById("grade_componentes").style.display = "grid";
                                 });
                             });
                         });
