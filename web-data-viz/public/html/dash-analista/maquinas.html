@@ -296,7 +296,6 @@
             </div>
         </div>
     </div>
-
 <script>
     let idEmpresa = sessionStorage.ID_EMPRESA
     let params = new URLSearchParams(location.search);
@@ -428,226 +427,220 @@
         grade.style.gridTemplateRows = `repeat(${linhas}, minmax(96px, 1fr))`;
     }
 
-    function preencherJanela(link, janela, nome, metrica) {
-        fetch(`${link}/janelas/${janela}/metricas.json`, { cache: "no-store" }).then(resposta =>
-        resposta.json()).then(dados => {
-        
-                if (!dados.dados.kpis[metrica] || dados.dados.kpis[metrica].avg == null) return;
+    function preencherJanela(link, janela, metricastras) {
+        fetch(`${link}/janelas/${janela}/metricas.json`, { cache: "no-store" })
+            .then(resposta => resposta.json())
+            .then(dados => {
+                for (let nome in metricastras) {
+                    let kpi = dados.dados.kpis[metricastras[nome]];
 
-                let desvio = dados.dados.kpis[metrica].desvio_padrao == null ? "--" : "±" + dados.dados.kpis[metrica].desvio_padrao.toFixed(1);
+                    if (!kpi || kpi.avg == null) continue;
 
-                document.getElementById(`linha_${nome}_${janela}`).innerHTML =
-                    `<span class="text-gray-400">${janela}</span>
-                    <span>${dados.dados.kpis[metrica].avg.toFixed(1)}</span>
-                    <span>${dados.dados.kpis[metrica].max.toFixed(1)}</span>
-                    <span>${dados.dados.kpis[metrica].min.toFixed(1)}</span>
-                    <span>${desvio}</span>`;
-        })
+                    let desvio = kpi.desvio_padrao == null ? "--" : "±" + kpi.desvio_padrao.toFixed(1);
+
+                    document.getElementById(`linha_${nome}_${janela}`).innerHTML =
+                        `<span class="text-gray-400">${janela}</span>
+                        <span>${kpi.avg.toFixed(1)}</span>
+                        <span>${kpi.max.toFixed(1)}</span>
+                        <span>${kpi.min.toFixed(1)}</span>
+                        <span>${desvio}</span>`;
+                }
+            })
     }
 
     let url = "https://bucket-gold-marcelo-sptech.s3.us-east-1.amazonaws.com";
 
     fetch(`/empresas/buscar/${idEmpresa}`).then((dados) => {
         dados.json().then((resposta) => {
-            console.log(resposta)
             nome_empresa.innerHTML = resposta[0].nome_fantasia
             let link = `${url}/${idEmpresa}/${resposta[0].nome_fantasia}/operacional/especifico/farm=${idFarm}/sessao=${idSessao}/maquina=${idRig}`;
             let linkmonitora = `${url}/${idEmpresa}/${resposta[0].nome_fantasia}/operacional/catalogo/limites.json`;
 
-            fetch(`${link}/tempo_real/atual.json`, { cache: "no-store" }).then((dados2) => {
-                dados2.json().then((resposta2) => {
-                    console.log(resposta2)
-                    ultima_coleta.innerHTML = "Última coleta: " + new Date(resposta2.gerado_em).toLocaleTimeString('pt-BR');
+            // as 21 janelas começam já, sem esperar atual/limites/status
+            let janelas = ["24h", "7d", "30d"];
+            let metricastras = {
+                cpu: "cpu_percent",
+                ram: "ram_percent",
+                swap: "swap_memory_percent",
+                temperatura: "temperature",
+                gpu: "gpu_usage",
+                disco: "disk",
+                ventoinha: "fans_speed"
+            };
 
-                    let cardcpu = document.getElementById("card_cpu");
-                    let cardram = document.getElementById("card_ram");
-                    let cardswap = document.getElementById("card_swap");
-                    let carddisco = document.getElementById("card_disco");
-                    let cardgpu = document.getElementById("card_gpu");
-                    let cardtemperatura = document.getElementById("card_temperatura");
-                    let cardventoinha = document.getElementById("card_ventoinha");
+            for (let j = 0; j < janelas.length; j++) {
+                preencherJanela(link, janelas[j], metricastras);
+            }
 
-                    fetch(linkmonitora, { cache: "no-store" }).then((dadosmonitora) => {
-                        dadosmonitora.json().then((dadosmonitora) => {
-                            let limites = dadosmonitora.dados.limites;
-                            console.log(limites)
-                            let monitoracpu = false;
-                            let monitoraram = false;
-                            let monitoraswap = false;
-                            let monitoradisco = false;
-                            let monitoragpu = false;
-                            let monitoratemp = false;
-                            let monitoraventoinha = false;
+            // ao inves de fazer 3 fetches uso o promise all
+            Promise.all([
+                fetch(`${link}/tempo_real/atual.json`, { cache: "no-store" }).then(dados =>
+                dados.json()),
+                fetch(linkmonitora, { cache: "no-store" }).then(dados2 =>
+                dados2.json()),
+                fetch(`${link}/tempo_real/status.json`, { cache: "no-store" }).then(dados3 =>
+                 dados3.json())
+                ]).then(([resposta2, dadosmonitora, resposta3]) => {
 
-                            for (let i = 0; i < limites.length; i++) {
-                                if (limites[i].id_maquina != idRig) continue;
+                ultima_coleta.innerHTML = "Última coleta: " + new Date(resposta2.gerado_em).toLocaleTimeString('pt-BR');
 
-                                if (limites[i].componente == "CPU") monitoracpu = limites[i].monitorado;
-                                if (limites[i].componente == "RAM") monitoraram = limites[i].monitorado;
-                                if (limites[i].componente == "Swap") monitoraswap = limites[i].monitorado;
-                                if (limites[i].componente == "Disco") monitoradisco = limites[i].monitorado;
-                                if (limites[i].componente == "GPU") monitoragpu = limites[i].monitorado;
-                                if (limites[i].componente == "Temperatura") monitoratemp = limites[i].monitorado;
-                                if (limites[i].componente == "Ventoinha") monitoraventoinha = limites[i].monitorado;
-                            }
+                let cardcpu = document.getElementById("card_cpu");
+                let cardram = document.getElementById("card_ram");
+                let cardswap = document.getElementById("card_swap");
+                let carddisco = document.getElementById("card_disco");
+                let cardgpu = document.getElementById("card_gpu");
+                let cardtemperatura = document.getElementById("card_temperatura");
+                let cardventoinha = document.getElementById("card_ventoinha");
 
-                            let m = resposta2.dados.metricas;
+                let limites = dadosmonitora.dados.limites;
+                let monitoracpu = false;
+                let monitoraram = false;
+                let monitoraswap = false;
+                let monitoradisco = false;
+                let monitoragpu = false;
+                let monitoratemp = false;
+                let monitoraventoinha = false;
 
-                            if (monitoracpu == true && resposta2.dados.metricas["cpu_percent"] != null) {
-                                cardcpu.style.display = '';
-                                cpu_valor.innerHTML = resposta2.dados.metricas["cpu_percent"] + " %";
-                                cpu_freq.innerHTML = resposta2.dados.metricas["cpu_frequency"] + " GHz";
-                                barra_cpu.style.width = `${resposta2.dados.metricas["cpu_percent"]}%`;
-                            }
+                for (let i = 0; i < limites.length; i++) {
+                    if (limites[i].id_maquina != idRig) continue;
 
-                            if (monitoraram == true && resposta2.dados.metricas["ram_percent"] != null) {
-                                cardram.style.display = '';
-                                ram_valor.innerHTML = resposta2.dados.metricas["ram_percent"] + " %";
-                                barra_ram.style.width = `${resposta2.dados.metricas["ram_percent"]}%`;
-                            }
+                    if (limites[i].componente == "CPU") monitoracpu = limites[i].monitorado;
+                    if (limites[i].componente == "RAM") monitoraram = limites[i].monitorado;
+                    if (limites[i].componente == "Swap") monitoraswap = limites[i].monitorado;
+                    if (limites[i].componente == "Disco") monitoradisco = limites[i].monitorado;
+                    if (limites[i].componente == "GPU") monitoragpu = limites[i].monitorado;
+                    if (limites[i].componente == "Temperatura") monitoratemp = limites[i].monitorado;
+                    if (limites[i].componente == "Ventoinha") monitoraventoinha = limites[i].monitorado;
+                }
 
-                            if (monitoraswap == true && resposta2.dados.metricas["swap_memory_percent"] != null) {
-                                cardswap.style.display = '';
-                                swap_valor.innerHTML = resposta2.dados.metricas["swap_memory_percent"] + " %";
-                                swap_valor_usado.innerHTML = resposta2.dados.metricas["swap_memory_used"] + " /";
-                                swap_valor_total.innerHTML = resposta2.dados.metricas["swap_memory_total"] + " GB";
-                                barra_swap.style.width = `${resposta2.dados.metricas["swap_memory_percent"]}%`;
-                            }
+                if (monitoracpu == true && resposta2.dados.metricas["cpu_percent"] != null) {
+                    cardcpu.style.display = '';
+                    cpu_valor.innerHTML = resposta2.dados.metricas["cpu_percent"] + " %";
+                    cpu_freq.innerHTML = resposta2.dados.metricas["cpu_frequency"] + " GHz";
+                    barra_cpu.style.width = `${resposta2.dados.metricas["cpu_percent"]}%`;
+                }
 
-                            if (monitoradisco == true && resposta2.dados.metricas["disk"] != null) {
-                                carddisco.style.display = '';
-                                disco_valor.innerHTML = resposta2.dados.metricas["disk"] + " GB";
-                            }
+                if (monitoraram == true && resposta2.dados.metricas["ram_percent"] != null) {
+                    cardram.style.display = '';
+                    ram_valor.innerHTML = resposta2.dados.metricas["ram_percent"] + " %";
+                    barra_ram.style.width = `${resposta2.dados.metricas["ram_percent"]}%`;
+                }
 
-                            if (monitoragpu == true && resposta2.dados.metricas["gpu_usage"] != null) {
-                                cardgpu.style.display = '';
-                                gpu_valor_uso.innerHTML = resposta2.dados.metricas["gpu_usage"] + " %";
-                                gpu_valor_potencia.innerHTML = resposta2.dados.metricas["gpu_energy"] + " W";
-                                gpu_valor_temperatura.innerHTML = resposta2.dados.metricas["gpu_temp"] + " °C";
-                                gpu_valor_ventoinha.innerHTML = resposta2.dados.metricas["gpu_fan_speed"] + " %";
-                            }
+                if (monitoraswap == true && resposta2.dados.metricas["swap_memory_percent"] != null) {
+                    cardswap.style.display = '';
+                    swap_valor.innerHTML = resposta2.dados.metricas["swap_memory_percent"] + " %";
+                    swap_valor_usado.innerHTML = resposta2.dados.metricas["swap_memory_used"] + " /";
+                    swap_valor_total.innerHTML = resposta2.dados.metricas["swap_memory_total"] + " GB";
+                    barra_swap.style.width = `${resposta2.dados.metricas["swap_memory_percent"]}%`;
+                }
 
-                            if (monitoratemp == true && resposta2.dados.metricas["temperature"] != null) {
-                                cardtemperatura.style.display = '';
-                                temperatura_valor.innerHTML = resposta2.dados.metricas["temperature"] + " °C";
-                            }
+                if (monitoradisco == true && resposta2.dados.metricas["disk"] != null) {
+                    carddisco.style.display = '';
+                    disco_valor.innerHTML = resposta2.dados.metricas["disk"] + " GB";
+                }
 
-                            if (monitoraventoinha == true && resposta2.dados.metricas["fans_speed"] != null) {
-                                cardventoinha.style.display = '';
-                                ventoinha_valor.innerHTML = resposta2.dados.metricas["fans_speed"] + " %";
-                            }
+                if (monitoragpu == true && resposta2.dados.metricas["gpu_usage"] != null) {
+                    cardgpu.style.display = '';
+                    gpu_valor_uso.innerHTML = resposta2.dados.metricas["gpu_usage"] + " %";
+                    gpu_valor_potencia.innerHTML = resposta2.dados.metricas["gpu_energy"] + " W";
+                    gpu_valor_temperatura.innerHTML = resposta2.dados.metricas["gpu_temp"] + " °C";
+                    gpu_valor_ventoinha.innerHTML = resposta2.dados.metricas["gpu_fan_speed"] + " %";
+                }
 
-                            ajustarGrade();
+                if (monitoratemp == true && resposta2.dados.metricas["temperature"] != null) {
+                    cardtemperatura.style.display = '';
+                    temperatura_valor.innerHTML = resposta2.dados.metricas["temperature"] + " °C";
+                }
 
-                            let janelas = ["24h", "7d", "30d"];
-                            let metricastras = {
-                                cpu: "cpu_percent",
-                                ram: "ram_percent",
-                                swap: "swap_memory_percent",
-                                temperatura: "temperature",
-                                gpu: "gpu_usage",
-                                disco: "disk",
-                                ventoinha: "fans_speed"
-                            };
+                if (monitoraventoinha == true && resposta2.dados.metricas["fans_speed"] != null) {
+                    cardventoinha.style.display = '';
+                    ventoinha_valor.innerHTML = resposta2.dados.metricas["fans_speed"] + " %";
+                }
 
-                            for (let i in metricastras) {
-                                for (let j = 0; j < janelas.length; j++) {
-                                    preencherJanela(link, janelas[j], i, metricastras[i]);
+                ajustarGrade();
+
+                let pico_status = document.getElementById("pico_status")
+                let kpi_status = document.getElementById("kpi_status")
+                pico_status.innerHTML = (resposta3.dados.status_geral).toUpperCase()
+                let componentesStatus = resposta3.dados.componentes;
+
+                let cardsStatus = [
+                    { nome: "cpu", card: cardcpu, texto: "status_cpu", monitorado: monitoracpu, barra: "barra_cpu" , icone : "iconecpu" , cor_acao : "acao_cpu" , acao_critico_texto : "Ação sugerida: verificar refrigeração"},
+                    { nome: "ram", card: cardram, texto: "status_ram", monitorado: monitoraram, barra: "barra_ram" , icone : "iconeram" , cor_acao : "acao_ram" , acao_critico_texto : "Acão sugerida: verificar conexões" },
+                    { nome: "swap", card: cardswap, texto: "status_swap", monitorado: monitoraswap, barra: "barra_swap" , icone : "iconeswap" , cor_acao : "acao_swap" , acao_critico_texto : "Ação sugerida: verificar memória" },
+                    { nome: "temperatura", card: cardtemperatura, texto: "status_temperatura", monitorado: monitoratemp , icone : "iconetemperatura" , cor_acao : "acao_temperatura" , acao_critico_texto : "verificar as ventoinhas" },
+                    { nome: "gpu", card: cardgpu, texto: "status_gpu", monitorado: monitoragpu , icone : "iconegpu" , cor_acao : "acao_gpu" , acao_critico_texto : "verificar conexões de vídeo" },
+                    { nome: "disco", card: carddisco, texto: "status_disco", monitorado: monitoradisco , icone : "iconedisco" , cor_acao : "acao_disco" , acao_critico_texto : "verificar aplicações pesadas" },
+                    { nome: "ventoinha", card: cardventoinha, texto: "status_ventoinha", monitorado: monitoraventoinha , icone : "iconeventoinha" , cor_acao : "acao_ventoinha" , acao_critico_texto : "verificar energia" }
+                ];
+
+                for (let i = 0; i < componentesStatus.length; i++) {
+                    for (let j = 0; j < cardsStatus.length; j++) {
+
+                        if (componentesStatus[i].componente == cardsStatus[j].nome && cardsStatus[j].monitorado == true) {
+
+                            let status = componentesStatus[i].status;
+                            let frente = cardsStatus[j].card.firstElementChild.firstElementChild;
+                            let texto = document.getElementById(cardsStatus[j].texto);
+                            let barra = document.getElementById(cardsStatus[j].barra);
+                            let icone = document.getElementById(cardsStatus[j].icone);
+                            let cor_acao = document.getElementById(cardsStatus[j].cor_acao);
+                            let acao_critico_texto = cardsStatus[j].acao_critico_texto
+
+                            if (status == "critico") {
+                                cardsStatus[j].card.style.order = 0;
+                                frente.style.backgroundColor = "#24191B";
+                                frente.style.borderColor = "#FF1F3D";
+                                texto.style.color = "#FF5269";
+                                texto.innerHTML = "Crítico";
+                                icone.style.color = "#FF5269"
+                                cor_acao.style.color = "#FF5269"
+                                cor_acao.innerHTML = `<i class="fa-solid fa-wrench mr-1"></i>${acao_critico_texto}`;
+                                if(barra){
+                                    barra.style.backgroundColor = "#FF5269"
+                                }
+                            } else if (status == "atencao") {
+                                cardsStatus[j].card.style.order = 1;
+                                frente.style.backgroundColor = "#241F14";
+                                frente.style.borderColor = "#FFB000";
+                                texto.style.color = "#FFB000";
+                                texto.innerHTML = "Atenção";
+                                icone.style.color = "#FFB000"
+                                cor_acao.style.color = "#FFB000"
+                                cor_acao.innerHTML = `<i class="fa-solid fa-wrench mr-1"></i>${acao_critico_texto}`;
+                                if(barra){
+                                    barra.style.backgroundColor = "#FFB000"
+                                }
+                            } else {
+                                cardsStatus[j].card.style.order = 2;
+                                frente.style.backgroundColor = "#112C24";
+                                frente.style.borderColor = "#207F70";
+                                texto.style.color = "#00E6A6";
+                                texto.innerHTML = "Normal";
+                                icone.style.color = "#00E6A6"
+                                cor_acao.style.color = "#00E6A6"
+                                cor_acao.innerHTML = `<i class="fa-solid fa-wrench mr-1"></i>Ação sugerida: Nenhuma`;
+                                if(barra){
+                                    barra.style.backgroundColor = "#00E6A6"
                                 }
                             }
-                            // document.getElementById("grade_componentes").hidden = false;
+                        }
+                    }
+                }
 
-                            fetch(`${link}/tempo_real/status.json`, { cache: "no-store" }).then((dadosstatus) => {
-                                dadosstatus.json().then((resposta3) => {
-                                    console.log(resposta3)
-                                    let pico_status = document.getElementById("pico_status")
-                                    let kpi_status = document.getElementById("kpi_status")
-                                    pico_status.innerHTML = (resposta3.dados.status_geral).toUpperCase()
-                                    let componentesStatus = resposta3.dados.componentes;
+                if (resposta3.dados.status_geral == "critico") {
+                    pico_status.style.color = '#FF1E3C'
+                    kpi_status.style.borderTopColor = '#FF1E3C'
+                } else if (resposta3.dados.status_geral == "atencao") {
+                    pico_status.style.color = '#FFB000'
+                    kpi_status.style.borderTopColor = '#FFB000'
+                } else {
+                    pico_status.style.color = '#00E6A6'
+                    kpi_status.style.borderTopColor = '#00E6A6'
+                }
 
-                                    let cardsStatus = [
-                                        { nome: "cpu", card: cardcpu, texto: "status_cpu", monitorado: monitoracpu, barra: "barra_cpu" , icone : "iconecpu" , cor_acao : "acao_cpu" , acao_critico_texto : "Ação sugerida: verificar refrigeração"},
-                                        { nome: "ram", card: cardram, texto: "status_ram", monitorado: monitoraram, barra: "barra_ram" , icone : "iconeram" , cor_acao : "acao_ram" , acao_critico_texto : "Acão sugerida: verificar conexões" },
-                                        { nome: "swap", card: cardswap, texto: "status_swap", monitorado: monitoraswap, barra: "barra_swap" , icone : "iconeswap" , cor_acao : "acao_swap" , acao_critico_texto : "Ação sugerida: verificar memória" },
-                                        { nome: "temperatura", card: cardtemperatura, texto: "status_temperatura", monitorado: monitoratemp , icone : "iconetemperatura" , cor_acao : "acao_temperatura" , acao_critico_texto : "verificar as ventoinhas" },
-                                        { nome: "gpu", card: cardgpu, texto: "status_gpu", monitorado: monitoragpu , icone : "iconegpu" , cor_acao : "acao_gpu" , acao_critico_texto : "verificar conexões de vídeo" },
-                                        { nome: "disco", card: carddisco, texto: "status_disco", monitorado: monitoradisco , icone : "iconedisco" , cor_acao : "acao_disco" , acao_critico_texto : "verificar aplicações pesadas" },
-                                        { nome: "ventoinha", card: cardventoinha, texto: "status_ventoinha", monitorado: monitoraventoinha , icone : "iconeventoinha" , cor_acao : "acao_ventoinha" , acao_critico_texto : "verificar energia" }
-                                    ];
-
-                                    for (let i = 0; i < componentesStatus.length; i++) {
-                                        for (let j = 0; j < cardsStatus.length; j++) {
-
-                                            if (componentesStatus[i].componente == cardsStatus[j].nome && cardsStatus[j].monitorado == true) {
-
-                                                let status = componentesStatus[i].status;
-                                                let frente = cardsStatus[j].card.firstElementChild.firstElementChild;
-                                                let texto = document.getElementById(cardsStatus[j].texto);
-                                                let barra = document.getElementById(cardsStatus[j].barra);
-                                                let icone = document.getElementById(cardsStatus[j].icone);
-                                                let cor_acao = document.getElementById(cardsStatus[j].cor_acao);
-                                                let acao_critico_texto = cardsStatus[j].acao_critico_texto
-
-                                                if (status == "critico") {
-                                                    cardsStatus[j].card.style.order = 0;
-                                                    frente.style.backgroundColor = "#24191B";
-                                                    frente.style.borderColor = "#FF1F3D";
-                                                    texto.style.color = "#FF5269";
-                                                    texto.innerHTML = "Crítico";
-                                                    icone.style.color = "#FF5269"
-                                                    cor_acao.style.color = "#FF5269"
-                                                    cor_acao.innerHTML = `<i class="fa-solid fa-wrench mr-1"></i>${acao_critico_texto}`;
-                                                    if(barra){
-                                                        barra.style.backgroundColor = "#FF5269"
-                                                    }
-                                                } else if (status == "atencao") {
-                                                    cardsStatus[j].card.style.order = 1;
-                                                    frente.style.backgroundColor = "#241F14";
-                                                    frente.style.borderColor = "#FFB000";
-                                                    texto.style.color = "#FFB000";
-                                                    texto.innerHTML = "Atenção";
-                                                    icone.style.color = "#FFB000"
-                                                    cor_acao.style.color = "#FFB000"
-                                                    cor_acao.innerHTML = `<i class="fa-solid fa-wrench mr-1"></i>${acao_critico_texto}`;
-                                                    if(barra){
-                                                        barra.style.backgroundColor = "#FFB000"
-                                                    }
-                                                } else {
-                                                    cardsStatus[j].card.style.order = 2;
-                                                    frente.style.backgroundColor = "#112C24";
-                                                    frente.style.borderColor = "#207F70";
-                                                    texto.style.color = "#00E6A6";
-                                                    texto.innerHTML = "Normal";
-                                                    icone.style.color = "#00E6A6"
-                                                    cor_acao.style.color = "#00E6A6"
-                                                    cor_acao.innerHTML = `<i class="fa-solid fa-wrench mr-1"></i>Ação sugerida: Nenhuma`;
-                                                    if(barra){
-                                                        barra.style.backgroundColor = "#00E6A6"
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-
-                                    if (resposta3.dados.status_geral == "critico") {
-                                        pico_status.style.color = '#FF1E3C'
-                                        kpi_status.style.borderTopColor = '#FF1E3C'
-                                    } else if (resposta3.dados.status_geral == "atencao") {
-                                        pico_status.style.color = '#FFB000'
-                                        kpi_status.style.borderTopColor = '#FFB000'
-                                    } else {
-                                        pico_status.style.color = '#00E6A6'
-                                        kpi_status.style.borderTopColor = '#00E6A6'
-                                    }
-
-
-                                    // usado para nao piscar o mockado (pretendo ainda mudar a logica)
-                                    document.getElementById("grade_componentes").style.display = "grid";
-                                });
-                            });
-                        });
-                    });
-                });
+                // usado para nao piscar o mockado (pretendo ainda mudar a logica)
+                document.getElementById("grade_componentes").style.display = "grid";
             });
         });
     });
