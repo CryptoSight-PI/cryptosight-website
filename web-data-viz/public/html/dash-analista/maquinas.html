@@ -71,15 +71,15 @@
 
     <div class="grid grid-cols-4 gap-4 px-3 sm:px-5 lg:pl-15 lg:pr-10 mt-2">
         <div id="kpi_status" class="rounded-2xl border border-[#207F70] bg-[#0C1F19] border-t-4 border-solid p-2.5 sm:p-4 transition-transform duration-300 hover:scale-103">
-            <p class="text-sm text-gray-500">Status</p>
+            <p class="text-sm text-white">Status</p>
             <p id="pico_status" class="font-space-mono font-bold text-2xl sm:text-4xl mt-2"> ... </p>
             <p class="text-xs text-[#A0B5AC] mt-2">Detalhes</p>
         </div>
 
-        <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] border-t-4 border-solid border-t-yellow-500 p-2.5 sm:p-4 transition-transform duration-300 hover:scale-103">
-            <p class="text-sm text-white">Causa principal</p>
-            <p class="font-space-mono font-bold text-orange-400 text-2xl sm:text-3xl mt-2">X</p>
-            <p class="text-xs text-[#A0B5AC] mt-2">Y% dos alertas registrados</p>
+        <div id="kpi_causa" class="rounded-2xl border border-[#207F70] bg-[#0C1F19] border-t-4 border-solid p-2.5 sm:p-4 transition-transform duration-300 hover:scale-103">
+            <p class="text-sm text-white">Causa principal (últimos 30 dias)</p>
+            <p id="kpi_componente_principal" class="font-space-mono font-bold text-2xl sm:text-3xl mt-2">...</p>
+            <p id="detalhe_kpi_componente" class="text-xs text-[#A0B5AC] mt-2"></p>
         </div>
 
         
@@ -477,8 +477,10 @@
                 fetch(linkmonitora, { cache: "no-store" }).then(dados2 =>
                 dados2.json()),
                 fetch(`${link}/tempo_real/status.json`, { cache: "no-store" }).then(dados3 =>
-                 dados3.json())
-                ]).then(([resposta2, dadosmonitora, resposta3]) => {
+                dados3.json()),
+                fetch(`/dispositivos/listarcomponenteprincipal/${idRig}`).then(dados4 => 
+                dados4.json()),
+                ]).then(([resposta2, dadosmonitora, resposta3 , resposta4]) => {
 
                 ultima_coleta.innerHTML = "Última coleta: " + new Date(resposta2.gerado_em).toLocaleTimeString('pt-BR');
 
@@ -562,6 +564,42 @@
                 pico_status.innerHTML = (resposta3.dados.status_geral).toUpperCase()
                 let componentesStatus = resposta3.dados.componentes;
 
+                let kpi_causa = document.getElementById("kpi_causa");
+
+                if (resposta4.length == 0) {
+                    kpi_componente_principal.innerHTML = "--";
+                    kpi_componente_principal.style.color = "#6d6f6e";
+                    kpi_causa.style.borderTopColor = "#6d6f6e";
+                    detalhe_kpi_componente.innerHTML = "Sem alertas nos últimos 30 dias";
+                } else {
+                    let criticos = Number(resposta4[0].criticos);
+                    let atencoes = Number(resposta4[0].atencoes);
+                    let total = criticos + atencoes;
+
+                
+                    let LIMITE_VERMELHO = 3;  
+                    let LIMITE_AMARELO_CRITICOS = 2;
+                    let LIMITE_AMARELO_TOTAL = 3;
+
+                    let cor = ""
+                    let situacao = ""
+                    if (criticos >= LIMITE_VERMELHO) {
+                        cor = "#FF1E3C";
+                        situacao = "Crítico recorrente";
+                    } else if (criticos >= LIMITE_AMARELO_CRITICOS || total >= LIMITE_AMARELO_TOTAL) {
+                        cor = "#FFB000";
+                        situacao = "Atenção: recorrência";
+                    } else {
+                        cor = "#00E6A6";
+                        situacao = "Ocorrência isolada";
+                    }
+                    kpi_componente_principal.innerHTML = resposta4[0].nome;
+                    kpi_componente_principal.style.color = cor;
+                    kpi_causa.style.borderTopColor = cor;
+                     detalhe_kpi_componente.innerHTML = `${situacao} - ${resposta4[0].percentual}% dos alertas ( ${resposta4[0].contador} / ${resposta4[0].total} )`;
+                    // detalhe_kpi_componente.innerHTML =  `${resposta4[0].percentual}% dos alertas registrados ( ${resposta4[0].contador} / ${resposta4[0].total} )`
+                }
+
                 let cardsStatus = [
                     { nome: "cpu", card: cardcpu, texto: "status_cpu", monitorado: monitoracpu, barra: "barra_cpu" , icone : "iconecpu" , cor_acao : "acao_cpu" , acao_critico_texto : "Ação sugerida: verificar refrigeração"},
                     { nome: "ram", card: cardram, texto: "status_ram", monitorado: monitoraram, barra: "barra_ram" , icone : "iconeram" , cor_acao : "acao_ram" , acao_critico_texto : "Acão sugerida: verificar conexões" },
@@ -642,6 +680,17 @@
             });
         });
     });
+
+    // fetch(`/dispositivos/listarcomponenteprincipal/${idRig}`).then((dados) => {
+    //     dados.json().then((resposta) => {
+    //         console.log(resposta)
+    //         // console.log("oi")
+    //         console.log(resposta[0].nome)
+    //         kpi_componente_principal.innerHTML = resposta[0].nome;
+    //         console.log(resposta[0].percentual)
+    //         detalhe_kpi_componente.innerHTML = resposta[0].percentual + "% dos alertas registrados"
+    //     })
+    // })
 </script>
 </body>
 
