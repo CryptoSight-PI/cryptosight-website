@@ -561,6 +561,11 @@
                 let kpi_status = document.getElementById("kpi_status")
                 pico_status.innerHTML = (resposta3.dados.status_geral).toUpperCase()
                 let componentesStatus = resposta3.dados.componentes;
+                // let MINUTOS_OFFLINE = 10;
+                // let idadeLeitura = (Date.now() - new Date(resposta3.dados.timestamp)) / 60000;
+                let offline = resposta3.dados.status_geral == "offline"
+                //  || idadeLeitura > MINUTOS_OFFLINE;
+                // ver se vai ser a logica de nao rodar a etl tambem
 
                 
                 let cardsStatus = [
@@ -585,8 +590,20 @@
                             let icone = document.getElementById(cardsStatus[j].icone);
                             let cor_acao = document.getElementById(cardsStatus[j].cor_acao);
                             let acao_critico_texto = cardsStatus[j].acao_critico_texto
-
-                            if (status == "critico") {
+                            if(offline) status = "offline"
+                            if(status == "offline" || status == "sem_dados"){
+                                cardsStatus[j].card.style.order = 3;
+                                frente.style.backgroundColor = "#202725";
+                                frente.style.borderColor = "#626B66";
+                                texto.style.color = "#6d6f6e";
+                                texto.innerHTML = status == "offline" ? "Offline" : "Sem dados";
+                                icone.style.color = "#6d6f6e";
+                                cor_acao.style.color = "#6d6f6e";
+                                cor_acao.innerHTML = `<i class="fa-solid fa-plug-circle-xmark mr-1"></i>Máquina sem comunicação`;
+                                if(barra){
+                                    barra.style.backgroundColor = "#6d6f6e"
+                                }
+                            }else if (status == "critico") {
                                 cardsStatus[j].card.style.order = 0;
                                 frente.style.backgroundColor = "#24191B";
                                 frente.style.borderColor = "#FF1F3D";
@@ -626,8 +643,11 @@
                         }
                     }
                 }
-
-                if (resposta3.dados.status_geral == "critico") {
+                if(offline){
+                    pico_status.innerHTML = "OFFLINE"
+                    pico_status.style.color = '#6d6f6e'
+                    kpi_status.style.borderTopColor = '#6d6f6e'
+                }else if (resposta3.dados.status_geral == "critico") {
                     pico_status.style.color = '#FF1E3C'
                     kpi_status.style.borderTopColor = '#FF1E3C'
                 } else if (resposta3.dados.status_geral == "atencao") {
