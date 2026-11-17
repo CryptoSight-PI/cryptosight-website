@@ -155,6 +155,9 @@
                             <div id="linha_cpu_24h" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">24h</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
                             <div id="linha_cpu_7d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">7d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
                             <div id="linha_cpu_30d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">30d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
+                            <p id="hist_cpu" class="text-[11px] mt-1 pt-1 border-t border-[#207F70]/40 text-gray-400"></p>
+                                <!-- <p class="text-[10px] text-gray-400 mt-2 border-t border-[#207F70]/40 pt-2">Histórico (% de problema)</p>
+                                <p class="text-xs font-space-mono text-gray-300"> CRÍTICO:<span class="text-[#FF1F3D]"> 95%</span> - <span class="text-xs">12/11/2026 as 16:23</span><br></p> -->
                         </div>
                     </div>
                 </div>
@@ -178,6 +181,8 @@
                             <div id="linha_ram_24h" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">24h</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
                             <div id="linha_ram_7d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">7d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
                             <div id="linha_ram_30d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">30d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
+                            <p id="hist_ram" class="text-[11px] mt-1 pt-1 border-t border-[#207F70]/40 text-gray-400"></p>
+
                         </div>
                     </div>
                 </div>
@@ -201,6 +206,8 @@
                             <div id="linha_swap_24h" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">24h</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
                             <div id="linha_swap_7d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">7d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
                             <div id="linha_swap_30d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">30d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
+                            <p id="hist_swap" class="text-[11px] mt-1 pt-1 border-t border-[#207F70]/40 text-gray-400"></p>
+
                         </div>
                     </div>
                 </div>
@@ -223,6 +230,8 @@
                             <div id="linha_temperatura_24h" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">24h</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
                             <div id="linha_temperatura_7d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">7d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
                             <div id="linha_temperatura_30d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">30d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
+                            <p id="hist_temperatura" class="text-[11px] mt-1 pt-1 border-t border-[#207F70]/40 text-gray-400"></p>
+
                         </div>
                     </div>
                 </div>
@@ -247,6 +256,8 @@
                             <div id="linha_gpu_24h" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">24h</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
                             <div id="linha_gpu_7d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">7d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
                             <div id="linha_gpu_30d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">30d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
+                            <p id="hist_gpu" class="text-[11px] mt-1 pt-1 border-t border-[#207F70]/40 text-gray-400"></p>
+
                         </div>
                     </div>
                 </div>
@@ -269,6 +280,8 @@
                             <div id="linha_disco_24h" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">24h</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
                             <div id="linha_disco_7d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">7d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
                             <div id="linha_disco_30d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">30d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
+                            <p id="hist_disco" class="text-[11px] mt-1 pt-1 border-t border-[#207F70]/40 text-gray-400"></p>
+
                         </div>
                     </div>
                 </div>
@@ -291,6 +304,8 @@
                             <div id="linha_ventoinha_24h" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">24h</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
                             <div id="linha_ventoinha_7d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">7d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
                             <div id="linha_ventoinha_30d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">30d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
+                            <p id="hist_ventoinha" class="text-[11px] mt-1 pt-1 border-t border-[#207F70]/40 text-gray-400"></p>
+
                         </div>
                     </div>
                 </div>
@@ -428,7 +443,7 @@
     }
 
     function preencherJanela(link, janela, metricastras) {
-        fetch(`${link}/janelas/${janela}/metricas.json`, { cache: "no-store" }).then(resposta =>
+        fetch(`${link}/janelas/${janela}/metricas.json`, { cache: "no-cache" }).then(resposta =>
          resposta.json()).then(dados => {
                 for (let nome in metricastras) {
                     let kpi = dados.dados.kpis[metricastras[nome]];
@@ -446,6 +461,45 @@
                 }
             })
     }
+
+    function preencherHistorico(link) {
+    let nomes = ["cpu", "ram", "swap", "temperatura", "gpu", "disco", "ventoinha"];
+    let unidades = ["%", "%", "%", "°C", "%", "GB", "%"];
+
+    fetch(`${link}/janelas/30d/picos.json`, { cache: "no-cache" }).then(resposta =>
+        resposta.json()).then(dados => {
+            let picos = dados.dados;
+
+            for (let i = 0; i < nomes.length; i++) {
+                let horas = 0;
+                let maior = 0;
+                let ultimo = null;
+
+                for (let j = 0; j < picos.length; j++) {
+                    if (picos[j].componente == nomes[i]) {
+                        horas++;
+                        if (picos[j].pico > maior) {
+                            maior = picos[j].pico;
+                        }
+                        ultimo = picos[j].timestamp; 
+                    }
+                }
+
+                let historico = document.getElementById(`hist_${nomes[i]}`);
+
+                if (horas == 0) {
+                    historico.innerHTML = "Sem problemas em 30d";
+                    continue;
+                }
+
+                let data = new Date(ultimo).toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit" });
+                let hora = new Date(ultimo).getHours() + "h";
+
+                historico.style.color = horas >= 3 ? "#FF5269" : "#FFB000";
+                historico.innerHTML = `${horas}h fora do limite · pico ${maior.toFixed(1)} ${unidades[i]} · último ${data} ${hora}`;
+            }
+        })
+}
 
     let url = "https://bucket-gold-marcelo-sptech.s3.us-east-1.amazonaws.com";
 
@@ -469,14 +523,15 @@
             for (let j = 0; j < janelas.length; j++) {
                 preencherJanela(link, janelas[j], metricastras);
             }
+            preencherHistorico(link);
 
             // ao inves de fazer 3 fetches uso o promise all
             Promise.all([
-                fetch(`${link}/tempo_real/atual.json`, { cache: "no-store" }).then(dados =>
+                fetch(`${link}/tempo_real/atual.json`, { cache: "no-cache" }).then(dados =>
                 dados.json()),
                 fetch(linkmonitora, { cache: "no-store" }).then(dados2 =>
                 dados2.json()),
-                fetch(`${link}/tempo_real/status.json`, { cache: "no-store" }).then(dados3 =>
+                fetch(`${link}/tempo_real/status.json`, { cache: "no-cache" }).then(dados3 =>
                 dados3.json()),
                 ]).then(([resposta2, dadosmonitora, resposta3]) => {
 
