@@ -10,6 +10,7 @@
     <title>Dashboard - Maquinas</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://bucket-gold-marcelo-sptech.s3.us-east-1.amazonaws.com">
 </head>
 
 <body class="min-h-screen w-screen pl-15 bg-linear-135 from-[#0d1412] via-[#09483f] to-[#0d1412] text-white bg-fixed overflow-x-hidden">
@@ -85,15 +86,15 @@
         
         <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] border-t-4 border-solid border-t-blue-500 p-2.5 sm:p-4 transition-transform duration-300 hover:scale-103 min-w-0">
             <p class="text-sm text-white truncate">Próxima falha prevista</p>
-            <p id="previsao_horas" class="font-space-mono font-bold text-blue-500 text-2xl sm:text-3xl mt-2 truncate">X HORAS</p>
+            <p id="previsao_horas" class="font-space-mono font-bold text-blue-500 text-2xl sm:text-3xl mt-2 truncate">...</p>
             <p id="previsao_detalhe" class="text-xs text-[#A0B5AC] mt-2 truncate whitespace-nowrap">componente - valor - timestamp</p>
         </div>
 
 
         <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] border-t-4 border-solid border-t-yellow-500 p-2.5 sm:p-4 transition-transform duration-300 hover:scale-103">
-            <p class="text-sm text-white">Leitura mais fora da média</p>
-            <p class="font-space-mono font-bold text-yellow-400 text-2xl sm:text-3xl mt-2">X </p>
-            <p class="text-xs text-[#A0B5AC] mt-2">COMPONENTE X - RIG Y</p>
+            <p class="text-sm text-white">Leitura mais fora do normal</p>
+            <p id="kpi_leitura_fora" class="font-space-mono font-bold text-yellow-400 text-2xl sm:text-3xl mt-2">...</p>
+            <p id="detalhe_leitura_fora" class="text-xs text-[#A0B5AC] mt-2">...</p>
         </div>
     </div>
 
@@ -463,43 +464,43 @@
     }
 
     function preencherHistorico(link) {
-    let nomes = ["cpu", "ram", "swap", "temperatura", "gpu", "disco", "ventoinha"];
-    let unidades = ["%", "%", "%", "°C", "%", "GB", "%"];
+        let nomes = ["cpu", "ram", "swap", "temperatura", "gpu", "disco", "ventoinha"];
+        let unidades = ["%", "%", "%", "°C", "%", "GB", "%"];
 
-    fetch(`${link}/janelas/30d/picos.json`, { cache: "no-cache" }).then(resposta =>
-        resposta.json()).then(dados => {
-            let picos = dados.dados;
+        fetch(`${link}/janelas/30d/picos.json`, { cache: "no-cache" }).then(resposta =>
+            resposta.json()).then(dados => {
+                let picos = dados.dados;
 
-            for (let i = 0; i < nomes.length; i++) {
-                let horas = 0;
-                let maior = 0;
-                let ultimo = null;
+                for (let i = 0; i < nomes.length; i++) {
+                    let horas = 0;
+                    let maior = 0;
+                    let ultimo = null;
 
-                for (let j = 0; j < picos.length; j++) {
-                    if (picos[j].componente == nomes[i]) {
-                        horas++;
-                        if (picos[j].pico > maior) {
-                            maior = picos[j].pico;
+                    for (let j = 0; j < picos.length; j++) {
+                        if (picos[j].componente == nomes[i]) {
+                            horas++;
+                            if (picos[j].pico > maior) {
+                                maior = picos[j].pico;
+                            }
+                            ultimo = picos[j].timestamp; 
                         }
-                        ultimo = picos[j].timestamp; 
                     }
+
+                    let historico = document.getElementById(`hist_${nomes[i]}`);
+
+                    if (horas == 0) {
+                        historico.innerHTML = "Sem problemas em 30d";
+                        continue;
+                    }
+
+                    let data = new Date(ultimo).toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit" });
+                    let hora = new Date(ultimo).getHours() + "h";
+
+                    historico.style.color = horas >= 3 ? "#FF5269" : "#FFB000";
+                    historico.innerHTML = `${horas}h fora do limite · pico ${maior.toFixed(1)} ${unidades[i]} · último ${data} ${hora}`;
                 }
-
-                let historico = document.getElementById(`hist_${nomes[i]}`);
-
-                if (horas == 0) {
-                    historico.innerHTML = "Sem problemas em 30d";
-                    continue;
-                }
-
-                let data = new Date(ultimo).toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit" });
-                let hora = new Date(ultimo).getHours() + "h";
-
-                historico.style.color = horas >= 3 ? "#FF5269" : "#FFB000";
-                historico.innerHTML = `${horas}h fora do limite · pico ${maior.toFixed(1)} ${unidades[i]} · último ${data} ${hora}`;
-            }
-        })
-}
+            })
+    }
 
     let url = "https://bucket-gold-marcelo-sptech.s3.us-east-1.amazonaws.com";
 
@@ -533,7 +534,9 @@
                 dados2.json()),
                 fetch(`${link}/tempo_real/status.json`, { cache: "no-cache" }).then(dados3 =>
                 dados3.json()),
-                ]).then(([resposta2, dadosmonitora, resposta3]) => {
+                fetch(`${link}/previsoes/previsoes.json`, {cache: "no-cache"}).then(dados4 => 
+                dados4.json())
+                ]).then(([resposta2, dadosmonitora, resposta3, resposta4]) => {
 
                 ultima_coleta.innerHTML = "Última coleta: " + new Date(resposta2.gerado_em).toLocaleTimeString('pt-BR');
 
@@ -616,6 +619,10 @@
                 let kpi_status = document.getElementById("kpi_status")
                 pico_status.innerHTML = (resposta3.dados.status_geral).toUpperCase()
                 let componentesStatus = resposta3.dados.componentes;
+                console.log(resposta3)
+                kpi_leitura_fora.innerHTML = resposta3.dados.leitura_mais_fora_media.componente
+                // detalhe_leitura_fora.innerHTML = resposta3.dados.leitura_mais_fora_media.componente + " Z-score: " + resposta3.dados.leitura_mais_fora_media.z_score
+                detalhe_leitura_fora.innerHTML = `valor atual: ${resposta3.dados.leitura_mais_fora_media.valor} - Z-score: ${resposta3.dados.leitura_mais_fora_media.z_score}`
                 // let MINUTOS_OFFLINE = 10;
                 // let idadeLeitura = (Date.now() - new Date(resposta3.dados.timestamp)) / 60000;
                 let offline = resposta3.dados.status_geral == "offline"
@@ -715,6 +722,19 @@
 
                 // usado para nao piscar o mockado (pretendo ainda mudar a logica)
                 document.getElementById("grade_componentes").style.display = "grid";
+
+                console.log(resposta4)
+
+                let previsao = resposta4.dados;
+
+                if (previsao && previsao.horas != null) {
+                    previsao_horas.innerHTML = `${previsao.horas.toFixed(1)} HORAS`;
+                    previsao_detalhe.innerHTML =`${previsao.componente} - ${previsao.valor} - ${new Date(previsao.timestamp).toLocaleString("pt-BR")}`;
+                } else {
+                    previsao_horas.innerHTML = "Nenhum risco";
+                    previsao_detalhe.innerHTML = "Sem previsão de falha próxima";
+                }
+
             });
         });
     });
