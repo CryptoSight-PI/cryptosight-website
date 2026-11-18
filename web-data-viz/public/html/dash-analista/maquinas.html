@@ -106,10 +106,10 @@
                     <p class="text-xs text-gray-400">Quando os picos acontecem e quais componentes os causam</p>
                 </div>
 
-                <div class="flex rounded-xl overflow-hidden border border-[#207F70]">
-                    <button class="px-3 py-2 text-xs bg-[#144840] text-[#00E6A6]">24h</button>
-                    <button class="px-3 py-2 text-xs text-[#A0B5AC] hover:bg-[#ffffff0d]">7d</button>
-                    <button class="px-3 py-2 text-xs text-[#A0B5AC] hover:bg-[#ffffff0d]">30d</button>
+               <div class="flex rounded-xl overflow-hidden border border-[#207F70]">
+                    <button id="btn_24h" onclick="carregarpicos('24h')" class="px-3 py-2 text-xs bg-[#144840] text-[#00E6A6]">24h</button>
+                    <button id="btn_7d" onclick="carregarpicos('7d')" class="px-3 py-2 text-xs text-[#A0B5AC] hover:bg-[#ffffff0d]">7d</button>
+                    <button id="btn_30d" onclick="carregarpicos('30d')" class="px-3 py-2 text-xs text-[#A0B5AC] hover:bg-[#ffffff0d]">30d</button>
                 </div>
             </div>
 
@@ -346,39 +346,8 @@
     let graficopicos = new Chart(document.getElementById('graficopicos'), {
         type: 'bar',
         data: {
-            labels: ['00h', '01h', '02h', '03h', '04h', '05h', '06h', '07h', '08h', '09h', '10h', '11h', '12h', '13h', '14h', '15h', '16h', '17h', '18h', '19h', '20h', '21h', '22h', '23h'],
-            datasets: [
-                {
-                    label: 'Temperatura',
-                    data: [12, 10, 8, 4, 2, 12, 0, 6, 10, 8, 9, 12, 4, 6, 7, 2, 1, 2, 4, 6, 3, 5, 6, 2],
-                    backgroundColor: '#FFB000',
-                    borderRadius: 4
-                },
-                {
-                    label: 'GPU',
-                    data: [9, 2, 5, 2, 1, 3, 2, 6, 5, 3, 1, 3, 5, 6, 7, 2, 3, 2, 3, 1, 1, 1, 5, 6],
-                    backgroundColor: '#FF1F3D',
-                    borderRadius: 4
-                },
-                {
-                    label: 'CPU',
-                    data: [7, 9, 1, 1, 2, 0, 1, 5, 6, 5, 6, 3, 2, 2, 3, 5, 0, 9, 3, 6, 7, 4, 2, 6],
-                    backgroundColor: '#E879F9',
-                    borderRadius: 4
-                },
-                {
-                    label: 'RAM',
-                    data: [0, 0, 2, 6, 4, 1, 1, 7, 3, 2, 3, 5, 7, 8, 2, 1, 3, 5, 6, 4, 2, 2, 2, 1],
-                    backgroundColor: '#438BFF',
-                    borderRadius: 4
-                },
-                {
-                    label: 'DISCO',
-                    data: [0, 0, 1, 1, 1, 2, 2, 10, 12, 2, 4, 6, 7, 3, 5, 6, 2, 2, 2, 1, 1, 5, 6, 3],
-                    backgroundColor: '#A78BFA',
-                    borderRadius: 4
-                }
-            ]
+            labels: [],
+            datasets: []
         },
         options: {
             maintainAspectRatio: false,
@@ -504,11 +473,16 @@
 
     let url = "https://bucket-gold-marcelo-sptech.s3.us-east-1.amazonaws.com";
 
+    let linkPicos = ""
+
     fetch(`/empresas/buscar/${idEmpresa}`).then((dados) => {
         dados.json().then((resposta) => {
             nome_empresa.innerHTML = resposta[0].nome_fantasia
             let link = `${url}/${idEmpresa}/${resposta[0].nome_fantasia}/operacional/especifico/farm=${idFarm}/sessao=${idSessao}/maquina=${idRig}`;
             let linkmonitora = `${url}/${idEmpresa}/${resposta[0].nome_fantasia}/operacional/catalogo/limites.json`;
+            
+            linkPicos = link
+            carregarpicos("24h")
 
             let janelas = ["24h", "7d", "30d"];
             let metricastras = {
@@ -620,7 +594,7 @@
                 pico_status.innerHTML = (resposta3.dados.status_geral).toUpperCase()
                 let componentesStatus = resposta3.dados.componentes;
                 console.log(resposta3)
-                kpi_leitura_fora.innerHTML = resposta3.dados.leitura_mais_fora_media.componente
+                kpi_leitura_fora.innerHTML = resposta3.dados.leitura_mais_fora_media.componente.toUpperCase()
                 // detalhe_leitura_fora.innerHTML = resposta3.dados.leitura_mais_fora_media.componente + " Z-score: " + resposta3.dados.leitura_mais_fora_media.z_score
                 detalhe_leitura_fora.innerHTML = `valor atual: ${resposta3.dados.leitura_mais_fora_media.valor} - Z-score: ${resposta3.dados.leitura_mais_fora_media.z_score}`
                 // let MINUTOS_OFFLINE = 10;
@@ -779,6 +753,67 @@
 
         })
     })
+
+
+
+    function carregarpicos(janela){
+
+        let botoes = ["24h", "7d", "30d"]
+        for (let i = 0; i < botoes.length; i++) {
+            let botao = document.getElementById("btn_" + botoes[i])
+
+            if (botoes[i] == janela) {
+                botao.className = "px-3 py-2 text-xs bg-[#144840] text-[#00E6A6]"
+            } else {
+                botao.className = "px-3 py-2 text-xs text-[#A0B5AC] hover:bg-[#ffffff0d]"
+            }
+        }
+
+        fetch(`${linkPicos}/janelas/${janela}/picos.json`).then(resposta => {
+            resposta.json().then(dados => {
+                console.log(dados)
+                let cores = {
+                    temperatura: '#FFB000',
+                    gpu: '#FF1F3D',
+                    cpu: '#E879F9',
+                    ram: '#438BFF',
+                    disco: '#A78BFA',
+                    swap: '#2DD4BF',
+                    ventoinha: '#94A3B8'
+                };
+                let tempo = []
+                let nomes = ["temperatura", "gpu", "cpu", "ram", "disco", "swap", "ventoinha"]
+                let datasets = []
+
+
+                for (let i = 0; i < dados.dados.length; i++) {
+                    tempo.push(dados.dados[i].timestamp)
+                }
+                console.log(tempo)
+
+                for (let c = 0; c < nomes.length; c++) {
+                    let valores = []
+
+                    for (let t = 0; t < tempo.length; t++) {
+                        let soma = 0
+
+                        for (let i = 0; i < dados.dados.length; i++) {
+                            if (dados.dados[i].timestamp == tempo[t] && dados.dados[i].componente == nomes[c]) {
+                                soma = soma + dados.dados[i].qtd
+                            }
+                        }
+                        valores.push(soma)
+                    }
+                    datasets.push({ label: nomes[c], data: valores, backgroundColor: cores[nomes[c]], borderRadius: 4 })
+                }
+                graficopicos.data.labels = tempo
+                graficopicos.data.datasets = datasets
+                graficopicos.update()
+                
+            })
+        })
+    }
+
 </script>
 </body>
 
