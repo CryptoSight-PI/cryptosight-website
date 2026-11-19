@@ -10,7 +10,7 @@
     <title>Dashboard - Maquinas</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="preconnect" href="https://bucket-gold-marcelo-sptech.s3.us-east-1.amazonaws.com">
+    <link rel="preconnect" href="https://bucket-gold-marcelo-sptech.s3.us-east-1.amazonaws.com" crossorigin>
 </head>
 
 <body class="min-h-screen w-screen pl-15 bg-linear-135 from-[#0d1412] via-[#09483f] to-[#0d1412] text-white bg-fixed overflow-x-hidden">
@@ -756,22 +756,26 @@
 
 
 
-    function carregarpicos(janela){
+        
+    function carregarpicos(janela) {
 
-        let botoes = ["24h", "7d", "30d"]
+        let botoes = ["24h", "7d", "30d"];
+
         for (let i = 0; i < botoes.length; i++) {
-            let botao = document.getElementById("btn_" + botoes[i])
+
+            let botao = document.getElementById("btn_" + botoes[i]);
 
             if (botoes[i] == janela) {
-                botao.className = "px-3 py-2 text-xs bg-[#144840] text-[#00E6A6]"
+                botao.className = "px-3 py-2 text-xs bg-[#144840] text-[#00E6A6]";
             } else {
-                botao.className = "px-3 py-2 text-xs text-[#A0B5AC] hover:bg-[#ffffff0d]"
+                botao.className = "px-3 py-2 text-xs text-[#A0B5AC] hover:bg-[#ffffff0d]";
             }
         }
 
-        fetch(`${linkPicos}/janelas/${janela}/picos.json`).then(resposta => {
-            resposta.json().then(dados => {
-                console.log(dados)
+        fetch(`${linkPicos}/janelas/${janela}/picos.json`).then(resposta =>
+         resposta.json()).then(dados => {
+                console.log(dados);
+
                 let cores = {
                     temperatura: '#FFB000',
                     gpu: '#FF1F3D',
@@ -781,38 +785,73 @@
                     swap: '#2DD4BF',
                     ventoinha: '#94A3B8'
                 };
-                let tempo = []
-                let nomes = ["temperatura", "gpu", "cpu", "ram", "disco", "swap", "ventoinha"]
-                let datasets = []
 
+                let tempo = [];
+                let nomes = [];
+                let datasets = [];
 
                 for (let i = 0; i < dados.dados.length; i++) {
-                    tempo.push(dados.dados[i].timestamp)
+                    let label;
+
+                    if (janela == "24h") {
+                        label = new Date(dados.dados[i].timestamp).toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
+                    } else {
+                        label = new Date(dados.dados[i].timestamp).toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit" });
+                    }
+
+                    if (!tempo.includes(label)) {
+                        tempo.push(label);
+                    }
                 }
-                console.log(tempo)
+
+                for (let i = 0; i < dados.dados.length; i++) {
+                    if (!nomes.includes(dados.dados[i].componente)) {
+                        nomes.push(dados.dados[i].componente);
+                    }
+                }
 
                 for (let c = 0; c < nomes.length; c++) {
-                    let valores = []
+
+                    let valores = [];
 
                     for (let t = 0; t < tempo.length; t++) {
-                        let soma = 0
+
+                        let soma = 0;
 
                         for (let i = 0; i < dados.dados.length; i++) {
-                            if (dados.dados[i].timestamp == tempo[t] && dados.dados[i].componente == nomes[c]) {
-                                soma = soma + dados.dados[i].qtd
+
+                            let data = new Date(dados.dados[i].timestamp);
+                            let label;
+
+                            if (janela == "24h") {
+                                label = new Date(dados.dados[i].timestamp).toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
+                            } else {
+                                label = data.toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit" });
+                            }
+
+                            if ( label == tempo[t] && dados.dados[i].componente == nomes[c]) {
+                                soma += Number(dados.dados[i].qtd) || 0;
                             }
                         }
-                        valores.push(soma)
+
+                        valores.push(soma);
                     }
-                    datasets.push({ label: nomes[c], data: valores, backgroundColor: cores[nomes[c]], borderRadius: 4 })
+
+                    datasets.push({
+                        label: nomes[c],
+                        data: valores,
+                        backgroundColor: cores[nomes[c]] || '#94A3B8',
+                        borderRadius: 4
+                    });
                 }
-                graficopicos.data.labels = tempo
-                graficopicos.data.datasets = datasets
-                graficopicos.update()
-                
+
+                graficopicos.data.labels = tempo;
+                graficopicos.data.datasets = datasets;
+                graficopicos.update();
+
             })
-        })
     }
+
 
 </script>
 </body>
