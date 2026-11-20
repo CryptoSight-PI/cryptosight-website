@@ -402,12 +402,38 @@
             }
         })
 
+    let valoresNasBarras = {
+        id: "valoresNasBarras",
+        afterDatasetsDraw(chart) {
+            const ctx = chart.ctx;
+            ctx.save();
+            ctx.fillStyle = "#0d1412";
+            ctx.font = "bold 11px sans-serif";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+
+            chart.data.datasets.forEach((ds, i) => {
+                if (!chart.isDatasetVisible(i)) return;
+
+                chart.getDatasetMeta(i).data.forEach((barra, j) => {
+                    const valor = ds.data[j];
+                    if (!valor) return;                                    
+                    if (Math.abs(barra.base - barra.y) < 14) return;       
+                    ctx.fillText(valor, barra.x, (barra.y + barra.base) / 2);
+                });
+            });
+
+            ctx.restore();
+        }
+    };
+
     let graficopicos = new Chart(document.getElementById('graficopicos'), {
         type: 'bar',
         data: {
             labels: [],
             datasets: []
         },
+        plugins: [valoresNasBarras],
         options: {
             maintainAspectRatio: false,
             scales: {
@@ -598,6 +624,7 @@
 
     let linkPicos = ""
 
+function atualizardash(){
     fetch(`/empresas/buscar/${idEmpresa}`).then((dados) => {
         dados.json().then((resposta) => {
             nome_empresa.innerHTML = resposta[0].nome_fantasia
@@ -881,6 +908,9 @@
 
         })
     })
+}
+
+
      
     function carregarpicos(janela) {
 
@@ -983,6 +1013,21 @@
             }
         })
     }
+
+atualizardash()
+
+document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") {
+        atualizardash();
+    }
+});
+
+setInterval(() => {
+    if (document.visibilityState === "visible") {
+        atualizardash();
+    }
+}, 60000);
+// ver se vai mudar o tempo
         
 
 
