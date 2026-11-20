@@ -76,7 +76,7 @@
             <p id="pico_status" class="font-space-mono font-bold text-2xl sm:text-4xl mt-2"> ... </p>
             <p id="detalhe_status" class="text-xs text-[#A0B5AC] mt-2">Detalhes</p>
             <div class="mt-auto pt-1">
-                <p class="text-[11px] pt-1 border-t border-[#207F70]/40 text-[#A0B5AC]"><i id="ic_meta_status" class="fa-solid fa-bullseye mr-1 text-[#6d6f6e]"></i><span id="meta_status">Meta: todos os componentes em Normal</span></p>
+                <p id="texto_meta_status" class="text-[11px] pt-1 border-t border-[#207F70]/40 text-[#A0B5AC]"><i id="ic_meta_status" class="fa-solid fa-bullseye mr-1 text-[#6d6f6e]"></i><span id="meta_status">Meta: todos os componentes em Normal</span></p>
             </div>
         </div>
 
@@ -85,7 +85,7 @@
             <p id="kpi_componente_principal" class="font-space-mono font-bold text-2xl sm:text-3xl mt-2">...</p>
             <p id="detalhe_kpi_componente" class="text-xs text-[#A0B5AC] mt-2"></p>
            <div class="mt-auto pt-1">
-                <p class="text-[11px] pt-1 border-t border-[#207F70]/40 text-[#A0B5AC]"><i id="ic_meta_status" class="fa-solid fa-bullseye mr-1 text-[#6d6f6e]"></i><span id="meta_previsao">Meta: Ocorrência isolada - menos que 3 alertas  </span></p>
+                <p id="texto_meta_causa" class="text-[11px] pt-1 border-t border-[#207F70]/40 text-[#A0B5AC]"><i id="ic_meta_causa" class="fa-solid fa-bullseye mr-1 text-[#6d6f6e]"></i><span id="meta_causa">Meta: Ocorrência isolada - menos que 3 alertas  </span></p>
             </div>
         </div>
 
@@ -95,7 +95,7 @@
             <p id="previsao_horas" class="font-space-mono font-bold text-blue-500 text-2xl sm:text-3xl mt-2 truncate">...</p>
             <p id="previsao_detalhe" class="text-xs text-[#A0B5AC] mt-2 truncate whitespace-nowrap">componente - valor - timestamp</p>
             <div class="mt-auto pt-1">
-                <p class="text-[11px] pt-1 border-t border-[#207F70]/40 text-[#A0B5AC]"><i id="ic_meta_status" class="fa-solid fa-bullseye mr-1 text-[#6d6f6e]"></i><span id="meta_previsao">Meta: Nenhum risco nas próximas horas</span></p>
+                <p id="texto_meta_previsao" class="text-[11px] pt-1 border-t border-[#207F70]/40 text-[#A0B5AC]"><i id="ic_meta_previsao" class="fa-solid fa-bullseye mr-1 text-[#6d6f6e]"></i><span id="meta_previsao">Meta: Nenhum risco nas próximas horas</span></p>
             </div>
         </div>
 
@@ -105,7 +105,7 @@
             <p id="kpi_leitura_fora" class="font-space-mono font-bold text-yellow-400 text-2xl sm:text-3xl mt-2">...</p>
             <p id="detalhe_leitura_fora" class="text-xs text-[#A0B5AC] mt-2">...</p>
             <div class="mt-auto pt-1">
-                <p class="text-[11px] pt-1 border-t border-[#207F70]/40 text-[#A0B5AC]"><i id="ic_meta_status" class="fa-solid fa-bullseye mr-1 text-[#6d6f6e]"></i><span id="meta_previsao">Meta: Z-score menor que 1 </span></p>
+                <p id="texto_meta_previsao" class="text-[11px] pt-1 border-t border-[#207F70]/40 text-[#A0B5AC]"><i id="ic_meta_leitura" class="fa-solid fa-bullseye mr-1 text-[#6d6f6e]"></i><span id="meta_leitura">Meta: Z-score menor que 1 </span></p>
             </div>
         </div>
     </div>
@@ -493,6 +493,7 @@
             let dentro = valorAtual != null && (metaMax == null || valorAtual <= metaMax) && (metaMin == null || valorAtual >= metaMin);
 
             let pidmeta = document.getElementById("meta_" + nome);
+
             if (pidmeta) {
                 pidmeta.innerHTML = `<i class="fa-solid fa-bullseye mr-1"></i>Meta ${textoMeta}`;
                 pidmeta.style.color = dentro ? "#00E6A6" : "#A0B5AC";
@@ -626,6 +627,18 @@
     let janelaAtual = "24h";
 
 
+function colorirMeta(id, texto , atingiu) {
+    let icone = document.getElementById(id);
+    let textometa = document.getElementById(texto);
+
+    if (icone) {
+        icone.style.color = atingiu ? "#00E6A6" : "#A0B5AC";
+    }
+    if(textometa){
+        textometa.style.color = atingiu ? "#00E6A6" : "#A0B5AC";
+    }
+}
+
 function atualizardash(){
     fetch(`/empresas/buscar/${idEmpresa}`).then((dados) => {
         dados.json().then((resposta) => {
@@ -751,14 +764,27 @@ function atualizardash(){
                 pico_status.innerHTML = (resposta3.dados.status_geral).toUpperCase()
                 let componentesStatus = resposta3.dados.componentes;
                 console.log(resposta3)
-                kpi_leitura_fora.innerHTML = resposta3.dados.leitura_mais_fora_media.componente.toUpperCase()
-                // detalhe_leitura_fora.innerHTML = resposta3.dados.leitura_mais_fora_media.componente + " Z-score: " + resposta3.dados.leitura_mais_fora_media.z_score
-                detalhe_leitura_fora.innerHTML = `valor atual: ${resposta3.dados.leitura_mais_fora_media.valor} - Z-score: ${resposta3.dados.leitura_mais_fora_media.z_score}`
-                // let MINUTOS_OFFLINE = 10;
-                // let idadeLeitura = (Date.now() - new Date(resposta3.dados.timestamp)) / 60000;
+                let leitura = resposta3.dados.leitura_mais_fora_media;
+
+                if (leitura && leitura.z_score != null) {
+                    colorirMeta("ic_meta_leitura", "texto_meta_leitura" , Math.abs(Number(leitura.z_score)) < 1);
+
+                    kpi_leitura_fora.innerHTML = leitura.componente.toUpperCase();
+
+                    detalhe_leitura_fora.innerHTML = `valor atual: ${leitura.valor} - Z-score: ${leitura.z_score}`;
+                } else {
+                    colorirMeta("ic_meta_leitura", "texto_meta_leitura" , false);
+
+                    kpi_leitura_fora.innerHTML = "--";
+                    detalhe_leitura_fora.innerHTML = "Sem dados suficientes para avaliar";
+                }
+                // kpi_leitura_fora.innerHTML = resposta3.dados.leitura_mais_fora_media.componente.toUpperCase()
+
+                // detalhe_leitura_fora.innerHTML = `valor atual: ${resposta3.dados.leitura_mais_fora_media.valor} - Z-score: ${resposta3.dados.leitura_mais_fora_media.z_score}`
+               
                 let offline = resposta3.dados.status_geral == "offline"
-                //  || idadeLeitura > MINUTOS_OFFLINE;
-                // ver se vai ser a logica de nao rodar a etl tambem
+                colorirMeta("ic_meta_status", "texto_meta_status" , !offline && resposta3.dados.status_geral == "normal");
+           
 
                 
                 let cardsStatus = [
@@ -850,6 +876,7 @@ function atualizardash(){
                     pico_status.style.color = '#00E6A6'
                     kpi_status.style.borderTopColor = '#00E6A6'
                 }
+                
 
                 // usado para nao piscar o mockado (pretendo ainda mudar a logica)
                 document.getElementById("grade_componentes").style.display = "grid";
@@ -857,6 +884,8 @@ function atualizardash(){
                 console.log(resposta4)
 
                 let previsao = resposta4.dados;
+
+                colorirMeta("ic_meta_previsao", "texto_meta_previsao" , !previsao || previsao.horas == null);
 
                 if (previsao && previsao.horas != null) {
                     previsao_horas.innerHTML = `${previsao.horas.toFixed(1)} HORAS`;
@@ -879,6 +908,8 @@ function atualizardash(){
                     kpi_componente_principal.style.color = "#6d6f6e";
                     kpi_causa.style.borderTopColor = "#6d6f6e";
                     detalhe_kpi_componente.innerHTML = "Sem alertas nos últimos 30 dias";
+                    colorirMeta("ic_meta_causa" , "texto_meta_causa" , true);
+
                 } else {
                     let criticos = Number(resposta4[0].criticos);
                     let atencoes = Number(resposta4[0].atencoes);
@@ -901,6 +932,7 @@ function atualizardash(){
                         cor = "#00E6A6";
                         situacao = "Ocorrência isolada";
                     }
+                    colorirMeta("ic_meta_causa", "texto_meta_causa" , total < 3 && criticos < 2);
                     kpi_componente_principal.innerHTML = resposta4[0].nome;
                     kpi_componente_principal.style.color = cor;
                     kpi_causa.style.borderTopColor = cor;
