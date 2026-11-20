@@ -74,13 +74,19 @@
         <div id="kpi_status" class="rounded-2xl border border-[#207F70] bg-[#0C1F19] border-t-4 border-solid p-2.5 sm:p-4 transition-transform duration-300 hover:scale-103">
             <p class="text-sm text-white">Status</p>
             <p id="pico_status" class="font-space-mono font-bold text-2xl sm:text-4xl mt-2"> ... </p>
-            <p class="text-xs text-[#A0B5AC] mt-2">Detalhes</p>
+            <p id="detalhe_status" class="text-xs text-[#A0B5AC] mt-2">Detalhes</p>
+            <div class="mt-auto pt-1">
+                <p class="text-[11px] pt-1 border-t border-[#207F70]/40 text-[#A0B5AC]"><i id="ic_meta_status" class="fa-solid fa-bullseye mr-1 text-[#6d6f6e]"></i><span id="meta_status">Meta: todos os componentes em Normal</span></p>
+            </div>
         </div>
 
         <div id="kpi_causa" class="rounded-2xl border border-[#207F70] bg-[#0C1F19] border-t-4 border-solid p-2.5 sm:p-4 transition-transform duration-300 hover:scale-103">
             <p class="text-sm text-white">Causa principal (últimos 30 dias)</p>
             <p id="kpi_componente_principal" class="font-space-mono font-bold text-2xl sm:text-3xl mt-2">...</p>
             <p id="detalhe_kpi_componente" class="text-xs text-[#A0B5AC] mt-2"></p>
+           <div class="mt-auto pt-1">
+                <p class="text-[11px] pt-1 border-t border-[#207F70]/40 text-[#A0B5AC]"><i id="ic_meta_status" class="fa-solid fa-bullseye mr-1 text-[#6d6f6e]"></i><span id="meta_previsao">Meta: Ocorrência isolada - menos que 3 alertas  </span></p>
+            </div>
         </div>
 
         
@@ -88,6 +94,9 @@
             <p class="text-sm text-white truncate">Próxima falha prevista</p>
             <p id="previsao_horas" class="font-space-mono font-bold text-blue-500 text-2xl sm:text-3xl mt-2 truncate">...</p>
             <p id="previsao_detalhe" class="text-xs text-[#A0B5AC] mt-2 truncate whitespace-nowrap">componente - valor - timestamp</p>
+            <div class="mt-auto pt-1">
+                <p class="text-[11px] pt-1 border-t border-[#207F70]/40 text-[#A0B5AC]"><i id="ic_meta_status" class="fa-solid fa-bullseye mr-1 text-[#6d6f6e]"></i><span id="meta_previsao">Meta: Nenhum risco nas próximas horas</span></p>
+            </div>
         </div>
 
 
@@ -95,6 +104,9 @@
             <p class="text-sm text-white">Leitura mais fora do normal</p>
             <p id="kpi_leitura_fora" class="font-space-mono font-bold text-yellow-400 text-2xl sm:text-3xl mt-2">...</p>
             <p id="detalhe_leitura_fora" class="text-xs text-[#A0B5AC] mt-2">...</p>
+            <div class="mt-auto pt-1">
+                <p class="text-[11px] pt-1 border-t border-[#207F70]/40 text-[#A0B5AC]"><i id="ic_meta_status" class="fa-solid fa-bullseye mr-1 text-[#6d6f6e]"></i><span id="meta_previsao">Meta: Z-score menor que 1 </span></p>
+            </div>
         </div>
     </div>
 
@@ -141,7 +153,6 @@
                     <p class="text-gray-500 text-sm">Ative o monitoramento desta máquina para ver os dados aqui.</p>
                 </div>
 
-                <!-- CPU -->
                 <div id="card_cpu" class="cursor-pointer" style="display:none;min-height:0;height:100%" onclick="this.firstElementChild.classList.toggle('rotate-y-180')">
                     <div class="relative h-full transform-3d transition-transform duration-500">
                         <div class="absolute inset-0 backface-hidden rounded-xl border border-[#7A2935] bg-[#24191B] p-3 flex flex-col justify-between">
@@ -176,7 +187,6 @@
                     </div>
                 </div>
 
-                <!-- RAM -->
                 <div id="card_ram" class="cursor-pointer" style="display:none;min-height:0;height:100%" onclick="this.firstElementChild.classList.toggle('rotate-y-180')">
                     <div class="relative h-full transform-3d transition-transform duration-500">
                         <div class="absolute inset-0 backface-hidden rounded-xl border border-[#7A2935] bg-[#24191B] p-3 flex flex-col justify-between">
@@ -211,7 +221,6 @@
                     </div>
                 </div>
 
-                <!-- SWAP -->
                 <div id="card_swap" class="cursor-pointer" style="display:none;min-height:0;height:100%" onclick="this.firstElementChild.classList.toggle('rotate-y-180')">
                     <div class="relative h-full transform-3d transition-transform duration-500">
                         <div class="absolute inset-0 backface-hidden rounded-xl border border-[#7A5A10] bg-[#241F14] p-3 flex flex-col justify-between">
@@ -246,7 +255,6 @@
                     </div>
                 </div>
 
-                <!-- TEMPERATURA -->
                 <div id="card_temperatura" class="cursor-pointer" style="display:none;min-height:0;height:100%" onclick="this.firstElementChild.classList.toggle('rotate-y-180')">
                     <div class="relative h-full transform-3d transition-transform duration-500">
                         <div class="absolute inset-0 backface-hidden rounded-xl border border-[#7A5A10] bg-[#241F14] p-3 flex flex-col justify-between">
@@ -276,7 +284,6 @@
                     </div>
                 </div>
 
-                <!-- GPU -->
                 <div id="card_gpu" class="cursor-pointer" style="display:none;min-height:0;height:100%" onclick="this.firstElementChild.classList.toggle('rotate-y-180')">
                     <div class="relative h-full transform-3d transition-transform duration-500">
                         <div class="absolute inset-0 backface-hidden rounded-xl border border-[#7A5A10] bg-[#241F14] p-3 flex flex-col justify-between">
@@ -305,7 +312,6 @@
                     </div>
                 </div>
 
-                <!-- DISCO -->
                 <div id="card_disco" class="cursor-pointer" style="display:none;min-height:0;height:100%" onclick="this.firstElementChild.classList.toggle('rotate-y-180')">
                     <div class="relative h-full transform-3d transition-transform duration-500">
                         <div class="absolute inset-0 backface-hidden rounded-xl border border-[#207F70] bg-[#112C24] p-3 flex flex-col justify-between">
@@ -335,7 +341,6 @@
                     </div>
                 </div>
 
-                <!-- VENTOINHA -->
                 <div id="card_ventoinha" class="cursor-pointer" style="display:none;min-height:0;height:100%" onclick="this.firstElementChild.classList.toggle('rotate-y-180')">
                     <div class="relative h-full transform-3d transition-transform duration-500">
                         <div class="absolute inset-0 backface-hidden rounded-xl border border-[#207F70] bg-[#112C24] p-3 flex flex-col justify-between">
@@ -406,7 +411,7 @@
         options: {
             maintainAspectRatio: false,
             scales: {
-                x: { stacked: true },
+                x: { stacked: true, ticks: { autoSkip: false } },
                 y: { stacked: true }
             },
             onClick: function (evento, barras, grafico) {
@@ -513,7 +518,7 @@
 
         if (normais.length + (temGpu ? 1 : 0) == 0) {
             vazio.style.display = "flex";
-            grade.style.gridTemplateRows = "1fr";
+            // grade.style.gridTemplateRows = "1fr";
             return;
         }
         vazio.style.display = "none";
@@ -876,16 +881,12 @@
 
         })
     })
-
-
-
-        
+     
     function carregarpicos(janela) {
 
         let botoes = ["24h", "7d", "30d"];
 
         for (let i = 0; i < botoes.length; i++) {
-
             let botao = document.getElementById("btn_" + botoes[i]);
 
             if (botoes[i] == janela) {
@@ -896,86 +897,93 @@
         }
 
         fetch(`${linkPicos}/janelas/${janela}/picos.json`).then(resposta =>
-         resposta.json()).then(dados => {
-                console.log(dados);
+        resposta.json()).then(dados => {
 
-                let cores = {
-                    temperatura: '#FFB000',
-                    gpu: '#FF1F3D',
-                    cpu: '#E879F9',
-                    ram: '#438BFF',
-                    disco: '#A78BFA',
-                    swap: '#2DD4BF',
-                    ventoinha: '#94A3B8'
-                };
+            let cores = {
+                temperatura: '#FFB000',
+                gpu: '#FF1F3D',
+                cpu: '#E879F9',
+                ram: '#438BFF',
+                disco: '#A78BFA',
+                swap: '#2DD4BF',
+                ventoinha: '#94A3B8'
+            };
 
-                let tempo = [];
-                let nomes = [];
-                let datasets = [];
+            let horas = [];     
+            let tempo = [];     
+            let nomes = [];
+            let datasets = [];
 
-                for (let i = 0; i < dados.dados.length; i++) {
-                    let label;
+            if (janela == "24h") {
+                let agora = new Date();
+                agora.setMinutes(0, 0, 0);
 
-                    if (janela == "24h") {
-                        label = new Date(dados.dados[i].timestamp).toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
-                    } else {
-                        label = new Date(dados.dados[i].timestamp).toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit" });
-                    }
-
-                    if (!tempo.includes(label)) {
-                        tempo.push(label);
-                    }
+                for (let i = 23; i >= 0; i--) {
+                    let hora = new Date(agora.getTime() - i * 3600 * 1000);
+                    horas.push(hora.getTime());
+                    tempo.push(hora.getHours() + "h");
                 }
+            } else {
+                let quantosDias = 7;
+                if (janela == "30d") quantosDias = 30;
 
-                for (let i = 0; i < dados.dados.length; i++) {
-                    if (!nomes.includes(dados.dados[i].componente)) {
-                        nomes.push(dados.dados[i].componente);
-                    }
+                new Date().setHours(0, 0, 0, 0);
+
+                for (let i = quantosDias - 1; i >= 0; i--) {
+                    let dia = new Date(new Date().getTime() - i * 24 * 3600 * 1000);
+                    horas.push(dia.getTime());
+                    tempo.push(dia.toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit" }));
                 }
+            }
 
-                for (let c = 0; c < nomes.length; c++) {
+            for (let i = 0; i < dados.dados.length; i++) {
+                if (!nomes.includes(dados.dados[i].componente)) {
+                    nomes.push(dados.dados[i].componente);
+                }
+            }
 
-                    let valores = [];
+            for (let c = 0; c < nomes.length; c++) {
+                let valores = [];
 
-                    for (let t = 0; t < tempo.length; t++) {
+                for (let t = 0; t < horas.length; t++) {
+                    let soma = 0;
 
-                        let soma = 0;
+                    for (let i = 0; i < dados.dados.length; i++) {
+                        let mesmaBarra = false;
 
-                        for (let i = 0; i < dados.dados.length; i++) {
-
-                            let data = new Date(dados.dados[i].timestamp);
-                            let label;
-
-                            if (janela == "24h") {
-                                label = new Date(dados.dados[i].timestamp).toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
-                            } else {
-                                label = data.toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit" });
-                            }
-
-                            if ( label == tempo[t] && dados.dados[i].componente == nomes[c]) {
-                                soma += Number(dados.dados[i].qtd) || 0;
-                            }
+                        if (janela == "24h") {
+                            mesmaBarra = new Date(dados.dados[i].timestamp).getTime() == horas[t];                             
+                        } else {
+                            mesmaBarra = new Date(dados.dados[i].timestamp).toDateString() == new Date(horas[t]).toDateString(); 
                         }
 
-                        valores.push(soma);
+                        if (mesmaBarra && dados.dados[i].componente == nomes[c]) {
+                            soma += Number(dados.dados[i].qtd) || 0;
+                        }
                     }
-
-                    datasets.push({
-                        label: nomes[c],
-                        data: valores,
-                        backgroundColor: cores[nomes[c]] || '#94A3B8',
-                        borderRadius: 4
-                    });
+                    valores.push(soma);
                 }
 
-                graficopicos.data.labels = tempo;
-                graficopicos.data.datasets = datasets;
-                graficopicos.update();
+                datasets.push({
+                    label: nomes[c],
+                    data: valores,
+                    backgroundColor: cores[nomes[c]] || '#94A3B8',
+                    borderRadius: 4
+                });
+            }
 
-            })
+            graficopicos.data.labels = tempo;
+            graficopicos.data.datasets = datasets;
+            graficopicos.update();
+
+            if (dados.dados.length == 0) {
+                document.getElementById('ondePicos').innerHTML = '<p class="text-xs text-[#00E6A6]">Nenhum pico</p>';
+            } else {
+                document.getElementById('ondePicos').innerHTML = '<p class="text-xs text-gray-400">Clique em uma barra para ver onde os picos aconteceram.</p>';
+            }
+        })
     }
-
-    
+        
 
 
 </script>
