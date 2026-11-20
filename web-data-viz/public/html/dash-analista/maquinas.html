@@ -622,7 +622,9 @@
 
     let url = "https://bucket-gold-marcelo-sptech.s3.us-east-1.amazonaws.com";
 
-    let linkPicos = ""
+    let linkPicos = ""  
+    let janelaAtual = "24h";
+
 
 function atualizardash(){
     fetch(`/empresas/buscar/${idEmpresa}`).then((dados) => {
@@ -632,7 +634,7 @@ function atualizardash(){
             let linkmonitora = `${url}/${idEmpresa}/${resposta[0].nome_fantasia}/operacional/catalogo/limites.json`;
             
             linkPicos = link
-            carregarpicos("24h")
+            carregarpicos(janelaAtual)
 
             let janelas = ["24h", "7d", "30d"];
             let metricastras = {
@@ -913,6 +915,7 @@ function atualizardash(){
 
      
     function carregarpicos(janela) {
+        janelaAtual = janela;
 
         let botoes = ["24h", "7d", "30d"];
 
