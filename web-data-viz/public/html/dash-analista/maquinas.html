@@ -122,12 +122,16 @@
         </div>
 
         <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] p-5 min-w-0 flex flex-col xl:h-full">
-            <div class="flex items-center justify-between mb-4">
+            <div class="flex items-start justify-between mb-4 gap-3">
                 <div>
                     <h3 class="text-white text-lg font-semibold">Estado atual dos componentes</h3>
                     <p class="text-gray-400 text-xs">Clique em um card para ver 24h, 7d e 30d</p>
+                    <p class="text-[10px] text-gray-500 mt-1 flex items-center gap-1 flex-wrap">
+                        <span style="display:inline-block;width:2px;height:9px;background:#fff;border-radius:1px"></span>meta ideal
+                        <span style="display:inline-block;width:2px;height:9px;background:#FF5269;border-radius:1px;margin-left:8px"></span>limite máximo
+                    </p>
                 </div>
-                <span id="ultima_coleta" class="text-xs text-gray-400"><i class="fa-regular fa-clock mr-1"></i>Última coleta </span>
+                <span id="ultima_coleta" class="text-xs text-gray-400 whitespace-nowrap"><i class="fa-regular fa-clock mr-1"></i>Última coleta </span>
             </div>
 
             <div id="grade_componentes" class="flex-1" style="display:none;grid-template-columns:repeat(2,minmax(0,1fr));gap:0.5rem;min-height:22rem">
@@ -137,6 +141,7 @@
                     <p class="text-gray-500 text-sm">Ative o monitoramento desta máquina para ver os dados aqui.</p>
                 </div>
 
+                <!-- CPU -->
                 <div id="card_cpu" class="cursor-pointer" style="display:none;min-height:0;height:100%" onclick="this.firstElementChild.classList.toggle('rotate-y-180')">
                     <div class="relative h-full transform-3d transition-transform duration-500">
                         <div class="absolute inset-0 backface-hidden rounded-xl border border-[#7A2935] bg-[#24191B] p-3 flex flex-col justify-between">
@@ -145,9 +150,19 @@
                                 <span id="status_cpu" class="text-[#FF5269] text-xs font-semibold">Crítico</span>
                             </div>
                             <div>
-                                <p id="cpu_valor" class="text-white text-2xl font-bold">X%</p>
-                                <div class="h-1 bg-[#263E35] rounded-full mt-1 overflow-hidden"><div id="barra_cpu" class="h-full bg-[#FF1F3D]"></div></div>
-                                <p id="cpu_freq" class="text-gray-400 text-xs mt-1">Z GHz</p>
+                                <div class="flex items-end justify-between gap-2">
+                                    <p id="cpu_valor" class="text-white text-2xl font-bold">X%</p>
+                                    <p id="meta_cpu" class="text-[11px] text-gray-400 text-right whitespace-nowrap"></p>
+                                </div>
+                                <div class="relative h-1.5 bg-[#263E35] rounded-full mt-1.5">
+                                    <div id="barra_cpu" class="h-full bg-[#FF1F3D] rounded-full"></div>
+                                    <div id="marca_cpu" title="Meta ideal" style="display:none;position:absolute;top:-3px;height:12px;width:2px;background:#fff;border-radius:1px"></div>
+                                    <div id="lim_marca_cpu" title="Limite máximo" style="display:none;position:absolute;top:-3px;height:12px;width:2px;background:#FF5269;border-radius:1px;box-shadow:0 0 0 1px #0C1F19"></div>
+                                </div>
+                                <div class="flex items-center justify-between gap-2 mt-1.5">
+                                    <p id="cpu_freq" class="text-gray-400 text-xs">Z GHz</p>
+                                    <p id="lim_cpu" class="text-[10px] text-gray-300 whitespace-nowrap"></p>
+                                </div>
                             </div>
                             <p id="acao_cpu" class="text-xs text-[#FFB000]"><i class="fa-solid fa-wrench mr-1"></i>Ação sugerida: verificar refrigeração</p>
                         </div>
@@ -157,12 +172,11 @@
                             <div id="linha_cpu_7d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">7d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
                             <div id="linha_cpu_30d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">30d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
                             <p id="hist_cpu" class="text-[11px] mt-1 pt-1 border-t border-[#207F70]/40 text-gray-400"></p>
-                                <!-- <p class="text-[10px] text-gray-400 mt-2 border-t border-[#207F70]/40 pt-2">Histórico (% de problema)</p>
-                                <p class="text-xs font-space-mono text-gray-300"> CRÍTICO:<span class="text-[#FF1F3D]"> 95%</span> - <span class="text-xs">12/11/2026 as 16:23</span><br></p> -->
                         </div>
                     </div>
                 </div>
 
+                <!-- RAM -->
                 <div id="card_ram" class="cursor-pointer" style="display:none;min-height:0;height:100%" onclick="this.firstElementChild.classList.toggle('rotate-y-180')">
                     <div class="relative h-full transform-3d transition-transform duration-500">
                         <div class="absolute inset-0 backface-hidden rounded-xl border border-[#7A2935] bg-[#24191B] p-3 flex flex-col justify-between">
@@ -171,9 +185,19 @@
                                 <span id="status_ram" class="text-[#FF5269] text-xs font-semibold">Crítico</span>
                             </div>
                             <div>
-                                <p id="ram_valor" class="text-white text-2xl font-bold">x%</p>
-                                <div class="h-1 bg-[#263E35] rounded-full mt-1 overflow-hidden"><div id="barra_ram" class="h-full bg-[#FF1F3D]"></div></div>
-                                <p class="text-gray-400 text-xs mt-1">Memória em uso</p>
+                                <div class="flex items-end justify-between gap-2">
+                                    <p id="ram_valor" class="text-white text-2xl font-bold">x%</p>
+                                    <p id="meta_ram" class="text-[11px] text-gray-400 text-right whitespace-nowrap"></p>
+                                </div>
+                                <div class="relative h-1.5 bg-[#263E35] rounded-full mt-1.5">
+                                    <div id="barra_ram" class="h-full bg-[#FF1F3D] rounded-full"></div>
+                                    <div id="marca_ram" title="Meta ideal" style="display:none;position:absolute;top:-3px;height:12px;width:2px;background:#fff;border-radius:1px"></div>
+                                    <div id="lim_marca_ram" title="Limite máximo" style="display:none;position:absolute;top:-3px;height:12px;width:2px;background:#FF5269;border-radius:1px;box-shadow:0 0 0 1px #0C1F19"></div>
+                                </div>
+                                <div class="flex items-center justify-between gap-2 mt-1.5">
+                                    <p class="text-gray-400 text-xs">Memória em uso</p>
+                                    <p id="lim_ram" class="text-[10px] text-gray-300 whitespace-nowrap"></p>
+                                </div>
                             </div>
                             <p id="acao_ram" class="text-xs text-[#FFB000]"><i class="fa-solid fa-wrench mr-1"></i>Ação sugerida: checar processos e swap</p>
                         </div>
@@ -183,11 +207,11 @@
                             <div id="linha_ram_7d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">7d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
                             <div id="linha_ram_30d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">30d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
                             <p id="hist_ram" class="text-[11px] mt-1 pt-1 border-t border-[#207F70]/40 text-gray-400"></p>
-
                         </div>
                     </div>
                 </div>
 
+                <!-- SWAP -->
                 <div id="card_swap" class="cursor-pointer" style="display:none;min-height:0;height:100%" onclick="this.firstElementChild.classList.toggle('rotate-y-180')">
                     <div class="relative h-full transform-3d transition-transform duration-500">
                         <div class="absolute inset-0 backface-hidden rounded-xl border border-[#7A5A10] bg-[#241F14] p-3 flex flex-col justify-between">
@@ -196,9 +220,19 @@
                                 <span id="status_swap" class="text-[#FFB000] text-xs font-semibold">Atenção</span>
                             </div>
                             <div>
-                                <p id="swap_valor" class="text-white text-2xl font-bold">x%</p>
-                                <div class="h-1 bg-[#263E35] rounded-full mt-1 overflow-hidden"><div id="barra_swap" class="h-full bg-[#FFB000]"></div></div>
-                                <span id="swap_valor_usado" class="text-gray-400 text-xs mt-1">y /  </span> <span id="swap_valor_total" class="text-gray-400 text-xs mt-1"> z GB </span>
+                                <div class="flex items-end justify-between gap-2">
+                                    <p id="swap_valor" class="text-white text-2xl font-bold">x%</p>
+                                    <p id="meta_swap" class="text-[11px] text-gray-400 text-right whitespace-nowrap"></p>
+                                </div>
+                                <div class="relative h-1.5 bg-[#263E35] rounded-full mt-1.5">
+                                    <div id="barra_swap" class="h-full bg-[#FFB000] rounded-full"></div>
+                                    <div id="marca_swap" title="Meta ideal" style="display:none;position:absolute;top:-3px;height:12px;width:2px;background:#fff;border-radius:1px"></div>
+                                    <div id="lim_marca_swap" title="Limite máximo" style="display:none;position:absolute;top:-3px;height:12px;width:2px;background:#FF5269;border-radius:1px;box-shadow:0 0 0 1px #0C1F19"></div>
+                                </div>
+                                <div class="flex items-center justify-between gap-2 mt-1.5">
+                                    <p class="text-gray-400 text-xs"><span id="swap_valor_usado">y /  </span> <span id="swap_valor_total"> z GB </span></p>
+                                    <p id="lim_swap" class="text-[10px] text-gray-300 whitespace-nowrap"></p>
+                                </div>
                             </div>
                             <p id="acao_swap" class="text-xs text-[#FFB000]"><i class="fa-solid fa-wrench mr-1"></i>Ação sugerida: liberar memória</p>
                         </div>
@@ -208,11 +242,11 @@
                             <div id="linha_swap_7d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">7d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
                             <div id="linha_swap_30d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">30d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
                             <p id="hist_swap" class="text-[11px] mt-1 pt-1 border-t border-[#207F70]/40 text-gray-400"></p>
-
                         </div>
                     </div>
                 </div>
 
+                <!-- TEMPERATURA -->
                 <div id="card_temperatura" class="cursor-pointer" style="display:none;min-height:0;height:100%" onclick="this.firstElementChild.classList.toggle('rotate-y-180')">
                     <div class="relative h-full transform-3d transition-transform duration-500">
                         <div class="absolute inset-0 backface-hidden rounded-xl border border-[#7A5A10] bg-[#241F14] p-3 flex flex-col justify-between">
@@ -221,8 +255,14 @@
                                 <span id="status_temperatura" class="text-[#FFB000] text-xs font-semibold">Atenção</span>
                             </div>
                             <div>
-                                <p id="temperatura_valor" class="text-white text-2xl font-bold">X °C</p>
-                                <p class="text-gray-400 text-xs mt-1">Temperatura atual</p>
+                                <div class="flex items-end justify-between gap-2">
+                                    <p id="temperatura_valor" class="text-white text-2xl font-bold">X °C</p>
+                                    <p id="meta_temperatura" class="text-[11px] text-gray-400 text-right whitespace-nowrap"></p>
+                                </div>
+                                <div class="flex items-center justify-between gap-2 mt-1.5">
+                                    <p class="text-gray-400 text-xs">Temperatura atual</p>
+                                    <p id="lim_temperatura" class="text-[10px] text-gray-300 whitespace-nowrap"></p>
+                                </div>
                             </div>
                             <p id="acao_temperatura" class="text-xs text-[#FFB000]"><i class="fa-solid fa-wrench mr-1"></i>Ação sugerida: checar ventoinhas</p>
                         </div>
@@ -232,16 +272,16 @@
                             <div id="linha_temperatura_7d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">7d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
                             <div id="linha_temperatura_30d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">30d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
                             <p id="hist_temperatura" class="text-[11px] mt-1 pt-1 border-t border-[#207F70]/40 text-gray-400"></p>
-
                         </div>
                     </div>
                 </div>
 
+                <!-- GPU -->
                 <div id="card_gpu" class="cursor-pointer" style="display:none;min-height:0;height:100%" onclick="this.firstElementChild.classList.toggle('rotate-y-180')">
                     <div class="relative h-full transform-3d transition-transform duration-500">
                         <div class="absolute inset-0 backface-hidden rounded-xl border border-[#7A5A10] bg-[#241F14] p-3 flex flex-col justify-between">
                             <div class="flex items-center justify-between">
-                                <span class="text-gray-300 text-sm"><i id="iconegpu" class="fa-solid fa-gauge-high mr-2 text-[#FFB000]"></i>GPU</span>
+                                <span class="text-gray-300 text-sm"><i id="iconegpu" class="fa-solid fa-gauge-high mr-2 text-[#FFB000]"></i>GPU <span id="meta_gpu" class="text-[11px] text-gray-400 ml-2"></span></span>
                                 <span id="status_gpu" class="text-[#FFB000] text-xs font-semibold">Atenção</span>
                             </div>
                             <div class="flex justify-between px-2">
@@ -250,7 +290,10 @@
                                 <div><p class="text-gray-400 text-xs">Temp.</p><p id="gpu_valor_temperatura" class="text-white text-lg font-bold">Z °C</p></div>
                                 <div><p class="text-gray-400 text-xs">Ventoinha</p><p id="gpu_valor_ventoinha" class="text-white text-lg font-bold">W%</p></div>
                             </div>
-                            <p id="acao_gpu" class="text-xs text-[#FFB000]"><i class="fa-solid fa-wrench mr-1"></i>Ação sugerida: revisar consumo e minerador</p>
+                            <div class="flex items-center justify-between gap-2">
+                                <p id="acao_gpu" class="text-xs text-[#FFB000] truncate"><i class="fa-solid fa-wrench mr-1"></i>Ação sugerida: revisar consumo e minerador</p>
+                                <p id="lim_gpu" class="text-[10px] text-gray-300 whitespace-nowrap" title="Limites do uso da GPU"></p>
+                            </div>
                         </div>
                         <div class="absolute inset-0 backface-hidden rotate-y-180 rounded-xl border border-[#207F70] bg-[#112C24] p-3 flex flex-col justify-center gap-1">
                             <div class="grid grid-cols-5 text-[11px] text-gray-400"><span>GPU uso</span><span>Média</span><span>Máx</span><span>Mín</span><span>Desv.</span></div>
@@ -258,11 +301,11 @@
                             <div id="linha_gpu_7d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">7d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
                             <div id="linha_gpu_30d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">30d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
                             <p id="hist_gpu" class="text-[11px] mt-1 pt-1 border-t border-[#207F70]/40 text-gray-400"></p>
-
                         </div>
                     </div>
                 </div>
 
+                <!-- DISCO -->
                 <div id="card_disco" class="cursor-pointer" style="display:none;min-height:0;height:100%" onclick="this.firstElementChild.classList.toggle('rotate-y-180')">
                     <div class="relative h-full transform-3d transition-transform duration-500">
                         <div class="absolute inset-0 backface-hidden rounded-xl border border-[#207F70] bg-[#112C24] p-3 flex flex-col justify-between">
@@ -271,8 +314,14 @@
                                 <span id="status_disco" class="text-[#00E6A6] text-xs font-semibold">Normal</span>
                             </div>
                             <div>
-                                <p id="disco_valor" class="text-white text-2xl font-bold">X GB</p>
-                                <p class="text-gray-400 text-xs mt-1">Espaço livre</p>
+                                <div class="flex items-end justify-between gap-2">
+                                    <p id="disco_valor" class="text-white text-2xl font-bold">X GB</p>
+                                    <p id="meta_disco" class="text-[11px] text-gray-400 text-right whitespace-nowrap"></p>
+                                </div>
+                                <div class="flex items-center justify-between gap-2 mt-1.5">
+                                    <p class="text-gray-400 text-xs">Espaço livre</p>
+                                    <p id="lim_disco" class="text-[10px] text-gray-300 whitespace-nowrap"></p>
+                                </div>
                             </div>
                             <p id="acao_disco" class="text-xs text-[#00E6A6]"><i class="fa-solid fa-circle-check mr-1"></i>Ação sugerida: nenhuma</p>
                         </div>
@@ -282,11 +331,11 @@
                             <div id="linha_disco_7d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">7d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
                             <div id="linha_disco_30d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">30d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
                             <p id="hist_disco" class="text-[11px] mt-1 pt-1 border-t border-[#207F70]/40 text-gray-400"></p>
-
                         </div>
                     </div>
                 </div>
 
+                <!-- VENTOINHA -->
                 <div id="card_ventoinha" class="cursor-pointer" style="display:none;min-height:0;height:100%" onclick="this.firstElementChild.classList.toggle('rotate-y-180')">
                     <div class="relative h-full transform-3d transition-transform duration-500">
                         <div class="absolute inset-0 backface-hidden rounded-xl border border-[#207F70] bg-[#112C24] p-3 flex flex-col justify-between">
@@ -295,8 +344,14 @@
                                 <span id="status_ventoinha" class="text-[#00E6A6] text-xs font-semibold">Normal</span>
                             </div>
                             <div>
-                                <p id="ventoinha_valor" class="text-white text-2xl font-bold">X%</p>
-                                <p class="text-gray-400 text-xs mt-1">Velocidade</p>
+                                <div class="flex items-end justify-between gap-2">
+                                    <p id="ventoinha_valor" class="text-white text-2xl font-bold">X%</p>
+                                    <p id="meta_ventoinha" class="text-[11px] text-gray-400 text-right whitespace-nowrap"></p>
+                                </div>
+                                <div class="flex items-center justify-between gap-2 mt-1.5">
+                                    <p class="text-gray-400 text-xs">Velocidade</p>
+                                    <p id="lim_ventoinha" class="text-[10px] text-gray-300 whitespace-nowrap"></p>
+                                </div>
                             </div>
                             <p id="acao_ventoinha" class="text-xs text-[#00E6A6]"><i class="fa-solid fa-circle-check mr-1"></i>Ação sugerida: nenhuma</p>
                         </div>
@@ -306,7 +361,6 @@
                             <div id="linha_ventoinha_7d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">7d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
                             <div id="linha_ventoinha_30d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">30d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
                             <p id="hist_ventoinha" class="text-[11px] mt-1 pt-1 border-t border-[#207F70]/40 text-gray-400"></p>
-
                         </div>
                     </div>
                 </div>
@@ -371,6 +425,70 @@
             }
         }
     });
+
+    let limitesRig = {}; 
+
+    function preencherMeta(metricas) {
+        let componentes = {
+            cpu:         { metrica: "cpu_percent",         unidade: "%" },
+            ram:         { metrica: "ram_percent",         unidade: "%" },
+            swap:        { metrica: "swap_memory_percent", unidade: "%" },
+            temperatura: { metrica: "temperature",         unidade: " °C" },
+            gpu:         { metrica: "gpu_usage",           unidade: "%" },
+            disco:       { metrica: "disk",                unidade: " GB" },
+            ventoinha:   { metrica: "fans_speed",          unidade: "%" }
+        };
+
+        for (let nome in componentes) {
+
+            let limite = limitesRig[nome];
+            if (!limite) continue;  
+
+            let unidade = componentes[nome].unidade;
+            let valorAtual = metricas[componentes[nome].metrica];
+
+            let limiteMax = limite.limite_max != null ? Number(limite.limite_max) : null;
+            let limiteMin = limite.limite_min != null ? Number(limite.limite_min) : null;
+
+            // ver essa logica ainda
+            let metaMax = limiteMax != null ? limiteMax * 0.93 : null;
+            let metaMin = limiteMin != null ? limiteMin * 1.3 : null;
+
+            let textoMeta = "--";
+            if (metaMin != null && metaMax != null) {
+                textoMeta = Number(metaMin).toFixed(1) + "–" + Number(metaMax).toFixed(1) + unidade;
+            }
+
+            let dentro = valorAtual != null && (metaMax == null || valorAtual <= metaMax) && (metaMin == null || valorAtual >= metaMin);
+
+            let pidmeta = document.getElementById("meta_" + nome);
+            if (pidmeta) {
+                pidmeta.innerHTML = `<i class="fa-solid fa-bullseye mr-1"></i>Meta ${textoMeta}`;
+                pidmeta.style.color = dentro ? "#00E6A6" : "#A0B5AC";
+            }
+
+            let textoMin = limiteMin != null ? Number(limiteMin).toFixed(1) + unidade : "—";
+            let textoMax = limiteMax != null ? Number(limiteMax).toFixed(1) + unidade : "—";
+
+            let pidlimite = document.getElementById("lim_" + nome);
+            if (pidlimite) {
+                pidlimite.innerHTML = `<span class="text-gray-500">mín</span> ${textoMin} <span class="text-gray-500">· máx</span> ${textoMax}`;
+            }
+
+            let marcaMeta = document.getElementById("marca_" + nome);
+            if (marcaMeta && metaMax != null) {
+                marcaMeta.style.display = "";
+                marcaMeta.style.left = Math.min(metaMax, 100) + "%";
+            }
+
+            let marcaLimite = document.getElementById("lim_marca_" + nome);
+            if (marcaLimite && limiteMax != null) {
+                marcaLimite.style.display = "";
+                marcaLimite.style.left = Math.min(limiteMax, 100) + "%";
+            }
+        }
+    }
+
 
     function ajustarGrade() {
         let grade = document.getElementById("grade_componentes");
@@ -541,6 +659,9 @@
                     if (limites[i].componente == "GPU") monitoragpu = limites[i].monitorado;
                     if (limites[i].componente == "Temperatura") monitoratemp = limites[i].monitorado;
                     if (limites[i].componente == "Ventoinha") monitoraventoinha = limites[i].monitorado;
+
+                    if (limites[i].monitorado) limitesRig[limites[i].componente.toLowerCase()] = limites[i];
+
                 }
 
                 if (monitoracpu == true && resposta2.dados.metricas["cpu_percent"] != null) {
@@ -588,6 +709,8 @@
                 }
 
                 ajustarGrade();
+                preencherMeta(resposta2.dados.metricas);
+
 
                 let pico_status = document.getElementById("pico_status")
                 let kpi_status = document.getElementById("kpi_status")
@@ -851,6 +974,8 @@
 
             })
     }
+
+    
 
 
 </script>
