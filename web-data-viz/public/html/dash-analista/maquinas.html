@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../../css/style.css">
     <title>Dashboard - Maquinas</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="preconnect" href="https://bucket-gold-marcelo-sptech.s3.us-east-1.amazonaws.com" crossorigin>
 </head>
@@ -140,7 +141,7 @@
                     <p class="text-gray-400 text-xs">Clique em um card para ver 24h, 7d e 30d</p>
                     <p class="text-[10px] text-gray-500 mt-1 flex items-center gap-1 flex-wrap">
                         <span style="display:inline-block;width:2px;height:9px;background:#fff;border-radius:1px"></span>meta ideal
-                        <span style="display:inline-block;width:2px;height:9px;background:#FF5269;border-radius:1px;margin-left:8px"></span>limite máximo
+                        <span style="display:inline-block;width:2px;height:9px;background:#FF5269;border-radius:1px;margin-left:8px"></span>limites
                     </p>
                 </div>
                 <span id="ultima_coleta" class="text-xs text-gray-400 whitespace-nowrap"><i class="fa-regular fa-clock mr-1"></i>Última coleta </span>
@@ -168,6 +169,7 @@
                                 <div class="relative h-1.5 bg-[#263E35] rounded-full mt-1.5">
                                     <div id="barra_cpu" class="h-full bg-[#FF1F3D] rounded-full"></div>
                                     <div id="marca_cpu" title="Meta ideal" style="display:none;position:absolute;top:-3px;height:12px;width:2px;background:#fff;border-radius:1px"></div>
+                                    <div id="lim_min_marca_cpu" style="display:none;position:absolute;top:-3px;height:12px;width:2px;background:#FF5269;border-radius:1px;box-shadow:0 0 0 1px #0C1F19"></div>
                                     <div id="lim_marca_cpu" title="Limite máximo" style="display:none;position:absolute;top:-3px;height:12px;width:2px;background:#FF5269;border-radius:1px;box-shadow:0 0 0 1px #0C1F19"></div>
                                 </div>
                                 <div class="flex items-center justify-between gap-2 mt-1.5">
@@ -202,6 +204,7 @@
                                 <div class="relative h-1.5 bg-[#263E35] rounded-full mt-1.5">
                                     <div id="barra_ram" class="h-full bg-[#FF1F3D] rounded-full"></div>
                                     <div id="marca_ram" title="Meta ideal" style="display:none;position:absolute;top:-3px;height:12px;width:2px;background:#fff;border-radius:1px"></div>
+                                    <div id="lim_min_marca_ram" style="display:none;position:absolute;top:-3px;height:12px;width:2px;background:#FF5269;border-radius:1px;box-shadow:0 0 0 1px #0C1F19"></div>
                                     <div id="lim_marca_ram" title="Limite máximo" style="display:none;position:absolute;top:-3px;height:12px;width:2px;background:#FF5269;border-radius:1px;box-shadow:0 0 0 1px #0C1F19"></div>
                                 </div>
                                 <div class="flex items-center justify-between gap-2 mt-1.5">
@@ -236,6 +239,7 @@
                                 <div class="relative h-1.5 bg-[#263E35] rounded-full mt-1.5">
                                     <div id="barra_swap" class="h-full bg-[#FFB000] rounded-full"></div>
                                     <div id="marca_swap" title="Meta ideal" style="display:none;position:absolute;top:-3px;height:12px;width:2px;background:#fff;border-radius:1px"></div>
+                                    <div id="lim_min_marca_swap" style="display:none;position:absolute;top:-3px;height:12px;width:2px;background:#FF5269;border-radius:1px;box-shadow:0 0 0 1px #0C1F19"></div>
                                     <div id="lim_marca_swap" title="Limite máximo" style="display:none;position:absolute;top:-3px;height:12px;width:2px;background:#FF5269;border-radius:1px;box-shadow:0 0 0 1px #0C1F19"></div>
                                 </div>
                                 <div class="flex items-center justify-between gap-2 mt-1.5">
@@ -443,13 +447,52 @@
             onClick: function (evento, barras, grafico) {
                 if (barras.length == 0) return;
 
-                let hora = barras[0].index;
-                let texto = '<p class="text-xs text-gray-400 mb-2">Relatório das <b class="text-white">' + grafico.data.labels[hora] + '</b></p>';
+                let inicio = periodosBarras[barras[0].index];
+                let rotulo = grafico.data.labels[barras[0].index];
+                let componentes = {};
 
-                for (let i = 0; i < grafico.data.datasets.length; i++) {
-                    let nome = grafico.data.datasets[i].label;
-                    let valor = grafico.data.datasets[i].data[hora];
-                    texto += '<div class="flex items-center gap-2 text-xs py-1.5 border-t border-[#207F70]/30">' + '<span class="w-2.5 h-2.5 rounded-full shrink-0" style="background:' + grafico.data.datasets[i].backgroundColor + '"></span>' + '<b class="w-24">' + nome + '</b>' + '<span class="text-gray-400">' + valor + ' picos - farm x - sessao y - rigx e componentex</span>' + '</div>';
+                for (let i = 0; i < picosAtuais.length; i++) {
+                    let pico = picosAtuais[i];
+                    let quando = new Date(pico.timestamp);
+                    let mesmaBarra = false;
+
+                    if (janelaAtual == "24h") {
+                        mesmaBarra = quando.getTime() == inicio;
+                    } else {
+                        mesmaBarra = quando.toDateString() == new Date(inicio).toDateString();
+                    }
+
+                    if (!mesmaBarra) continue;
+
+                    if (!componentes[pico.componente]) {
+                        componentes[pico.componente] = { total: 0, maior: pico };
+                    }
+
+                    componentes[pico.componente].total += Number(pico.qtd) || 0;
+
+                    if (pico.pico > componentes[pico.componente].maior.pico) {
+                        componentes[pico.componente].maior = pico;
+                    }
+                }
+
+                let texto = '<p class="text-xs text-gray-400 mb-2">Relatório de <b class="text-white">' + rotulo + '</b></p>';
+                let nomes = Object.keys(componentes);
+
+                if (nomes.length == 0) {
+                    texto += '<p class="text-xs text-[#00E6A6]">Nenhum pico neste período.</p>';
+                }
+
+                for (let i = 0; i < nomes.length; i++) {
+                    let horario = new Date(componentes[nomes[i]].maior.timestamp).toLocaleString("pt-BR", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" });
+                    let cor = "#94A3B8";
+
+                    for (let j = 0; j < grafico.data.datasets.length; j++) {
+                        if (grafico.data.datasets[j].label == nomes[i]) {
+                            cor = grafico.data.datasets[j].backgroundColor;
+                        }
+                    }
+
+                    texto += '<div class="flex items-center gap-2 text-xs py-1.5 border-t border-[#207F70]/30">' + '<span class="w-2.5 h-2.5 rounded-full shrink-0" style="background:' + cor + '"></span>' + '<b class="w-24">' + nomes[i] + '</b>' + '<span class="text-gray-400">' + componentes[nomes[i]].total + ' picos - pior ' + Number(componentes[nomes[i]].maior.pico).toFixed(1) + ' - às ' + horario + '</span>' + '</div>';
                 }
 
                 document.getElementById('ondePicos').innerHTML = texto;
@@ -517,6 +560,11 @@
             if (marcaLimite && limiteMax != null) {
                 marcaLimite.style.display = "";
                 marcaLimite.style.left = Math.min(limiteMax, 100) + "%";
+            }
+            let marcaLimiteMin = document.getElementById("lim_min_marca_" + nome);
+            if (marcaLimiteMin && limiteMin != null) {
+                marcaLimiteMin.style.display = "";
+                marcaLimiteMin.style.left = Math.min(limiteMin, 100) + "%";
             }
         }
     }
@@ -616,7 +664,7 @@
                     let hora = new Date(ultimo).getHours() + "h";
 
                     historico.style.color = horas >= 3 ? "#FF5269" : "#FFB000";
-                    historico.innerHTML = `${horas}h fora do limite · pico ${maior.toFixed(1)} ${unidades[i]} · último ${data} ${hora}`;
+                    historico.innerHTML = `${horas}h fora do limite · pico ${maior.toFixed(1)} ${unidades[i]} · último ${data} ${hora} (30d)`;
                 }
             })
     }
@@ -625,6 +673,8 @@
 
     let linkPicos = ""  
     let janelaAtual = "24h";
+    let periodosBarras = [];
+    let picosAtuais = [];
 
 
 function colorirMeta(id, texto , atingiu) {
@@ -1000,6 +1050,9 @@ function atualizardash(){
                     tempo.push(dia.toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit" }));
                 }
             }
+
+            periodosBarras = horas;
+            picosAtuais = dados.dados;
 
             for (let i = 0; i < dados.dados.length; i++) {
                 if (!nomes.includes(dados.dados[i].componente)) {
