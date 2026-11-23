@@ -91,9 +91,9 @@
         </div>
 
         
-        <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] border-t-4 border-solid border-t-blue-500 p-2.5 sm:p-4 transition-transform duration-300 hover:scale-103 min-w-0">
+        <div id="kpiPrev" class="rounded-2xl border border-[#207F70] bg-[#0C1F19] border-t-4 border-solid p-2.5 sm:p-4 transition-transform duration-300 hover:scale-103 min-w-0">
             <p class="text-sm text-white truncate">Próxima falha prevista</p>
-            <p id="previsao_horas" class="font-space-mono font-bold text-blue-500 text-2xl sm:text-3xl mt-2 truncate">...</p>
+            <p id="previsao_horas" class="font-space-mono font-bold text-2xl sm:text-3xl mt-2 truncate">...</p>
             <p id="previsao_detalhe" class="text-xs text-[#A0B5AC] mt-2 truncate whitespace-nowrap">componente - valor - timestamp</p>
             <div class="mt-auto pt-1">
                 <p id="texto_meta_previsao" class="text-[11px] pt-1 border-t border-[#207F70]/40 text-[#A0B5AC]"><i id="ic_meta_previsao" class="fa-solid fa-bullseye mr-1 text-[#6d6f6e]"></i><span id="meta_previsao">Meta: Nenhum risco nas próximas horas</span></p>
@@ -101,12 +101,12 @@
         </div>
 
 
-        <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] border-t-4 border-solid border-t-yellow-500 p-2.5 sm:p-4 transition-transform duration-300 hover:scale-103">
+        <div id="kpiLeitura" class="rounded-2xl border border-[#207F70] bg-[#0C1F19] border-t-4 border-solid p-2.5 sm:p-4 transition-transform duration-300 hover:scale-103">
             <p class="text-sm text-white">Leitura mais fora do normal</p>
-            <p id="kpi_leitura_fora" class="font-space-mono font-bold text-yellow-400 text-2xl sm:text-3xl mt-2">...</p>
+            <p id="kpi_leitura_fora" class="font-space-mono font-bold text-2xl sm:text-3xl mt-2">...</p>
             <p id="detalhe_leitura_fora" class="text-xs text-[#A0B5AC] mt-2">...</p>
             <div class="mt-auto pt-1">
-                <p id="texto_meta_previsao" class="text-[11px] pt-1 border-t border-[#207F70]/40 text-[#A0B5AC]"><i id="ic_meta_leitura" class="fa-solid fa-bullseye mr-1 text-[#6d6f6e]"></i><span id="meta_leitura">Meta: Z-score menor que 1 </span></p>
+                <p id="texto_meta_leitura" class="text-[11px] pt-1 border-t border-[#207F70]/40 text-[#A0B5AC]"><i id="ic_meta_leitura" class="fa-solid fa-bullseye mr-1 text-[#6d6f6e]"></i><span id="meta_leitura">Meta: Z-score menor que 1 </span></p>
             </div>
         </div>
     </div>
@@ -817,18 +817,28 @@ function atualizardash(){
                 console.log(resposta3)
                 let leitura = resposta3.dados.leitura_mais_fora_media;
 
+                let kpiLeitura = document.getElementById("kpiLeitura")
+                let corLeitura = "#6d6f6e"; 
+
                 if (leitura && leitura.z_score != null) {
-                    colorirMeta("ic_meta_leitura", "texto_meta_leitura" , Math.abs(Number(leitura.z_score)) < 1);
+                    let z = Math.abs(Number(leitura.z_score));
+                    colorirMeta("ic_meta_leitura", "texto_meta_leitura", z < 1);
 
                     kpi_leitura_fora.innerHTML = leitura.componente.toUpperCase();
-
                     detalhe_leitura_fora.innerHTML = `valor atual: ${leitura.valor} - Z-score: ${leitura.z_score}`;
-                } else {
-                    colorirMeta("ic_meta_leitura", "texto_meta_leitura" , false);
 
+                    if (z >= 3) corLeitura = "#FF1E3C";
+                    else if (z >= 2) corLeitura = "#FFB000";
+                    else if (z >= 1) corLeitura = "#FFD84D";
+                    else corLeitura = "#00E6A6";
+                } else {
+                    colorirMeta("ic_meta_leitura", "texto_meta_leitura", false);
                     kpi_leitura_fora.innerHTML = "--";
                     detalhe_leitura_fora.innerHTML = "Sem dados suficientes para avaliar";
                 }
+
+                kpi_leitura_fora.style.color = corLeitura;
+                kpiLeitura.style.borderTopColor = corLeitura;
                 // kpi_leitura_fora.innerHTML = resposta3.dados.leitura_mais_fora_media.componente.toUpperCase()
 
                 // detalhe_leitura_fora.innerHTML = `valor atual: ${resposta3.dados.leitura_mais_fora_media.valor} - Z-score: ${resposta3.dados.leitura_mais_fora_media.z_score}`
@@ -938,13 +948,23 @@ function atualizardash(){
 
                 colorirMeta("ic_meta_previsao", "texto_meta_previsao" , !previsao || previsao.horas == null);
 
+                let kpiPrev = document.getElementById("kpiPrev")
+                let corPrev = "#00E6A6"; 
+
                 if (previsao && previsao.horas != null) {
                     previsao_horas.innerHTML = `${previsao.horas.toFixed(1)} HORAS`;
-                    previsao_detalhe.innerHTML =`${previsao.componente} - ${previsao.valor} - ${new Date(previsao.timestamp).toLocaleString("pt-BR")}`;
+                    previsao_detalhe.innerHTML = `${previsao.componente} - ${previsao.valor} - ${new Date(previsao.timestamp).toLocaleString("pt-BR")}`;
+
+                    if (previsao.horas <= 6) corPrev = "#FF1E3C";
+                    else if (previsao.horas <= 24) corPrev = "#FFB000";
+                    else corPrev = "#438BFF";
                 } else {
                     previsao_horas.innerHTML = "Nenhum risco";
                     previsao_detalhe.innerHTML = "Sem previsão de falha próxima";
                 }
+
+                previsao_horas.style.color = corPrev;
+                kpiPrev.style.borderTopColor = corPrev;
 
             });
         });
