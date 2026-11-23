@@ -23,6 +23,7 @@ var ufsRouter = require("./src/routes/ufs");
 var dispositivosRouter = require("./src/routes/dispositivos");
 var farmsRouter = require("./src/routes/farms");
 var sessoesRouter = require("./src/routes/sessoes");
+var dashboardGeralRouter = require("./src/routes/dashboardGeralRoutes");
 
 
 app.use(express.json());
@@ -38,6 +39,7 @@ app.use("/ufs", ufsRouter);
 app.use("/dispositivos", dispositivosRouter);
 app.use("/farms", farmsRouter);
 app.use("/sessoes" , sessoesRouter);
+app.use("/dashboard-geral", dashboardGeralRouter);
 
 
 app.listen(PORTA_APP, function () {
