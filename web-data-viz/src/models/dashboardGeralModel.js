@@ -1,7 +1,7 @@
 var database = require("../database/config");
 
 // URL do bucket gold  -YasminEloitaNascimento
-const URL_GOLD = ''
+const URL_GOLD = process.env.URL_GOLD_env;
 
 //  so valores desta lista entram no SQL (evita SQL injection) -YasminEloitaNascimento
 const JANELAS = { "24h": "24 HOUR", "7d": "7 DAY", "30d": "30 DAY" };

@@ -669,7 +669,15 @@
             })
     }
 
-    let url = "https://bucket-gold-marcelo-sptech.s3.us-east-1.amazonaws.com";
+    // let url = "https://bucket-gold-marcelo-sptech.s3.us-east-1.amazonaws.com";
+    let url = "";
+
+    fetch("/dashboard-geral/config").then(r => r.json()).then(config => {
+        url = config.urlGold;
+        console.log("URL Gold:", url);
+        atualizardash();
+    });
+    
 
     let linkPicos = ""  
     let janelaAtual = "24h";
@@ -1123,7 +1131,7 @@ function atualizardash(){
         })
     }
 
-atualizardash()
+// atualizardash()
 
 document.addEventListener("visibilitychange", () => {
     if (document.visibilityState === "visible") {

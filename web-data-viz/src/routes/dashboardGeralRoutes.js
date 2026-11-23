@@ -18,4 +18,6 @@ router.get("/uptime/:idEmpresa", controller.uptime);
 // mapa de saude -YasminEloitaNascimento
 router.get("/mapa-saude/:idEmpresa", controller.mapaSaude);
 
+router.get("/config", (req, res) => res.json({ urlGold: process.env.URL_GOLD_env }));
+
 module.exports = router;
