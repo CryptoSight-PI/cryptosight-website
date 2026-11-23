@@ -812,6 +812,7 @@ function atualizardash(){
                 let pico_status = document.getElementById("pico_status")
                 let kpi_status = document.getElementById("kpi_status")
                 pico_status.innerHTML = (resposta3.dados.status_geral).toUpperCase()
+                detalhe_status.innerHTML = `Desde: ${new Date(resposta3.dados.timestamp).toLocaleString("pt-BR" , {timeZone : "America/Sao_Paulo"})}`
                 let componentesStatus = resposta3.dados.componentes;
                 console.log(resposta3)
                 let leitura = resposta3.dados.leitura_mais_fora_media;
