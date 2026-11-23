@@ -38,7 +38,7 @@
         <div class="flex flex-row flex-wrap gap-5">
             <div class="bg-[#207F70] rounded-2xl pl-4 pr-6 pt-3 pb-3 flex flex-row">
                 <img src="../../assets/imgs/bitdeer-logo.svg" alt="">
-                <p class="font-space-mono ml-3 font-semibold text-sm text-nowrap place-content-center">Bitdeer Technologies Group</p>
+                <p id="nome_empresa" class="font-space-mono ml-3 font-semibold text-sm text-nowrap place-content-center">Bitdeer Technologies Group</p>
             </div>
             <button class="bg-transparent rounded-2xl border border-[#207F70] place-content-center flex flex-row pl-4 pr-4 pt-3 pb-3 hover:cursor-pointer hover:bg-[#00000025] transition-colors duration-100 ease-in-out">
                 <img src="../../assets/imgs/download.svg" class="">
@@ -46,47 +46,41 @@
             </button>
         </div>
         <div class="flex flex-row align-baseline">
-            <p class="font-space-mono font-bold place-self-center mr-3 text-lg">Luiz Oliveira</p>
+            <p id="nome_usuario" class="font-space-mono font-bold place-self-center mr-3 text-lg">Luiz Oliveira</p>
             <img src="../../assets/imgs/Luiz.png" class="rounded-4xl border border-[#207F70] p-0.5">
         </div>
     </div>
 
 
-    <div class="ml-5 mr-5 md:ml-10 md:mr-15 mt-7 mb-8 flex flex-wrap items-center justify-between gap-4">
-        <p class="text-2xl font-ibm-mono font-semibold">Visão geral</p>
-        <div class="w-full sm:w-auto">
-            <label class="sr-only" for="busca">Pesquisar farm ou máquina</label>
-            <input id="busca" type="search" placeholder="Pesquisar farm ou máquina..." class="w-full rounded-xl border border-[#207F70]/50 bg-[#0b1a14] px-4 py-2.5 text-sm text-white placeholder:text-[#8ea79f] sm:w-72">
-        </div>
-    </div>
-
     <div class="ml-5 mr-5 md:ml-10 md:mr-15 pb-10 flex flex-col gap-4 font-[Inter] tabular-nums text-[#eaf3f0]">
 
         <!-- kpis -->
         <section aria-label="Indicadores" class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <article class="min-w-0 rounded-2xl border border-t-[3px] border-[#207F70]/50 border-t-[#FF1E3C] bg-[#0d1f18] px-5 pt-3.5 pb-4">
+        <article id="kpi_reincidentes" class="min-w-0 rounded-2xl border border-t-[3px] border-[#207F70]/50 border-t-[#6d6f6e] bg-[#0d1f18] px-5 pt-3.5 pb-4">
             <p class="text-[13px] font-medium">Farm com mais reincidentes</p>
-            <p class="mt-2 truncate font-space-mono text-[26px] leading-tight font-bold sm:text-[28px] text-[#FF1E3C]">Farm C</p>
-            <p class="mt-1.5 text-xs text-[#8ea79f]">2 máquinas com 3+ alertas do mesmo componente (30d)</p>
+            <p id="reincidentes_valor" class="mt-2 truncate font-space-mono text-[26px] leading-tight font-bold sm:text-[28px]">...</p>
+            <p id="reincidentes_detalhe" class="mt-1.5 text-xs text-[#8ea79f]">Carregando...</p>
         </article>
-        <article class="min-w-0 rounded-2xl border border-t-[3px] border-[#207F70]/50 border-t-[#FFB001] bg-[#0d1f18] px-5 pt-3.5 pb-4">
+        <article id="kpi_horario" class="min-w-0 rounded-2xl border border-t-[3px] border-[#207F70]/50 border-t-[#6d6f6e] bg-[#0d1f18] px-5 pt-3.5 pb-4">
             <p class="text-[13px] font-medium">Dia e horário que mais dão problema</p>
-            <p class="mt-2 truncate font-space-mono text-[26px] leading-tight font-bold sm:text-[28px] text-[#FFB001]">Qua · 08h</p>
-            <p class="mt-1.5 text-xs text-[#8ea79f]">15 alertas nessa janela (30d)</p>
+            <p id="horario_valor" class="mt-2 truncate font-space-mono text-[26px] leading-tight font-bold sm:text-[28px]">...</p>
+            <p id="horario_detalhe" class="mt-1.5 text-xs text-[#8ea79f]">Carregando...</p>
         </article>
-        <article class="min-w-0 rounded-2xl border border-t-[3px] border-[#207F70]/50 border-t-[#00E6A6] bg-[#0d1f18] px-5 pt-3.5 pb-4">
+        <article id="kpi_uptime" class="min-w-0 rounded-2xl border border-t-[3px] border-[#207F70]/50 border-t-[#6d6f6e] bg-[#0d1f18] px-5 pt-3.5 pb-4">
             <p class="text-[13px] font-medium">Máquinas em uptime</p>
-            <p class="mt-2 truncate font-space-mono text-[26px] leading-tight font-bold sm:text-[28px] text-[#00E6A6]">96,7%</p>
-            <p class="mt-1.5 text-xs text-[#8ea79f]">59 de 61 máquinas online</p>
+            <p id="uptime_valor" class="mt-2 truncate font-space-mono text-[26px] leading-tight font-bold sm:text-[28px]">...</p>
+            <p id="uptime_detalhe" class="mt-1.5 text-xs text-[#8ea79f]">Carregando...</p>
+            <p class="mt-1 text-[10px] text-[#8ea79f]">Ideal: 98%</p>
         </article>
-        <article class="min-w-0 rounded-2xl border border-t-[3px] border-[#207F70]/50 border-t-[#00E6A6] bg-[#0d1f18] px-5 pt-3.5 pb-4">
-            <p class="text-[13px] font-medium">Alertas resolvidos</p>
-            <p class="mt-2 truncate font-space-mono text-[26px] leading-tight font-bold sm:text-[28px] text-[#00E6A6]">485/540</p>
-            <p class="mt-1.5 text-xs text-[#8ea79f]">90% dos alertas dos últimos 30 dias</p>
+        <article id="kpi_resolvidos" class="min-w-0 rounded-2xl border border-t-[3px] border-[#207F70]/50 border-t-[#6d6f6e] bg-[#0d1f18] px-5 pt-3.5 pb-4">
+            <p class="text-[13px] font-medium">Alertas resolvidos (30d)</p>
+            <p id="resolvidos_valor" class="mt-2 truncate font-space-mono text-[26px] leading-tight font-bold sm:text-[28px]">...</p>
+            <p id="resolvidos_detalhe" class="mt-1.5 text-xs text-[#8ea79f]">Carregando...</p>
+            <p class="mt-1 text-[10px] text-[#8ea79f]">Ideal: 96%</p>
         </article>
         </section>
 
-    
+
         <section class="grid grid-cols-1 gap-4 lg:grid-cols-5">
 
             <!-- grafico alertas -->
@@ -94,230 +88,54 @@
                 <div class="flex flex-wrap items-start justify-between gap-3">
                     <div class="min-w-0">
                         <h2 class="text-lg font-semibold leading-tight">Alertas por Farm</h2>
-                        <p class="mt-1 text-xs text-[#8ea79f]">Quando os alertas acontecem e quais componentes os causam</p>
+                        <p class="mt-1 text-xs text-[#8ea79f]">Quando os alertas acontecem</p>
                     </div>
                     <div class="flex flex-wrap gap-2 text-xs">
                         <div class="inline-flex overflow-hidden rounded-lg border border-[#207F70]/50 bg-[#0b1a14]">
-                            <button type="button" class="px-3 py-1.5 cursor-pointer bg-[#00644f] text-[#00E6A6]">Farm</button>
-                            <button type="button" class="px-3 py-1.5 cursor-pointer text-[#8ea79f] hover:text-white">Dia</button>
-                            <button type="button" class="px-3 py-1.5 cursor-pointer text-[#8ea79f] hover:text-white">Horário</button>
+                            <button id="g_farm" onclick="mudarAgrupamento('farm')" type="button" class="px-3 py-1.5 cursor-pointer bg-[#00644f] text-[#00E6A6]">Farm</button>
+                            <button id="g_dia" onclick="mudarAgrupamento('dia')" type="button" class="px-3 py-1.5 cursor-pointer text-[#8ea79f] hover:text-white">Dia</button>
+                            <button id="g_horario" onclick="mudarAgrupamento('horario')" type="button" class="px-3 py-1.5 cursor-pointer text-[#8ea79f] hover:text-white">Horário</button>
                         </div>
                         <div class="inline-flex overflow-hidden rounded-lg border border-[#207F70]/50 bg-[#0b1a14]">
-                            <button type="button" class="px-3 py-1.5 cursor-pointer text-[#8ea79f] hover:text-white">24h</button>
-                            <button type="button" class="px-3 py-1.5 cursor-pointer bg-[#00644f] text-[#00E6A6]">7d</button>
-                            <button type="button" class="px-3 py-1.5 cursor-pointer text-[#8ea79f] hover:text-white">30d</button>
+                            <button id="j_24h" onclick="mudarJanela('24h')" type="button" class="px-3 py-1.5 cursor-pointer text-[#8ea79f] hover:text-white">24h</button>
+                            <button id="j_7d" onclick="mudarJanela('7d')" type="button" class="px-3 py-1.5 cursor-pointer bg-[#00644f] text-[#00E6A6]">7d</button>
+                            <button id="j_30d" onclick="mudarJanela('30d')" type="button" class="px-3 py-1.5 cursor-pointer text-[#8ea79f] hover:text-white">30d</button>
                         </div>
                         <label class="sr-only" for="filtro-farm">Filtrar farm</label>
-                        <select id="filtro-farm" class="cursor-pointer rounded-lg border border-[#207F70]/50 bg-[#0b1a14] px-2.5 py-1.5 text-white">
-                            <option>Todas as farms</option>
-                            <option>Farm SLA - SP</option>
-                            <option>Farm B - RJ</option>
-                            <option>Farm C</option>
-                            <option>Farm D - MG</option>
+                        <select id="filtro-farm" onchange="carregarGrafico()" class="cursor-pointer rounded-lg border border-[#207F70]/50 bg-[#0b1a14] px-2.5 py-1.5 text-white">
+                            <option value="">Todas as farms</option>
                         </select>
                     </div>
                 </div>
 
                 <ul class="mt-4 flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs text-[#8ea79f]">
-                <li class="flex items-center gap-1.5"><span class="size-3 rounded-full bg-[#ffb001]"></span>Temperatura</li>
-                <li class="flex items-center gap-1.5"><span class="size-3 rounded-full bg-[#ff1e3c]"></span>GPU</li>
-                <li class="flex items-center gap-1.5"><span class="size-3 rounded-full bg-[#e879f9]"></span>CPU</li>
-                <li class="flex items-center gap-1.5"><span class="size-3 rounded-full bg-[#448bff]"></span>RAM</li>
-                <li class="flex items-center gap-1.5"><span class="size-3 rounded-full bg-[#a78bfa]"></span>Disco</li>
+                <li class="flex items-center gap-1.5"><span class="size-3 rounded-full bg-[#ff1e3c]"></span>Crítico</li>
+                <li class="flex items-center gap-1.5"><span class="size-3 rounded-full bg-[#ffb001]"></span>Atenção</li>
                 </ul>
 
-                <!-- barras que qnd clicar abre o modal com os alertas e vai para o jira obs: tenho que ver isso-->
+                
                 <div class="mt-3">
-            <button type="button" onclick="document.getElementById('modal-alertas').showModal()" class="grid h-16 w-full cursor-pointer lg:h-24 grid-cols-[84px_minmax(0,1fr)_44px] sm:grid-cols-[128px_minmax(0,1fr)_124px] gap-x-2.5 rounded-lg text-left hover:bg-[#00E6A6]/5">
-                <span class="self-center truncate pl-1.5 text-xs">Farm C</span>
-                <span class="relative h-full border-r border-[#17362d] bg-[linear-gradient(to_right,#17362d_1px,transparent_1px)] bg-size-[25%_100%]">
-                    <span class="absolute inset-y-[18%] left-0 flex gap-0.5" style="width:90%">
-                                <i class="min-w-[3px] last:rounded-r bg-[#ffb001]" style="flex:3 1 0"></i>
-                                <i class="min-w-[3px] last:rounded-r bg-[#ff1e3c]" style="flex:11 1 0"></i>
-                                <i class="min-w-[3px] last:rounded-r bg-[#e879f9]" style="flex:12 1 0"></i>
-                                <i class="min-w-[3px] last:rounded-r bg-[#448bff]" style="flex:4 1 0"></i>
-                                <i class="min-w-[3px] last:rounded-r bg-[#a78bfa]" style="flex:6 1 0"></i>
-                    </span>
-                </span>
-                <span class="flex flex-col items-end self-center pr-1.5 font-space-mono text-xs leading-tight">
-                    <span><b>36</b><span class="hidden text-[#8ea79f] sm:inline"> alertas</span></span>
-                    <span class="text-[10px] text-[#FF1E3C]">15 crít.</span>
-                </span>
-            </button>
-            <button type="button" onclick="document.getElementById('modal-alertas').showModal()" class="grid h-16 w-full cursor-pointer lg:h-24 grid-cols-[84px_minmax(0,1fr)_44px] sm:grid-cols-[128px_minmax(0,1fr)_124px] gap-x-2.5 rounded-lg text-left hover:bg-[#00E6A6]/5">
-                <span class="self-center truncate pl-1.5 text-xs">Farm B - RJ</span>
-                <span class="relative h-full border-r border-[#17362d] bg-[linear-gradient(to_right,#17362d_1px,transparent_1px)] bg-size-[25%_100%]">
-                    <span class="absolute inset-y-[18%] left-0 flex gap-0.5" style="width:77.5%">
-                                <i class="min-w-[3px] last:rounded-r bg-[#ffb001]" style="flex:8 1 0"></i>
-                                <i class="min-w-[3px] last:rounded-r bg-[#ff1e3c]" style="flex:1 1 0"></i>
-                                <i class="min-w-[3px] last:rounded-r bg-[#e879f9]" style="flex:10 1 0"></i>
-                                <i class="min-w-[3px] last:rounded-r bg-[#448bff]" style="flex:7 1 0"></i>
-                                <i class="min-w-[3px] last:rounded-r bg-[#a78bfa]" style="flex:5 1 0"></i>
-                    </span>
-                </span>
-                <span class="flex flex-col items-end self-center pr-1.5 font-space-mono text-xs leading-tight">
-                    <span><b>31</b><span class="hidden text-[#8ea79f] sm:inline"> alertas</span></span>
-                    <span class="text-[10px] text-[#FF1E3C]">13 crít.</span>
-                </span>
-            </button>
-            <button type="button" onclick="document.getElementById('modal-alertas').showModal()" class="grid h-16 w-full cursor-pointer lg:h-24 grid-cols-[84px_minmax(0,1fr)_44px] sm:grid-cols-[128px_minmax(0,1fr)_124px] gap-x-2.5 rounded-lg text-left hover:bg-[#00E6A6]/5">
-                <span class="self-center truncate pl-1.5 text-xs">Farm D - MG</span>
-                <span class="relative h-full border-r border-[#17362d] bg-[linear-gradient(to_right,#17362d_1px,transparent_1px)] bg-size-[25%_100%]">
-                    <span class="absolute inset-y-[18%] left-0 flex gap-0.5" style="width:50%">
-                                <i class="min-w-[3px] last:rounded-r bg-[#ffb001]" style="flex:5 1 0"></i>
-                                <i class="min-w-[3px] last:rounded-r bg-[#ff1e3c]" style="flex:4 1 0"></i>
-                                <i class="min-w-[3px] last:rounded-r bg-[#e879f9]" style="flex:3 1 0"></i>
-                                <i class="min-w-[3px] last:rounded-r bg-[#448bff]" style="flex:5 1 0"></i>
-                                <i class="min-w-[3px] last:rounded-r bg-[#a78bfa]" style="flex:3 1 0"></i>
-                    </span>
-                </span>
-                <span class="flex flex-col items-end self-center pr-1.5 font-space-mono text-xs leading-tight">
-                    <span><b>20</b><span class="hidden text-[#8ea79f] sm:inline"> alertas</span></span>
-                    <span class="text-[10px] text-[#FF1E3C]">10 crít.</span>
-                </span>
-            </button>
-            <button type="button" onclick="document.getElementById('modal-alertas').showModal()" class="grid h-16 w-full cursor-pointer lg:h-24 grid-cols-[84px_minmax(0,1fr)_44px] sm:grid-cols-[128px_minmax(0,1fr)_124px] gap-x-2.5 rounded-lg text-left hover:bg-[#00E6A6]/5">
-                <span class="self-center truncate pl-1.5 text-xs">Farm SLA - SP</span>
-                <span class="relative h-full border-r border-[#17362d] bg-[linear-gradient(to_right,#17362d_1px,transparent_1px)] bg-size-[25%_100%]">
-                    <span class="absolute inset-y-[18%] left-0 flex gap-0.5" style="width:62.5%">
-                                <i class="min-w-[3px] last:rounded-r bg-[#ffb001]" style="flex:9 1 0"></i>
-                                <i class="min-w-[3px] last:rounded-r bg-[#ff1e3c]" style="flex:3 1 0"></i>
-                                <i class="min-w-[3px] last:rounded-r bg-[#e879f9]" style="flex:2 1 0"></i>
-                                <i class="min-w-[3px] last:rounded-r bg-[#448bff]" style="flex:6 1 0"></i>
-                                <i class="min-w-[3px] last:rounded-r bg-[#a78bfa]" style="flex:5 1 0"></i>
-                    </span>
-                </span>
-                <span class="flex flex-col items-end self-center pr-1.5 font-space-mono text-xs leading-tight">
-                    <span><b>25</b><span class="hidden text-[#8ea79f] sm:inline"> alertas</span></span>
-                    <span class="text-[10px] text-[#FF1E3C]">5 crít.</span>
-                </span>
-            </button>
+                    <div id="grafico_barras"></div>
                     <div class="mt-1 grid grid-cols-[84px_minmax(0,1fr)_44px] sm:grid-cols-[128px_minmax(0,1fr)_124px] gap-x-2.5">
                         <span></span>
-                        <div class="relative h-5 text-[10px] text-[#8ea79f]">
-                            <span class="absolute left-0">0</span>
-                            <span class="absolute left-1/4 -ml-1.5">10</span>
-                            <span class="absolute left-1/2 -ml-1.5">20</span>
-                            <span class="absolute left-3/4 -ml-1.5">30</span>
-                            <span class="absolute right-0">40</span>
-                        </div>
+                        <div id="grafico_eixo" class="relative h-5 text-[10px] text-[#8ea79f]"></div>
                         <span></span>
                     </div>
                 </div>
 
                 <div class="mt-auto flex flex-wrap justify-between gap-2 pt-4 text-xs text-[#8ea79f]">
-                    <span>Clique em uma barra para ver os alertas e abrir o chamado no Jira.</span>
-                    <span class="font-space-mono">Últimos 7 dias · 112 alertas · 43 críticos</span>
+                    <span id="grafico_dica">Clique em uma barra para ver os alertas e abrir o chamado no Jira</span>
+                    <span id="grafico_resumo" class="font-space-mono"></span>
                 </div>
             </div>
 
-            <!-- mapa de saude obs: tenho que ver a ordem de criticidade -->
+            <!-- mapa de saude (vem do ETL) -->
             <div class="flex min-w-0 flex-col rounded-2xl border border-[#207F70]/50 bg-[#0d1f18] p-4 md:p-5 lg:col-span-2">
                 <h2 class="text-lg font-semibold leading-tight">Mapa de saúde</h2>
                 <p class="mt-1 font-space-mono text-[11px] text-[#8ea79f]">Farm › Sessão › Rig</p>
 
-                <div class="mt-4 flex max-h-140 flex-col gap-4 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-[#207F70] scrollbar-track-transparent">
-                <article class="shrink-0 rounded-xl border border-[#207F70]/50 bg-[#102a21] p-4">
-                    <div class="flex items-center justify-between gap-2">
-                        <h3 class="truncate text-sm font-semibold">Farm SLA - SP</h3>
-                        <span class="whitespace-nowrap rounded-md border border-[#FF1E3C]/30 bg-[#FF1E3C]/15 px-2.5 py-1 font-space-mono text-[10px] text-[#ef363b]">8 alertas abertos</span>
-                    </div>
-                    <div class="mt-3.5">
-                        <p class="mb-2 font-space-mono text-[11px] text-[#8ea79f]">Sessão 2</p>
-                        <div class="flex gap-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-[#207F70] scrollbar-track-transparent">
-                            <button type="button" class="h-8 w-9 shrink-0 cursor-pointer rounded-md font-space-mono text-[11px] font-bold hover:brightness-125 bg-[#FF1E3C] text-white">03</button>
-                            <button type="button" class="h-8 w-9 shrink-0 cursor-pointer rounded-md font-space-mono text-[11px] font-bold hover:brightness-125 bg-[#FF1E3C] text-white">06</button>
-                            <button type="button" class="h-8 w-9 shrink-0 cursor-pointer rounded-md font-space-mono text-[11px] font-bold hover:brightness-125 bg-[#6d6f6e] text-white">09</button>
-                            <button type="button" class="h-8 w-9 shrink-0 cursor-pointer rounded-md font-space-mono text-[11px] font-bold hover:brightness-125 bg-[#FFB001] text-[#2b1c00]">04</button>
-                            <button type="button" class="h-8 w-9 shrink-0 cursor-pointer rounded-md font-space-mono text-[11px] font-bold hover:brightness-125 bg-[#FFB001] text-[#2b1c00]">08</button>
-                            <button type="button" class="h-8 w-9 shrink-0 cursor-pointer rounded-md font-space-mono text-[11px] font-bold hover:brightness-125 bg-[#00E6A6] text-[#04261d]">01</button>
-                            <button type="button" class="h-8 w-9 shrink-0 cursor-pointer rounded-md font-space-mono text-[11px] font-bold hover:brightness-125 bg-[#00E6A6] text-[#04261d]">02</button>
-                            <button type="button" class="h-8 w-9 shrink-0 cursor-pointer rounded-md font-space-mono text-[11px] font-bold hover:brightness-125 bg-[#00E6A6] text-[#04261d]">05</button>
-                            <button type="button" class="h-8 w-9 shrink-0 cursor-pointer rounded-md font-space-mono text-[11px] font-bold hover:brightness-125 bg-[#00E6A6] text-[#04261d]">07</button>
-                            <button type="button" class="h-8 w-9 shrink-0 cursor-pointer rounded-md font-space-mono text-[11px] font-bold hover:brightness-125 bg-[#00E6A6] text-[#04261d]">10</button>
-                        </div>
-                    </div>
-                    <div class="mt-3.5">
-                        <p class="mb-2 font-space-mono text-[11px] text-[#8ea79f]">Sessão 1</p>
-                        <div class="flex gap-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-[#207F70] scrollbar-track-transparent">
-                            <button type="button" class="h-8 w-9 shrink-0 cursor-pointer rounded-md font-space-mono text-[11px] font-bold hover:brightness-125 bg-[#FF1E3C] text-white">02</button>
-                            <button type="button" class="h-8 w-9 shrink-0 cursor-pointer rounded-md font-space-mono text-[11px] font-bold hover:brightness-125 bg-[#FFB001] text-[#2b1c00]">01</button>
-                            <button type="button" class="h-8 w-9 shrink-0 cursor-pointer rounded-md font-space-mono text-[11px] font-bold hover:brightness-125 bg-[#00E6A6] text-[#04261d]">03</button>
-                            <button type="button" class="h-8 w-9 shrink-0 cursor-pointer rounded-md font-space-mono text-[11px] font-bold hover:brightness-125 bg-[#00E6A6] text-[#04261d]">04</button>
-                        </div>
-                    </div>
-                </article>
-                <article class="shrink-0 rounded-xl border border-[#207F70]/50 bg-[#102a21] p-4">
-                    <div class="flex items-center justify-between gap-2">
-                        <h3 class="truncate text-sm font-semibold">Farm C</h3>
-                        <span class="whitespace-nowrap rounded-md border border-[#FF1E3C]/30 bg-[#FF1E3C]/15 px-2.5 py-1 font-space-mono text-[10px] text-[#ef363b]">6 alertas abertos</span>
-                    </div>
-                    <div class="mt-3.5">
-                        <p class="mb-2 font-space-mono text-[11px] text-[#8ea79f]">Sessão 1</p>
-                        <div class="flex gap-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-[#207F70] scrollbar-track-transparent">
-                            <button type="button" class="h-8 w-9 shrink-0 cursor-pointer rounded-md font-space-mono text-[11px] font-bold hover:brightness-125 bg-[#FF1E3C] text-white">01</button>
-                            <button type="button" class="h-8 w-9 shrink-0 cursor-pointer rounded-md font-space-mono text-[11px] font-bold hover:brightness-125 bg-[#FF1E3C] text-white">03</button>
-                            <button type="button" class="h-8 w-9 shrink-0 cursor-pointer rounded-md font-space-mono text-[11px] font-bold hover:brightness-125 bg-[#FFB001] text-[#2b1c00]">02</button>
-                            <button type="button" class="h-8 w-9 shrink-0 cursor-pointer rounded-md font-space-mono text-[11px] font-bold hover:brightness-125 bg-[#00E6A6] text-[#04261d]">04</button>
-                            <button type="button" class="h-8 w-9 shrink-0 cursor-pointer rounded-md font-space-mono text-[11px] font-bold hover:brightness-125 bg-[#00E6A6] text-[#04261d]">05</button>
-                        </div>
-                    </div>
-                    <div class="mt-3.5">
-                        <p class="mb-2 font-space-mono text-[11px] text-[#8ea79f]">Sessão 2</p>
-                        <div class="flex gap-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-[#207F70] scrollbar-track-transparent">
-                            <button type="button" class="h-8 w-9 shrink-0 cursor-pointer rounded-md font-space-mono text-[11px] font-bold hover:brightness-125 bg-[#6d6f6e] text-white">02</button>
-                            <button type="button" class="h-8 w-9 shrink-0 cursor-pointer rounded-md font-space-mono text-[11px] font-bold hover:brightness-125 bg-[#FFB001] text-[#2b1c00]">01</button>
-                            <button type="button" class="h-8 w-9 shrink-0 cursor-pointer rounded-md font-space-mono text-[11px] font-bold hover:brightness-125 bg-[#00E6A6] text-[#04261d]">03</button>
-                            <button type="button" class="h-8 w-9 shrink-0 cursor-pointer rounded-md font-space-mono text-[11px] font-bold hover:brightness-125 bg-[#00E6A6] text-[#04261d]">04</button>
-                            <button type="button" class="h-8 w-9 shrink-0 cursor-pointer rounded-md font-space-mono text-[11px] font-bold hover:brightness-125 bg-[#00E6A6] text-[#04261d]">05</button>
-                            <button type="button" class="h-8 w-9 shrink-0 cursor-pointer rounded-md font-space-mono text-[11px] font-bold hover:brightness-125 bg-[#00E6A6] text-[#04261d]">06</button>
-                        </div>
-                    </div>
-                </article>
-                <article class="shrink-0 rounded-xl border border-[#207F70]/50 bg-[#102a21] p-4">
-                    <div class="flex items-center justify-between gap-2">
-                        <h3 class="truncate text-sm font-semibold">Farm B - RJ</h3>
-                        <span class="whitespace-nowrap rounded-md border border-[#FF1E3C]/30 bg-[#FF1E3C]/15 px-2.5 py-1 font-space-mono text-[10px] text-[#ef363b]">4 alertas abertos</span>
-                    </div>
-                    <div class="mt-3.5">
-                        <p class="mb-2 font-space-mono text-[11px] text-[#8ea79f]">Sessão 1</p>
-                        <div class="flex gap-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-[#207F70] scrollbar-track-transparent">
-                            <button type="button" class="h-8 w-9 shrink-0 cursor-pointer rounded-md font-space-mono text-[11px] font-bold hover:brightness-125 bg-[#FF1E3C] text-white">04</button>
-                            <button type="button" class="h-8 w-9 shrink-0 cursor-pointer rounded-md font-space-mono text-[11px] font-bold hover:brightness-125 bg-[#FFB001] text-[#2b1c00]">02</button>
-                            <button type="button" class="h-8 w-9 shrink-0 cursor-pointer rounded-md font-space-mono text-[11px] font-bold hover:brightness-125 bg-[#00E6A6] text-[#04261d]">01</button>
-                            <button type="button" class="h-8 w-9 shrink-0 cursor-pointer rounded-md font-space-mono text-[11px] font-bold hover:brightness-125 bg-[#00E6A6] text-[#04261d]">03</button>
-                            <button type="button" class="h-8 w-9 shrink-0 cursor-pointer rounded-md font-space-mono text-[11px] font-bold hover:brightness-125 bg-[#00E6A6] text-[#04261d]">05</button>
-                            <button type="button" class="h-8 w-9 shrink-0 cursor-pointer rounded-md font-space-mono text-[11px] font-bold hover:brightness-125 bg-[#00E6A6] text-[#04261d]">06</button>
-                            <button type="button" class="h-8 w-9 shrink-0 cursor-pointer rounded-md font-space-mono text-[11px] font-bold hover:brightness-125 bg-[#00E6A6] text-[#04261d]">07</button>
-                            <button type="button" class="h-8 w-9 shrink-0 cursor-pointer rounded-md font-space-mono text-[11px] font-bold hover:brightness-125 bg-[#00E6A6] text-[#04261d]">08</button>
-                        </div>
-                    </div>
-                    <div class="mt-3.5">
-                        <p class="mb-2 font-space-mono text-[11px] text-[#8ea79f]">Sessão 2</p>
-                        <div class="flex gap-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-[#207F70] scrollbar-track-transparent">
-                            <button type="button" class="h-8 w-9 shrink-0 cursor-pointer rounded-md font-space-mono text-[11px] font-bold hover:brightness-125 bg-[#6d6f6e] text-white">03</button>
-                            <button type="button" class="h-8 w-9 shrink-0 cursor-pointer rounded-md font-space-mono text-[11px] font-bold hover:brightness-125 bg-[#00E6A6] text-[#04261d]">01</button>
-                            <button type="button" class="h-8 w-9 shrink-0 cursor-pointer rounded-md font-space-mono text-[11px] font-bold hover:brightness-125 bg-[#00E6A6] text-[#04261d]">02</button>
-                            <button type="button" class="h-8 w-9 shrink-0 cursor-pointer rounded-md font-space-mono text-[11px] font-bold hover:brightness-125 bg-[#00E6A6] text-[#04261d]">04</button>
-                        </div>
-                    </div>
-                </article>
-                <article class="shrink-0 rounded-xl border border-[#207F70]/50 bg-[#102a21] p-4">
-                    <div class="flex items-center justify-between gap-2">
-                        <h3 class="truncate text-sm font-semibold">Farm D - MG</h3>
-                        <span class="whitespace-nowrap rounded-md border border-[#FF1E3C]/30 bg-[#FF1E3C]/15 px-2.5 py-1 font-space-mono text-[10px] text-[#ef363b]">1 alerta aberto</span>
-                    </div>
-                    <div class="mt-3.5">
-                        <p class="mb-2 font-space-mono text-[11px] text-[#8ea79f]">Sessão 1</p>
-                        <div class="flex gap-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-[#207F70] scrollbar-track-transparent">
-                            <button type="button" class="h-8 w-9 shrink-0 cursor-pointer rounded-md font-space-mono text-[11px] font-bold hover:brightness-125 bg-[#FFB001] text-[#2b1c00]">05</button>
-                            <button type="button" class="h-8 w-9 shrink-0 cursor-pointer rounded-md font-space-mono text-[11px] font-bold hover:brightness-125 bg-[#00E6A6] text-[#04261d]">01</button>
-                            <button type="button" class="h-8 w-9 shrink-0 cursor-pointer rounded-md font-space-mono text-[11px] font-bold hover:brightness-125 bg-[#00E6A6] text-[#04261d]">02</button>
-                            <button type="button" class="h-8 w-9 shrink-0 cursor-pointer rounded-md font-space-mono text-[11px] font-bold hover:brightness-125 bg-[#00E6A6] text-[#04261d]">03</button>
-                            <button type="button" class="h-8 w-9 shrink-0 cursor-pointer rounded-md font-space-mono text-[11px] font-bold hover:brightness-125 bg-[#00E6A6] text-[#04261d]">04</button>
-                        </div>
-                    </div>
-                </article>
+                <div id="mapa_saude" class="mt-4 flex max-h-140 flex-col gap-4 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-[#207F70] scrollbar-track-transparent">
+                    <p class="text-xs text-[#8ea79f]">Carregando...</p>
                 </div>
 
                 <ul class="mt-auto flex flex-wrap gap-x-4 gap-y-1 pt-4 text-xs text-[#8ea79f]">
@@ -334,8 +152,8 @@
     <dialog id="modal-alertas" class="fixed top-auto bottom-0 left-0 right-0 mx-auto max-h-[74vh] w-full max-w-5xl flex-col rounded-t-2xl border border-b-0 border-[#207F70]/50 bg-[#0d1f18] p-0 text-white open:flex backdrop:bg-black/60 backdrop:backdrop-blur-sm">
         <div class="flex items-start justify-between gap-3 border-b border-[#207F70]/50 px-5 pt-4 pb-3">
             <div class="min-w-0">
-                <h2 class="truncate font-space-mono text-lg leading-tight font-bold">Farm C</h2>
-                <p class="mt-1 text-xs text-[#8ea79f]">Últimos 7 dias · 4 alertas · 2 críticos</p>
+                <h2 id="modal_titulo" class="truncate font-space-mono text-lg leading-tight font-bold">Farm</h2>
+                <p id="modal_subtitulo" class="mt-1 text-xs text-[#8ea79f]"></p>
             </div>
             <form method="dialog">
                 <button type="submit" aria-label="Fechar" class="grid size-9 cursor-pointer place-items-center rounded-lg border border-[#207F70]/50 text-[#8ea79f] hover:text-white">
@@ -343,82 +161,362 @@
                 </button>
             </form>
         </div>
-        <div class="flex min-h-0 flex-col gap-2.5 overflow-y-auto px-5 pt-3 pb-4 scrollbar-thin scrollbar-thumb-[#207F70] scrollbar-track-transparent">
-            <a href="https://suaempresa.atlassian.net/browse/MON-107" target="_blank" rel="noopener noreferrer" class="flex flex-wrap items-center gap-x-3.5 gap-y-2.5 rounded-xl border px-3.5 py-3 hover:brightness-125 border-[#FF1E3C]/30 bg-[#FF1E3C]/8">
-                <span class="grid size-10 shrink-0 place-items-center rounded-xl bg-[#FF1E3C]/15 text-[#ff4d63]">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></svg>
-                </span>
-                <span class="flex min-w-0 flex-1 basis-56 flex-col">
-                    <span class="font-space-mono text-[13px] font-bold">MR01-01C</span>
-                    <span class="text-[13px]">Hashrate abaixo do esperado (14 MH/s)</span>
-                    <span class="mt-0.5 text-[11px] text-[#8ea79f]">Farm C / S1 · 12/11 15:02 · há 1 h</span>
-                </span>
-                <span class="flex flex-wrap items-center gap-2">
-                    <span class="rounded-md px-2.5 py-1 text-[11px] font-semibold bg-[#FF1E3C]/15 text-[#ff6b7d]">Crítico</span>
-                    <span class="rounded-md px-2.5 py-1 text-[11px] font-semibold bg-white/10 text-white">Aberto</span>
-                    <span class="inline-flex items-center gap-1.5 rounded-md border border-[#00E6A6]/35 px-2.5 py-1.5 font-space-mono text-xs font-bold text-[#00E6A6]">MON-107
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>
-                    </span>
-                </span>
-            </a>
-            <a href="https://suaempresa.atlassian.net/browse/MON-096" target="_blank" rel="noopener noreferrer" class="flex flex-wrap items-center gap-x-3.5 gap-y-2.5 rounded-xl border px-3.5 py-3 hover:brightness-125 border-[#FF1E3C]/30 bg-[#FF1E3C]/8">
-                <span class="grid size-10 shrink-0 place-items-center rounded-xl bg-[#FF1E3C]/15 text-[#ff4d63]">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></svg>
-                </span>
-                <span class="flex min-w-0 flex-1 basis-56 flex-col">
-                    <span class="font-space-mono text-[13px] font-bold">MR01-01C</span>
-                    <span class="text-[13px]">Hashrate abaixo do esperado (18 MH/s)</span>
-                    <span class="mt-0.5 text-[11px] text-[#8ea79f]">Farm C / S1 · 11/11 14:10 · há 26 h</span>
-                </span>
-                <span class="flex flex-wrap items-center gap-2">
-                    <span class="rounded-md px-2.5 py-1 text-[11px] font-semibold bg-[#FF1E3C]/15 text-[#ff6b7d]">Crítico</span>
-                    <span class="rounded-md px-2.5 py-1 text-[11px] font-semibold bg-[#00E6A6]/10 text-[#00E6A6]">Resolvido</span>
-                    <span class="inline-flex items-center gap-1.5 rounded-md border border-[#00E6A6]/35 px-2.5 py-1.5 font-space-mono text-xs font-bold text-[#00E6A6]">MON-096
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>
-                    </span>
-                </span>
-            </a>
-            <a href="https://suaempresa.atlassian.net/browse/MON-109" target="_blank" rel="noopener noreferrer" class="flex flex-wrap items-center gap-x-3.5 gap-y-2.5 rounded-xl border px-3.5 py-3 hover:brightness-125 border-[#FFB001]/25 bg-[#FFB001]/6">
-                <span class="grid size-10 shrink-0 place-items-center rounded-xl bg-[#FFB001]/15 text-[#FFB001]">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/><path d="M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg>
-                </span>
-                <span class="flex min-w-0 flex-1 basis-56 flex-col">
-                    <span class="font-space-mono text-[13px] font-bold">MR01-02C</span>
-                    <span class="text-[13px]">Disco acima de 90% de uso</span>
-                    <span class="mt-0.5 text-[11px] text-[#8ea79f]">Farm C / S1 · 11/11 20:05 · há 20 h</span>
-                </span>
-                <span class="flex flex-wrap items-center gap-2">
-                    <span class="rounded-md px-2.5 py-1 text-[11px] font-semibold bg-[#FFB001]/15 text-[#FFB001]">Atenção</span>
-                    <span class="rounded-md px-2.5 py-1 text-[11px] font-semibold bg-white/10 text-white">Aberto</span>
-                    <span class="inline-flex items-center gap-1.5 rounded-md border border-[#00E6A6]/35 px-2.5 py-1.5 font-space-mono text-xs font-bold text-[#00E6A6]">MON-109
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>
-                    </span>
-                </span>
-            </a>
-            <a href="https://suaempresa.atlassian.net/browse/MON-075" target="_blank" rel="noopener noreferrer" class="flex flex-wrap items-center gap-x-3.5 gap-y-2.5 rounded-xl border px-3.5 py-3 hover:brightness-125 border-[#FFB001]/25 bg-[#FFB001]/6">
-                <span class="grid size-10 shrink-0 place-items-center rounded-xl bg-[#FFB001]/15 text-[#FFB001]">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/><path d="M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg>
-                </span>
-                <span class="flex min-w-0 flex-1 basis-56 flex-col">
-                    <span class="font-space-mono text-[13px] font-bold">MR01-02C</span>
-                    <span class="text-[13px]">Disco acima de 90% de uso</span>
-                    <span class="mt-0.5 text-[11px] text-[#8ea79f]">Farm C / S1 · 09/11 18:40 · há 70 h</span>
-                </span>
-                <span class="flex flex-wrap items-center gap-2">
-                    <span class="rounded-md px-2.5 py-1 text-[11px] font-semibold bg-[#FFB001]/15 text-[#FFB001]">Atenção</span>
-                    <span class="rounded-md px-2.5 py-1 text-[11px] font-semibold bg-[#00E6A6]/10 text-[#00E6A6]">Resolvido</span>
-                    <span class="inline-flex items-center gap-1.5 rounded-md border border-[#00E6A6]/35 px-2.5 py-1.5 font-space-mono text-xs font-bold text-[#00E6A6]">MON-075
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>
-                    </span>
-                </span>
-            </a>
-        </div>
+        <div id="modal_lista" class="flex min-h-0 flex-col gap-2.5 overflow-y-auto px-5 pt-3 pb-4 scrollbar-thin scrollbar-thumb-[#207F70] scrollbar-track-transparent"></div>
     </dialog>
 
-    <!-- navbar -->
     <script>
     var idEmpresa = sessionStorage.ID_EMPRESA
 
+    if (sessionStorage.NOME_USUARIO) {
+        nome_usuario.innerHTML = sessionStorage.NOME_USUARIO
+    }
+
+    // metas "ideais" mostradas nas kpis -YasminEloitaNascimento
+    const IDEAL_UPTIME = 98
+    const IDEAL_RESOLVIDOS = 96
+
+    const VERDE = "#00E6A6"
+    const AMARELO = "#FFB001"
+    const VERMELHO = "#FF1E3C"
+    const CINZA = "#6d6f6e"
+
+    const BTN_ATIVO = "px-3 py-1.5 cursor-pointer bg-[#00644f] text-[#00E6A6]"
+    const BTN_INATIVO = "px-3 py-1.5 cursor-pointer text-[#8ea79f] hover:text-white"
+
+    let agrupar = "farm"
+    let janela = "7d"
+    let farms = []
+
+    // evita quebrar o html se o nome tiver < ou > -YasminEloitaNascimento
+    function esc(texto) {
+        let div = document.createElement("div")
+        div.textContent = texto == null ? "" : texto
+        return div.innerHTML
+    }
+
+    // pinta o valor e a borda de cima da kpi -YasminEloitaNascimento
+    function pintarKpi(idArtigo, idValor, cor) {
+        document.getElementById(idArtigo).style.borderTopColor = cor
+        document.getElementById(idValor).style.color = cor
+    }
+
+    // verde se bateu o ideal, amarelo se ficou ate 5 pontos abaixo, vermelho se menos -YasminEloitaNascimento
+    function corPorIdeal(valor, ideal) {
+        if (valor >= ideal) return VERDE
+        if (valor >= ideal - 5) return AMARELO
+        return VERMELHO
+    }
+
+    // kpi
+    function carregarKpis() {
+        fetch(`/dashboard-geral/kpis/${idEmpresa}`).then(r => r.json()).then(dados => {
+
+            if (dados.farm_reincidentes) {
+                reincidentes_valor.innerHTML = esc(dados.farm_reincidentes.nome)
+                reincidentes_detalhe.innerHTML = `${dados.farm_reincidentes.maquinas} máquinas com 3+ alertas do mesmo componente (30d)`
+                pintarKpi("kpi_reincidentes", "reincidentes_valor", VERMELHO)
+            } else {
+                reincidentes_valor.innerHTML = "Nenhuma"
+                reincidentes_detalhe.innerHTML = "Sem reincidência nos últimos 30 dias"
+                pintarKpi("kpi_reincidentes", "reincidentes_valor", VERDE)
+            }
+
+            if (dados.dia_horario) {
+                horario_valor.innerHTML = `${dados.dia_horario.dia} · ${dados.dia_horario.hora}`
+                horario_detalhe.innerHTML = `${dados.dia_horario.total} alertas nessa janela (30d)`
+                pintarKpi("kpi_horario", "horario_valor", AMARELO)
+            } else {
+                horario_valor.innerHTML = "--"
+                horario_detalhe.innerHTML = "Sem alertas nos últimos 30 dias"
+                pintarKpi("kpi_horario", "horario_valor", VERDE)
+            }
+
+            let r = dados.alertas_resolvidos
+            if (r.total == 0) {
+                resolvidos_valor.innerHTML = "--"
+                resolvidos_detalhe.innerHTML = "Sem alertas nos últimos 30 dias"
+                pintarKpi("kpi_resolvidos", "resolvidos_valor", VERDE)
+            } else {
+                resolvidos_valor.innerHTML = r.percentual + "%"
+                resolvidos_detalhe.innerHTML = `${r.resolvidos} de ${r.total} alertas resolvidos`
+                pintarKpi("kpi_resolvidos", "resolvidos_valor", corPorIdeal(r.percentual, IDEAL_RESOLVIDOS))
+            }
+        })
+    }
+
+
+    function carregarUptime() {
+        fetch(`/dashboard-geral/uptime/${idEmpresa}`).then(r => r.json()).then(dados => {
+            if (dados.erro) {
+                uptime_valor.innerHTML = "--"
+                uptime_detalhe.innerHTML = "Sem dados do ETL"
+                pintarKpi("kpi_uptime", "uptime_valor", CINZA)
+                return
+            }
+            uptime_valor.innerHTML = String(dados.percentual).replace(".", ",") + "%"
+            uptime_detalhe.innerHTML = `${dados.online} de ${dados.total} máquinas online`
+            pintarKpi("kpi_uptime", "uptime_valor", corPorIdeal(dados.percentual, IDEAL_UPTIME))
+        })
+    }
+
+  //mapa de saude -YasminELoitaNascimento
+    const COR_RIG = {
+        critico: "bg-[#FF1E3C] text-white",
+        atencao: "bg-[#FFB001] text-[#2b1c00]",
+        offline: "bg-[#6d6f6e] text-white",
+        normal: "bg-[#00E6A6] text-[#04261d]",
+        sem_dados: "bg-[#00E6A6] text-[#04261d]"
+    }
+
+    function carregarMapa() {
+        fetch(`/dashboard-geral/mapa-saude/${idEmpresa}`).then(r => r.json()).then(lista => {
+            let caixa = document.getElementById("mapa_saude")
+
+            if (!Array.isArray(lista) || lista.length == 0) {
+                caixa.innerHTML = '<p class="text-xs text-[#8ea79f]">Sem dados do ETL.</p>'
+                return
+            }
+
+            caixa.innerHTML = ""
+            for (let i = 0; i < lista.length; i++) {
+                let f = lista[i]
+
+                let badge = f.alertas_abertos > 0
+                    ? `<span class="whitespace-nowrap rounded-md border border-[#FF1E3C]/30 bg-[#FF1E3C]/15 px-2.5 py-1 font-space-mono text-[10px] text-[#ef363b]">${f.alertas_abertos} ${f.alertas_abertos == 1 ? "alerta aberto" : "alertas abertos"}</span>`
+                    : `<span class="whitespace-nowrap rounded-md border border-[#00E6A6]/30 bg-[#00E6A6]/10 px-2.5 py-1 font-space-mono text-[10px] text-[#00E6A6]">Sem alertas abertos</span>`
+
+                let sessoes = ""
+                for (let j = 0; j < f.sessoes.length; j++) {
+                    let s = f.sessoes[j]
+                    let rigs = ""
+                    for (let k = 0; k < s.rigs.length; k++) {
+                        let rig = s.rigs[k]
+                        rigs += `<button type="button" onclick="abrirRig(${rig.id}, ${s.id}, ${f.id})" data-rig="${rig.id}" class="h-8 w-9 shrink-0 cursor-pointer rounded-md font-space-mono text-[11px] font-bold hover:brightness-125 ${COR_RIG[rig.status] || COR_RIG.normal}">${String(rig.id).padStart(2, "0")}</button>`
+                    }
+                    sessoes += `
+                    <div class="mt-3.5">
+                        <p class="mb-2 font-space-mono text-[11px] text-[#8ea79f]">${esc(s.nome)}</p>
+                        <div class="flex gap-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-[#207F70] scrollbar-track-transparent">${rigs}</div>
+                    </div>`
+                }
+
+                caixa.innerHTML += `
+                <article data-farm="${esc(f.nome).toLowerCase()}" class="shrink-0 rounded-xl border border-[#207F70]/50 bg-[#102a21] p-4">
+                    <div class="flex items-center justify-between gap-2">
+                        <h3 class="truncate text-sm font-semibold">${esc(f.nome)}</h3>
+                        ${badge}
+                    </div>
+                    ${sessoes}
+                </article>`
+            }
+            filtrarMapa()
+        })
+    }
+
+    // busca por nome da farm ou numero da rig -YasminEloitaNascimento
+    function filtrarMapa() {
+        let texto = document.getElementById("busca").value.trim().toLowerCase()
+        let cards = document.querySelectorAll("#mapa_saude article")
+
+        for (let i = 0; i < cards.length; i++) {
+            let nomeFarm = cards[i].dataset.farm
+            let rigs = cards[i].querySelectorAll("button[data-rig]")
+            let achouRig = false
+
+            for (let j = 0; j < rigs.length; j++) {
+                let bate = texto != "" && (rigs[j].dataset.rig == texto || rigs[j].textContent == texto)
+                rigs[j].style.outline = bate ? "2px solid #fff" : ""
+                if (bate) achouRig = true
+            }
+
+            cards[i].style.display = (texto == "" || nomeFarm.includes(texto) || achouRig) ? "" : "none"
+        }
+    }
+
+    
+    function mudarAgrupamento(novo) {
+        agrupar = novo
+        document.getElementById("g_farm").className = novo == "farm" ? BTN_ATIVO : BTN_INATIVO
+        document.getElementById("g_dia").className = novo == "dia" ? BTN_ATIVO : BTN_INATIVO
+        document.getElementById("g_horario").className = novo == "horario" ? BTN_ATIVO : BTN_INATIVO
+        carregarGrafico()
+    }
+
+    function mudarJanela(nova) {
+        janela = nova
+        document.getElementById("j_24h").className = nova == "24h" ? BTN_ATIVO : BTN_INATIVO
+        document.getElementById("j_7d").className = nova == "7d" ? BTN_ATIVO : BTN_INATIVO
+        document.getElementById("j_30d").className = nova == "30d" ? BTN_ATIVO : BTN_INATIVO
+        carregarGrafico()
+    }
+
+    function carregarGrafico() {
+        let idFarm = document.getElementById("filtro-farm").value
+
+        fetch(`/dashboard-geral/alertas-por-farm/${idEmpresa}?janela=${janela}&agrupar=${agrupar}&farm=${idFarm}`)
+            .then(r => r.json()).then(dados => {
+
+                let caixa = document.getElementById("grafico_barras")
+                let eixo = document.getElementById("grafico_eixo")
+                caixa.innerHTML = ""
+                eixo.innerHTML = ""
+
+                if (!dados.barras || dados.barras.length == 0) {
+                    caixa.innerHTML = '<p class="py-6 text-center text-xs text-[#00E6A6]">Nenhum alerta neste período.</p>'
+                    document.getElementById("grafico_resumo").innerHTML = `Últimos ${janela} · 0 alertas`
+                    return
+                }
+
+                
+                let maior = Math.max(...dados.barras.map(b => b.total), 1)
+                let escala = Math.ceil(maior / 4) * 4
+
+                
+                let altura = agrupar == "farm" ? "h-16 lg:h-24" : "h-9"
+
+                for (let i = 0; i < dados.barras.length; i++) {
+                    let b = dados.barras[i]
+                    let largura = (b.total / escala) * 100
+
+                    let fatias = ""
+                    if (b.criticos > 0) fatias += `<i class="min-w-[3px] bg-[#ff1e3c]" style="flex:${b.criticos} 1 0"></i>`
+                    if (b.atencoes > 0) fatias += `<i class="min-w-[3px] last:rounded-r bg-[#ffb001]" style="flex:${b.atencoes} 1 0"></i>`
+
+                    caixa.innerHTML += `
+                    <button type="button" onclick="clicarBarra('${esc(b.nome).replace(/'/g, "\\'")}')" class="grid ${altura} w-full cursor-pointer grid-cols-[84px_minmax(0,1fr)_44px] sm:grid-cols-[128px_minmax(0,1fr)_124px] gap-x-2.5 rounded-lg text-left hover:bg-[#00E6A6]/5">
+                        <span class="self-center truncate pl-1.5 text-xs">${esc(b.nome)}</span>
+                        <span class="relative h-full border-r border-[#17362d] bg-[linear-gradient(to_right,#17362d_1px,transparent_1px)] bg-size-[25%_100%]">
+                            <span class="absolute inset-y-[18%] left-0 flex gap-0.5" style="width:${largura}%">${fatias}</span>
+                        </span>
+                        <span class="flex flex-col items-end self-center pr-1.5 font-space-mono text-xs leading-tight">
+                            <span><b>${b.total}</b><span class="hidden text-[#8ea79f] sm:inline"> alertas</span></span>
+                            <span class="text-[10px] text-[#FF1E3C]">${b.criticos} crít.</span>
+                        </span>
+                    </button>`
+                }
+
+            
+                let posicoes = ["left-0", "left-1/4 -ml-1.5", "left-1/2 -ml-1.5", "left-3/4 -ml-1.5", "right-0"]
+                for (let i = 0; i < 5; i++) {
+                    eixo.innerHTML += `<span class="absolute ${posicoes[i]}">${Math.round((escala / 4) * i)}</span>`
+                }
+
+                document.getElementById("grafico_resumo").innerHTML = `Últimos ${janela} · ${dados.total_alertas} alertas · ${dados.total_criticos} críticos`
+            })
+    }
+
+    // descobre qual farm abrir no modal -YasminEloitaNascimento
+    // por farm: o nome da barra e a farm. Por dia/horario: usa a farm escolhida no filtro
+    function clicarBarra(nome) {
+        let idFarm = ""
+
+        if (agrupar == "farm") {
+            for (let i = 0; i < farms.length; i++) {
+                if (farms[i].nome == nome) idFarm = farms[i].id
+            }
+        } else {
+            idFarm = document.getElementById("filtro-farm").value
+        }
+
+        if (idFarm == "") {
+            document.getElementById("grafico_dica").innerHTML = "Escolha uma farm no filtro para ver os alertas dessa barra."
+            return
+        }
+        abrirModal(idFarm)
+    }
+
+    
+    const ICONE_CRITICO = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></svg>'
+    const ICONE_ATENCAO = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>'
+    const ICONE_LINK = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>'
+
+    function tempoAtras(data) {
+        let horas = Math.floor((Date.now() - new Date(data).getTime()) / 3600000)
+        return horas < 1 ? "há menos de 1 h" : `há ${horas} h`
+    }
+
+    function abrirModal(idFarm) {
+        fetch(`/dashboard-geral/alertas/${idEmpresa}/${idFarm}?janela=${janela}`).then(r => r.json()).then(dados => {
+
+            modal_titulo.innerHTML = esc(dados.farm || "Farm")
+            modal_subtitulo.innerHTML = `Últimos ${janela} · ${dados.total} alertas · ${dados.criticos} críticos`
+
+            let lista = document.getElementById("modal_lista")
+            lista.innerHTML = ""
+
+            if (dados.alertas.length == 0) {
+                lista.innerHTML = '<p class="py-4 text-center text-xs text-[#00E6A6]">Nenhum alerta neste período.</p>'
+            }
+
+            for (let i = 0; i < dados.alertas.length; i++) {
+                let a = dados.alertas[i]
+                let critico = a.severidade == "critico"
+                let resolvido = a.status == "resolvido"
+
+                let quando = new Date(a.detectado_em).toLocaleString("pt-BR", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" })
+
+                let chip = a.chave_jira
+                    ? `<span class="inline-flex items-center gap-1.5 rounded-md border border-[#00E6A6]/35 px-2.5 py-1.5 font-space-mono text-xs font-bold text-[#00E6A6]">${esc(a.chave_jira)}${ICONE_LINK}</span>`
+                    : `<span class="rounded-md border border-white/20 px-2.5 py-1.5 font-space-mono text-xs text-[#8ea79f]">Sem chamado</span>`
+
+                // se tem link vira <a>, se nao, vira <div> -YasminEloitaNascimento
+                let abre = a.link_jira
+                    ? `<a href="${esc(a.link_jira)}" target="_blank" rel="noopener noreferrer"`
+                    : `<div`
+                let fecha = a.link_jira ? "</a>" : "</div>"
+
+                lista.innerHTML += `
+                ${abre} class="flex flex-wrap items-center gap-x-3.5 gap-y-2.5 rounded-xl border px-3.5 py-3 hover:brightness-125 ${critico ? "border-[#FF1E3C]/30 bg-[#FF1E3C]/8" : "border-[#FFB001]/25 bg-[#FFB001]/6"}">
+                    <span class="grid size-10 shrink-0 place-items-center rounded-xl ${critico ? "bg-[#FF1E3C]/15 text-[#ff4d63]" : "bg-[#FFB001]/15 text-[#FFB001]"}">${critico ? ICONE_CRITICO : ICONE_ATENCAO}</span>
+                    <span class="flex min-w-0 flex-1 basis-56 flex-col">
+                        <span class="font-space-mono text-[13px] font-bold">Rig ${String(a.maquina).padStart(2, "0")} · ${esc(a.componente)}</span>
+                        <span class="text-[13px]">${esc(a.descricao)}</span>
+                        <span class="mt-0.5 text-[11px] text-[#8ea79f]">${esc(a.farm)} / ${esc(a.sessao)} · ${quando} · ${tempoAtras(a.detectado_em)}</span>
+                    </span>
+                    <span class="flex flex-wrap items-center gap-2">
+                        <span class="rounded-md px-2.5 py-1 text-[11px] font-semibold ${critico ? "bg-[#FF1E3C]/15 text-[#ff6b7d]" : "bg-[#FFB001]/15 text-[#FFB001]"}">${critico ? "Crítico" : "Atenção"}</span>
+                        <span class="rounded-md px-2.5 py-1 text-[11px] font-semibold ${resolvido ? "bg-[#00E6A6]/10 text-[#00E6A6]" : "bg-white/10 text-white"}">${resolvido ? "Resolvido" : "Aberto"}</span>
+                        ${chip}
+                    </span>
+                ${fecha}`
+            }
+
+            document.getElementById("modal-alertas").showModal()
+        })
+    }
+
+    // lista as farms no filtro do grafico  -YasminEloitaNascimento
+    function carregarFarms() {
+        fetch(`/farms/list/${idEmpresa}`).then(r => r.json()).then(lista => {
+            farms = lista
+            let select = document.getElementById("filtro-farm")
+            for (let i = 0; i < lista.length; i++) {
+                select.innerHTML += `<option value="${lista[i].id}">${esc(lista[i].nome)}</option>`
+            }
+        })
+    }
+
+    function atualizar() {
+        carregarKpis()
+        carregarUptime()
+        carregarMapa()
+        carregarGrafico()
+    }
+
+    // nome da empresa no cabecalho (mesma rota do maquinas.html) -YasminEloitaNascimento
+    fetch(`/empresas/buscar/${idEmpresa}`).then(r => r.json()).then(e => {
+        nome_empresa.innerHTML = esc(e[0].nome_fantasia)
+    })
+
+    carregarFarms()
+    atualizar()
+
+    // atualiza a cada 60s so se a aba estiver aberta (igual ao maquinas.html) -YasminEloitaNascimento
+    setInterval(() => {
+        if (document.visibilityState === "visible") atualizar()
+    }, 60000)
+
+    // ---------- navbar ----------
     function abrirFarms(){
         let pid = document.getElementById("lista_farms")
         pid.innerHTML = ""
