@@ -1,7 +1,7 @@
 var database = require("../database/config");
 
 // URL do bucket gold  -YasminEloitaNascimento
-const URL_GOLD = process.env.URL_GOLD || "";
+const URL_GOLD = ''
 
 //  so valores desta lista entram no SQL (evita SQL injection) -YasminEloitaNascimento
 const JANELAS = { "24h": "24 HOUR", "7d": "7 DAY", "30d": "30 DAY" };
@@ -90,8 +90,9 @@ function alertasPorGrupo(idEmpresa, janela, agrupar, idFarm) {
         params.push(idFarm);
     }
 
-    return database.executar(`
+        return database.executar(`
         SELECT ${grupo} AS grupo,
+               MIN(f.id) AS id_farm,
                COUNT(*) AS total,
                SUM(a.severidade = 'critico') AS criticos
         ${JOIN_ALERTAS}

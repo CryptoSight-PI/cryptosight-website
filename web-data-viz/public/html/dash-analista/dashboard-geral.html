@@ -91,11 +91,7 @@
                         <p class="mt-1 text-xs text-[#8ea79f]">Quando os alertas acontecem</p>
                     </div>
                     <div class="flex flex-wrap gap-2 text-xs">
-                        <div class="inline-flex overflow-hidden rounded-lg border border-[#207F70]/50 bg-[#0b1a14]">
-                            <button id="g_farm" onclick="mudarAgrupamento('farm')" type="button" class="px-3 py-1.5 cursor-pointer bg-[#00644f] text-[#00E6A6]">Farm</button>
-                            <button id="g_dia" onclick="mudarAgrupamento('dia')" type="button" class="px-3 py-1.5 cursor-pointer text-[#8ea79f] hover:text-white">Dia</button>
-                            <button id="g_horario" onclick="mudarAgrupamento('horario')" type="button" class="px-3 py-1.5 cursor-pointer text-[#8ea79f] hover:text-white">Horário</button>
-                        </div>
+                    
                         <div class="inline-flex overflow-hidden rounded-lg border border-[#207F70]/50 bg-[#0b1a14]">
                             <button id="j_24h" onclick="mudarJanela('24h')" type="button" class="px-3 py-1.5 cursor-pointer text-[#8ea79f] hover:text-white">24h</button>
                             <button id="j_7d" onclick="mudarJanela('7d')" type="button" class="px-3 py-1.5 cursor-pointer bg-[#00644f] text-[#00E6A6]">7d</button>
@@ -383,7 +379,7 @@
                     if (b.atencoes > 0) fatias += `<i class="min-w-[3px] last:rounded-r bg-[#ffb001]" style="flex:${b.atencoes} 1 0"></i>`
 
                     caixa.innerHTML += `
-                    <button type="button" onclick="clicarBarra('${esc(b.nome).replace(/'/g, "\\'")}')" class="grid ${altura} w-full cursor-pointer grid-cols-[84px_minmax(0,1fr)_44px] sm:grid-cols-[128px_minmax(0,1fr)_124px] gap-x-2.5 rounded-lg text-left hover:bg-[#00E6A6]/5">
+                    <button type="button" onclick="clicarBarra(${b.id_farm})" class="grid ${altura} w-full cursor-pointer grid-cols-[84px_minmax(0,1fr)_44px] sm:grid-cols-[128px_minmax(0,1fr)_124px] gap-x-2.5 rounded-lg text-left hover:bg-[#00E6A6]/5">
                         <span class="self-center truncate pl-1.5 text-xs">${esc(b.nome)}</span>
                         <span class="relative h-full border-r border-[#17362d] bg-[linear-gradient(to_right,#17362d_1px,transparent_1px)] bg-size-[25%_100%]">
                             <span class="absolute inset-y-[18%] left-0 flex gap-0.5" style="width:${largura}%">${fatias}</span>
@@ -405,26 +401,22 @@
             })
     }
 
-    // descobre qual farm abrir no modal -YasminEloitaNascimento
-    // por farm: o nome da barra e a farm. Por dia/horario: usa a farm escolhida no filtro
-    function clicarBarra(nome) {
-        let idFarm = ""
+    
+    function clicarBarra(idDaBarra) {
+    let idFarm = ""
 
-        if (agrupar == "farm") {
-            for (let i = 0; i < farms.length; i++) {
-                if (farms[i].nome == nome) idFarm = farms[i].id
-            }
-        } else {
-            idFarm = document.getElementById("filtro-farm").value
-        }
-
-        if (idFarm == "") {
-            document.getElementById("grafico_dica").innerHTML = "Escolha uma farm no filtro para ver os alertas dessa barra."
-            return
-        }
-        abrirModal(idFarm)
+    if (agrupar == "farm" && idDaBarra != null) {
+        idFarm = idDaBarra
+    } else {
+        idFarm = document.getElementById("filtro-farm").value
     }
 
+    if (idFarm == "") {
+        document.getElementById("grafico_dica").innerHTML = "Escolha uma farm no filtro para ver os alertas dessa barra."
+        return
+    }
+    abrirModal(idFarm)
+}
     
     const ICONE_CRITICO = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></svg>'
     const ICONE_ATENCAO = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>'

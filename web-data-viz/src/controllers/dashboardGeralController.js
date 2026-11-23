@@ -64,7 +64,7 @@ async function alertasPorFarm(req, res) {
             let total = Number(l.total);
             let criticos = Number(l.criticos);
 
-            return { nome: nome, ordem: l.grupo, total: total, criticos: criticos, atencoes: total - criticos };
+                       return { nome: nome, id_farm: agrupar == "farm" ? Number(l.id_farm) : null, ordem: l.grupo, total: total, criticos: criticos, atencoes: total - criticos };
         });
 
         // farm: maior primeiro | dia e horario: ordem natural -YasminEloitaNascimento
