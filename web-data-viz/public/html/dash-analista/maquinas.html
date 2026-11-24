@@ -571,44 +571,70 @@
 
 
     function ajustarGrade() {
-        let grade = document.getElementById("grade_componentes");
-        let vazio = document.getElementById("sem_componentes");
-        let gpu = document.getElementById("card_gpu");
+    let grade = document.getElementById("grade_componentes");
+    let vazio = document.getElementById("sem_componentes");
+    let gpu = document.getElementById("card_gpu");
 
-        let normais = [];
-        let temGpu = false;
-
-        for (let i = 0; i < grade.children.length; i++) {
-            let c = grade.children[i];
-            if (c === vazio || c.style.display == "none") continue;
-
-            c.style.gridColumn = "";
-
-            if (c === gpu) {
-                temGpu = true;
-            } else {
-                normais.push(c);
-            }
-        }
-
-        if (normais.length + (temGpu ? 1 : 0) == 0) {
-            vazio.style.display = "flex";
-            // grade.style.gridTemplateRows = "1fr";
-            return;
-        }
-        vazio.style.display = "none";
-
-        if (normais.length % 2 == 1) {
-            normais[normais.length - 1].style.gridColumn = "span 2";
-        }
-
-        if (temGpu) {
-            gpu.style.gridColumn = "span 2";
-        }
-
-        let linhas = Math.ceil(normais.length / 2) + (temGpu ? 1 : 0);
-        grade.style.gridTemplateRows = `repeat(${linhas}, minmax(96px, 1fr))`;
+    // cards visíveis
+    let visiveis = [];
+    for (let i = 0; i < grade.children.length; i++) {
+        let c = grade.children[i];
+        if (c === vazio || c.style.display == "none") continue;
+        visiveis.push(c);
     }
+
+    if (visiveis.length == 0) {
+        vazio.style.display = "flex";
+        return;
+    }
+    vazio.style.display = "none";
+
+    // mesma ordem que o CSS vai usar: pelo "order" e, empatando, pela posição no HTML
+    visiveis.sort(function (a, b) {
+        let oa = Number(a.style.order) || 0;
+        let ob = Number(b.style.order) || 0;
+        if (oa != ob) return oa - ob;
+        return grade.children.length && Array.prototype.indexOf.call(grade.children, a) - Array.prototype.indexOf.call(grade.children, b);
+    });
+
+    grade.style.gridAutoFlow = "row";   // sem "dense": ninguém pula a fila
+
+    let colunaAtual = 0;   // 0 = início da linha, 1 = já tem um card nela
+    let linhas = 0;
+
+    for (let i = 0; i < visiveis.length; i++) {
+        let c = visiveis[i];
+        let largo = (c === gpu);
+
+        if (!largo && colunaAtual == 1) {
+            // fecha a linha com este card
+            c.style.gridColumn = "";
+            colunaAtual = 0;
+            linhas++;
+            continue;
+        }
+
+        if (!largo) {
+            // começa uma linha: se o próximo é largo ou não existe, este vira largo
+            let proximo = visiveis[i + 1];
+            if (!proximo || proximo === gpu) {
+                c.style.gridColumn = "span 2";
+                linhas++;
+            } else {
+                c.style.gridColumn = "";
+                colunaAtual = 1;
+            }
+        } else {
+            // GPU: sempre 2 colunas, e a linha anterior já foi fechada pela regra acima
+            c.style.gridColumn = "span 2";
+            linhas++;
+        }
+    }
+
+    let alturaLinha = 140;
+    grade.style.gridTemplateRows = `repeat(${linhas}, minmax(${alturaLinha}px, 1fr))`;
+    grade.style.minHeight = (linhas * alturaLinha + (linhas - 1) * 8) + "px";
+}
 
     function preencherJanela(link, janela, metricastras) {
         fetch(`${link}/janelas/${janela}/metricas.json`, { cache: "no-cache" }).then(resposta =>
@@ -735,6 +761,13 @@ function atualizardash(){
                 dados4.json())
                 ]).then(([resposta2, dadosmonitora, resposta3, resposta4]) => {
 
+                    if (!resposta2 || !dadosmonitora || !resposta3) {
+                        ultima_coleta.innerHTML = "Sem dados do ETL para esta máquina";
+                        document.getElementById("grade_componentes").style.display = "grid";
+                        ajustarGrade();
+                        return;
+                    }
+
                 ultima_coleta.innerHTML = "Última coleta: " + new Date(resposta2.gerado_em).toLocaleTimeString('pt-BR');
 
                 let cardcpu = document.getElementById("card_cpu");
@@ -813,7 +846,7 @@ function atualizardash(){
                     ventoinha_valor.innerHTML = resposta2.dados.metricas["fans_speed"] + " %";
                 }
 
-                ajustarGrade();
+                // ajustarGrade();
                 preencherMeta(resposta2.dados.metricas);
 
 
@@ -946,25 +979,36 @@ function atualizardash(){
                     kpi_status.style.borderTopColor = '#00E6A6'
                 }
                 
+                ajustarGrade();
+
 
                 // usado para nao piscar o mockado (pretendo ainda mudar a logica)
                 document.getElementById("grade_componentes").style.display = "grid";
 
                 console.log(resposta4)
 
-                let previsao = resposta4.dados;
+                let previsao = resposta4.dados && resposta4.dados.length > 0 ? resposta4.dados[0] : null;
+                let risco = null;
 
-                colorirMeta("ic_meta_previsao", "texto_meta_previsao" , !previsao || previsao.horas == null);
+                if (previsao && previsao.componentes) {
+                    for (let i = 0; i < previsao.componentes.length; i++) {
+                        if (previsao.componentes[i].horas_ate_limite != null) {
+                            risco = previsao.componentes[i];   // já vem ordenado pelo menor tempo
+                            break;
+                        }
+                    }
+                }
+
+                colorirMeta("ic_meta_previsao", "texto_meta_previsao", risco == null);
 
                 let kpiPrev = document.getElementById("kpiPrev")
-                let corPrev = "#00E6A6"; 
+                let corPrev = "#00E6A6";
 
-                if (previsao && previsao.horas != null) {
-                    previsao_horas.innerHTML = `${previsao.horas.toFixed(1)} HORAS`;
-                    previsao_detalhe.innerHTML = `${previsao.componente} - ${previsao.valor} - ${new Date(previsao.timestamp).toLocaleString("pt-BR")}`;
-
-                    if (previsao.horas <= 6) corPrev = "#FF1E3C";
-                    else if (previsao.horas <= 24) corPrev = "#FFB000";
+                if (risco) {
+                        previsao_horas.innerHTML = risco.horas_ate_limite == 0 ? "RISCO AGORA" : `${risco.horas_ate_limite.toFixed(1)} HORAS`;
+                        previsao_detalhe.innerHTML = `${risco.componente.toUpperCase()} (${risco.nivel_proximo_risco}) - ${risco.valor_atual}`;
+                    if (risco.horas_ate_limite <= 6) corPrev = "#FF1E3C";
+                    else if (risco.horas_ate_limite <= 24) corPrev = "#FFB000";
                     else corPrev = "#438BFF";
                 } else {
                     previsao_horas.innerHTML = "Nenhum risco";
@@ -973,7 +1017,6 @@ function atualizardash(){
 
                 previsao_horas.style.color = corPrev;
                 kpiPrev.style.borderTopColor = corPrev;
-
             });
         });
     });
