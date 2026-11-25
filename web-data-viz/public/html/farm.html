@@ -454,8 +454,8 @@
         let v = (nome) => document.getElementById(`ipt${nome}farm${sufixo}`).value.trim();
         let valorTxt = v("valor").replace(",", ".");
         let diaTxt = v("diaalugado");
-        let valorNum = valorRaw === "" ? 0 : Number(valorTxt);
-        let diaNum = diaRaw === "" ? 0 : Number(diaTxt).checked;
+        let valorNum = valorTxt === "" ? 0 : Number(valorTxt);
+        let diaNum = diaTxt === "" ? 0 : Number(diaTxt).checked;
         return {
             nome: v("nome"),
             cep: v("cep"),
@@ -466,8 +466,8 @@
             numero: v("numero"),
             complemento: v("complemento"),
             valor: Number.isFinite(valorNum) ? valorNum : 0,
-            categoria: alugado ? "Local de Farm alugado" : comprado ? "Local de Farm comprado" : null,
-            dia_aluguel: alugado && Number.isFinite(diaNum) && diaNum >= 1 ? diaNum : null,
+            categoria: document.getElementById(`iptalugadofarm${sufixo}`).checked ? "Local de Farm alugado" : comprado ? "Local de Farm comprado" : null,
+            dia_aluguel: document.getElementById(`iptalugadofarm${sufixo}`).checked && Number.isFinite(diaNum) && diaNum >= 1 ? diaNum : null,
             id_usuario: sessionStorage.ID_USUARIO
         };
     }
