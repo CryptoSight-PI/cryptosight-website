@@ -988,31 +988,46 @@ function atualizardash(){
                 console.log(resposta4)
 
                 let previsao = resposta4.dados && resposta4.dados.length > 0 ? resposta4.dados[0] : null;
-                let risco = null;
+                let critico = previsao ? previsao.critico_atual : null;
+                let falha = previsao ? previsao.proxima_falha : null;
 
-                if (previsao && previsao.componentes) {
-                    for (let i = 0; i < previsao.componentes.length; i++) {
-                        if (previsao.componentes[i].horas_ate_limite != null) {
-                            risco = previsao.componentes[i];   // já vem ordenado pelo menor tempo
-                            break;
-                        }
-                    }
-                }
-
-                colorirMeta("ic_meta_previsao", "texto_meta_previsao", risco == null);
-
-                let kpiPrev = document.getElementById("kpiPrev")
+                let kpiPrev = document.getElementById("kpiPrev");
                 let corPrev = "#00E6A6";
 
-                if (risco) {
-                        previsao_horas.innerHTML = risco.horas_ate_limite == 0 ? "RISCO AGORA" : `${risco.horas_ate_limite.toFixed(1)} HORAS`;
-                        previsao_detalhe.innerHTML = `${risco.componente.toUpperCase()} (${risco.nivel_proximo_risco}) - ${risco.valor_atual}`;
-                    if (risco.horas_ate_limite <= 6) corPrev = "#FF1E3C";
-                    else if (risco.horas_ate_limite <= 24) corPrev = "#FFB000";
+                function duracao(h) {
+                    if (h == null) return "";
+                    return h < 1 ? Math.round(h * 60) + " MIN" : h.toFixed(1) + " H";
+                }
+
+                colorirMeta("ic_meta_previsao", "texto_meta_previsao", !critico && !falha);
+
+                if (critico) {
+                    if (critico.horas_ate_dano != null) {
+                        let quando = new Date(critico.horario_dano).toLocaleString("pt-BR", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" });
+                        previsao_horas.innerHTML = `${critico.componente.toUpperCase()} <span class="text-[15px] font-normal">em ${duracao(critico.horas_ate_dano).toLowerCase()}</span>`
+                        previsao_detalhe.innerHTML = `${critico.componente} atinge ${critico.limite_dano} em ${quando}`;
+                        corPrev = critico.horas_ate_dano <= 24 ? "#FF1E3C" : "#FFB000";
+                    } else if (critico.horas_ate_normalizar != null) {
+                        let quando = new Date(Date.now() + critico.horas_ate_normalizar * 3600000).toLocaleString("pt-BR", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" });
+                        previsao_horas.innerHTML = `${critico.componente.toUpperCase()} <span class="text-[15px] font-normal">em ${duracao(critico.horas_ate_normalizar).toLowerCase()}</span>`
+                        previsao_detalhe.innerHTML = `${critico.componente} volta a ${critico.valor_limite} em ${quando}`;
+                        corPrev = "#438BFF";
+                    } else {
+                        previsao_horas.innerHTML = `${critico.componente.toUpperCase()}`
+                        previsao_detalhe.innerHTML = `${critico.componente} estável em ${critico.valor_atual}, sem dano previsto`;
+                        corPrev = "#FFB000";
+                    }
+                } else if (falha) {
+                    let quando = new Date(falha.horario_critico).toLocaleString("pt-BR", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" });
+                    previsao_horas.innerHTML = `${falha.componente.toUpperCase()} <span class="text-[15px] font-normal">em ${duracao(falha.horas_ate_critico).toLowerCase()}</span>`
+                    previsao_detalhe.innerHTML = `${falha.componente} atinge ${falha.valor_limite} em ${quando}`;
+
+                    if (falha.horas_ate_critico <= 6) corPrev = "#FF1E3C";
+                    else if (falha.horas_ate_critico <= 24) corPrev = "#FFB000";
                     else corPrev = "#438BFF";
                 } else {
                     previsao_horas.innerHTML = "Nenhum risco";
-                    previsao_detalhe.innerHTML = "Sem previsão de falha próxima";
+                    previsao_detalhe.innerHTML = "Sem tendência de falha nos próximos 7 dias";
                 }
 
                 previsao_horas.style.color = corPrev;
