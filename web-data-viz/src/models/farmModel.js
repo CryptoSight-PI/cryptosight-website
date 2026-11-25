@@ -29,12 +29,22 @@ function findById(id) {
     return database.executar(sql);
 }
 
-function create(nome, id_empresa, cep, logradouro, bairro, cidade, id_uf, numero, complemento) {
+function create(nome, id_empresa, cep, logradouro, bairro, cidade, id_uf, numero, complemento, valor, categoria, dia_aluguel, id_usuario) {
     // return ensureCep(cep, logradouro, bairro, cidade, id_uf).then(function () {
+    if (categoria == 'Local de Farm alugado'){
         var addressSql = mysql.format(`
+            INSERT INTO endereco (cep, logradouro, bairro, cidade, id_uf, numero, complemento, sede, aluguel, dia_pagamento_aluguel) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, 0, ?, ?);
+        `, [cep, logradouro, bairro, cidade, id_uf, numero, complemento, valor, dia_aluguel]);
+    } else if (categoria == "Local de Farm comprado"){
+        var addressSql = mysql.format(`
+        START TRANSACTION;
         INSERT INTO endereco (cep, logradouro, bairro, cidade, id_uf, numero, complemento, sede) 
         VALUES (?, ?, ?, ?, ?, ?, ?, 0);
-    `, [cep, logradouro, bairro, cidade, id_uf, numero, complemento]);
+        SET @farm_id = LAST_INSERT_ID();
+        INSERT INTO pagamento (id_usuario, id_farm, valor, categoria) VALUES (?, @farm_id, ?, ?)
+    `, [cep, logradouro, bairro, cidade, id_uf, numero, complemento, id_usuario, valor, categoria]);
+    }
 
     return database.executar(addressSql).then(function (addressResult) {
         var id_endereco = addressResult.insertId;

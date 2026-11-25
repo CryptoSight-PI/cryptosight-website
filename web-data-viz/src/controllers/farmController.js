@@ -44,6 +44,11 @@ function create(req, res) {
     var id_uf = req.body.id_uf;
     var numero = req.body.numero;
     var complemento = req.body.complemento;
+    var valor = req.body.valor;
+    var categoria = req.body.categoria;
+    var dia_aluguel = req.body.dia_aluguel;
+    var id_usuario = req.body.id_usuario;
+    
 
     if (nome == undefined) {
         res.status(400).send("O nome está undefined!");
@@ -61,8 +66,14 @@ function create(req, res) {
         res.status(400).send("O id_uf está undefined!");
     } else if (numero == undefined) {
         res.status(400).send("O numero está undefined!");
+    } else if (valor == undefined) {
+        res.status(400).send("O numero está undefined!");
+    } else if (categoria == undefined) {
+        res.status(400).send("O numero está undefined!");
+    } else if (id_usuario == undefined) {
+        res.status(400).send("O numero está undefined!");
     } else {
-        farmModel.create(nome, id_empresa, cep, logradouro, bairro, cidade, id_uf, numero, complemento)
+        farmModel.create(nome, id_empresa, cep, logradouro, bairro, cidade, id_uf, numero, complemento, valor, categoria, dia_aluguel, id_usuario)
             .then(function (result) {
                 res.status(201).json(result);
             }).catch(function (error) {
