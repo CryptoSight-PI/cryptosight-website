@@ -252,11 +252,11 @@
                 <div class="flex flex-wrap gap-4 mt-2 text-sm">
                     <label class="flex items-center gap-2 cursor-pointer">
                         <input type="radio" name="historico_farm_editado" id="iptcompradofarmeditado" onchange="alternarcamposhistorico('editado')" class="accent-[#00E6A6] cursor-pointer">
-                        Comprado
+                        Nova compra
                     </label>
                     <label class="flex items-center gap-2 cursor-pointer">
                         <input type="radio" name="historico_farm_editado" id="iptalugadofarmeditado" onchange="alternarcamposhistorico('editado')" class="accent-[#00E6A6] cursor-pointer">
-                        Alugado
+                        Novo aluguel
                     </label>
                     <label class="flex items-center gap-2 cursor-pointer">
                         <input type="radio" name="historico_farm_editado" id="iptnaohistoricofarmeditado" onchange="alternarcamposhistorico('editado')" class="accent-[#00E6A6] cursor-pointer" checked>
@@ -452,6 +452,10 @@
 
     function pegarcampos(sufixo) {
         let v = (nome) => document.getElementById(`ipt${nome}farm${sufixo}`).value.trim();
+        let valorTxt = v("valor").replace(",", ".");
+        let diaTxt = v("diaalugado");
+        let valorNum = valorRaw === "" ? 0 : Number(valorTxt);
+        let diaNum = diaRaw === "" ? 0 : Number(diaTxt).checked;
         return {
             nome: v("nome"),
             cep: v("cep"),
@@ -461,9 +465,9 @@
             id_uf: v("uf"),
             numero: v("numero"),
             complemento: v("complemento"),
-            valor: v("valor").replace(",", "."),
-            categoria: iptalugadofarm.checked ? "Local de Farm alugado" : "Local de Farm comprado",
-            dia_aluguel: v("diaalugado"),
+            valor: Number.isFinite(valorNum) ? valorNum : 0,
+            categoria: alugado ? "Local de Farm alugado" : comprado ? "Local de Farm comprado" : null,
+            dia_aluguel: alugado && Number.isFinite(diaNum) && diaNum >= 1 ? diaNum : null,
             id_usuario: sessionStorage.ID_USUARIO
         };
     }
@@ -488,6 +492,7 @@
 
     function adicionarfarm() {
         let campos = pegarcampos("");
+        console.log(campos)
 
         if (!camposvalidos(campos)) {
             alert("Preencha todos os campos (CEP com 8 dígitos).");
@@ -506,7 +511,8 @@
                 modal_adicionar_farm.close();
                 listarfarms();
             } else {
-                resposta.text().then((t) => alert("Erro ao cadastrar: " + t));
+                console.log("resposta: " + campos)
+                resposta.text().then((t) => console.log("Erro ao cadastrar: " + t));
             }
         })
         .catch((erro) => {
@@ -554,7 +560,7 @@
                 modal_editar_farm.close();
                 listarfarms();
             } else {
-                resposta.text().then((t) => alert("Erro ao editar: " + t));
+            resposta.text().then((t) => alert("Erro ao editar: " + t));
             }
         })
         .catch((erro) => {

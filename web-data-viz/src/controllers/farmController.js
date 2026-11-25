@@ -68,8 +68,6 @@ function create(req, res) {
         res.status(400).send("O numero está undefined!");
     } else if (valor == undefined) {
         res.status(400).send("O valor está undefined!");
-    } else if (categoria == undefined) {
-        res.status(400).send("O categoria está undefined!");
     } else if (id_usuario == undefined) {
         res.status(400).send("O id usuario está undefined!");
     } else {
@@ -92,6 +90,10 @@ function update(req, res) {
     var id_uf = req.body.id_uf;
     var numero = req.body.numero;
     var complemento = req.body.complemento;
+    var valor = req.body.valor;
+    var categoria = req.body.categoria;
+    var dia_aluguel = req.body.dia_aluguel;
+    var id_usuario = req.body.id_usuario;
 
     if (id == undefined) {
         res.status(400).send("O id da farm está undefined!");
@@ -116,7 +118,7 @@ function update(req, res) {
                     res.status(404).send("Farm não encontrada!");
                     return;
                 }
-                return farmModel.update(id, nome, cep, logradouro, bairro, cidade, id_uf, numero, complemento)
+                return farmModel.update(id, nome, cep, logradouro, bairro, cidade, id_uf, numero, complemento, valor, categoria, dia_aluguel, id_usuario)
                     .then(function () {
                         res.json({ id: Number(id), mensagem: "Farm atualizada com sucesso!" });
                     });
