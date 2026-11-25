@@ -31,26 +31,26 @@ function findById(id) {
 
 function create(nome, id_empresa, cep, logradouro, bairro, cidade, id_uf, numero, complemento, valor, categoria, dia_aluguel, id_usuario) {
     // return ensureCep(cep, logradouro, bairro, cidade, id_uf).then(function () {
-    if (categoria == 'Local de Farm alugado'){
         var addressSql = mysql.format(`
-            INSERT INTO endereco (cep, logradouro, bairro, cidade, id_uf, numero, complemento, sede, aluguel, dia_pagamento_aluguel) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, 0, ?, ?);
-        `, [cep, logradouro, bairro, cidade, id_uf, numero, complemento, valor, dia_aluguel]);
-    } else if (categoria == "Local de Farm comprado"){
-        var addressSql = mysql.format(`
-        START TRANSACTION;
-        INSERT INTO endereco (cep, logradouro, bairro, cidade, id_uf, numero, complemento, sede) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, 0);
-        SET @farm_id = LAST_INSERT_ID();
-        INSERT INTO pagamento (id_usuario, id_farm, valor, categoria) VALUES (?, @farm_id, ?, ?)
-    `, [cep, logradouro, bairro, cidade, id_uf, numero, complemento, id_usuario, valor, categoria]);
-    }
+            INSERT INTO endereco (cep, logradouro, bairro, cidade, id_uf, numero, complemento, sede) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, 0);
+        `, [cep, logradouro, bairro, cidade, id_uf, numero, complemento]);
 
     return database.executar(addressSql).then(function (addressResult) {
         var id_endereco = addressResult.insertId;
-        var farmSql = mysql.format(`
-            INSERT INTO farm (nome, id_empresa, id_endereco) VALUES (?, ?, ?);
-        `, [nome, id_empresa, id_endereco]);
+        if (categoria == 'Local de Farm alugado'){
+            var farmSql = mysql.format(`
+            INSERT INTO farm (nome, id_empresa, id_endereco, aluguel, dia_pagamento_aluguel) VALUES (?, ?, ?, ?, ?);
+        `, [nome, id_empresa, id_endereco, valor, dia_aluguel]);
+    } else if (categoria == "Local de Farm comprado"){
+        var addressSql = mysql.format(`
+        START TRANSACTION;
+        INSERT INTO farm (nome, id_empresa, id_endereco) VALUES (?, ?, ?); 
+        SET @farm_id = LAST_INSERT_ID();
+        INSERT INTO pagamento (id_usuario, id_farm, valor, categoria) VALUES (?, @farm_id, ?, ?);
+        COMMIT;
+    `, [nome, id_empresa, id_endereco, id_usuario, valor, categoria]);
+    }
 
         return database.executar(farmSql)
             .then(function (farmResult) {

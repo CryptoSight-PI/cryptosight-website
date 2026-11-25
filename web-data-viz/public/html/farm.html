@@ -461,7 +461,7 @@
             id_uf: v("uf"),
             numero: v("numero"),
             complemento: v("complemento"),
-            valor: v("valor"),
+            valor: v("valor").replace(",", "."),
             categoria: iptalugadofarm.checked ? "Local de Farm alugado" : "Local de Farm comprado",
             dia_aluguel: v("diaalugado"),
             id_usuario: sessionStorage.ID_USUARIO

@@ -67,11 +67,11 @@ function create(req, res) {
     } else if (numero == undefined) {
         res.status(400).send("O numero está undefined!");
     } else if (valor == undefined) {
-        res.status(400).send("O numero está undefined!");
+        res.status(400).send("O valor está undefined!");
     } else if (categoria == undefined) {
-        res.status(400).send("O numero está undefined!");
+        res.status(400).send("O categoria está undefined!");
     } else if (id_usuario == undefined) {
-        res.status(400).send("O numero está undefined!");
+        res.status(400).send("O id usuario está undefined!");
     } else {
         farmModel.create(nome, id_empresa, cep, logradouro, bairro, cidade, id_uf, numero, complemento, valor, categoria, dia_aluguel, id_usuario)
             .then(function (result) {
