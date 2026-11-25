@@ -138,9 +138,9 @@
             <div class="flex items-start justify-between mb-4 gap-3">
                 <div>
                     <h3 class="text-white text-lg font-semibold">Estado atual dos componentes</h3>
-                    <p class="text-gray-400 text-xs">Clique em um card para ver 24h, 7d e 30d</p>
-                    <p class="text-[10px] text-gray-500 mt-1 flex items-center gap-1 flex-wrap">
-                        <span style="display:inline-block;width:2px;height:9px;background:#fff;border-radius:1px"></span>meta ideal
+                        <button id="btn_virar_todos" style="margin-top:6px;padding:4px 12px;font-size:12px;border-radius:999px;border:1px solid #00E6A6;background:#144840;color:#00E6A6;cursor:pointer"><i class="fa-solid fa-hand-pointer" style="margin-right:6px"></i>CLIQUE EM CADA CARD PARA VER 24h, 7d e 30d</button>                    
+                        <p class="text-[10px] text-gray-500 mt-1 flex items-center gap-1 flex-wrap">
+                        <span style="display:inline-block;width:16px;height:9px;box-sizing:border-box;border:1px dashed rgba(255,255,255,0.75);background:rgba(0,230,166,0.15);border-radius:3px"></span>faixa ideal
                         <span style="display:inline-block;width:2px;height:9px;background:#FF5269;border-radius:1px;margin-left:8px"></span>limites
                     </p>
                 </div>
@@ -154,7 +154,7 @@
                     <p class="text-gray-500 text-sm">Ative o monitoramento desta máquina para ver os dados aqui.</p>
                 </div>
 
-                <div id="card_cpu" class="cursor-pointer" style="display:none;min-height:0;height:100%" onclick="this.firstElementChild.classList.toggle('rotate-y-180')">
+                <div id="card_cpu" class="cursor-pointer" onclick="this.firstElementChild.classList.toggle('rotate-y-180')">
                     <div class="relative h-full transform-3d transition-transform duration-500">
                         <div class="absolute inset-0 backface-hidden rounded-xl border border-[#7A2935] bg-[#24191B] p-3 flex flex-col justify-between">
                             <div class="flex items-center justify-between">
@@ -478,6 +478,8 @@
                 let texto = '<p class="text-xs text-gray-400 mb-2">Relatório de <b class="text-white">' + rotulo + '</b></p>';
                 let nomes = Object.keys(componentes);
 
+                nomes.sort(function (a, b) { return componentes[b].total - componentes[a].total; });
+
                 if (nomes.length == 0) {
                     texto += '<p class="text-xs text-[#00E6A6]">Nenhum pico neste período.</p>';
                 }
@@ -552,9 +554,16 @@
 
             let marcaMeta = document.getElementById("marca_" + nome);
             if (marcaMeta && metaMax != null) {
+                let inicioFaixa = metaMin != null ? metaMin : 0;
+                let fimFaixa = metaMax;
+
                 marcaMeta.style.display = "";
-                marcaMeta.style.left = Math.min(metaMax, 100) + "%";
-            }
+                marcaMeta.style.left = inicioFaixa + "%";
+                marcaMeta.style.width = fimFaixa - inicioFaixa + "%";
+                marcaMeta.style.background = "rgba(0,230,166,0.15)";
+                marcaMeta.style.border = "2px dashed white";
+                marcaMeta.style.borderRadius = "4px";
+                marcaMeta.style.boxSizing = "border-box";            }
 
             let marcaLimite = document.getElementById("lim_marca_" + nome);
             if (marcaLimite && limiteMax != null) {
@@ -1002,19 +1011,25 @@ function atualizardash(){
                 colorirMeta("ic_meta_previsao", "texto_meta_previsao", !critico && !falha);
 
                 if (critico) {
-                    if (critico.horas_ate_dano != null) {
+                    let nomeCritico = critico.componente.toUpperCase();
+
+                    if (critico.tendencia_critica == "dano_atingido") {
+                        previsao_horas.innerHTML = `${nomeCritico} <span class="text-[15px] font-normal whitespace-nowrap">atingido</span>`;
+                        previsao_detalhe.innerHTML = `${critico.valor_atual} · dano a partir de ${critico.limite_dano}`;
+                        corPrev = "#FF1E3C";
+                    } else if (critico.horas_ate_dano != null) {
                         let quando = new Date(critico.horario_dano).toLocaleString("pt-BR", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" });
-                        previsao_horas.innerHTML = `${critico.componente.toUpperCase()} <span class="text-[15px] font-normal">em ${duracao(critico.horas_ate_dano).toLowerCase()}</span>`
-                        previsao_detalhe.innerHTML = `${critico.componente} atinge ${critico.limite_dano} em ${quando}`;
+                        previsao_horas.innerHTML = `${nomeCritico} <span class="text-[15px] font-normal whitespace-nowrap">em ${duracao(critico.horas_ate_dano).toLowerCase()}</span>`;
+                        previsao_detalhe.innerHTML = `dano: ${critico.valor_atual} → ${critico.limite_dano} · ${quando}`;
                         corPrev = critico.horas_ate_dano <= 24 ? "#FF1E3C" : "#FFB000";
                     } else if (critico.horas_ate_normalizar != null) {
                         let quando = new Date(Date.now() + critico.horas_ate_normalizar * 3600000).toLocaleString("pt-BR", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" });
-                        previsao_horas.innerHTML = `${critico.componente.toUpperCase()} <span class="text-[15px] font-normal">em ${duracao(critico.horas_ate_normalizar).toLowerCase()}</span>`
-                        previsao_detalhe.innerHTML = `${critico.componente} volta a ${critico.valor_limite} em ${quando}`;
+                        previsao_horas.innerHTML = `${nomeCritico} <span class="text-[15px] font-normal whitespace-nowrap">em ${duracao(critico.horas_ate_normalizar).toLowerCase()}</span>`;
+                        previsao_detalhe.innerHTML = `normaliza: ${critico.valor_atual} → ${critico.valor_limite} · ${quando}`;
                         corPrev = "#438BFF";
                     } else {
-                        previsao_horas.innerHTML = `${critico.componente.toUpperCase()}`
-                        previsao_detalhe.innerHTML = `${critico.componente} estável em ${critico.valor_atual}, sem dano previsto`;
+                        previsao_horas.innerHTML = `${nomeCritico} <span class="text-[15px] font-normal whitespace-nowrap">estável</span>`;
+                        previsao_detalhe.innerHTML = `${critico.valor_atual} · dano a partir de ${critico.limite_dano}`;
                         corPrev = "#FFB000";
                     }
                 } else if (falha) {
