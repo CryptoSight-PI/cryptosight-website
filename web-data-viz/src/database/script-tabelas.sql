@@ -189,3 +189,34 @@ create table pagamento (
     constraint fk_pagamento_responsavel foreign key(id_usuario) references usuario(id),
     constraint fk_pagamento_farm foreign key(id_farm) references farm(id)
 );
+
+
+create table medicao_rede (
+	id int auto_increment,
+    id_farm int,
+    latencia_pool int,
+    latencia_dns int,
+    latencia_gateway int,
+    timestamp_medicao timestamp default current_timestamp,
+    constraint pk_id_id_farm primary key (id, id_farm),
+    constraint fk_id_farm foreign key (id_farm) references farm(id),
+	index idx_timestamp (timestamp_medicao)
+) auto_increment = 100;
+
+
+create table eficiencia_maquina (
+	id int auto_increment,
+    id_maquina int,
+    status bit default 1,
+    hashrate int,
+    shares_aceitos int,
+    shares_rejeitados int,
+    shares_stale int,
+    timestamp_medicao timestamp default current_timestamp,
+    
+    constraint pk_id_id_maquina primary key (id, id_maquina),
+    constraint fk_id_maquina foreign key (id_maquina) references maquina(id)
+) auto_increment = 100;
+
+CREATE INDEX idx_eficiencia_maquina_tempo 
+ON eficiencia_maquina (id_maquina, timestamp_medicao);

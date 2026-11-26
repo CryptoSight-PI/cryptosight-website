@@ -20,6 +20,23 @@
     --font-space-mono: "Space Mono"
 }
 
+@layer components {
+  .no { @apply shrink-0 rounded-[10px] border px-3 py-2 font-ibm-mono border-[#2dd4a7]/50 bg-[#2dd4a7]/10; }
+  .no-nome  { @apply block text-xs text-gray-400; }
+  .no-valor { @apply text-base text-[#2dd4a7]; }
+
+  .no--falha { @apply border-red-400 bg-red-400/10; }
+  .no--falha .no-valor { @apply text-red-400; }
+
+  .no--nao-medido { @apply border-dashed border-gray-500 bg-transparent; }
+  .no--nao-medido .no-valor { @apply text-gray-400; }
+
+  .no--ref { @apply border-white/15 bg-transparent; }
+
+  .linha { @apply h-0.5 min-w-3 flex-1 bg-[#2dd4a7]; }
+  .linha--falha { @apply bg-red-400; }
+}
+
 html {
     scroll-behavior: smooth;
 }
