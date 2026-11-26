@@ -1,12 +1,32 @@
 var database = require("../database/config");
 
 
-function cadastrar(sessaoId, mac_address, modelo , fabricante, tipo) {
+function cadastrar(sessaoId, mac_address, modelo , fabricante, tipo, valor, categoria, id_usuario) {
   var instrucaoSql = `INSERT INTO maquina (id_sessao, mac_address , modelo, fabricante, tipo)  
   VALUES ('${sessaoId}', '${mac_address}', '${modelo}' , '${fabricante}' , '${tipo}')`;
 
   console.log("Executando a instrução SQL: \n" + instrucaoSql);
-  return database.executar(instrucaoSql);
+  return database.executar(instrucaoSql).then((resultadoCadastro) => {
+    if (Number(valor) <= 0) {
+      return resultadoCadastro;
+    }
+
+    var instrucaoFarmSql = `SELECT id_farm FROM sessao WHERE id = ${sessaoId};`;
+
+    return database.executar(instrucaoFarmSql).then((resultadoSessao) => {
+      if (!resultadoSessao || resultadoSessao.length === 0) {
+        throw new Error("Sessão não encontrada para registrar o pagamento.");
+      }
+
+      var id_farm = resultadoSessao[0].id_farm;
+      var instrucaoPagamentoSql = `INSERT INTO pagamento (id_usuario, id_farm, valor, categoria)
+      VALUES (${id_usuario}, ${id_farm}, ${valor}, '${categoria}')`;
+
+      return database.executar(instrucaoPagamentoSql).then(() => {
+        return resultadoCadastro;
+      });
+    });
+  });
 }
 
 
@@ -35,18 +55,68 @@ function excluir(iddispositivo) {
 }
 
 
-function atualizar(iddispositivo , mac_addresseditado , modeloeditado , fabricanteeditado , tipoeditado){
+function atualizar(iddispositivo , mac_addresseditado , modeloeditado , fabricanteeditado , tipoeditado, valor, categoria, id_usuario){
     var instrucaoSql = `update maquina set mac_address = '${mac_addresseditado}' , modelo = '${modeloeditado}' , fabricante = '${fabricanteeditado}' , tipo = '${tipoeditado}' where id = ${iddispositivo} ;`;
-    return database.executar(instrucaoSql);
+    return database.executar(instrucaoSql).then((resultadoAtualizacao) => {
+        if (Number(valor) <= 0) {
+            return resultadoAtualizacao;
+        }
+
+        var instrucaoFarmSql = `
+            select s.id_farm
+            from maquina m
+            join sessao s on s.id = m.id_sessao
+            where m.id = ${iddispositivo};
+        `;
+
+        return database.executar(instrucaoFarmSql).then((resultadoFarm) => {
+            if (!resultadoFarm || resultadoFarm.length === 0) {
+                throw new Error("Máquina não encontrada para registrar o pagamento.");
+            }
+
+            var id_farm = resultadoFarm[0].id_farm;
+            var instrucaoPagamentoSql = `insert into pagamento (id_usuario, id_farm, valor, categoria)
+            values (${id_usuario}, ${id_farm}, ${valor}, '${categoria}');`;
+
+            return database.executar(instrucaoPagamentoSql).then(() => {
+                return resultadoAtualizacao;
+            });
+        });
+    });
 }
 
 function catalogocomponente() {
     var instrucaoSql = `select id, nome from componente order by nome;`;
     return database.executar(instrucaoSql);
 }
-function cadastrarcomponente(iddispositivocomponente, idcomponentecomponente, limmin, limmax, monitorado) {
+function cadastrarcomponente(iddispositivocomponente, idcomponentecomponente, limmin, limmax, monitorado, valor, categoria, id_usuario) {
     var instrucaoSql = `insert into maquina_componente (id_maquina, id_componente, limite_min, limite_max, monitorado) values (${iddispositivocomponente}, ${idcomponentecomponente}, ${limmin}, ${limmax}, '${monitorado}');`;
-    return database.executar(instrucaoSql);
+    return database.executar(instrucaoSql).then((resultadoCadastro) => {
+        if (Number(valor) <= 0) {
+            return resultadoCadastro;
+        }
+
+        var instrucaoFarmSql = `
+            select s.id_farm
+            from maquina m
+            join sessao s on s.id = m.id_sessao
+            where m.id = ${iddispositivocomponente};
+        `;
+
+        return database.executar(instrucaoFarmSql).then((resultadoFarm) => {
+            if (!resultadoFarm || resultadoFarm.length === 0) {
+                throw new Error("Máquina não encontrada para registrar o pagamento.");
+            }
+
+            var id_farm = resultadoFarm[0].id_farm;
+            var instrucaoPagamentoSql = `insert into pagamento (id_usuario, id_farm, valor, categoria)
+            values (${id_usuario}, ${id_farm}, ${valor}, '${categoria}');`;
+
+            return database.executar(instrucaoPagamentoSql).then(() => {
+                return resultadoCadastro;
+            });
+        });
+    });
 }
 
 function listarcomponente(iddispositivocomponente) {
@@ -74,9 +144,35 @@ function excluircomponente(idcomponenteexcluido){
     return database.executar(instrucaoSql);
 }
 
-function editarcomponente(idcomponenteeditado , limmineditado , limmaxeditado , monitoradoeditado){
+function editarcomponente(idcomponenteeditado , limmineditado , limmaxeditado , monitoradoeditado, valor, categoria, id_usuario){
     var instrucaoSql = `update maquina_componente set limite_min = ${limmineditado} , limite_max = ${limmaxeditado} , monitorado = ${monitoradoeditado} where id = ${idcomponenteeditado};`
-    return database.executar(instrucaoSql);
+    return database.executar(instrucaoSql).then((resultadoEdicao) => {
+        if (Number(valor) <= 0) {
+            return resultadoEdicao;
+        }
+
+        var instrucaoFarmSql = `
+            select s.id_farm
+            from maquina_componente mc
+            join maquina m on m.id = mc.id_maquina
+            join sessao s on s.id = m.id_sessao
+            where mc.id = ${idcomponenteeditado};
+        `;
+
+        return database.executar(instrucaoFarmSql).then((resultadoFarm) => {
+            if (!resultadoFarm || resultadoFarm.length === 0) {
+                throw new Error("Componente não encontrado para registrar o pagamento.");
+            }
+
+            var id_farm = resultadoFarm[0].id_farm;
+            var instrucaoPagamentoSql = `insert into pagamento (id_usuario, id_farm, valor, categoria)
+            values (${id_usuario}, ${id_farm}, ${valor}, '${categoria}');`;
+
+            return database.executar(instrucaoPagamentoSql).then(() => {
+                return resultadoEdicao;
+            });
+        });
+    });
 }
 
 function catalogocripto() {

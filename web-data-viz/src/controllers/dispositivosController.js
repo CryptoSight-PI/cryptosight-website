@@ -7,6 +7,9 @@ function cadastrar(req, res) {
   var modelo = req.body.modelo;
   var fabricante = req.body.fabricante;
   var tipo = req.body.tipo;
+  var valor = Number(req.body.valor);
+  var categoria = req.body.categoria;
+  var id_usuario = req.body.id_usuario;
 
   if (sessaoId == undefined) {
     res.status(400).send("sessaoId está undefined!");
@@ -18,10 +21,18 @@ function cadastrar(req, res) {
     res.status(400).send("fabricante está undefined!");
   } else if (tipo == undefined) {
     res.status(400).send("tipo está undefined!");
+  } else if (req.body.valor == undefined) {
+    res.status(400).send("valor está undefined!");
+  } else if (isNaN(valor)) {
+    res.status(400).send("valor inválido!");
+  } else if (valor > 0 && categoria == undefined) {
+    res.status(400).send("categoria está undefined!");
+  } else if (valor > 0 && id_usuario == undefined) {
+    res.status(400).send("id_usuario está undefined!");
   } else {
 
     
-    dispositivosModel.cadastrar(sessaoId, mac_address, modelo, fabricante, tipo).then((resultado) => {
+    dispositivosModel.cadastrar(sessaoId, mac_address, modelo, fabricante, tipo, valor, categoria, id_usuario).then((resultado) => {
         res.status(201).json(resultado);
     })
     .catch((erro) => {
@@ -78,6 +89,9 @@ function atualizar(req , res){
     var modeloeditado = req.body.modelo;
     var fabricanteeditado = req.body.fabricante;
     var tipoeditado = req.body.tipo;
+    var valor = Number(req.body.valor);
+    var categoria = req.body.categoria;
+    var id_usuario = req.body.id_usuario;
 
     if (iddispositivo == undefined) {
         res.status(400).send("iddispositivo está undefined!");
@@ -89,8 +103,16 @@ function atualizar(req , res){
         res.status(400).send("fabricante está undefined!");
     } else if (tipoeditado == undefined) {
         res.status(400).send("tipo está undefined!");
+    } else if (req.body.valor == undefined) {
+        res.status(400).send("valor está undefined!");
+    } else if (isNaN(valor)) {
+        res.status(400).send("valor inválido!");
+    } else if (valor > 0 && categoria == undefined) {
+        res.status(400).send("categoria está undefined!");
+    } else if (valor > 0 && id_usuario == undefined) {
+        res.status(400).send("id_usuario está undefined!");
     } else {
-        dispositivosModel.atualizar(iddispositivo , mac_addresseditado , modeloeditado , fabricanteeditado , tipoeditado).then((resultado) => {
+        dispositivosModel.atualizar(iddispositivo , mac_addresseditado , modeloeditado , fabricanteeditado , tipoeditado, valor, categoria, id_usuario).then((resultado) => {
             res.status(201).json(resultado);
         }).catch((erro) => {
             res.status(400).send(erro.sqlMessage)
@@ -116,6 +138,9 @@ function cadastrarcomponente(req, res) {
     var limmin = req.body.limmin;
     var limmax = req.body.limmax;
     var monitorado = req.body.monitorado;
+    var valor = Number(req.body.valor);
+    var categoria = req.body.categoria;
+    var id_usuario = req.body.id_usuario;
 
     if (iddispositivocomponente == undefined) {
         res.status(400).send("iddispositivo está undefined!");
@@ -127,8 +152,16 @@ function cadastrarcomponente(req, res) {
         res.status(400).send("limmax está undefined!");
     } else if (monitorado == undefined) {
         res.status(400).send("monitorado está undefined!");
+    } else if (req.body.valor == undefined) {
+        res.status(400).send("valor está undefined!");
+    } else if (isNaN(valor)) {
+        res.status(400).send("valor inválido!");
+    } else if (valor > 0 && categoria == undefined) {
+        res.status(400).send("categoria está undefined!");
+    } else if (valor > 0 && id_usuario == undefined) {
+        res.status(400).send("id_usuario está undefined!");
     } else {
-        dispositivosModel.cadastrarcomponente(iddispositivocomponente, idcomponentecomponente, limmin, limmax, monitorado)
+        dispositivosModel.cadastrarcomponente(iddispositivocomponente, idcomponentecomponente, limmin, limmax, monitorado, valor, categoria, id_usuario)
             .then((resultado) => {
                 res.status(201).json(resultado);
             })
@@ -222,16 +255,34 @@ function editarcomponente(req, res) {
     var limmineditado = req.body.limmin;
     var limmaxeditado = req.body.limmax;
     var monitoradoeditado = req.body.monitorado;
+    var valor = Number(req.body.valor);
+    var categoria = req.body.categoria;
+    var id_usuario = req.body.id_usuario;
+
+    if (categoria == "Compinente trocado") {
+        categoria = "Componente trocado";
+    }
 
     if (idcomponenteeditado == undefined || limmineditado == undefined || limmaxeditado == undefined || monitoradoeditado == undefined) {
         return res.status(400).send("Dados para editar o componente incompletos.");
+    } else if (req.body.valor == undefined) {
+        return res.status(400).send("valor está undefined!");
+    } else if (isNaN(valor)) {
+        return res.status(400).send("valor inválido!");
+    } else if (valor > 0 && categoria == undefined) {
+        return res.status(400).send("categoria está undefined!");
+    } else if (valor > 0 && id_usuario == undefined) {
+        return res.status(400).send("id_usuario está undefined!");
     }
 
     dispositivosModel.editarcomponente(
         idcomponenteeditado,
         limmineditado,
         limmaxeditado,
-        monitoradoeditado
+        monitoradoeditado,
+        valor,
+        categoria,
+        id_usuario
     )
     .then((resultado) => {
         res.status(200).json(resultado);

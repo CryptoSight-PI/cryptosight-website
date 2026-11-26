@@ -98,7 +98,24 @@
                 <input placeholder="ASIC" id="ipttipodispositivo" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
             </div>
 
+            <div class="mt-4">
+                <label class="text-white">Gastos</label>
+                <div class="flex flex-wrap gap-4 mt-2 text-white">
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="radio" name="gasto_dispositivo" id="iptcompradodispositivo" onchange="alternarcamposhistorico('dispositivo')" class="accent-[#00E6A6] cursor-pointer">
+                        Comprado
+                    </label>
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="radio" name="gasto_dispositivo" id="iptnaohistoricodispositivo" onchange="alternarcamposhistorico('dispositivo')" class="accent-[#00E6A6] cursor-pointer" checked>
+                        Não acrescentar no histórico
+                    </label>
+                </div>
 
+                <div id="divvalordispositivo" class="hidden mt-3">
+                    <label class="text-white">Valor pago (R$)</label>
+                    <input type="number" min="0" step="0.01" placeholder="0,00" id="iptvalordispositivo" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+                </div>
+            </div>
 
             <div class="flex justify-between">
                 <button class="p-3 mt-5 text-white bg-[#00E6A6] rounded-2xl font-bold" onclick="adicionardispositivo()">CADASTRAR</button>
@@ -139,7 +156,7 @@
          <dialog id="modal_editar_dispositivo" class="w-full p-15 m-auto max-w-xl bg-[#0C1F19] border border-[#207F70]/60 rounded-2xl backdrop:backdrop-blur-sm">
             <h2 class="text-2xl text-white font-bold pb-2">Editar Dispositivo</h2>
             <div>
-                <label class="text-white">endereço mac</label>
+                <label class="text-white">Endereço mac</label>
                 <input oninput="validarmaceditado()" maxlength="17" placeholder="AA:BB:CC:DD:EE:FF" id="iptmacdispositivoeditado" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
             </div>
 
@@ -156,6 +173,25 @@
             <div>
                 <label class="text-white">Tipo</label>
                 <input placeholder="ASIC" id="ipttipodispositivoeditado" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+            </div>
+
+            <div class="mt-4">
+                <label class="text-white">Gastos</label>
+                <div class="flex flex-wrap gap-4 mt-2 text-white">
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="radio" name="gasto_dispositivo_editado" id="iptcompradodispositivoeditado" onchange="alternarcamposhistorico('dispositivoeditado')" class="accent-[#00E6A6] cursor-pointer">
+                        Novo dispositivo
+                    </label>
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="radio" name="gasto_dispositivo_editado" id="iptnaohistoricodispositivoeditado" onchange="alternarcamposhistorico('dispositivoeditado')" class="accent-[#00E6A6] cursor-pointer" checked>
+                        Não acrescentar no histórico
+                    </label>
+                </div>
+
+                <div id="divvalordispositivoeditado" class="hidden mt-3">
+                    <label class="text-white">Valor pago (R$)</label>
+                    <input type="number" min="0" step="0.01" placeholder="0,00" id="iptvalordispositivoeditado" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+                </div>
             </div>
 
             <div class="flex justify-between">
@@ -193,6 +229,25 @@
                 </select>
             </div> 
 
+            <div class="mt-4">
+                <label class="text-white">Gastos</label>
+                <div class="flex flex-wrap gap-4 mt-2 text-white">
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="radio" name="gasto_componente" id="iptcompradocomponente" onchange="alternarcamposhistorico('componente')" class="accent-[#00E6A6] cursor-pointer">
+                        Comprado
+                    </label>
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="radio" name="gasto_componente" id="iptnaohistoricocomponente" onchange="alternarcamposhistorico('componente')" class="accent-[#00E6A6] cursor-pointer" checked>
+                        Não acrescentar no histórico
+                    </label>
+                </div>
+
+                <div id="divvalorcomponente" class="hidden mt-3">
+                    <label class="text-white">Valor pago (R$)</label>
+                    <input type="number" min="0" step="0.01" placeholder="0,00" id="iptvalorcomponente" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+                </div>
+            </div>
+
              <div class="flex justify-between">
                 <button class="p-3 mt-5 text-white bg-[#00E6A6] rounded-2xl font-bold" onclick="adicionarcomponente()">CADASTRAR</button>
                 <button class="p-3 mt-5 rounded-2xl border border-[#207F70]/60 text-[#A0B5AC] hover:text-white font-bold cursor-pointer transition-colors" onclick="modal_adicionar_componente.close()">CANCELAR</button>
@@ -226,6 +281,26 @@
                     <option value="0" class="bg-[#0C1F19]">Não Monitorado</option>
                 </select>
             </div> 
+
+
+            <div class="mt-4">
+                <label class="text-white">Gastos</label>
+                <div class="flex flex-wrap gap-4 mt-2 text-white">
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="radio" name="gasto_componente_editado" id="iptcompradocomponenteeditado" onchange="alternarcamposhistorico('componenteeditado')" class="accent-[#00E6A6] cursor-pointer">
+                        Novo Componente
+                    </label>
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="radio" name="gasto_componente_editado" id="iptnaohistoricocomponenteeditado" onchange="alternarcamposhistorico('componenteeditado')" class="accent-[#00E6A6] cursor-pointer" checked>
+                        Não acrescentar no histórico
+                    </label>
+                </div>
+
+                <div id="divvalorcomponenteeditado" class="hidden mt-3">
+                    <label class="text-white">Valor pago (R$)</label>
+                    <input type="number" min="0" step="0.01" placeholder="0,00" id="iptvalorcomponenteeditado" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+                </div>
+            </div>
 
              <div class="flex justify-between">
                 <button class="p-3 mt-5 text-white bg-[#00E6A6] rounded-2xl font-bold" onclick="editarcomponente()">EDITAR</button>
@@ -283,6 +358,11 @@
 
     function voltarfarm(){
         window.location.href = 'farm.html'
+    }
+
+    function parseValorPago(valorTexto) {
+        let numero = Number(String(valorTexto).replace(",", ".").trim());
+        return Number.isFinite(numero) ? numero : 0;
     }
 
     function listardispositivos() {
@@ -353,6 +433,17 @@
 
     listardispositivos();
 
+    function alternarcamposhistorico(sufixo) {
+        const comprado = document.getElementById(`iptcomprado${sufixo}`).checked;
+        const naoAcrescentar = document.getElementById(`iptnaohistorico${sufixo}`).checked;
+
+        document.getElementById(`divvalor${sufixo}`).classList.toggle("hidden", !comprado);
+
+        if (naoAcrescentar) {
+            document.getElementById(`iptvalor${sufixo}`).value = "";
+        }
+    }
+
     function validarmac(){
         mac = iptmacdispositivo.value.replace(/[^0-9A-Fa-f]/g, "").toUpperCase();
         let m = "";
@@ -382,6 +473,8 @@
         let modelo = iptmodelodispositivo.value.trim();
         let fabricante = iptfabricantedispositivo.value.trim();
         let tipo = ipttipodispositivo.value.trim();
+        let valor = parseValorPago(iptvalordispositivo.value);
+        
 
         if (mac.length !== 17 || modelo == "" || fabricante == "" || tipo == "") {
             alert("Preencha todos os campos corretamente (MAC com 17 caracteres).");
@@ -395,7 +488,10 @@
                 mac_address: mac,
                 modelo: modelo,
                 fabricante: fabricante,
-                tipo: tipo
+                tipo: tipo,
+                valor: valor,
+                categoria: "Rig comprada",
+                id_usuario: sessionStorage.ID_USUARIO
             })
         })
         .then(function (resposta) {
@@ -406,6 +502,7 @@
                 iptmodelodispositivo.value = "";
                 iptfabricantedispositivo.value = "";
                 ipttipodispositivo.value = "";
+                iptvalordispositivo.value = "";
                 location.reload();
             } else {
                 resposta.text().then(texto => alert("Erro ao cadastrar: " + texto));
@@ -454,6 +551,7 @@
             iptmodelodispositivoeditado.value = modelo;
             iptfabricantedispositivoeditado.value = fabricante;
             ipttipodispositivoeditado.value = tipo;
+        
 
             iddispositivoeditado = id
 
@@ -512,6 +610,7 @@
             let modelo = iptmodelodispositivoeditado.value.trim();
             let fabricante = iptfabricantedispositivoeditado.value.trim();
             let tipo = ipttipodispositivoeditado.value.trim();
+            let valor = parseValorPago(iptvalordispositivoeditado.value);
 
             if (mac.length !== 17 || modelo == "" || fabricante == "" || tipo == "") {
                 alert("Preencha todos os campos corretamente (MAC com 17 caracteres).");
@@ -525,7 +624,10 @@
                     mac_address: mac,
                     modelo: modelo,
                     fabricante: fabricante,
-                    tipo: tipo
+                    tipo: tipo,
+                    valor: valor,
+                    categoria: "Rig comprada",
+                    id_usuario: sessionStorage.ID_USUARIO
                 })
             }).then((resposta) => {
                 if (resposta.ok) {
@@ -563,6 +665,7 @@
         let iddispositivocomponente = null
         function mostrarmodaladicionarcomponente(id) {
             iddispositivocomponente = id;
+        
             modal_adicionar_componente.showModal();
         }
 
@@ -572,6 +675,7 @@
             let limmin = iptcomponentelimmin.value.trim();
             let limmax = iptcomponentelimmax.value.trim();
             let monitorado = iptcomponentemonitorado.value.trim();
+            let valor = parseValorPago(iptvalorcomponente.value);
 
             if (idcomponente == "" || limmin == "" || limmax == "") {
                 alert("Preencha todos os campos.");
@@ -585,7 +689,10 @@
                     idcomponente: idcomponente,
                     limmin: limmin,
                     limmax: limmax,
-                    monitorado: monitorado
+                    monitorado: monitorado,
+                    valor: valor,
+                    categoria: "Componente comprado",
+                    id_usuario: sessionStorage.ID_USUARIO
                 })
             })
             .then(function (resposta) {
@@ -594,6 +701,7 @@
                     modal_adicionar_componente.close();
                     iptcomponentelimmin.value = "";
                     iptcomponentelimmax.value = "";
+                
                     listardispositivos();
                 } else {
                     resposta.text().then(texto => alert("Erro ao cadastrar: " + texto));
@@ -690,7 +798,7 @@
             iptcomponentelimmineditado.value = min
             iptcomponentelimmaxeditado.value = max
             iptcomponentemonitoradoeditado.value = String(monitorado)
-
+        
 
             idcomponenteeditado = id
 
@@ -703,6 +811,7 @@
             let limmineditado = iptcomponentelimmineditado.value.trim();
             let limmaxeditado = iptcomponentelimmaxeditado.value.trim();
             let monitoradoeditado = iptcomponentemonitoradoeditado.value.trim();
+            let valor = parseValorPago(iptvalorcomponenteeditado.value);
             
             fetch(`/dispositivos/editarcomponente/${idcomponenteeditado}` , {
                 method: "PUT",
@@ -712,7 +821,10 @@
                 body: JSON.stringify({
                     limmin: Number(limmineditado),
                     limmax: Number(limmaxeditado),
-                    monitorado: Number(monitoradoeditado)
+                    monitorado: Number(monitoradoeditado),
+                    valor: valor,
+                    categoria: "Componente trocado",
+                    id_usuario: sessionStorage.ID_USUARIO
                 })
             }).then((resposta) => {
                 if(resposta.ok) {
