@@ -30,6 +30,7 @@ var ufsRouter = require("./src/routes/ufs");
 var dispositivosRouter = require("./src/routes/dispositivos");
 var farmsRouter = require("./src/routes/farms");
 var sessoesRouter = require("./src/routes/sessoes");
+var dashboardGeralRouter = require("./src/routes/dashboardGeralRoutes");
 var nocRouter = require("./src/routes/noc");
 // var bobIARouter = require("./src/routes/bobAIRoute");
 
@@ -50,6 +51,7 @@ app.use("/ufs", ufsRouter);
 app.use("/dispositivos", dispositivosRouter);
 app.use("/farms", farmsRouter);
 app.use("/sessoes" , sessoesRouter);
+app.use("/dashboard-geral", dashboardGeralRouter);
 app.use("/noc", nocRouter);
 // app.use("/bobIA", bobIARouter);
 

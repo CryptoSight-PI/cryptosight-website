@@ -326,6 +326,23 @@ function removercripto(req, res) {
         .catch((erro) => res.status(500).json(erro.sqlMessage));
 }
 
+function listarcomponenteprincipal(req, res) {
+    var iddispositivo = req.params.iddispositivo;
+
+    if (iddispositivo == undefined) {
+        res.status(400).send("iddispositivo está undefined!");
+    } else {
+        dispositivosModel.listarcomponenteprincipal(iddispositivo)
+            .then((resultado) => {
+                res.status(200).json(resultado);
+            })
+            .catch((erro) => {
+                console.log(erro);
+                console.log("\nHouve um erro ao listar! Erro: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            });
+    }
+}
 
 module.exports = {
     cadastrar,
@@ -343,5 +360,6 @@ module.exports = {
     catalogocripto,
     listarcripto,
     adicionarcripto,
-    removercripto
+    removercripto,
+    listarcomponenteprincipal
 };

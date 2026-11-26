@@ -66,4 +66,8 @@ router.delete("/removercripto/:idligacao", function (req, res) {
     dispositivosController.removercripto(req, res);
 });
 
+router.get("/listarcomponenteprincipal/:iddispositivo" , function (req , res) {
+    dispositivosController.listarcomponenteprincipal(req , res);
+})
+
 module.exports = router;

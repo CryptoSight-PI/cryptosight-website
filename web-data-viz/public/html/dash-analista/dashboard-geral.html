@@ -10,8 +10,7 @@
     <title>Dashboard - Visão Geral</title>
 </head>
 
-<body class="h-screen w-screen pl-15 bg-linear-135 from-[#0d1412] via-[#09483f] to-[#0d1412] text-white bg-fixed overflow-x-hidden">
-    <!-- Navbar -->
+<body class="min-h-screen w-screen pl-15 bg-linear-135 from-[#0d1412] via-[#09483f] to-[#0d1412] text-white bg-fixed overflow-x-hidden">
     <dialog class="bg-[#0C1F19] flex flex-col group h-screen w-15 hover:w-70 transition-all duration-300 ease-in-out pt-5 z-99 overflow-hidden border-r border-[#207F70]" popover="hint" open>
         <img src="../../assets/imgs/logo.png" class="absolute self-center-safe justify-self-center-safe h-10 group-hover:h-15 transition-all duration-300 ease-in-out">
         <a href="">
@@ -20,39 +19,11 @@
             <p class="hidden group-hover:block text-[#00E6A6] justify-center self-center text-sm ml-3 text-nowrap font-inter font-semibold">Visão Geral</p>
         </div>
         </a>
-        <a href="">
-        <div class="rounded-2xl flex flex-row pl-2 pr-2 pt-3 pb-3 ml-2 w-13 hover:cursor-pointer">
+        <div onclick="abrirFarms()" class="rounded-2xl flex flex-row pl-2 pr-2 pt-3 pb-3 ml-2 w-13 hover:cursor-pointer">
             <img src="../../assets/icones-dash/maquinas.svg">
             <p class="hidden group-hover:block text-[#A0B5AC] justify-center self-center text-sm ml-3 text-nowrap font-inter font-semibold">Máquinas</p>
         </div>
-        </a>
-        <a href="">
-        <div class="rounded-2xl flex flex-row pl-2 pr-2 pt-3 pb-3 ml-2 w-13 hover:cursor-pointer">
-            <img src="../../assets/icones-dash/alertas.svg">
-            <p class="hidden group-hover:block text-[#A0B5AC] justify-center self-center text-sm ml-3 text-nowrap font-inter font-semibold">Alertas</p>
-        </div>
-        </a>
-<!-- 
-        <div class="h-0.1 border-3 border-[#207F70] rounded-xl ml-2 mt-10 mb-10 w-10.5 group-hover:w-64 transition-all duration-300 ease-out"></div>
-
-        <a href="">
-        <div class="rounded-2xl flex flex-row pl-2 pr-2 pt-3 pb-3 ml-2 w-13 hover:cursor-pointer">
-            <img src="../../assets/icones-dash/house-plus.svg">
-            <p class="hidden group-hover:block text-[#A0B5AC] justify-center self-center text-sm ml-3 text-nowrap font-inter font-semibold">Adicionar Farm</p>
-        </div>
-        </a>
-        <a href="">
-        <div class="rounded-2xl flex flex-row pl-2 pr-2 pt-3 pb-3 ml-2 w-13 hover:cursor-pointer">
-            <img src="../../assets/icones-dash/server-plus.svg">
-            <p class="hidden group-hover:block text-[#A0B5AC] justify-center self-center text-sm ml-3 text-nowrap font-inter font-semibold">Adicionar Rig</p>
-        </div>
-        </a>
-        <a href="">
-        <div class="rounded-2xl flex flex-row pl-2 pr-2 pt-3 pb-3 ml-2 w-13 hover:cursor-pointer">
-            <img src="../../assets/icones-dash/user-plus.svg">
-            <p class="hidden group-hover:block text-[#A0B5AC] justify-center self-center text-sm ml-3 text-nowrap font-inter font-semibold">Adicionar Usuário</p>
-        </div>
-        </a> -->
+        <div id="lista_farms" class="hidden group-hover:block ml-6 mr-2 text-sm text-[#A0B5AC] overflow-y-auto max-h-[50vh]"></div>
 
         <a href="../../index.html">
         <div class="absolute rounded-2xl flex flex-row pl-2 pr-2 pt-3 pb-3 ml-3 w-13 hover:cursor-pointer bottom-3">
@@ -62,12 +33,12 @@
         </a>
     </dialog>
 
-    <!-- Cabeçalho -->
-    <div class="border-b border-[#207F70] flex flex-row justify-between p-5 pl-10 pr-15 place-content-center">
-        <div class="flex flex-row gap-5">
+    <!-- Cabeçalho-->
+    <div class="border-b border-[#207F70] flex flex-row flex-wrap gap-4 justify-between p-5 pl-10 pr-15 place-content-center">
+        <div class="flex flex-row flex-wrap gap-5">
             <div class="bg-[#207F70] rounded-2xl pl-4 pr-6 pt-3 pb-3 flex flex-row">
                 <img src="../../assets/imgs/bitdeer-logo.svg" alt="">
-                <p class="font-space-mono ml-3 font-semibold text-sm text-nowrap place-content-center">Bitdeer Technologies Group</p>
+                <p id="nome_empresa" class="font-space-mono ml-3 font-semibold text-sm text-nowrap place-content-center">Bitdeer Technologies Group</p>
             </div>
             <button class="bg-transparent rounded-2xl border border-[#207F70] place-content-center flex flex-row pl-4 pr-4 pt-3 pb-3 hover:cursor-pointer hover:bg-[#00000025] transition-colors duration-100 ease-in-out">
                 <img src="../../assets/imgs/download.svg" class="">
@@ -75,511 +46,518 @@
             </button>
         </div>
         <div class="flex flex-row align-baseline">
-            <p class="font-space-mono font-bold place-self-center mr-3 text-lg">Luiz Oliveira</p>
+            <p id="nome_usuario" class="font-space-mono font-bold place-self-center mr-3 text-lg">Luiz Oliveira</p>
             <img src="../../assets/imgs/Luiz.png" class="rounded-4xl border border-[#207F70] p-0.5">
         </div>
     </div>
 
-    <!-- Visão geral -->
-    <p class="ml-10 mr-15 mt-7 mb-8 text-3xl font-ibm-mono font-semibold">Visão geral das farms<span class="text-[#808080] text-sm p-2">(nos últimos 30 dias)</span></p>
-    <div class="bg-linear-to-r from-[#0C1F19] to-[#0E3226] border border-[#207F70] rounded-2xl ml-10 mr-15 pr-10 pl-10 pb-9 pt-9">
-        <div class="mb-7 justify-between flex flex-row">
-            <div>
-                <p class="text-sm font-inter">Uptime total</p>
-                <div class="flex flex-row">
-                    <img src="../../assets/icones-dash/seta.svg">
-                    <img src="../../assets/icones-dash/seta-baixo.svg" class="hidden">
-                    <p class="text-2xl font-bold text-[#207F70] font-ibm-mono"><span id="uptime" class="text-3xl text-white pr-1">98</span>%</p>
-                </div>
-                <p class="text-[#808080] text-sm p-2 font-ibm-mono -mt-2 pl-0">Ideal: <span id="uptime_ideal">100</span>%</p>
-            </div>
-            <div>
-                <p class="text-sm font-inter">Alertas em atividade</p>
-                <div class="flex flex-row">
-                    <img src="../../assets/icones-dash/seta-baixo.svg">
-                    <img src="../../assets/icones-dash/seta.svg" class="hidden">
-                    <p class="text-2xl font-bold text-[#207F70] font-ibm-mono"><span id="alertas_ativos" class="text-3xl text-white">11</span></p>
-                </div>
-                <p class="text-[#808080] text-sm p-2 font-ibm-mono -mt-2 pl-0">Ideal: <span id="alertas_ideal">0</span></p>
-            </div>
-            <div>
-                <p class="text-sm font-inter">Hashrate total</p>
-                <div class="flex flex-row">
-                    <img src="../../assets/icones-dash/seta.svg">
-                    <img src="../../assets/icones-dash/seta-baixo.svg" class="hidden">
-                    <p class="text-2xl font-bold text-[#207F70] font-ibm-mono"><span id="hashrate_total" class="text-3xl text-white pr-1">7.70</span>PH/s</span></p>
-                </div>
-                <p class="text-[#808080] text-sm p-2 font-ibm-mono -mt-2 pl-0">Ideal: <span id="hashrate_ideal">0</span> PH/s</p>
-            </div>
-            <div>
-                <p class="text-sm font-inter">Consumo total</p>
-                <div class="flex flex-row">
-                    <img src="../../assets/icones-dash/seta.svg" class="hidden">
-                    <img src="../../assets/icones-dash/seta-baixo.svg">
-                    <p class="text-2xl font-bold text-[#207F70] font-ibm-mono"><span id="consumo_total" class="text-3xl text-white pr-1">130.0</span>kW</p>
-                </div>
-                <p class="text-[#808080] text-sm p-2 font-ibm-mono -mt-2 pl-0">Ideal: <span id="consumo_ideal">0</span> kW</p>
-            </div>
-            <div>
-                <p class="text-sm font-inter">Eficiencia media aproximada</p>
-                <div class="flex flex-row">
-                    <img src="../../assets/icones-dash/seta.svg" class="hidden">
-                    <img src="../../assets/icones-dash/seta-baixo.svg">
-                    <p class="text-2xl font-bold text-[#207F70] font-ibm-mono"><span id="eficiencia_rig" class="text-3xl text-white pr-1">66</span>J/TH</p>
-                </div>
-                <p class="text-[#808080] text-sm p-2 font-ibm-mono -mt-2 pl-0">Ideal: <span id="eficiencia_ideal">0</span> J/TH</p>
-            </div>
+
+    <div class="ml-5 mr-5 md:ml-10 md:mr-15 pb-10 flex flex-col gap-4 font-[Inter] tabular-nums text-[#eaf3f0]">
+        <div class="mt-7 mr-15 flex flex-row items-center gap-2 text-sm font-space-mono text-[#A0B5AC]">
+            <span class="text-white font-semibold text-2xl">Macrovisão<span>
         </div>
-        <div>
-            <div class="flex flex-row justify-between gap-1 font-space-mono mb-2">
-                <p>Saúde das Rigs</p>
-                <p> <span id="num_ok"></span> Ok · 
-                    <span id="num_atencao"></span> Atenção · 
-                    <span id="num_critica"></span> Crítica · 
-                    <span id="num_offline"></span> Offline</p>
+
+        <!-- kpis -->
+        <section aria-label="Indicadores" class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <article id="kpi_reincidentes" class="min-w-0 rounded-2xl border border-t-[3px] border-[#207F70]/50 border-t-[#6d6f6e] bg-[#0d1f18] px-5 pt-3.5 pb-4">
+            <p class="text-[13px] font-medium">Farm com mais reincidentes</p>
+            <p id="reincidentes_valor" class="mt-2 truncate font-space-mono text-[26px] leading-tight font-bold sm:text-[28px]">...</p>
+            <p id="reincidentes_detalhe" class="mt-1.5 text-xs text-[#8ea79f]">Carregando...</p>
+        </article>
+        <article id="kpi_horario" class="min-w-0 rounded-2xl border border-t-[3px] border-[#207F70]/50 border-t-[#6d6f6e] bg-[#0d1f18] px-5 pt-3.5 pb-4">
+            <p class="text-[13px] font-medium">Dia e horário que mais dão problema</p>
+            <p id="horario_valor" class="mt-2 truncate font-space-mono text-[26px] leading-tight font-bold sm:text-[28px]">...</p>
+            <p id="horario_detalhe" class="mt-1.5 text-xs text-[#8ea79f]">Carregando...</p>
+        </article>
+        <article id="kpi_uptime" class="min-w-0 rounded-2xl border border-t-[3px] border-[#207F70]/50 border-t-[#6d6f6e] bg-[#0d1f18] px-5 pt-3.5 pb-4">
+            <p class="text-[13px] font-medium">Máquinas em uptime</p>
+            <p id="uptime_valor" class="mt-2 truncate font-space-mono text-[26px] leading-tight font-bold sm:text-[28px]">...</p>
+            <p id="uptime_detalhe" class="mt-1.5 text-xs text-[#8ea79f]">Carregando...</p>
+            <p class="mt-1 text-[10px] text-[#8ea79f]">Ideal: 98%</p>
+        </article>
+        <article id="kpi_resolvidos" class="min-w-0 rounded-2xl border border-t-[3px] border-[#207F70]/50 border-t-[#6d6f6e] bg-[#0d1f18] px-5 pt-3.5 pb-4">
+            <p class="text-[13px] font-medium">Alertas resolvidos (30d)</p>
+            <p id="resolvidos_valor" class="mt-2 truncate font-space-mono text-[26px] leading-tight font-bold sm:text-[28px]">...</p>
+            <p id="resolvidos_detalhe" class="mt-1.5 text-xs text-[#8ea79f]">Carregando...</p>
+            <p class="mt-1 text-[10px] text-[#8ea79f]">Ideal: 96%</p>
+        </article>
+        </section>
+
+
+        <section class="grid grid-cols-1 gap-4 lg:grid-cols-5">
+
+            <!-- grafico alertas -->
+            <div class="flex min-w-0 flex-col rounded-2xl border border-[#207F70]/50 bg-[#0d1f18] p-4 md:p-5 lg:col-span-3">
+                <div class="flex flex-wrap items-start justify-between gap-3">
+                    <div class="min-w-0">
+                        <h2 class="text-lg font-semibold leading-tight">Alertas por Farm</h2>
+                        <p class="mt-1 text-xs text-[#8ea79f]">Quando os alertas acontecem</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 text-xs">
+                    
+                        <div class="inline-flex overflow-hidden rounded-lg border border-[#207F70]/50 bg-[#0b1a14]">
+                            <button id="j_24h" onclick="mudarJanela('24h')" type="button" class="px-3 py-1.5 cursor-pointer text-[#8ea79f] hover:text-white">24h</button>
+                            <button id="j_7d" onclick="mudarJanela('7d')" type="button" class="px-3 py-1.5 cursor-pointer bg-[#00644f] text-[#00E6A6]">7d</button>
+                            <button id="j_30d" onclick="mudarJanela('30d')" type="button" class="px-3 py-1.5 cursor-pointer text-[#8ea79f] hover:text-white">30d</button>
+                        </div>
+                        <label class="sr-only" for="filtro-farm">Filtrar farm</label>
+                        <select id="filtro-farm" onchange="carregarGrafico()" class="cursor-pointer rounded-lg border border-[#207F70]/50 bg-[#0b1a14] px-2.5 py-1.5 text-white">
+                            <option value="">Todas as farms</option>
+                        </select>
+                    </div>
+                </div>
+
+                <ul class="mt-4 flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs text-[#8ea79f]">
+                <li class="flex items-center gap-1.5"><span class="size-3 rounded-full bg-[#ff1e3c]"></span>Crítico</li>
+                <li class="flex items-center gap-1.5"><span class="size-3 rounded-full bg-[#ffb001]"></span>Atenção</li>
+                </ul>
+
+                
+                <div class="mt-3">
+                    <div id="grafico_barras"></div>
+                    <div class="mt-1 grid grid-cols-[84px_minmax(0,1fr)_44px] sm:grid-cols-[128px_minmax(0,1fr)_124px] gap-x-2.5">
+                        <span></span>
+                        <div id="grafico_eixo" class="relative h-5 text-[10px] text-[#8ea79f]"></div>
+                        <span></span>
+                    </div>
+                </div>
+
+                <div class="mt-auto flex flex-wrap justify-between gap-2 pt-4 text-xs text-[#8ea79f]">
+                    <span id="grafico_dica">Clique em uma barra para ver os alertas e abrir o chamado no Jira</span>
+                    <span id="grafico_resumo" class="font-space-mono"></span>
+                </div>
             </div>
-            <div class="h-5 overflow-hidden flex flex-row rounded-md">
-                <div role="progressbar" id="porcento_ok" style="width: 69%;" class="bg-[#00E6A6]"></div>
-                <div role="progressbar" id="porcento_atencao" style="width: 19%;" class="bg-[#FFAE00]"></div>
-                <div role="progressbar" id="porcento_critica" style="width: 7%;" class="bg-[#E00027]"></div>
-                <div role="progressbar" id="porcento_offline" style="width: 5%;" class="bg-[#808080]"></div>
+
+            <!-- mapa de saude (vem do ETL) -->
+            <div class="flex min-w-0 flex-col rounded-2xl border border-[#207F70]/50 bg-[#0d1f18] p-4 md:p-5 lg:col-span-2">
+                <h2 class="text-lg font-semibold leading-tight">Mapa de saúde</h2>
+                <p class="mt-1 font-space-mono text-[11px] text-[#8ea79f]">Farm › Sessão › Rig</p>
+
+                <div id="mapa_saude" class="mt-4 flex max-h-140 flex-col gap-4 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-[#207F70] scrollbar-track-transparent">
+                    <p class="text-xs text-[#8ea79f]">Carregando...</p>
+                </div>
+
+                <ul class="mt-auto flex flex-wrap gap-x-4 gap-y-1 pt-4 text-xs text-[#8ea79f]">
+                <li class="flex items-center gap-1.5"><span class="size-2.5 rounded-full bg-[#00E6A6]"></span>Normal</li>
+                <li class="flex items-center gap-1.5"><span class="size-2.5 rounded-full bg-[#FFB001]"></span>Atenção</li>
+                <li class="flex items-center gap-1.5"><span class="size-2.5 rounded-full bg-[#FF1E3C]"></span>Crítico</li>
+                <li class="flex items-center gap-1.5"><span class="size-2.5 rounded-full bg-[#6d6f6e]"></span>Offline</li>
+                </ul>
             </div>
-        </div>
+        </section>
     </div>
 
-    <!-- Filtros -->
-    <div class="flex flex-row ml-10 mr-15 mt-5">
-        <button onclick="filtro(listaIncidente,'listaIncidente', 'Rigs com Incidentes', 'filtro_total')" class="text-sm rounded-2xl pl-3 pr-3 p-2 border ml-2 hover:cursor-pointer filtro-selecionado transition-colors duration-100 ease-in-out"  id="filtro_total">Incidentes <span id="rigs_incidente_filtro"></span></button>        
-        <button onclick="filtro(listaCritica,'listaCritica', 'Rigs em estado Crítico','filtro_criticas')" class="text-sm rounded-2xl pl-3 pr-3 p-2 border ml-2 hover:cursor-pointer filtro transition-colors duration-100 ease-in-out"  id="filtro_criticas">Críticas <span id="rigs_criticas_filtro"></span></button>
-        <button onclick="filtro(listaOff,'listaOff', 'Rigs Offline','filtro_offline')" class="text-sm rounded-2xl pl-3 pr-3 p-2 border ml-2 hover:cursor-pointer filtro transition-colors duration-100 ease-in-out"  id="filtro_offline">Offline <span id="rigs_offline_filtro"></span></button>
-        <button onclick="filtro(listaAtencao,'listaAtencao', 'Rigs que necessitam atenção','filtro_atencao')" class="text-sm rounded-2xl pl-3 pr-3 p-2 border ml-2 hover:cursor-pointer filtro transition-colors duration-100 ease-in-out"  id="filtro_atencao">Atenção <span id="rigs_atencao_filtro"></span></button>
-        <button onclick="filtro(listaTodas,'listaTodas', 'Todas as Rigs','filtro_saudaveis')" class="text-sm rounded-2xl pl-3 pr-3 p-2 border ml-2 hover:cursor-pointer filtro transition-colors duration-100 ease-in-out"  id="filtro_saudaveis">Todas <span id="rigs_total_filtro"></span></button>
-    </div>
-
-    <!-- Restante -->
-    <div class="lg:grid grid-cols-3 ml-10 mr-15 mt-3 gap-5">
-        <div class="col-span-2">
-    <!-- Fazenda A -->
-            <div id="area_rigs" class="bg-[#0C1F19] border border-[#207F70] pb-8 pt-8 pl-10 pr-10 rounded-2xl mb-10">
-                <div class="flex flex-row justify-between">
-                    <p id="nome_card" class="font-semibold font-inter text-2xl mb-10">Rigs com incidentes</p>
-                    <p class="font-space-mono text-sm"><span id="rigs_ativas"></span>/<span id="rigs_total"></span> online · <span id="rigs_com_alertas"></span> alertas</p>
-                </div>
+    <!-- modal dos alertas-->
+    <dialog id="modal-alertas" class="fixed top-auto bottom-0 left-0 right-0 mx-auto max-h-[74vh] w-full max-w-5xl flex-col rounded-t-2xl border border-b-0 border-[#207F70]/50 bg-[#0d1f18] p-0 text-white open:flex backdrop:bg-black/60 backdrop:backdrop-blur-sm">
+        <div class="flex items-start justify-between gap-3 border-b border-[#207F70]/50 px-5 pt-4 pb-3">
+            <div class="min-w-0">
+                <h2 id="modal_titulo" class="truncate font-space-mono text-lg leading-tight font-bold">Farm</h2>
+                <p id="modal_subtitulo" class="mt-1 text-xs text-[#8ea79f]"></p>
             </div>
+            <form method="dialog">
+                <button type="submit" aria-label="Fechar" class="grid size-9 cursor-pointer place-items-center rounded-lg border border-[#207F70]/50 text-[#8ea79f] hover:text-white">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+                </button>
+            </form>
         </div>
+        <div id="modal_lista" class="flex min-h-0 flex-col gap-2.5 overflow-y-auto px-5 pt-3 pb-4 scrollbar-thin scrollbar-thumb-[#207F70] scrollbar-track-transparent"></div>
+    </dialog>
+
+    <script>
+    var idEmpresa = sessionStorage.ID_EMPRESA
+
+    if (sessionStorage.NOME_USUARIO) {
+        nome_usuario.innerHTML = sessionStorage.NOME_USUARIO
+    }
+
+    // metas "ideais" mostradas nas kpis -YasminEloitaNascimento
+    const IDEAL_UPTIME = 98
+    const IDEAL_RESOLVIDOS = 96
+
+    const VERDE = "#00E6A6"
+    const AMARELO = "#FFB001"
+    const VERMELHO = "#FF1E3C"
+    const CINZA = "#6d6f6e"
+
+    const BTN_ATIVO = "px-3 py-1.5 cursor-pointer bg-[#00644f] text-[#00E6A6]"
+    const BTN_INATIVO = "px-3 py-1.5 cursor-pointer text-[#8ea79f] hover:text-white"
+
+    let agrupar = "farm"
+    let janela = "7d"
+    let farms = []
+
+    // evita quebrar o html se o nome tiver < ou > -YasminEloitaNascimento
+    function esc(texto) {
+        let div = document.createElement("div")
+        div.textContent = texto == null ? "" : texto
+        return div.innerHTML
+    }
+
+    // pinta o valor e a borda de cima da kpi -YasminEloitaNascimento
+    function pintarKpi(idArtigo, idValor, cor) {
+        document.getElementById(idArtigo).style.borderTopColor = cor
+        document.getElementById(idValor).style.color = cor
+    }
+
+    // verde se bateu o ideal, amarelo se ficou ate 5 pontos abaixo, vermelho se menos -YasminEloitaNascimento
+    function corPorIdeal(valor, ideal) {
+        if (valor >= ideal) return VERDE
+        if (valor >= ideal - 5) return AMARELO
+        return VERMELHO
+    }
+
+    // kpi
+    function carregarKpis() {
+        fetch(`/dashboard-geral/kpis/${idEmpresa}`).then(r => r.json()).then(dados => {
+
+            if (dados.farm_reincidentes) {
+                reincidentes_valor.innerHTML = esc(dados.farm_reincidentes.nome)
+                reincidentes_detalhe.innerHTML = `${dados.farm_reincidentes.maquinas} máquinas com 3+ alertas do mesmo componente (30d)`
+                pintarKpi("kpi_reincidentes", "reincidentes_valor", VERMELHO)
+            } else {
+                reincidentes_valor.innerHTML = "Nenhuma"
+                reincidentes_detalhe.innerHTML = "Sem reincidência nos últimos 30 dias"
+                pintarKpi("kpi_reincidentes", "reincidentes_valor", VERDE)
+            }
+
+            if (dados.dia_horario) {
+                horario_valor.innerHTML = `${dados.dia_horario.dia} · ${dados.dia_horario.hora}`
+                horario_detalhe.innerHTML = `${dados.dia_horario.total} alertas nessa janela (30d)`
+                pintarKpi("kpi_horario", "horario_valor", AMARELO)
+            } else {
+                horario_valor.innerHTML = "--"
+                horario_detalhe.innerHTML = "Sem alertas nos últimos 30 dias"
+                pintarKpi("kpi_horario", "horario_valor", VERDE)
+            }
+
+            let r = dados.alertas_resolvidos
+            if (r.total == 0) {
+                resolvidos_valor.innerHTML = "--"
+                resolvidos_detalhe.innerHTML = "Sem alertas nos últimos 30 dias"
+                pintarKpi("kpi_resolvidos", "resolvidos_valor", VERDE)
+            } else {
+                resolvidos_valor.innerHTML = r.percentual + "%"
+                resolvidos_detalhe.innerHTML = `${r.resolvidos} de ${r.total} alertas resolvidos`
+                pintarKpi("kpi_resolvidos", "resolvidos_valor", corPorIdeal(r.percentual, IDEAL_RESOLVIDOS))
+            }
+        })
+    }
+
+
+    function carregarUptime() {
+        fetch(`/dashboard-geral/uptime/${idEmpresa}`).then(r => r.json()).then(dados => {
+            if (dados.erro) {
+                uptime_valor.innerHTML = "--"
+                uptime_detalhe.innerHTML = "Sem dados do ETL"
+                pintarKpi("kpi_uptime", "uptime_valor", CINZA)
+                return
+            }
+            uptime_valor.innerHTML = String(dados.percentual).replace(".", ",") + "%"
+            uptime_detalhe.innerHTML = `${dados.online} de ${dados.total} máquinas online`
+            pintarKpi("kpi_uptime", "uptime_valor", corPorIdeal(dados.percentual, IDEAL_UPTIME))
+        })
+    }
+
+  //mapa de saude -YasminELoitaNascimento
+    const COR_RIG = {
+        critico: "bg-[#FF1E3C] text-white",
+        atencao: "bg-[#FFB001] text-[#2b1c00]",
+        offline: "bg-[#6d6f6e] text-white",
+        normal: "bg-[#00E6A6] text-[#04261d]",
+        sem_dados: "bg-[#00E6A6] text-[#04261d]"
+    }
+
+    function carregarMapa() {
+        fetch(`/dashboard-geral/mapa-saude/${idEmpresa}`).then(r => r.json()).then(lista => {
+            let caixa = document.getElementById("mapa_saude")
+
+            if (!Array.isArray(lista) || lista.length == 0) {
+                caixa.innerHTML = '<p class="text-xs text-[#8ea79f]">Sem dados do ETL.</p>'
+                return
+            }
+
+            caixa.innerHTML = ""
+            for (let i = 0; i < lista.length; i++) {
+                let f = lista[i]
+
+                let badge = f.alertas_abertos > 0
+                    ? `<span class="whitespace-nowrap rounded-md border border-[#FF1E3C]/30 bg-[#FF1E3C]/15 px-2.5 py-1 font-space-mono text-[10px] text-[#ef363b]">${f.alertas_abertos} ${f.alertas_abertos == 1 ? "alerta aberto" : "alertas abertos"}</span>`
+                    : `<span class="whitespace-nowrap rounded-md border border-[#00E6A6]/30 bg-[#00E6A6]/10 px-2.5 py-1 font-space-mono text-[10px] text-[#00E6A6]">Sem alertas abertos</span>`
+
+                let sessoes = ""
+                for (let j = 0; j < f.sessoes.length; j++) {
+                    let s = f.sessoes[j]
+                    let rigs = ""
+                    for (let k = 0; k < s.rigs.length; k++) {
+                        let rig = s.rigs[k]
+                        rigs += `<button type="button" onclick="abrirRig(${rig.id}, ${s.id}, ${f.id})" data-rig="${rig.id}" class="h-8 w-9 shrink-0 cursor-pointer rounded-md font-space-mono text-[11px] font-bold hover:brightness-125 ${COR_RIG[rig.status] || COR_RIG.normal}">${String(rig.id).padStart(2, "0")}</button>`
+                    }
+                    sessoes += `
+                    <div class="mt-3.5">
+                        <p class="mb-2 font-space-mono text-[11px] text-[#8ea79f]">${esc(s.nome)}</p>
+                        <div class="flex gap-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-[#207F70] scrollbar-track-transparent">${rigs}</div>
+                    </div>`
+                }
+
+                caixa.innerHTML += `
+                <article data-farm="${esc(f.nome).toLowerCase()}" class="shrink-0 rounded-xl border border-[#207F70]/50 bg-[#102a21] p-4">
+                    <div class="flex items-center justify-between gap-2">
+                        <h3 class="truncate text-sm font-semibold">${esc(f.nome)}</h3>
+                        ${badge}
+                    </div>
+                    ${sessoes}
+                </article>`
+            }
+            filtrarMapa()
+        })
+    }
+
+    // busca por nome da farm ou numero da rig -YasminEloitaNascimento
+    function filtrarMapa() {
+        let texto = document.getElementById("busca").value.trim().toLowerCase()
+        let cards = document.querySelectorAll("#mapa_saude article")
+
+        for (let i = 0; i < cards.length; i++) {
+            let nomeFarm = cards[i].dataset.farm
+            let rigs = cards[i].querySelectorAll("button[data-rig]")
+            let achouRig = false
+
+            for (let j = 0; j < rigs.length; j++) {
+                let bate = texto != "" && (rigs[j].dataset.rig == texto || rigs[j].textContent == texto)
+                rigs[j].style.outline = bate ? "2px solid #fff" : ""
+                if (bate) achouRig = true
+            }
+
+            cards[i].style.display = (texto == "" || nomeFarm.includes(texto) || achouRig) ? "" : "none"
+        }
+    }
+
     
-    <!-- Alertas e mais informações -->
+    function mudarAgrupamento(novo) {
+        agrupar = novo
+        document.getElementById("g_farm").className = novo == "farm" ? BTN_ATIVO : BTN_INATIVO
+        document.getElementById("g_dia").className = novo == "dia" ? BTN_ATIVO : BTN_INATIVO
+        document.getElementById("g_horario").className = novo == "horario" ? BTN_ATIVO : BTN_INATIVO
+        carregarGrafico()
+    }
 
-        <div>
-            <div id="rig_individual" class="bg-[#0C1F19] border border-[#207F70] pb-6 pt-6 pr-6 pl-6 rounded-2xl">
-                <p>Clique em um dos cards para selecionar uma Rig</p>
-            </div>
-        </div>
-    </div>
-</body>
-</html>
-<script>
-    let lista = []
-    let listaTodas = []
-    let listaIncidente = []
-    let listaAtencao = []
-    let listaCritica = []
-    let listaOff = []
-    let listaOk = []
-    let filtroSelec = "filtro_total"
+    function mudarJanela(nova) {
+        janela = nova
+        document.getElementById("j_24h").className = nova == "24h" ? BTN_ATIVO : BTN_INATIVO
+        document.getElementById("j_7d").className = nova == "7d" ? BTN_ATIVO : BTN_INATIVO
+        document.getElementById("j_30d").className = nova == "30d" ? BTN_ATIVO : BTN_INATIVO
+        carregarGrafico()
+    }
 
-    window.onload = carregarDadosSite()
+    function carregarGrafico() {
+        let idFarm = document.getElementById("filtro-farm").value
 
-    function sortearJSON(){
-        let contador = 0;
-        let contaFarm = 0
-        let setor = 1
-        let idRig = 1
-        let problemas = 10
-        let offlines = 3
+        fetch(`/dashboard-geral/alertas-por-farm/${idEmpresa}?janela=${janela}&agrupar=${agrupar}&farm=${idFarm}`)
+            .then(r => r.json()).then(dados => {
 
-        while (contador < 42){
-            contador++
-            let rng = problemas > 0 ? Math.round(Math.random()*(4-1)+1) : 4
-            let problema = Number((Math.random()*(4-1)+1).toFixed(0))
+                let caixa = document.getElementById("grafico_barras")
+                let eixo = document.getElementById("grafico_eixo")
+                caixa.innerHTML = ""
+                eixo.innerHTML = ""
 
-            let farm = contaFarm <= 21? "A":"B"
-            let status = rng == 1? "critico" : rng == 2? "offline" : rng == 3? "atencao" : "ok"
-            let hash = 0
-            let gpu = 0
-            let temperatura = 0
-            let consumo = 0
-            let atualizada = Math.ceil(Math.random()*(120-1)+1)
+                if (!dados.barras || dados.barras.length == 0) {
+                    caixa.innerHTML = '<p class="py-6 text-center text-xs text-[#00E6A6]">Nenhum alerta neste período.</p>'
+                    document.getElementById("grafico_resumo").innerHTML = `Últimos ${janela} · 0 alertas`
+                    return
+                }
+
+                
+                let maior = Math.max(...dados.barras.map(b => b.total), 1)
+                let escala = Math.ceil(maior / 4) * 4
+
+                
+                let altura = agrupar == "farm" ? "h-16 lg:h-24" : "h-9"
+
+                for (let i = 0; i < dados.barras.length; i++) {
+                    let b = dados.barras[i]
+                    let largura = (b.total / escala) * 100
+
+                    let fatias = ""
+                    if (b.criticos > 0) fatias += `<i class="min-w-[3px] bg-[#ff1e3c]" style="flex:${b.criticos} 1 0"></i>`
+                    if (b.atencoes > 0) fatias += `<i class="min-w-[3px] last:rounded-r bg-[#ffb001]" style="flex:${b.atencoes} 1 0"></i>`
+
+                    caixa.innerHTML += `
+                    <button type="button" onclick="clicarBarra(${b.id_farm})" class="grid ${altura} w-full cursor-pointer grid-cols-[84px_minmax(0,1fr)_44px] sm:grid-cols-[128px_minmax(0,1fr)_124px] gap-x-2.5 rounded-lg text-left hover:bg-[#00E6A6]/5">
+                        <span class="self-center truncate pl-1.5 text-xs">${esc(b.nome)}</span>
+                        <span class="relative h-full border-r border-[#17362d] bg-[linear-gradient(to_right,#17362d_1px,transparent_1px)] bg-size-[25%_100%]">
+                            <span class="absolute inset-y-[18%] left-0 flex gap-0.5" style="width:${largura}%">${fatias}</span>
+                        </span>
+                        <span class="flex flex-col items-end self-center pr-1.5 font-space-mono text-xs leading-tight">
+                            <span><b>${b.total}</b><span class="hidden text-[#8ea79f] sm:inline"> alertas</span></span>
+                            <span class="text-[10px] text-[#FF1E3C]">${b.criticos} crít.</span>
+                        </span>
+                    </button>`
+                }
+
             
-            let nomeRig = ""
-
-            if (rng == 1){
-                problemas--
-                if (problema == 1){
-                    // Caso 1 - Alta Temperatura
-                    console.log("Critico 1")
-                    hash = parseFloat((Math.random()*(120-100)+100).toFixed(1))
-                    gpu = Math.ceil(Math.random()*(100-95)+95)
-                    temperatura = Math.ceil(Math.random()*(98-85)+85)
-                    consumo = parseFloat((Math.random()*(3.5-2)+2).toFixed(1))
-
-                } else if (problema == 2){
-                    // Caso 2 - GPU com defeito
-                    console.log("Critico 2")
-                    hash = parseFloat((Math.random()*(50-40)+40).toFixed(1))
-                    gpu = Math.ceil(Math.random()*(70-60)+60)
-                    temperatura = Math.ceil(Math.random()*(65-45)+45)
-                    consumo = parseFloat((Math.random()*(3.5-2)+2).toFixed(1))
-
-                } else if (problema == 3){
-                    // Caso 3 - Hash coletado anormal
-                    console.log("Critico 3")
-                    hash = parseFloat((Math.random()*(12-10)+10).toFixed(1))
-                    gpu = Math.ceil(Math.random()*(100-95)+95)
-                    temperatura = Math.ceil(Math.random()*(65-45)+45)
-                    consumo = parseFloat((Math.random()*(3.5-2)+2).toFixed(1))
-
-                } else if (problema == 4){
-                    // Caso 4 - Gasto excessivo de energia
-                    console.log("Critico 4")
-                    hash = parseFloat((Math.random()*(120-100)+100).toFixed(1))
-                    gpu = Math.ceil(Math.random()*(100-95)+95)
-                    temperatura = Math.ceil(Math.random()*(65-45)+45)
-                    consumo = parseFloat((Math.random()*(10.5-9)+9).toFixed(1))
+                let posicoes = ["left-0", "left-1/4 -ml-1.5", "left-1/2 -ml-1.5", "left-3/4 -ml-1.5", "right-0"]
+                for (let i = 0; i < 5; i++) {
+                    eixo.innerHTML += `<span class="absolute ${posicoes[i]}">${Math.round((escala / 4) * i)}</span>`
                 }
-            } else if (rng == 2){
-                if(offlines == 0){
-                    contador--
-                    continue
-                }
-                problemas--
-                offlines--
-                console.log("Offline")
-                status = "offline"
-            } else if (rng == 3){
-                problemas--
-                if (problema == 1){
-                    // Caso 1 - Rig esquentando
-                    console.log("Atencao 1")
-                    hash = parseFloat((Math.random()*(120-100)+100).toFixed(1))
-                    gpu = Math.ceil(Math.random()*(100-95)+95)
-                    temperatura = Math.ceil(Math.random()*(80-71)+71)
-                    consumo = parseFloat((Math.random()*(3.5-2)+2).toFixed(1))
 
-                } else if (problema == 2){
-                    // Caso 2 - GPU anormal
-                    console.log("Atencao 2")
-                    hash = parseFloat((Math.random()*(100-90)+90).toFixed(1))
-                    gpu = Math.ceil(Math.random()*(80-75)+80)
-                    temperatura = Math.ceil(Math.random()*(65-45)+45)
-                    consumo = parseFloat((Math.random()*(3.5-2)+2).toFixed(1))
+                document.getElementById("grafico_resumo").innerHTML = `Últimos ${janela} · ${dados.total_alertas} alertas · ${dados.total_criticos} críticos`
+            })
+    }
 
-                } else if (problema == 3){
-                    // Caso 3 - Hash coletado anormal
-                    console.log("Atencao 3")
-                    hash = parseFloat((Math.random()*(90-80)+80).toFixed(1))
-                    gpu = Math.ceil(Math.random()*(100-95)+95)
-                    temperatura = Math.ceil(Math.random()*(65-45)+45)
-                    consumo = parseFloat((Math.random()*(3.5-2)+2).toFixed(1))
+    
+    function clicarBarra(idDaBarra) {
+    let idFarm = ""
 
-                } else if (problema == 4){
-                    // Caso 4 - Gasto excessivo de energia
-                    console.log("Atencao 4")
-                    hash = parseFloat((Math.random()*(120-100)+100).toFixed(1))
-                    gpu = Math.ceil(Math.random()*(100-95)+95)
-                    temperatura = Math.ceil(Math.random()*(65-45)+45)
-                    consumo = parseFloat((Math.random()*(8-4)+4).toFixed(1))
-                }
-            } else {
-                console.log("Ok")
-                hash = parseFloat((Math.random()*(120-100)+100).toFixed(1))
-                gpu = Math.ceil(Math.random()*(100-95)+95)
-                temperatura = Math.ceil(Math.random()*(65-45)+45)
-                consumo = parseFloat((Math.random()*(3.5-2)+2).toFixed(1))
+    if (agrupar == "farm" && idDaBarra != null) {
+        idFarm = idDaBarra
+    } else {
+        idFarm = document.getElementById("filtro-farm").value
+    }
+
+    if (idFarm == "") {
+        document.getElementById("grafico_dica").innerHTML = "Escolha uma farm no filtro para ver os alertas dessa barra."
+        return
+    }
+    abrirModal(idFarm)
+}
+    
+    const ICONE_CRITICO = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></svg>'
+    const ICONE_ATENCAO = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>'
+    const ICONE_LINK = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>'
+
+    function tempoAtras(data) {
+        let horas = Math.floor((Date.now() - new Date(data).getTime()) / 3600000)
+        return horas < 1 ? "há menos de 1 h" : `há ${horas} h`
+    }
+
+    function abrirModal(idFarm) {
+        fetch(`/dashboard-geral/alertas/${idEmpresa}/${idFarm}?janela=${janela}`).then(r => r.json()).then(dados => {
+
+            modal_titulo.innerHTML = esc(dados.farm || "Farm")
+            modal_subtitulo.innerHTML = `Últimos ${janela} · ${dados.total} alertas · ${dados.criticos} críticos`
+
+            let lista = document.getElementById("modal_lista")
+            lista.innerHTML = ""
+
+            if (dados.alertas.length == 0) {
+                lista.innerHTML = '<p class="py-4 text-center text-xs text-[#00E6A6]">Nenhum alerta neste período.</p>'
             }
 
-            if(setor <= 3){
-                if (idRig <= 7){
-                    nomeRig = `MR0${setor}-0${idRig}${farm}`
-                    idRig++
-                } else {
-                    idRig = 1
-                    nomeRig = `MR0${setor}-0${idRig}${farm}`
-                    setor++
-                }
-            } else {
-                setor = 1
-                nomeRig = `MR0${setor}-0${idRig}${farm}`
+            for (let i = 0; i < dados.alertas.length; i++) {
+                let a = dados.alertas[i]
+                let critico = a.severidade == "critico"
+                let resolvido = a.status == "resolvido"
+
+                let quando = new Date(a.detectado_em).toLocaleString("pt-BR", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" })
+
+                let chip = a.chave_jira
+                    ? `<span class="inline-flex items-center gap-1.5 rounded-md border border-[#00E6A6]/35 px-2.5 py-1.5 font-space-mono text-xs font-bold text-[#00E6A6]">${esc(a.chave_jira)}${ICONE_LINK}</span>`
+                    : `<span class="rounded-md border border-white/20 px-2.5 py-1.5 font-space-mono text-xs text-[#8ea79f]">Sem chamado</span>`
+
+                // se tem link vira <a>, se nao, vira <div> -YasminEloitaNascimento
+                let abre = a.link_jira
+                    ? `<a href="${esc(a.link_jira)}" target="_blank" rel="noopener noreferrer"`
+                    : `<div`
+                let fecha = a.link_jira ? "</a>" : "</div>"
+
+                lista.innerHTML += `
+                ${abre} class="flex flex-wrap items-center gap-x-3.5 gap-y-2.5 rounded-xl border px-3.5 py-3 hover:brightness-125 ${critico ? "border-[#FF1E3C]/30 bg-[#FF1E3C]/8" : "border-[#FFB001]/25 bg-[#FFB001]/6"}">
+                    <span class="grid size-10 shrink-0 place-items-center rounded-xl ${critico ? "bg-[#FF1E3C]/15 text-[#ff4d63]" : "bg-[#FFB001]/15 text-[#FFB001]"}">${critico ? ICONE_CRITICO : ICONE_ATENCAO}</span>
+                    <span class="flex min-w-0 flex-1 basis-56 flex-col">
+                        <span class="font-space-mono text-[13px] font-bold">Rig ${String(a.maquina).padStart(2, "0")} · ${esc(a.componente)}</span>
+                        <span class="text-[13px]">${esc(a.descricao)}</span>
+                        <span class="mt-0.5 text-[11px] text-[#8ea79f]">${esc(a.farm)} / ${esc(a.sessao)} · ${quando} · ${tempoAtras(a.detectado_em)}</span>
+                    </span>
+                    <span class="flex flex-wrap items-center gap-2">
+                        <span class="rounded-md px-2.5 py-1 text-[11px] font-semibold ${critico ? "bg-[#FF1E3C]/15 text-[#ff6b7d]" : "bg-[#FFB001]/15 text-[#FFB001]"}">${critico ? "Crítico" : "Atenção"}</span>
+                        <span class="rounded-md px-2.5 py-1 text-[11px] font-semibold ${resolvido ? "bg-[#00E6A6]/10 text-[#00E6A6]" : "bg-white/10 text-white"}">${resolvido ? "Resolvido" : "Aberto"}</span>
+                        ${chip}
+                    </span>
+                ${fecha}`
             }
 
-            rig = {
-                "nome": nomeRig,
-                "farm": farm,
-                "status": status,
-                "hash": hash,
-                "gpu": gpu,
-                "temperatura": temperatura,
-                "consumo": consumo,
-                "atualizada": atualizada
-            }
-
-            console.log(rig)
-
-            lista.push(rig);
-            contaFarm++
-        }
-
-        lista.forEach(farm => {
-            if (farm.status == "offline"){
-                listaOff.push(farm)
-            } else if (farm.status == "critico"){
-                listaCritica.push(farm)
-            } else if (farm.status == "atencao"){
-                listaAtencao.push(farm)
-            } else if (farm.status == "ok"){
-                listaOk.push(farm)
-            }
-        });
-
-        listaCritica.forEach(rig => {
-            listaIncidente.push(rig)
-            listaTodas.push(rig)
-        })
-
-        listaOff.forEach(rig => {
-            listaIncidente.push(rig)
-            listaTodas.push(rig)
-        })
-
-        listaAtencao.forEach(rig => {
-            listaIncidente.push(rig)
-            listaTodas.push(rig)
-        })
-
-        listaOk.forEach(rig => {
-            listaTodas.push(rig)
+            document.getElementById("modal-alertas").showModal()
         })
     }
 
-    function carregarDadosSite(){
-        sortearJSON()
-
-        rigs_total.innerHTML = listaTodas.length
-        rigs_alertas = listaTodas.length-listaOk.length
-        num_ok.innerHTML = listaOk.length
-        num_atencao.innerHTML = listaAtencao.length
-        num_critica.innerHTML = listaCritica.length
-        num_offline.innerHTML = listaOff.length
-        porcento_ok.style.width = `${(100*listaOk.length)/listaTodas.length}%`
-        porcento_atencao.style.width = `${(100*listaAtencao.length)/listaTodas.length}%`
-        porcento_critica.style.width = `${(100*listaCritica.length)/listaTodas.length}%`
-        porcento_offline.style.width = `${(100*listaOff.length)/listaTodas.length}%`
-        rigs_incidente_filtro.innerHTML = listaIncidente.length
-        rigs_criticas_filtro.innerHTML = listaCritica.length
-        rigs_offline_filtro.innerHTML = listaOff.length
-        rigs_atencao_filtro.innerHTML = listaAtencao.length
-        rigs_total_filtro.innerHTML = listaTodas.length
-        console.log(listaTodas.length-listaOff.length)
-        rigs_ativas.innerHTML = listaTodas.length-listaOff.length
-        rigs_total.innerHTML = listaTodas.length
-        rigs_com_alertas.innerHTML = listaTodas.length-listaOk.length
-        alertas_ativos.innerHTML = listaIncidente.length
-
-        let numColunas = Math.floor(listaIncidente.length/7)
-        let somaHash = 0
-        let somaConsumo = 0
-
-        listaTodas.forEach(elemento => {
-            somaHash += Number(elemento.hash)
-            somaConsumo += Number(elemento.consumo)
-        });
-
-        let eficienciaRigs = (somaConsumo*1000)/somaHash
-        eficienciaRigs /= listaTodas.length
-        let eficienciaIdeal = ((2*42)*1000)/(120*42)
-        eficienciaIdeal /= listaTodas.length
-
-
-
-        hashrate_total.innerHTML = (somaHash/1000).toFixed(2)
-        consumo_total.innerHTML = somaConsumo.toFixed(2)
-        eficiencia_rig.innerHTML = eficienciaRigs.toFixed(2)
-        hashrate_ideal.innerHTML = ((120*42)/1000).toFixed(2)
-        consumo_ideal.innerHTML = (2*42).toFixed(2)
-        eficiencia_ideal.innerHTML = `< ${eficienciaIdeal.toFixed(2)}`
-
-
-        let coluna;
-        coluna = document.createElement("div")
-        coluna.id = "caixa_cards"
-        coluna.className = 'md:grid grid-cols-6 mb-2 gap-2 font-space-mono text-[#A0B5AC] transition-all duration-300 ease-in-out max-h-150 overflow-auto scroll-smooth scrollbar-track-transparent scrollbar-thumb-[#207F7035]'
-        for ( let i = 0; i < listaIncidente.length; i++){
-        coluna.innerHTML += `<div  onclick="selecionar('listaIncidente', ${i}, this)" id="${listaIncidente[i].nome}" class=" hover:rig-selecionada cursor-pointer ${listaIncidente[i].status} border h-fit p-3 rounded-2xl">
-    <div class="flex flex-row pb-2">
-        <div class="relative flex size-2 place-self-center">
-            <span class="absolute h-2 w-2 not-in-[.offline]:animate-ping rounded-full not-in-[.offline]:bg-[#00E6A6] opacity-75"></span>
-            <span class="relative size-2 rounded-full not-in-[.offline]:bg-[#00f1ad] bg-[#A0B5AC]"></span>
-        </div>
-        <p class="pl-2">${listaIncidente[i].nome}</p>
-    </div>
-    <p class="pb-2"><span class="text-white text-xl font-bold">${listaIncidente[i].temperatura}</span>°C</p>
-    <p class="text-sm">${listaIncidente[i].hash} TH/s</p>
-    <p class="text-sm mt-3 mb">Farm ${lista[i].farm} · <br> São Paulo</p>
-    <p class="text-xs">há ${listaIncidente[i].atualizada} min</p>
-</div>`
-
-            if (i == listaIncidente.length-1 && coluna.innerHTML != ""){
-                area_rigs.appendChild(coluna)
+    // lista as farms no filtro do grafico  -YasminEloitaNascimento
+    function carregarFarms() {
+        fetch(`/farms/list/${idEmpresa}`).then(r => r.json()).then(lista => {
+            farms = lista
+            let select = document.getElementById("filtro-farm")
+            for (let i = 0; i < lista.length; i++) {
+                select.innerHTML += `<option value="${lista[i].id}">${esc(lista[i].nome)}</option>`
             }
-        }
-        area_rigs.appendChild(coluna)
+        })
     }
 
-    function filtro(listaEscolhida,nomeLista,i,filtroEscolhido){
-
-        antiga = document.getElementsByClassName("filtro-selecionado")[0]
-        nova = document.getElementById(filtroEscolhido)
-
-        antiga.classList.toggle('filtro-selecionado')
-        antiga.classList.toggle('filtro')
-        nova.classList.toggle('filtro-selecionado')
-        nova.classList.toggle('filtro')
-
-        caixa_cards.innerHTML = ''
-        for(let i = 0; i < lista.length;i++){
-            caixa_cards.innerHTML += `<div onclick="selecionar('${nomeLista}', ${i}, this)" id="${listaEscolhida[i].nome}" class="${listaEscolhida[i].status} border h-fit p-3 rounded-2xl">
-    <div class="flex flex-row pb-2">
-        <div class="relative flex size-2 place-self-center">
-            <span class="absolute h-2 w-2 not-in-[.offline]:animate-ping rounded-full not-in-[.offline]:bg-[#00E6A6] opacity-75"></span>
-            <span class="relative size-2 rounded-full not-in-[.offline]:bg-[#00f1ad] bg-[#A0B5AC]"></span>
-        </div>
-        <p class="pl-2">${listaEscolhida[i].nome}</p>
-    </div>
-    <p class="pb-2"><span class="text-white text-xl font-bold">${listaEscolhida[i].temperatura}</span>°C</p>
-    <p class="text-sm">${listaEscolhida[i].hash} TH/s</p>
-    <p class="text-sm mt-3 mb">Farm ${listaEscolhida[i].farm} · <br> São Paulo</p>
-    <p class="text-xs">há ${listaEscolhida[i].atualizada} min</p>
-</div>`
-        }
+    function atualizar() {
+        carregarKpis()
+        carregarUptime()
+        carregarMapa()
+        carregarGrafico()
     }
 
-    function selecionar(nomeLista, i, elemento){
-        let listaSelect = []
-        if(nomeLista == "listaCritica"){
-            listaSelect = JSON.parse(JSON.stringify(listaCritica))
-        } else if(nomeLista == "listaAtencao"){
-            listaSelect = JSON.parse(JSON.stringify(listaAtencao))
-        } else if(nomeLista == "listaTodas"){
-            listaSelect = JSON.parse(JSON.stringify(listaTodas))
-        } else if(nomeLista == "listaIncidente"){
-            listaSelect = JSON.parse(JSON.stringify(listaIncidente))
-        } else if(nomeLista == "listaOff"){
-            listaSelect = JSON.parse(JSON.stringify(listaOff))
-        }
+    // nome da empresa no cabecalho (mesma rota do maquinas.html) -YasminEloitaNascimento
+    fetch(`/empresas/buscar/${idEmpresa}`).then(r => r.json()).then(e => {
+        nome_empresa.innerHTML = esc(e[0].nome_fantasia)
+    })
 
-        let statusCard = listaSelect[i].status == "critico"? "Crítico" : listaSelect[i].status == "offline" ? "Offline" : listaSelect[i].status == "atencao"? "Atenção" : "Ok"
-        console.log(nomeLista)
-        console.log(listaSelect)
+    carregarFarms()
+    atualizar()
 
-        let card = document.createElement("div")
-        rig_individual.innerHTML = ""
-        card.innerHTML = `<div class="flex flex-row justify-between">
-                    <div>
-                        <p class="font-inter text-sm mb-5 font-medium">Rig selecionada</p>
-                        <p id="modelo_selecionado" class="font-space-mono font-semibold text-xl">${listaSelect[i].nome}</p>
-                        <p class="font-inter text-sm font-medium"><span id="farm_selecionada">Farm ${listaSelect[i].farm}</span> · São Paulo
-                    </div>
-                    <p id="status_selecionada" class="border border-[#7A0015] bg-[#7A001542] text-[#E00027] text-sm pl-2 pr-2 pt-1 pb-1 rounded-2xl h-fit ${listaSelect[i].status} texto_${listaSelect[i].status}">${statusCard}</p>
-                </div>
-                <div class="flex flex-col gap-2 mt-7 mb-7 text-[#D5D5D5]">
-                    <div class="border border-[#207F70] rounded-2xl pt-2.5 pb-2.5 pr-3 pl-3 flex flex-row justify-between">
+    // atualiza a cada 60s so se a aba estiver aberta (igual ao maquinas.html) -YasminEloitaNascimento
+    setInterval(() => {
+        if (document.visibilityState === "visible") atualizar()
+    }, 60000)
+
+    // ---------- navbar ----------
+    function abrirFarms(){
+        let pid = document.getElementById("lista_farms")
+        pid.innerHTML = ""
+        fetch(`/farms/list/${idEmpresa}`).then(resposta =>
+        resposta.json()).then(farms => {
+                for (let i = 0; i < farms.length; i++){
+                    pid.innerHTML += `
                         <div>
-                            <p class="text-xs font-inter">Hashrate</p>
-                            <p class="font-ibm-mono font-bold"><span id="hash_selecionada">${listaSelect[i].hash}</span> TH/s</p>
-                        </div>
-                        <img src="../../assets/icones-dash/alerta-atencao.svg" id="atencao_hash" class="place-self-center hidden h-5">
-                        <img src="../../assets/icones-dash/alerta-critico.svg" id="critico_hash" class="place-self-center hidden h-5">
-                    </div>
-                    <div class="border border-[#207F70] rounded-2xl pt-2.5 pb-2.5 pr-3 pl-3 flex flex-row justify-between">
-                        <div>
-                            <p class="text-xs font-inter">Temperatura</p>
-                            <p class="font-ibm-mono font-bold"><span id="temperatura_selecionada">${listaSelect[i].temperatura}</span> °C</p>
-                        </div>
-                        <img src="../../assets/icones-dash/alerta-atencao.svg" id="atencao_temperatura" class="place-self-center hidden h-5">
-                        <img src="../../assets/icones-dash/alerta-critico.svg" id="critico_temperatura" class="place-self-center hidden h-5">
-                    </div>
-                    <div class="border border-[#207F70] rounded-2xl pt-2.5 pb-2.5 pr-3 pl-3 flex flex-row justify-between">
-                        <div>
-                            <p class="text-xs font-inter">Consumo</p>
-                            <p class="font-ibm-mono font-bold"><span id="consumo_selecionada">${listaSelect[i].consumo}</span> W</p>
-                        </div>
-                        <img src="../../assets/icones-dash/alerta-atencao.svg" id="atencao_consumo" class="place-self-center hidden h-5">
-                        <img src="../../assets/icones-dash/alerta-critico.svg" id="critico_consumo" class="place-self-center hidden h-5">
-                    </div>
-                    <div class="border border-[#207F70] rounded-2xl pt-2.5 pb-2.5 pr-3 pl-3 flex flex-row justify-between">
-                        <div>
-                            <p class="text-xs font-inter">GPU</p>
-                            <p class="font-ibm-mono font-bold"><span id="gpu_selecionada">${listaSelect[i].gpu}</span>%</p>
-                        </div>
-                        <img src="../../assets/icones-dash/alerta-atencao.svg" id="atencao_gpu" class="place-self-center hidden h-5">
-                        <img src="../../assets/icones-dash/alerta-critico.svg" id="critico_gpu" class="place-self-center hidden h-5">
-                    </div>
-                </div>
-                <button class="bg-[#0D3831] border border-[#207F70] rounded-xl font-inter font-medium w-full p-2 hover:cursor-pointer hover:bg-[#207F7025] transition-colors duration-100 ease-in-out">Abrir Dashboard da Rig</button>`
-        rig_individual.appendChild(card)
-
-        if(listaSelect[i].hash >= 80 && listaSelect[i].hash < 100){
-            atencao_hash.classList.remove("hidden")
-        } else if (listaSelect[i].hash < 80){
-            critico_hash.classList.remove("hidden")
-        } else {
-            atencao_hash.classList.add("hidden")
-            critico_hash.classList.add("hidden")
-        }
-
-        if(listaSelect[i].temperatura >= 65 && listaSelect[i].temperatura < 80){
-            atencao_temperatura.classList.remove("hidden")
-        } else if (listaSelect[i].temperatura > 80){
-            critico_temperatura.classList.remove("hidden")
-        } else {
-            atencao_temperatura.classList.add("hidden")
-            critico_temperatura.classList.add("hidden")
-        }
-
-        if(listaSelect[i].consumo >= 3.6 && listaSelect[i].consumo < 6){
-            atencao_consumo.classList.remove("hidden")
-        } else if (listaSelect[i].consumo > 6){
-            critico_consumo.classList.remove("hidden")
-        } else {
-            atencao_consumo.classList.add("hidden")
-            critico_consumo.classList.add("hidden")
-        }
-
-        if(listaSelect[i].gpu >= 71 && listaSelect[i].gpu < 85){
-            atencao_gpu.classList.remove("hidden")
-        } else if (listaSelect[i].gpu < 71){
-            critico_gpu.classList.remove("hidden")
-        } else {
-            atencao_gpu.classList.add("hidden")
-            critico_gpu.classList.add("hidden")
-        }
-
-        if(listaSelect[i].status == 'offline'){
-            atencao_hash.classList.add("hidden")
-            critico_hash.classList.add("hidden")
-            atencao_temperatura.classList.add("hidden")
-            critico_temperatura.classList.add("hidden")
-            atencao_consumo.classList.add("hidden")
-            critico_consumo.classList.add("hidden")
-            atencao_gpu.classList.add("hidden")
-            critico_gpu.classList.add("hidden")
-        }
-        
-        elementoAtual = document.getElementsByClassName("rig-selecionada")
-        if(elementoAtual.length > 0){
-            elementoAtual[0].classList.remove("rig-selecionada")
-        }
-        elemento.classList.add("rig-selecionada")
-        rig_individual.classList.add("h-full p-5")
+                            <p onclick="abrirSessoes(${farms[i].id})" class="cursor-pointer py-1 hover:text-[#00E6A6]">${farms[i].nome}</p>
+                            <div id="sessoes_${farms[i].id}" class="ml-4"></div>
+                        </div>`
+                }
+            })
     }
-</script>
+
+    function abrirSessoes(idFarm){
+        let pid = document.getElementById("sessoes_" + idFarm)
+        pid.innerHTML = ""
+        fetch(`/sessoes/listar/${idFarm}`).then(resposta =>
+        resposta.json()).then(sessoes => {
+                for (let i = 0; i < sessoes.length; i++){
+                    pid.innerHTML += `
+                        <div>
+                            <p onclick="abrirRigs(${sessoes[i].id} , ${idFarm})" class="cursor-pointer py-1 hover:text-[#00E6A6]">${sessoes[i].nome}</p>
+                            <div id="rigs_${sessoes[i].id}" class="ml-4"></div>
+                        </div>`
+                }
+            })
+    }
+
+    function abrirRigs(idSessao , idFarm){
+        let pid = document.getElementById("rigs_" + idSessao)
+        pid.innerHTML = ""
+        fetch(`/dispositivos/listar/${idSessao}`).then(resposta =>
+        resposta.json()).then(dados => {
+                for (let i = 0; i < dados.length; i++){
+                    pid.innerHTML += `<p onclick="abrirRig(${dados[i].id}, ${idSessao} , ${idFarm})" class="cursor-pointer py-1 hover:text-[#00E6A6]">Rig-${dados[i].id}</p>`
+                }
+            })
+    }
+
+    function abrirRig(idrig, idsessao , idFarm){
+        window.location.href = `../dash-analista/maquinas.html?id=${idrig}&farm=${idFarm}&sessao=${idsessao}`
+    }
+    </script>
+
+</body>
+
+</html>

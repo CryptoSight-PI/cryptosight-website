@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../assets/imgs/logo.png">
+    <link rel="stylesheet" href="../../css/output.css">
+    <link rel="stylesheet" href="../../css/style.css">
+    <title>Dashboard - Maquinas</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://bucket-gold-marcelo-sptech.s3.us-east-1.amazonaws.com" crossorigin>
+</head>
+
+<body class="min-h-screen w-screen pl-15 bg-linear-135 from-[#0d1412] via-[#09483f] to-[#0d1412] text-white bg-fixed overflow-x-hidden">
+
+    <!-- Navbar -->
+    <dialog class="bg-[#0C1F19] flex flex-col group h-screen w-15 hover:w-70 transition-all duration-300 ease-in-out pt-5 z-99 overflow-hidden border-r border-[#207F70]" popover="hint" open>
+
+        <img src="../../assets/imgs/logo.png"
+            class="absolute self-center-safe justify-self-center-safe h-10 group-hover:h-15 transition-all duration-300 ease-in-out">
+
+        <a href="../dash-analista/dashboard-geral.html">
+            <div class="rounded-2xl flex flex-row pl-2 pr-2 pt-3 pb-3 ml-2 mr-2 mt-30 mb-2 hover:cursor-pointer">
+                <img src="../../assets/icones-dash/geral.svg">
+                <p class="hidden group-hover:block text-[#A0B5AC] justify-center self-center text-sm ml-3 text-nowrap font-inter font-semibold">Visão Geral</p>
+            </div>
+        </a>
+
+        <a href="">
+            <div class="rounded-2xl flex flex-row pl-2 pr-2 pt-3 pb-3 ml-2 hover:cursor-pointer w-10.5 group-hover:w-64 transition-all duration-300 ease-out bg-[#144840]">
+                <img src="../../assets/icones-dash/maquinas-verde.svg">
+                <p class="hidden group-hover:block text-[#00E6A6] justify-center self-center text-sm ml-3 text-nowrap font-inter font-semibold">Máquinas</p>
+            </div>
+        </a>
+
+        <a href="../../index.html">
+            <div class="absolute rounded-2xl flex flex-row pl-2 pr-2 pt-3 pb-3 ml-3 w-13 hover:cursor-pointer bottom-3">
+                <img src="../../assets/icones-dash/sair.svg">
+                <p class="hidden group-hover:block text-[#A0B5AC] justify-center self-center text-sm ml-3 text-nowrap font-inter font-semibold">Logout</p>
+            </div>
+        </a>
+    </dialog>
+
+    <!-- Cabeçalho -->
+    <div class="border-b border-[#207F70] flex flex-row justify-between p-5 pl-10 pr-15 place-content-center">
+        <div class="flex flex-row gap-5">
+            <div class="bg-[#207F70] rounded-2xl pl-4 pr-6 pt-3 pb-3 flex flex-row">
+                <img src="../../assets/imgs/bitdeer-logo.svg" alt="">
+                <p id="nome_empresa" class="font-space-mono ml-3 font-semibold text-sm text-nowrap place-content-center">Bitdeer Technologies Group</p>
+            </div>
+            <button onclick="exportarRelatorio()" class="bg-transparent rounded-2xl border border-[#207F70] place-content-center flex flex-row pl-4 pr-4 pt-3 pb-3 hover:cursor-pointer hover:bg-[#00000025] transition-colors duration-100 ease-in-out">
+                <img src="../../assets/imgs/download.svg">
+                <p class="font-space-mono ml-3 text-sm text-nowrap place-content-center">Exportar relatório</p>
+            </button>
+        </div>
+        <div class="flex flex-row align-baseline">
+            <p id="nome_usuario" class="font-space-mono font-bold place-self-center mr-3 text-lg">Luiz Oliveira</p>
+            <img src="../../assets/imgs/Luiz.png" class="rounded-4xl border border-[#207F70] p-0.5">
+        </div>
+    </div>
+
+    <div class="ml-10 mt-7 mr-15 mb-1 flex flex-row items-center gap-2 text-sm font-space-mono text-[#A0B5AC]">
+        <span id="nome_farm" class="text-white font-semibold text-2xl">...</span>
+        <span class="text-[#207F70] text-2xl">></span>
+        <span id="nome_sessao" class="text-white font-semibold text-2xl">...</span>
+        <span class="text-[#207F70] text-2xl">></span>
+        <span class="text-2xl text-white font-semibold">Rig</span>
+        <span id="id_rig" class="text-white font-semibold text-2xl"></span>
+    </div>
+
+    <p class="sm:px-5 lg:pl-15 lg:pr-10 text-[11px] text-[#A0B5AC] flex items-center gap-4 justify-end mr-5">
+        <span>Meta ideal:</span>
+        <span><i class="fa-solid fa-bullseye mr-1" style="color:#00E6A6"></i>verde = cumprida</span>
+        <span><i class="fa-solid fa-bullseye mr-1" style="color:#A0B5AC"></i>cinza = não cumprida</span>
+    </p>
+
+    <div class="grid grid-cols-4 gap-4 px-3 sm:px-5 lg:pl-15 lg:pr-10 mt-1">
+        <div id="kpi_status" class="rounded-2xl border border-[#207F70] bg-[#0C1F19] border-t-[3px] border-solid p-2.5 sm:p-4 transition-transform duration-300 hover:scale-103">
+            <p class="text-sm text-white">Status</p>
+            <p id="pico_status" class="font-space-mono font-bold text-2xl sm:text-4xl mt-2"> ... </p>
+            <p id="detalhe_status" class="text-xs text-[#A0B5AC] mt-2">Detalhes</p>
+            <div class="mt-auto pt-1">
+                <p id="texto_meta_status" class="text-[11px] pt-1 border-t border-[#207F70]/40 text-[#A0B5AC]"><i id="ic_meta_status" class="fa-solid fa-bullseye mr-1 text-[#6d6f6e]"></i><span id="meta_status">Meta: todos os componentes em Normal</span></p>
+            </div>
+        </div>
+
+        <div id="kpi_causa" class="rounded-2xl border border-[#207F70] bg-[#0C1F19] border-t-[3px] border-solid p-2.5 sm:p-4 transition-transform duration-300 hover:scale-103">
+            <p class="text-sm text-white">Causa principal (últimos 30 dias)</p>
+            <p id="kpi_componente_principal" class="font-space-mono font-bold text-2xl sm:text-3xl mt-2">...</p>
+            <p id="detalhe_kpi_componente" class="text-xs text-[#A0B5AC] mt-2"></p>
+           <div class="mt-auto pt-1">
+                <p id="texto_meta_causa" class="text-[11px] pt-1 border-t border-[#207F70]/40 text-[#A0B5AC]"><i id="ic_meta_causa" class="fa-solid fa-bullseye mr-1 text-[#6d6f6e]"></i><span id="meta_causa">Meta: Ocorrência isolada - menos que 3 alertas  </span></p>
+            </div>
+        </div>
+
+        
+        <div id="kpiPrev" class="rounded-2xl border border-[#207F70] bg-[#0C1F19] border-t-[3px] border-solid p-2.5 sm:p-4 transition-transform duration-300 hover:scale-103 min-w-0">
+            <p class="text-sm text-white truncate">Próxima falha prevista</p>
+            <p id="previsao_horas" class="font-space-mono font-bold text-2xl sm:text-3xl mt-2 truncate">...</p>
+            <p id="previsao_detalhe" class="text-xs text-[#A0B5AC] mt-2 truncate whitespace-nowrap">componente - valor - timestamp</p>
+            <div class="mt-auto pt-1">
+                <p id="texto_meta_previsao" class="text-[11px] pt-1 border-t border-[#207F70]/40 text-[#A0B5AC]"><i id="ic_meta_previsao" class="fa-solid fa-bullseye mr-1 text-[#6d6f6e]"></i><span id="meta_previsao">Meta: Nenhum risco nas próximas horas</span></p>
+            </div>
+        </div>
+
+
+        <div id="kpiLeitura" class="rounded-2xl border border-[#207F70] bg-[#0C1F19] border-t-[3px] border-solid p-2.5 sm:p-4 transition-transform duration-300 hover:scale-103">
+            <p class="text-sm text-white">Leitura mais fora do normal</p>
+            <p id="kpi_leitura_fora" class="font-space-mono font-bold text-2xl sm:text-3xl mt-2">...</p>
+            <p id="detalhe_leitura_fora" class="text-xs text-[#A0B5AC] mt-2">...</p>
+            <div class="mt-auto pt-1">
+                <p id="texto_meta_leitura" class="text-[11px] pt-1 border-t border-[#207F70]/40 text-[#A0B5AC]"><i id="ic_meta_leitura" class="fa-solid fa-bullseye mr-1 text-[#6d6f6e]"></i><span id="meta_leitura">Meta: Z-score menor que 1 </span></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 xl:grid-cols-2 gap-4 px-3 sm:px-5 lg:pl-15 lg:pr-10 mt-2 mb-10">
+        <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] p-5 min-w-0">
+            <div class="flex flex-wrap justify-between gap-3 mb-4">
+                <div>
+                    <p class="text-lg">Picos ao longo do tempo</p>
+                    <p class="text-xs text-gray-400">Quando os picos acontecem e quais componentes os causam</p>
+                </div>
+
+               <div class="flex rounded-xl overflow-hidden border border-[#207F70]">
+                    <button id="btn_24h" onclick="carregarpicos('24h')" class="px-3 py-2 text-xs bg-[#144840] text-[#00E6A6]">24h</button>
+                    <button id="btn_7d" onclick="carregarpicos('7d')" class="px-3 py-2 text-xs text-[#A0B5AC] hover:bg-[#ffffff0d]">7d</button>
+                    <button id="btn_30d" onclick="carregarpicos('30d')" class="px-3 py-2 text-xs text-[#A0B5AC] hover:bg-[#ffffff0d]">30d</button>
+                </div>
+            </div>
+
+            <div class="relative h-54 sm:h-76 xl:h-120 w-full">
+                <canvas id="graficopicos"></canvas>
+            </div>
+            <div id="ondePicos" class="bg-[#102C24] border border-[#207F70]/60 rounded-xl p-4 mt-4">
+                <p class="text-xs text-gray-400">Clique em uma barra para ver onde os picos aconteceram.</p>
+            </div>
+        </div>
+
+        <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] p-5 min-w-0 flex flex-col xl:h-full">
+            <div class="flex items-start justify-between mb-4 gap-3">
+                <div>
+                    <h3 class="text-white text-lg font-semibold">Estado atual dos componentes</h3>
+                        <button id="btn_virar_todos" style="margin-top:6px;padding:4px 12px;font-size:12px;border-radius:999px;border:1px solid #00E6A6;background:#144840;color:#00E6A6;"><i class="fa-solid fa-hand-pointer" style="margin-right:6px"></i>CLIQUE EM CADA CARD PARA VER 24h, 7d e 30d</button>                    
+                        <p class="text-[10px] text-gray-500 mt-1 flex items-center gap-1 flex-wrap">
+                        <span style="display:inline-block;width:16px;height:9px;box-sizing:border-box;border:1px dashed rgba(255,255,255,0.75);background:rgba(0,230,166,0.15);border-radius:3px"></span>faixa ideal
+                        <span style="display:inline-block;width:2px;height:9px;background:#FF5269;border-radius:1px;margin-left:8px"></span>limites
+                    </p>
+                </div>
+                <span id="ultima_coleta" class="text-xs text-gray-400 whitespace-nowrap"><i class="fa-regular fa-clock mr-1"></i>Última coleta </span>
+            </div>
+
+            <div id="grade_componentes" class="flex-1" style="display:none;grid-template-columns:repeat(2,minmax(0,1fr));gap:0.5rem;min-height:22rem">
+
+                <div id="sem_componentes" style="display:none;grid-column:1 / -1;flex-direction:column;align-items:center;justify-content:center;gap:0.75rem;text-align:center;padding:1.5rem" class="rounded-xl border border-dashed border-[#626B66] bg-[#202725]">
+                    <p class="text-gray-300 font-semibold">Nenhum componente monitorado</p>
+                    <p class="text-gray-500 text-sm">Ative o monitoramento desta máquina para ver os dados aqui.</p>
+                </div>
+
+                <div id="card_cpu" class="cursor-pointer" onclick="this.firstElementChild.classList.toggle('rotate-y-180')">
+                    <div class="relative h-full transform-3d transition-transform duration-500">
+                        <div class="absolute inset-0 backface-hidden rounded-xl border border-[#7A2935] bg-[#24191B] p-3 flex flex-col justify-between">
+                            <div class="flex items-center justify-between">
+                                <span class="text-gray-300 text-sm"><i id="iconecpu" class="fa-solid fa-microchip mr-2 text-[#FF5269]"></i>CPU</span>
+                                <span id="status_cpu" class="text-[#FF5269] text-xs font-semibold">Crítico</span>
+                            </div>
+                            <div>
+                                <div class="flex items-end justify-between gap-2">
+                                    <p id="cpu_valor" class="text-white text-2xl font-bold">X%</p>
+                                    <p id="meta_cpu" class="text-[11px] text-gray-400 text-right whitespace-nowrap"></p>
+                                </div>
+                                <div class="relative h-1.5 bg-[#263E35] rounded-full mt-1.5">
+                                    <div id="barra_cpu" class="h-full bg-[#FF1F3D] rounded-full"></div>
+                                    <div id="marca_cpu" title="Meta ideal" style="display:none;position:absolute;top:-3px;height:12px;width:2px;background:#fff;border-radius:1px"></div>
+                                    <div id="lim_min_marca_cpu" style="display:none;position:absolute;top:-3px;height:12px;width:2px;background:#FF5269;border-radius:1px;box-shadow:0 0 0 1px #0C1F19"></div>
+                                    <div id="lim_marca_cpu" title="Limite máximo" style="display:none;position:absolute;top:-3px;height:12px;width:2px;background:#FF5269;border-radius:1px;box-shadow:0 0 0 1px #0C1F19"></div>
+                                </div>
+                                <div class="flex items-center justify-between gap-2 mt-1.5">
+                                    <p id="cpu_freq" class="text-gray-400 text-xs">Z GHz</p>
+                                    <p id="lim_cpu" class="text-[10px] text-gray-300 whitespace-nowrap"></p>
+                                </div>
+                            </div>
+                            <p id="acao_cpu" class="text-xs text-[#FFB000]"><i class="fa-solid fa-wrench mr-1"></i>Ação sugerida: verificar refrigeração</p>
+                        </div>
+                        <div class="absolute inset-0 backface-hidden rotate-y-180 rounded-xl border border-[#207F70] bg-[#112C24] p-3 flex flex-col justify-center gap-1">
+                            <div class="grid grid-cols-5 text-[11px] text-gray-400"><span></span><span>Média</span><span>Máx</span><span>Mín</span><span>Desv.</span></div>
+                            <div id="linha_cpu_24h" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">24h</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
+                            <div id="linha_cpu_7d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">7d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
+                            <div id="linha_cpu_30d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">30d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
+                            <p id="hist_cpu" class="text-[11px] mt-1 pt-1 border-t border-[#207F70]/40 text-gray-400"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="card_ram" class="cursor-pointer" style="display:none;min-height:0;height:100%" onclick="this.firstElementChild.classList.toggle('rotate-y-180')">
+                    <div class="relative h-full transform-3d transition-transform duration-500">
+                        <div class="absolute inset-0 backface-hidden rounded-xl border border-[#7A2935] bg-[#24191B] p-3 flex flex-col justify-between">
+                            <div class="flex items-center justify-between">
+                                <span class="text-gray-300 text-sm"><i id="iconeram" class="fa-solid fa-memory mr-2 text-[#FF5269]"></i>RAM</span>
+                                <span id="status_ram" class="text-[#FF5269] text-xs font-semibold">Crítico</span>
+                            </div>
+                            <div>
+                                <div class="flex items-end justify-between gap-2">
+                                    <p id="ram_valor" class="text-white text-2xl font-bold">x%</p>
+                                    <p id="meta_ram" class="text-[11px] text-gray-400 text-right whitespace-nowrap"></p>
+                                </div>
+                                <div class="relative h-1.5 bg-[#263E35] rounded-full mt-1.5">
+                                    <div id="barra_ram" class="h-full bg-[#FF1F3D] rounded-full"></div>
+                                    <div id="marca_ram" title="Meta ideal" style="display:none;position:absolute;top:-3px;height:12px;width:2px;background:#fff;border-radius:1px"></div>
+                                    <div id="lim_min_marca_ram" style="display:none;position:absolute;top:-3px;height:12px;width:2px;background:#FF5269;border-radius:1px;box-shadow:0 0 0 1px #0C1F19"></div>
+                                    <div id="lim_marca_ram" title="Limite máximo" style="display:none;position:absolute;top:-3px;height:12px;width:2px;background:#FF5269;border-radius:1px;box-shadow:0 0 0 1px #0C1F19"></div>
+                                </div>
+                                <div class="flex items-center justify-between gap-2 mt-1.5">
+                                    <p class="text-gray-400 text-xs">Memória em uso</p>
+                                    <p id="lim_ram" class="text-[10px] text-gray-300 whitespace-nowrap"></p>
+                                </div>
+                            </div>
+                            <p id="acao_ram" class="text-xs text-[#FFB000]"><i class="fa-solid fa-wrench mr-1"></i>Ação sugerida: checar processos e swap</p>
+                        </div>
+                        <div class="absolute inset-0 backface-hidden rotate-y-180 rounded-xl border border-[#207F70] bg-[#112C24] p-3 flex flex-col justify-center gap-1">
+                            <div class="grid grid-cols-5 text-[11px] text-gray-400"><span></span><span>Média</span><span>Máx</span><span>Mín</span><span>Desv.</span></div>
+                            <div id="linha_ram_24h" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">24h</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
+                            <div id="linha_ram_7d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">7d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
+                            <div id="linha_ram_30d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">30d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
+                            <p id="hist_ram" class="text-[11px] mt-1 pt-1 border-t border-[#207F70]/40 text-gray-400"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="card_swap" class="cursor-pointer" style="display:none;min-height:0;height:100%" onclick="this.firstElementChild.classList.toggle('rotate-y-180')">
+                    <div class="relative h-full transform-3d transition-transform duration-500">
+                        <div class="absolute inset-0 backface-hidden rounded-xl border border-[#7A5A10] bg-[#241F14] p-3 flex flex-col justify-between">
+                            <div class="flex items-center justify-between">
+                                <span class="text-gray-300 text-sm"><i id="iconeswap" class="fa-solid fa-right-left mr-2 text-[#FFB000]"></i>SWAP</span>
+                                <span id="status_swap" class="text-[#FFB000] text-xs font-semibold">Atenção</span>
+                            </div>
+                            <div>
+                                <div class="flex items-end justify-between gap-2">
+                                    <p id="swap_valor" class="text-white text-2xl font-bold">x%</p>
+                                    <p id="meta_swap" class="text-[11px] text-gray-400 text-right whitespace-nowrap"></p>
+                                </div>
+                                <div class="relative h-1.5 bg-[#263E35] rounded-full mt-1.5">
+                                    <div id="barra_swap" class="h-full bg-[#FFB000] rounded-full"></div>
+                                    <div id="marca_swap" title="Meta ideal" style="display:none;position:absolute;top:-3px;height:12px;width:2px;background:#fff;border-radius:1px"></div>
+                                    <div id="lim_min_marca_swap" style="display:none;position:absolute;top:-3px;height:12px;width:2px;background:#FF5269;border-radius:1px;box-shadow:0 0 0 1px #0C1F19"></div>
+                                    <div id="lim_marca_swap" title="Limite máximo" style="display:none;position:absolute;top:-3px;height:12px;width:2px;background:#FF5269;border-radius:1px;box-shadow:0 0 0 1px #0C1F19"></div>
+                                </div>
+                                <div class="flex items-center justify-between gap-2 mt-1.5">
+                                    <p class="text-gray-400 text-xs"><span id="swap_valor_usado">y /  </span> <span id="swap_valor_total"> z GB </span></p>
+                                    <p id="lim_swap" class="text-[10px] text-gray-300 whitespace-nowrap"></p>
+                                </div>
+                            </div>
+                            <p id="acao_swap" class="text-xs text-[#FFB000]"><i class="fa-solid fa-wrench mr-1"></i>Ação sugerida: liberar memória</p>
+                        </div>
+                        <div class="absolute inset-0 backface-hidden rotate-y-180 rounded-xl border border-[#207F70] bg-[#112C24] p-3 flex flex-col justify-center gap-1">
+                            <div class="grid grid-cols-5 text-[11px] text-gray-400"><span></span><span>Média</span><span>Máx</span><span>Mín</span><span>Desv.</span></div>
+                            <div id="linha_swap_24h" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">24h</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
+                            <div id="linha_swap_7d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">7d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
+                            <div id="linha_swap_30d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">30d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
+                            <p id="hist_swap" class="text-[11px] mt-1 pt-1 border-t border-[#207F70]/40 text-gray-400"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="card_temperatura" class="cursor-pointer" style="display:none;min-height:0;height:100%" onclick="this.firstElementChild.classList.toggle('rotate-y-180')">
+                    <div class="relative h-full transform-3d transition-transform duration-500">
+                        <div class="absolute inset-0 backface-hidden rounded-xl border border-[#7A5A10] bg-[#241F14] p-3 flex flex-col justify-between">
+                            <div class="flex items-center justify-between">
+                                <span class="text-gray-300 text-sm"><i id="iconetemperatura" class="fa-solid fa-temperature-high mr-2 text-[#FFB000]"></i>Temperatura</span>
+                                <span id="status_temperatura" class="text-[#FFB000] text-xs font-semibold">Atenção</span>
+                            </div>
+                            <div>
+                                <div class="flex items-end justify-between gap-2">
+                                    <p id="temperatura_valor" class="text-white text-2xl font-bold">X °C</p>
+                                    <p id="meta_temperatura" class="text-[11px] text-gray-400 text-right whitespace-nowrap"></p>
+                                </div>
+                                <div class="flex items-center justify-between gap-2 mt-1.5">
+                                    <p class="text-gray-400 text-xs">Temperatura atual</p>
+                                    <p id="lim_temperatura" class="text-[10px] text-gray-300 whitespace-nowrap"></p>
+                                </div>
+                            </div>
+                            <p id="acao_temperatura" class="text-xs text-[#FFB000]"><i class="fa-solid fa-wrench mr-1"></i>Ação sugerida: checar ventoinhas</p>
+                        </div>
+                        <div class="absolute inset-0 backface-hidden rotate-y-180 rounded-xl border border-[#207F70] bg-[#112C24] p-3 flex flex-col justify-center gap-1">
+                            <div class="grid grid-cols-5 text-[11px] text-gray-400"><span></span><span>Média</span><span>Máx</span><span>Mín</span><span>Desv.</span></div>
+                            <div id="linha_temperatura_24h" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">24h</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
+                            <div id="linha_temperatura_7d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">7d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
+                            <div id="linha_temperatura_30d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">30d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
+                            <p id="hist_temperatura" class="text-[11px] mt-1 pt-1 border-t border-[#207F70]/40 text-gray-400"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="card_gpu" class="cursor-pointer" style="display:none;min-height:0;height:100%" onclick="this.firstElementChild.classList.toggle('rotate-y-180')">
+                    <div class="relative h-full transform-3d transition-transform duration-500">
+                        <div class="absolute inset-0 backface-hidden rounded-xl border border-[#7A5A10] bg-[#241F14] p-3 flex flex-col justify-between">
+                            <div class="flex items-center justify-between">
+                                <span class="text-gray-300 text-sm"><i id="iconegpu" class="fa-solid fa-gauge-high mr-2 text-[#FFB000]"></i>GPU <span id="meta_gpu" class="text-[11px] text-gray-400 ml-2"></span></span>
+                                <span id="status_gpu" class="text-[#FFB000] text-xs font-semibold">Atenção</span>
+                            </div>
+                            <div class="flex justify-between px-2">
+                                <div><p class="text-gray-400 text-xs">Uso</p><p id="gpu_valor_uso" class="text-white text-lg font-bold">X%</p></div>
+                                <div><p class="text-gray-400 text-xs">Potência</p><p id="gpu_valor_potencia" class="text-white text-lg font-bold">Y W</p></div>
+                                <div><p class="text-gray-400 text-xs">Temp.</p><p id="gpu_valor_temperatura" class="text-white text-lg font-bold">Z °C</p></div>
+                                <div><p class="text-gray-400 text-xs">Ventoinha</p><p id="gpu_valor_ventoinha" class="text-white text-lg font-bold">W%</p></div>
+                            </div>
+                            <div class="flex items-center justify-between gap-2">
+                                <p id="acao_gpu" class="text-xs text-[#FFB000] truncate"><i class="fa-solid fa-wrench mr-1"></i>Ação sugerida: revisar consumo e minerador</p>
+                                <p id="lim_gpu" class="text-[10px] text-gray-300 whitespace-nowrap" title="Limites do uso da GPU"></p>
+                            </div>
+                        </div>
+                        <div class="absolute inset-0 backface-hidden rotate-y-180 rounded-xl border border-[#207F70] bg-[#112C24] p-3 flex flex-col justify-center gap-1">
+                            <div class="grid grid-cols-5 text-[11px] text-gray-400"><span>GPU uso</span><span>Média</span><span>Máx</span><span>Mín</span><span>Desv.</span></div>
+                            <div id="linha_gpu_24h" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">24h</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
+                            <div id="linha_gpu_7d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">7d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
+                            <div id="linha_gpu_30d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">30d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
+                            <p id="hist_gpu" class="text-[11px] mt-1 pt-1 border-t border-[#207F70]/40 text-gray-400"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="card_disco" class="cursor-pointer" style="display:none;min-height:0;height:100%" onclick="this.firstElementChild.classList.toggle('rotate-y-180')">
+                    <div class="relative h-full transform-3d transition-transform duration-500">
+                        <div class="absolute inset-0 backface-hidden rounded-xl border border-[#207F70] bg-[#112C24] p-3 flex flex-col justify-between">
+                            <div class="flex items-center justify-between">
+                                <span class="text-gray-300 text-sm"><i id="iconedisco" class="fa-solid fa-hard-drive mr-2 text-[#00E6A6]"></i>Disco</span>
+                                <span id="status_disco" class="text-[#00E6A6] text-xs font-semibold">Normal</span>
+                            </div>
+                            <div>
+                                <div class="flex items-end justify-between gap-2">
+                                    <p id="disco_valor" class="text-white text-2xl font-bold">X GB</p>
+                                    <p id="meta_disco" class="text-[11px] text-gray-400 text-right whitespace-nowrap"></p>
+                                </div>
+                                <div class="flex items-center justify-between gap-2 mt-1.5">
+                                    <p class="text-gray-400 text-xs">Espaço livre</p>
+                                    <p id="lim_disco" class="text-[10px] text-gray-300 whitespace-nowrap"></p>
+                                </div>
+                            </div>
+                            <p id="acao_disco" class="text-xs text-[#00E6A6]"><i class="fa-solid fa-circle-check mr-1"></i>Ação sugerida: nenhuma</p>
+                        </div>
+                        <div class="absolute inset-0 backface-hidden rotate-y-180 rounded-xl border border-[#207F70] bg-[#112C24] p-3 flex flex-col justify-center gap-1">
+                            <div class="grid grid-cols-5 text-[11px] text-gray-400"><span></span><span>Média</span><span>Máx</span><span>Mín</span><span>Desv.</span></div>
+                            <div id="linha_disco_24h" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">24h</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
+                            <div id="linha_disco_7d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">7d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
+                            <div id="linha_disco_30d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">30d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
+                            <p id="hist_disco" class="text-[11px] mt-1 pt-1 border-t border-[#207F70]/40 text-gray-400"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="card_ventoinha" class="cursor-pointer" style="display:none;min-height:0;height:100%" onclick="this.firstElementChild.classList.toggle('rotate-y-180')">
+                    <div class="relative h-full transform-3d transition-transform duration-500">
+                        <div class="absolute inset-0 backface-hidden rounded-xl border border-[#207F70] bg-[#112C24] p-3 flex flex-col justify-between">
+                            <div class="flex items-center justify-between">
+                                <span class="text-gray-300 text-sm"><i id="iconeventoinha" class="fa-solid fa-fan mr-2 text-[#00E6A6]"></i>Ventoinhas</span>
+                                <span id="status_ventoinha" class="text-[#00E6A6] text-xs font-semibold">Normal</span>
+                            </div>
+                            <div>
+                                <div class="flex items-end justify-between gap-2">
+                                    <p id="ventoinha_valor" class="text-white text-2xl font-bold">X%</p>
+                                    <p id="meta_ventoinha" class="text-[11px] text-gray-400 text-right whitespace-nowrap"></p>
+                                </div>
+                                <div class="flex items-center justify-between gap-2 mt-1.5">
+                                    <p class="text-gray-400 text-xs">Velocidade</p>
+                                    <p id="lim_ventoinha" class="text-[10px] text-gray-300 whitespace-nowrap"></p>
+                                </div>
+                            </div>
+                            <p id="acao_ventoinha" class="text-xs text-[#00E6A6]"><i class="fa-solid fa-circle-check mr-1"></i>Ação sugerida: nenhuma</p>
+                        </div>
+                        <div class="absolute inset-0 backface-hidden rotate-y-180 rounded-xl border border-[#207F70] bg-[#112C24] p-3 flex flex-col justify-center gap-1">
+                            <div class="grid grid-cols-5 text-[11px] text-gray-400"><span></span><span>Média</span><span>Máx</span><span>Mín</span><span>Desv.</span></div>
+                            <div id="linha_ventoinha_24h" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">24h</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
+                            <div id="linha_ventoinha_7d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">7d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
+                            <div id="linha_ventoinha_30d" class="grid grid-cols-5 text-xs font-space-mono"><span class="text-gray-400">30d</span><span>--</span><span>--</span><span>--</span><span>--</span></div>
+                            <p id="hist_ventoinha" class="text-[11px] mt-1 pt-1 border-t border-[#207F70]/40 text-gray-400"></p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+<script>
+    let idEmpresa = sessionStorage.ID_EMPRESA
+    let params = new URLSearchParams(location.search);
+    let idRig = params.get("id");
+    let idSessao = params.get("sessao");
+    let idFarm = params.get("farm")
+
+    nome_usuario.innerHTML = sessionStorage.NOME_USUARIO
+
+    id_rig.innerHTML = idRig
+
+    fetch(`/sessoes/listar/${idFarm}`).then(r => r.json())
+        .then(sessoes => {
+            for (let i = 0; i < sessoes.length; i++) {
+                if (sessoes[i].id == idSessao) {
+                    nome_sessao.innerHTML = sessoes[i].nome
+                }
+            }
+        })
+
+    fetch(`/farms/list/${idEmpresa}`).then(r => r.json())
+        .then(farms => {
+            for (let i = 0; i < farms.length; i++) {
+                if (farms[i].id == idFarm) {
+                    nome_farm.innerHTML = farms[i].nome
+                }
+            }
+        })
+
+    let valoresNasBarras = {
+        id: "valoresNasBarras",
+        afterDatasetsDraw(chart) {
+            const ctx = chart.ctx;
+            ctx.save();
+            ctx.fillStyle = "#0d1412";
+            ctx.font = "bold 11px sans-serif";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+
+            chart.data.datasets.forEach((ds, i) => {
+                if (!chart.isDatasetVisible(i)) return;
+
+                chart.getDatasetMeta(i).data.forEach((barra, j) => {
+                    const valor = ds.data[j];
+                    if (!valor) return;                                    
+                    if (Math.abs(barra.base - barra.y) < 14) return;       
+                    ctx.fillText(valor, barra.x, (barra.y + barra.base) / 2);
+                });
+            });
+
+            ctx.restore();
+        }
+    };
+
+    let graficopicos = new Chart(document.getElementById('graficopicos'), {
+        type: 'bar',
+        data: {
+            labels: [],
+            datasets: []
+        },
+        plugins: [valoresNasBarras],
+        options: {
+            maintainAspectRatio: false,
+            scales: {
+                x: { stacked: true, ticks: { autoSkip: false } },
+                y: { stacked: true }
+            },
+            onClick: function (evento, barras, grafico) {
+                if (barras.length == 0) return;
+
+                let inicio = periodosBarras[barras[0].index];
+                let rotulo = grafico.data.labels[barras[0].index];
+                let componentes = {};
+
+                for (let i = 0; i < picosAtuais.length; i++) {
+                    let pico = picosAtuais[i];
+                    let quando = new Date(pico.timestamp);
+                    let mesmaBarra = false;
+
+                    if (janelaAtual == "24h") {
+                        mesmaBarra = quando.getTime() == inicio;
+                    } else {
+                        mesmaBarra = quando.toDateString() == new Date(inicio).toDateString();
+                    }
+
+                    if (!mesmaBarra) continue;
+
+                    if (!componentes[pico.componente]) {
+                        componentes[pico.componente] = { total: 0, maior: pico };
+                    }
+
+                    componentes[pico.componente].total += Number(pico.qtd) || 0;
+
+                    if (pico.pico > componentes[pico.componente].maior.pico) {
+                        componentes[pico.componente].maior = pico;
+                    }
+                }
+
+                let texto = '<p class="text-xs text-gray-400 mb-2">Relatório de <b class="text-white">' + rotulo + '</b></p>';
+                let nomes = Object.keys(componentes);
+
+                nomes.sort(function (a, b) { return componentes[b].total - componentes[a].total; });
+
+                if (nomes.length == 0) {
+                    texto += '<p class="text-xs text-[#00E6A6]">Nenhum pico neste período.</p>';
+                }
+
+                for (let i = 0; i < nomes.length; i++) {
+                    let horario = new Date(componentes[nomes[i]].maior.timestamp).toLocaleString("pt-BR", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" });
+                    let cor = "#94A3B8";
+
+                    for (let j = 0; j < grafico.data.datasets.length; j++) {
+                        if (grafico.data.datasets[j].label == nomes[i]) {
+                            cor = grafico.data.datasets[j].backgroundColor;
+                        }
+                    }
+
+                    texto += '<div class="flex items-center gap-2 text-xs py-1.5 border-t border-[#207F70]/30">' + '<span class="w-2.5 h-2.5 rounded-full shrink-0" style="background:' + cor + '"></span>' + '<b class="w-24">' + nomes[i] + '</b>' + '<span class="text-gray-400">' + componentes[nomes[i]].total + ' picos - pior ' + Number(componentes[nomes[i]].maior.pico).toFixed(1) + ' - às ' + horario + '</span>' + '</div>';
+                }
+
+                document.getElementById('ondePicos').innerHTML = texto;
+            }
+        }
+    });
+
+    let limitesRig = {}; 
+
+    function preencherMeta(metricas) {
+        let componentes = {
+            cpu:         { metrica: "cpu_percent",         unidade: "%" },
+            ram:         { metrica: "ram_percent",         unidade: "%" },
+            swap:        { metrica: "swap_memory_percent", unidade: "%" },
+            temperatura: { metrica: "temperature",         unidade: " °C" },
+            gpu:         { metrica: "gpu_usage",           unidade: "%" },
+            disco:       { metrica: "disk",                unidade: " GB" },
+            ventoinha:   { metrica: "fans_speed",          unidade: "%" }
+        };
+
+        for (let nome in componentes) {
+
+            let limite = limitesRig[nome];
+            if (!limite) continue;  
+
+            let unidade = componentes[nome].unidade;
+            let valorAtual = metricas[componentes[nome].metrica];
+
+            let limiteMax = limite.limite_max != null ? Number(limite.limite_max) : null;
+            let limiteMin = limite.limite_min != null ? Number(limite.limite_min) : null;
+
+            // ver essa logica ainda
+            let metaMax = limiteMax != null ? limiteMax * 0.93 : null;
+            let metaMin = limiteMin != null ? limiteMin * 1.3 : null;
+
+            let textoMeta = "--";
+            if (metaMin != null && metaMax != null) {
+                textoMeta = Number(metaMin).toFixed(1) + "–" + Number(metaMax).toFixed(1) + unidade;
+            }
+
+            let dentro = valorAtual != null && (metaMax == null || valorAtual <= metaMax) && (metaMin == null || valorAtual >= metaMin);
+
+            let pidmeta = document.getElementById("meta_" + nome);
+
+            if (pidmeta) {
+                pidmeta.innerHTML = `<i class="fa-solid fa-bullseye mr-1"></i>Meta ${textoMeta}`;
+                pidmeta.style.color = dentro ? "#00E6A6" : "#A0B5AC";
+            }
+
+            let textoMin = limiteMin != null ? Number(limiteMin).toFixed(1) + unidade : "—";
+            let textoMax = limiteMax != null ? Number(limiteMax).toFixed(1) + unidade : "—";
+
+            let pidlimite = document.getElementById("lim_" + nome);
+            if (pidlimite) {
+                pidlimite.innerHTML = `<span class="text-gray-500">mín</span> ${textoMin} <span class="text-gray-500">· máx</span> ${textoMax}`;
+            }
+
+            let marcaMeta = document.getElementById("marca_" + nome);
+            if (marcaMeta && metaMax != null) {
+                let inicioFaixa = metaMin != null ? metaMin : 0;
+                let fimFaixa = metaMax;
+
+                marcaMeta.style.display = "";
+                marcaMeta.style.left = inicioFaixa + "%";
+                marcaMeta.style.width = fimFaixa - inicioFaixa + "%";
+                marcaMeta.style.background = "rgba(0,230,166,0.15)";
+                marcaMeta.style.border = "2px dashed white";
+                marcaMeta.style.borderRadius = "4px";
+                marcaMeta.style.boxSizing = "border-box";            }
+
+            let marcaLimite = document.getElementById("lim_marca_" + nome);
+            if (marcaLimite && limiteMax != null) {
+                marcaLimite.style.display = "";
+                marcaLimite.style.left = Math.min(limiteMax, 100) + "%";
+            }
+            let marcaLimiteMin = document.getElementById("lim_min_marca_" + nome);
+            if (marcaLimiteMin && limiteMin != null) {
+                marcaLimiteMin.style.display = "";
+                marcaLimiteMin.style.left = Math.min(limiteMin, 100) + "%";
+            }
+        }
+    }
+
+
+    function ajustarGrade() {
+    let grade = document.getElementById("grade_componentes");
+    let vazio = document.getElementById("sem_componentes");
+    let gpu = document.getElementById("card_gpu");
+
+    // cards visíveis
+    let visiveis = [];
+    for (let i = 0; i < grade.children.length; i++) {
+        let c = grade.children[i];
+        if (c === vazio || c.style.display == "none") continue;
+        visiveis.push(c);
+    }
+
+    if (visiveis.length == 0) {
+        vazio.style.display = "flex";
+        return;
+    }
+    vazio.style.display = "none";
+
+    // mesma ordem que o CSS vai usar: pelo "order" e, empatando, pela posição no HTML
+    visiveis.sort(function (a, b) {
+        let oa = Number(a.style.order) || 0;
+        let ob = Number(b.style.order) || 0;
+        if (oa != ob) return oa - ob;
+        return grade.children.length && Array.prototype.indexOf.call(grade.children, a) - Array.prototype.indexOf.call(grade.children, b);
+    });
+
+    grade.style.gridAutoFlow = "row";   // sem "dense": ninguém pula a fila
+
+    let colunaAtual = 0;   // 0 = início da linha, 1 = já tem um card nela
+    let linhas = 0;
+
+    for (let i = 0; i < visiveis.length; i++) {
+        let c = visiveis[i];
+        let largo = (c === gpu);
+
+        if (!largo && colunaAtual == 1) {
+            // fecha a linha com este card
+            c.style.gridColumn = "";
+            colunaAtual = 0;
+            linhas++;
+            continue;
+        }
+
+        if (!largo) {
+            // começa uma linha: se o próximo é largo ou não existe, este vira largo
+            let proximo = visiveis[i + 1];
+            if (!proximo || proximo === gpu) {
+                c.style.gridColumn = "span 2";
+                linhas++;
+            } else {
+                c.style.gridColumn = "";
+                colunaAtual = 1;
+            }
+        } else {
+            // GPU: sempre 2 colunas, e a linha anterior já foi fechada pela regra acima
+            c.style.gridColumn = "span 2";
+            linhas++;
+        }
+    }
+
+    let alturaLinha = 140;
+    grade.style.gridTemplateRows = `repeat(${linhas}, minmax(${alturaLinha}px, 1fr))`;
+    grade.style.minHeight = (linhas * alturaLinha + (linhas - 1) * 8) + "px";
+}
+
+    function preencherJanela(link, janela, metricastras) {
+        fetch(`${link}/janelas/${janela}/metricas.json`, { cache: "no-cache" }).then(resposta =>
+         resposta.json()).then(dados => {
+                for (let nome in metricastras) {
+                    let kpi = dados.dados.kpis[metricastras[nome]];
+
+                    if (!kpi || kpi.avg == null) continue;
+
+                    let desvio = kpi.desvio_padrao == null ? "--" : "±" + kpi.desvio_padrao.toFixed(1);
+
+                    document.getElementById(`linha_${nome}_${janela}`).innerHTML =
+                        `<span class="text-gray-400">${janela}</span>
+                        <span>${kpi.avg.toFixed(1)}</span>
+                        <span>${kpi.max.toFixed(1)}</span>
+                        <span>${kpi.min.toFixed(1)}</span>
+                        <span>${desvio}</span>`;
+                }
+            })
+    }
+
+    function preencherHistorico(link) {
+        let nomes = ["cpu", "ram", "swap", "temperatura", "gpu", "disco", "ventoinha"];
+        let unidades = ["%", "%", "%", "°C", "%", "GB", "%"];
+
+        fetch(`${link}/janelas/30d/picos.json`, { cache: "no-cache" }).then(resposta =>
+            resposta.json()).then(dados => {
+                let picos = dados.dados;
+
+                for (let i = 0; i < nomes.length; i++) {
+                    let horas = 0;
+                    let maior = 0;
+                    let ultimo = null;
+
+                    for (let j = 0; j < picos.length; j++) {
+                        if (picos[j].componente == nomes[i]) {
+                            horas++;
+                            if (picos[j].pico > maior) {
+                                maior = picos[j].pico;
+                            }
+                            ultimo = picos[j].timestamp; 
+                        }
+                    }
+
+                    let historico = document.getElementById(`hist_${nomes[i]}`);
+
+                    if (horas == 0) {
+                        historico.innerHTML = "Sem problemas em 30d";
+                        continue;
+                    }
+
+                    let data = new Date(ultimo).toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit" });
+                    let hora = new Date(ultimo).getHours() + "h";
+
+                    historico.style.color = horas >= 3 ? "#FF5269" : "#FFB000";
+                    historico.innerHTML = `${horas}h fora do limite · pico ${maior.toFixed(1)} ${unidades[i]} · último ${data} ${hora} (30d)`;
+                }
+            })
+    }
+
+    // let url = "https://bucket-gold-marcelo-sptech.s3.us-east-1.amazonaws.com";
+    let url = "";
+
+    fetch("/dashboard-geral/config").then(r => r.json()).then(config => {
+        url = config.urlGold;
+        console.log("URL Gold:", url);
+        atualizardash();
+    });
+    
+
+    let linkPicos = ""  
+    let janelaAtual = "24h";
+    let periodosBarras = [];
+    let picosAtuais = [];
+
+
+
+function exportarRelatorio() {
+    let doc = new window.jspdf.jsPDF();
+
+    //funcao auxiliar
+    function texto(t, x, y, tamanho = 11, negrito = false) {
+        // t é o texto,  x e y sao as posicoes no pdf, tamanho é o tamanho, padrao 8 e declaro negrito false
+        doc.setFont("helvetica", negrito ? "bold" : "normal");
+        //helvetica, se for negrito vai ser bold
+        doc.setFontSize(tamanho);
+        doc.text(String(t), x, y);
+    }
+
+    let y = 20;
+    //embaixo vai ir somando no y para descer a linha no pdf
+
+    texto("Relatorio da maquina", 15, y, 18, true);
+    y += 10;
+
+    texto("Farm: " + nome_farm.innerText, 15, y);
+    y += 7;
+    texto("Sessao: " + nome_sessao.innerText, 15, y);
+    y += 7;
+    texto("Rig: " + idRig, 15, y);
+    y += 7;
+    texto("Gerado em: " + new Date().toLocaleString("pt-BR"), 15, y);
+
+    y += 12;
+    doc.line(15, y, 195, y);
+    y += 10;
+
+    texto("Status geral: " + pico_status.innerText, 15, y, 12, true);
+    y += 8;
+
+    texto("Causa principal: " + kpi_componente_principal.innerText, 15, y);
+    y += 8;
+
+    texto("Proxima falha: " + previsao_horas.innerText, 15, y);
+    y += 8;
+
+    texto("Detalhes: " + previsao_detalhe.innerText, 15, y);
+    y += 12;
+
+    doc.line(15, y, 195, y);
+    y += 10;
+
+    texto("Componentes", 15, y, 13, true);
+    y += 9;
+
+    let componentes = [
+        "cpu", "ram", "swap", "temperatura",
+        "gpu", "disco", "ventoinha"
+    ];
+
+    for (let i = 0; i < componentes.length; i++) {
+        let nome = componentes[i];
+        let card = document.getElementById("card_" + nome);
+
+        if (card.style.display == "none") continue;
+
+        let valor = card.querySelector(".text-2xl");
+
+        let status = document.getElementById("status_" + nome);
+
+        texto(nome.toUpperCase() + ": " + (valor ? valor.innerText : "--") + " | " + status.innerText, 15, y);
+        // aqui de cada componetne, no for
+
+        //utilizo innertext em todos, que ja pega o texto que esta dentro desse elemento / id
+
+        y += 8;
+    }
+
+    doc.save("relatorio-rig-" + idRig + ".pdf");
+}
+
+
+function colorirMeta(id, texto , atingiu) {
+    let icone = document.getElementById(id);
+    let textometa = document.getElementById(texto);
+
+    if (icone) {
+        icone.style.color = atingiu ? "#00E6A6" : "#A0B5AC";
+    }
+    if(textometa){
+        textometa.style.color = atingiu ? "#00E6A6" : "#A0B5AC";
+    }
+}
+
+function atualizardash(){
+    fetch(`/empresas/buscar/${idEmpresa}`).then((dados) => {
+        dados.json().then((resposta) => {
+            nome_empresa.innerHTML = resposta[0].nome_fantasia
+            let link = `${url}/${idEmpresa}/${resposta[0].nome_fantasia}/operacional/especifico/farm=${idFarm}/sessao=${idSessao}/maquina=${idRig}`;
+            let linkmonitora = `${url}/${idEmpresa}/${resposta[0].nome_fantasia}/operacional/catalogo/limites.json`;
+            
+            linkPicos = link
+            carregarpicos(janelaAtual)
+
+            let janelas = ["24h", "7d", "30d"];
+            let metricastras = {
+                cpu: "cpu_percent",
+                ram: "ram_percent",
+                swap: "swap_memory_percent",
+                temperatura: "temperature",
+                gpu: "gpu_usage",
+                disco: "disk",
+                ventoinha: "fans_speed"
+            };
+
+            for (let j = 0; j < janelas.length; j++) {
+                preencherJanela(link, janelas[j], metricastras);
+            }
+            preencherHistorico(link);
+
+            // ao inves de fazer 3 fetches uso o promise all
+            Promise.all([
+                fetch(`${link}/tempo_real/atual.json`, { cache: "no-cache" }).then(dados =>
+                dados.json()),
+                fetch(linkmonitora, { cache: "no-store" }).then(dados2 =>
+                dados2.json()),
+                fetch(`${link}/tempo_real/status.json`, { cache: "no-cache" }).then(dados3 =>
+                dados3.json()),
+                fetch(`${link}/previsoes/previsoes.json`, {cache: "no-cache"}).then(dados4 => 
+                dados4.json())
+                ]).then(([resposta2, dadosmonitora, resposta3, resposta4]) => {
+
+                    if (!resposta2 || !dadosmonitora || !resposta3) {
+                        ultima_coleta.innerHTML = "Sem dados do ETL para esta máquina";
+                        document.getElementById("grade_componentes").style.display = "grid";
+                        ajustarGrade();
+                        return;
+                    }
+
+                ultima_coleta.innerHTML = "Última coleta: " + new Date(resposta2.gerado_em).toLocaleTimeString('pt-BR');
+
+                let cardcpu = document.getElementById("card_cpu");
+                let cardram = document.getElementById("card_ram");
+                let cardswap = document.getElementById("card_swap");
+                let carddisco = document.getElementById("card_disco");
+                let cardgpu = document.getElementById("card_gpu");
+                let cardtemperatura = document.getElementById("card_temperatura");
+                let cardventoinha = document.getElementById("card_ventoinha");
+
+                let limites = dadosmonitora.dados.limites;
+                let monitoracpu = false;
+                let monitoraram = false;
+                let monitoraswap = false;
+                let monitoradisco = false;
+                let monitoragpu = false;
+                let monitoratemp = false;
+                let monitoraventoinha = false;
+
+                for (let i = 0; i < limites.length; i++) {
+                    if (limites[i].id_maquina != idRig) continue;
+
+                    if (limites[i].componente == "CPU") monitoracpu = limites[i].monitorado;
+                    if (limites[i].componente == "RAM") monitoraram = limites[i].monitorado;
+                    if (limites[i].componente == "Swap") monitoraswap = limites[i].monitorado;
+                    if (limites[i].componente == "Disco") monitoradisco = limites[i].monitorado;
+                    if (limites[i].componente == "GPU") monitoragpu = limites[i].monitorado;
+                    if (limites[i].componente == "Temperatura") monitoratemp = limites[i].monitorado;
+                    if (limites[i].componente == "Ventoinha") monitoraventoinha = limites[i].monitorado;
+
+                    if (limites[i].monitorado) limitesRig[limites[i].componente.toLowerCase()] = limites[i];
+
+                }
+
+                if (monitoracpu == true && resposta2.dados.metricas["cpu_percent"] != null) {
+                    cardcpu.style.display = '';
+                    cpu_valor.innerHTML = resposta2.dados.metricas["cpu_percent"] + " %";
+                    cpu_freq.innerHTML = resposta2.dados.metricas["cpu_frequency"] + " GHz";
+                    barra_cpu.style.width = `${resposta2.dados.metricas["cpu_percent"]}%`;
+                }
+
+                if (monitoraram == true && resposta2.dados.metricas["ram_percent"] != null) {
+                    cardram.style.display = '';
+                    ram_valor.innerHTML = resposta2.dados.metricas["ram_percent"] + " %";
+                    barra_ram.style.width = `${resposta2.dados.metricas["ram_percent"]}%`;
+                }
+
+                if (monitoraswap == true && resposta2.dados.metricas["swap_memory_percent"] != null) {
+                    cardswap.style.display = '';
+                    swap_valor.innerHTML = resposta2.dados.metricas["swap_memory_percent"] + " %";
+                    swap_valor_usado.innerHTML = resposta2.dados.metricas["swap_memory_used"] + " /";
+                    swap_valor_total.innerHTML = resposta2.dados.metricas["swap_memory_total"] + " GB";
+                    barra_swap.style.width = `${resposta2.dados.metricas["swap_memory_percent"]}%`;
+                }
+
+                if (monitoradisco == true && resposta2.dados.metricas["disk"] != null) {
+                    carddisco.style.display = '';
+                    disco_valor.innerHTML = resposta2.dados.metricas["disk"] + " GB";
+                }
+
+                if (monitoragpu == true && resposta2.dados.metricas["gpu_usage"] != null) {
+                    cardgpu.style.display = '';
+                    gpu_valor_uso.innerHTML = resposta2.dados.metricas["gpu_usage"] + " %";
+                    gpu_valor_potencia.innerHTML = resposta2.dados.metricas["gpu_energy"] + " W";
+                    gpu_valor_temperatura.innerHTML = resposta2.dados.metricas["gpu_temp"] + " °C";
+                    gpu_valor_ventoinha.innerHTML = resposta2.dados.metricas["gpu_fan_speed"] + " %";
+                }
+
+                if (monitoratemp == true && resposta2.dados.metricas["temperature"] != null) {
+                    cardtemperatura.style.display = '';
+                    temperatura_valor.innerHTML = resposta2.dados.metricas["temperature"] + " °C";
+                }
+
+                if (monitoraventoinha == true && resposta2.dados.metricas["fans_speed"] != null) {
+                    cardventoinha.style.display = '';
+                    ventoinha_valor.innerHTML = resposta2.dados.metricas["fans_speed"] + " %";
+                }
+
+                // ajustarGrade();
+                preencherMeta(resposta2.dados.metricas);
+
+
+                let pico_status = document.getElementById("pico_status")
+                let kpi_status = document.getElementById("kpi_status")
+                pico_status.innerHTML = (resposta3.dados.status_geral).toUpperCase()
+                detalhe_status.innerHTML = `Desde: ${new Date(resposta3.dados.timestamp).toLocaleString("pt-BR" , {timeZone : "America/Sao_Paulo"})}`
+                let componentesStatus = resposta3.dados.componentes;
+                console.log(resposta3)
+                let leitura = resposta3.dados.leitura_mais_fora_media;
+
+                let kpiLeitura = document.getElementById("kpiLeitura")
+                let corLeitura = "#6d6f6e"; 
+
+                if (leitura && leitura.z_score != null) {
+                    let z = Math.abs(Number(leitura.z_score));
+                    colorirMeta("ic_meta_leitura", "texto_meta_leitura", z < 1);
+
+                    kpi_leitura_fora.innerHTML = leitura.componente.toUpperCase();
+                    detalhe_leitura_fora.innerHTML = `valor atual: ${leitura.valor} - Z-score: ${leitura.z_score}`;
+
+                    if (z >= 3) corLeitura = "#FF1E3C";
+                    else if (z >= 2) corLeitura = "#FFB000";
+                    else if (z >= 1) corLeitura = "#FFD84D";
+                    else corLeitura = "#00E6A6";
+                } else {
+                    colorirMeta("ic_meta_leitura", "texto_meta_leitura", false);
+                    kpi_leitura_fora.innerHTML = "--";
+                    detalhe_leitura_fora.innerHTML = "Sem dados suficientes para avaliar";
+                }
+
+                kpi_leitura_fora.style.color = corLeitura;
+                kpiLeitura.style.borderTopColor = corLeitura;
+                // kpi_leitura_fora.innerHTML = resposta3.dados.leitura_mais_fora_media.componente.toUpperCase()
+
+                // detalhe_leitura_fora.innerHTML = `valor atual: ${resposta3.dados.leitura_mais_fora_media.valor} - Z-score: ${resposta3.dados.leitura_mais_fora_media.z_score}`
+               
+                let offline = resposta3.dados.status_geral == "offline"
+                colorirMeta("ic_meta_status", "texto_meta_status" , !offline && resposta3.dados.status_geral == "normal");
+           
+
+                
+                let cardsStatus = [
+                    { nome: "cpu", card: cardcpu, texto: "status_cpu", monitorado: monitoracpu, barra: "barra_cpu" , icone : "iconecpu" , cor_acao : "acao_cpu" , acao_critico_texto : "Ação sugerida: verificar refrigeração"},
+                    { nome: "ram", card: cardram, texto: "status_ram", monitorado: monitoraram, barra: "barra_ram" , icone : "iconeram" , cor_acao : "acao_ram" , acao_critico_texto : "Acão sugerida: verificar conexões" },
+                    { nome: "swap", card: cardswap, texto: "status_swap", monitorado: monitoraswap, barra: "barra_swap" , icone : "iconeswap" , cor_acao : "acao_swap" , acao_critico_texto : "Ação sugerida: verificar memória" },
+                    { nome: "temperatura", card: cardtemperatura, texto: "status_temperatura", monitorado: monitoratemp , icone : "iconetemperatura" , cor_acao : "acao_temperatura" , acao_critico_texto : "verificar as ventoinhas" },
+                    { nome: "gpu", card: cardgpu, texto: "status_gpu", monitorado: monitoragpu , icone : "iconegpu" , cor_acao : "acao_gpu" , acao_critico_texto : "verificar conexões de vídeo" },
+                    { nome: "disco", card: carddisco, texto: "status_disco", monitorado: monitoradisco , icone : "iconedisco" , cor_acao : "acao_disco" , acao_critico_texto : "verificar aplicações pesadas" },
+                    { nome: "ventoinha", card: cardventoinha, texto: "status_ventoinha", monitorado: monitoraventoinha , icone : "iconeventoinha" , cor_acao : "acao_ventoinha" , acao_critico_texto : "verificar energia" }
+                ];
+
+                for (let i = 0; i < componentesStatus.length; i++) {
+                    for (let j = 0; j < cardsStatus.length; j++) {
+
+                        if (componentesStatus[i].componente == cardsStatus[j].nome && cardsStatus[j].monitorado == true) {
+
+                            let status = componentesStatus[i].status;
+                            let frente = cardsStatus[j].card.firstElementChild.firstElementChild;
+                            let texto = document.getElementById(cardsStatus[j].texto);
+                            let barra = document.getElementById(cardsStatus[j].barra);
+                            let icone = document.getElementById(cardsStatus[j].icone);
+                            let cor_acao = document.getElementById(cardsStatus[j].cor_acao);
+                            let acao_critico_texto = cardsStatus[j].acao_critico_texto
+                            if(offline) status = "offline"
+                            if(status == "offline" || status == "sem_dados"){
+                                cardsStatus[j].card.style.order = 3;
+                                frente.style.backgroundColor = "#202725";
+                                frente.style.borderColor = "#626B66";
+                                texto.style.color = "#6d6f6e";
+                                texto.innerHTML = status == "offline" ? "Offline" : "Sem dados";
+                                icone.style.color = "#6d6f6e";
+                                cor_acao.style.color = "#6d6f6e";
+                                cor_acao.innerHTML = `<i class="fa-solid fa-plug-circle-xmark mr-1"></i>Máquina sem comunicação`;
+                                if(barra){
+                                    barra.style.backgroundColor = "#6d6f6e"
+                                }
+                            }else if (status == "critico") {
+                                cardsStatus[j].card.style.order = 0;
+                                frente.style.backgroundColor = "#24191B";
+                                frente.style.borderColor = "#FF1F3D";
+                                texto.style.color = "#FF5269";
+                                texto.innerHTML = "Crítico";
+                                icone.style.color = "#FF5269"
+                                cor_acao.style.color = "#FF5269"
+                                cor_acao.innerHTML = `<i class="fa-solid fa-wrench mr-1"></i>${acao_critico_texto}`;
+                                if(barra){
+                                    barra.style.backgroundColor = "#FF5269"
+                                }
+                            } else if (status == "atencao") {
+                                cardsStatus[j].card.style.order = 1;
+                                frente.style.backgroundColor = "#241F14";
+                                frente.style.borderColor = "#FFB000";
+                                texto.style.color = "#FFB000";
+                                texto.innerHTML = "Atenção";
+                                icone.style.color = "#FFB000"
+                                cor_acao.style.color = "#FFB000"
+                                cor_acao.innerHTML = `<i class="fa-solid fa-wrench mr-1"></i>${acao_critico_texto}`;
+                                if(barra){
+                                    barra.style.backgroundColor = "#FFB000"
+                                }
+                            } else {
+                                cardsStatus[j].card.style.order = 2;
+                                frente.style.backgroundColor = "#112C24";
+                                frente.style.borderColor = "#207F70";
+                                texto.style.color = "#00E6A6";
+                                texto.innerHTML = "Normal";
+                                icone.style.color = "#00E6A6"
+                                cor_acao.style.color = "#00E6A6"
+                                cor_acao.innerHTML = `<i class="fa-solid fa-wrench mr-1"></i>Ação sugerida: Nenhuma`;
+                                if(barra){
+                                    barra.style.backgroundColor = "#00E6A6"
+                                }
+                            }
+                        }
+                    }
+                }
+                if(offline){
+                    pico_status.innerHTML = "OFFLINE"
+                    pico_status.style.color = '#6d6f6e'
+                    kpi_status.style.borderTopColor = '#6d6f6e'
+                }else if (resposta3.dados.status_geral == "critico") {
+                    pico_status.style.color = '#FF1E3C'
+                    kpi_status.style.borderTopColor = '#FF1E3C'
+                } else if (resposta3.dados.status_geral == "atencao") {
+                    pico_status.style.color = '#FFB000'
+                    kpi_status.style.borderTopColor = '#FFB000'
+                } else {
+                    pico_status.style.color = '#00E6A6'
+                    kpi_status.style.borderTopColor = '#00E6A6'
+                }
+                
+                ajustarGrade();
+
+
+                // usado para nao piscar o mockado (pretendo ainda mudar a logica)
+                document.getElementById("grade_componentes").style.display = "grid";
+
+                console.log(resposta4)
+
+                let previsao = resposta4.dados && resposta4.dados.length > 0 ? resposta4.dados[0] : null;
+                let critico = previsao ? previsao.critico_atual : null;
+                let falha = previsao ? previsao.proxima_falha : null;
+
+                let kpiPrev = document.getElementById("kpiPrev");
+                let corPrev = "#00E6A6";
+
+                function duracao(h) {
+                    if (h == null) return "";
+                    return h < 1 ? Math.round(h * 60) + " MIN" : h.toFixed(1) + " H";
+                }
+
+                colorirMeta("ic_meta_previsao", "texto_meta_previsao", !critico && !falha);
+
+                if (critico) {
+                    let nomeCritico = critico.componente.toUpperCase();
+
+                    if (critico.tendencia_critica == "dano_atingido") {
+                        previsao_horas.innerHTML = `${nomeCritico} <span class="text-[15px] font-normal whitespace-nowrap">atingido</span>`;
+                        previsao_detalhe.innerHTML = `${critico.valor_atual} · dano a partir de ${critico.limite_dano}`;
+                        corPrev = "#FF1E3C";
+                    } else if (critico.horas_ate_dano != null) {
+                        let quando = new Date(critico.horario_dano).toLocaleString("pt-BR", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" });
+                        previsao_horas.innerHTML = `${nomeCritico} <span class="text-[15px] font-normal whitespace-nowrap">em ${duracao(critico.horas_ate_dano).toLowerCase()}</span>`;
+                        previsao_detalhe.innerHTML = `dano: ${critico.valor_atual} → ${critico.limite_dano} · ${quando}`;
+                        corPrev = critico.horas_ate_dano <= 24 ? "#FF1E3C" : "#FFB000";
+                    } else if (critico.horas_ate_normalizar != null) {
+                        let quando = new Date(Date.now() + critico.horas_ate_normalizar * 3600000).toLocaleString("pt-BR", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" });
+                        previsao_horas.innerHTML = `${nomeCritico} <span class="text-[15px] font-normal whitespace-nowrap">em ${duracao(critico.horas_ate_normalizar).toLowerCase()}</span>`;
+                        previsao_detalhe.innerHTML = `normaliza: ${critico.valor_atual} → ${critico.valor_limite} · ${quando}`;
+                        corPrev = "#438BFF";
+                    } else {
+                        previsao_horas.innerHTML = `${nomeCritico} <span class="text-[15px] font-normal whitespace-nowrap">estável</span>`;
+                        previsao_detalhe.innerHTML = `${critico.valor_atual} · dano a partir de ${critico.limite_dano}`;
+                        corPrev = "#FFB000";
+                    }
+                } else if (falha) {
+                    let quando = new Date(falha.horario_critico).toLocaleString("pt-BR", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" });
+                    previsao_horas.innerHTML = `${falha.componente.toUpperCase()} <span class="text-[15px] font-normal">em ${duracao(falha.horas_ate_critico).toLowerCase()}</span>`
+                    previsao_detalhe.innerHTML = `${falha.componente} atinge ${falha.valor_limite} em ${quando}`;
+
+                    if (falha.horas_ate_critico <= 6) corPrev = "#FF1E3C";
+                    else if (falha.horas_ate_critico <= 24) corPrev = "#FFB000";
+                    else corPrev = "#438BFF";
+                } else {
+                    previsao_horas.innerHTML = "Nenhum risco";
+                    previsao_detalhe.innerHTML = "Sem tendência de falha nos próximos 7 dias";
+                }
+
+                previsao_horas.style.color = corPrev;
+                kpiPrev.style.borderTopColor = corPrev;
+            });
+        });
+    });
+
+    fetch(`/dispositivos/listarcomponenteprincipal/${idRig}`).then((dados4) => {
+        dados4.json().then((resposta4) => {
+            let kpi_causa = document.getElementById("kpi_causa");
+
+                if (resposta4.length == 0) {
+                    kpi_componente_principal.innerHTML = "--";
+                    kpi_componente_principal.style.color = "#6d6f6e";
+                    kpi_causa.style.borderTopColor = "#6d6f6e";
+                    detalhe_kpi_componente.innerHTML = "Sem alertas nos últimos 30 dias";
+                    colorirMeta("ic_meta_causa" , "texto_meta_causa" , true);
+
+                } else {
+                    let criticos = Number(resposta4[0].criticos);
+                    let atencoes = Number(resposta4[0].atencoes);
+                    let total = criticos + atencoes;
+
+                
+                    let LIMITE_VERMELHO = 3;  
+                    let LIMITE_AMARELO_CRITICOS = 2;
+                    let LIMITE_AMARELO_TOTAL = 3;
+
+                    let cor = ""
+                    let situacao = ""
+                    if (criticos >= LIMITE_VERMELHO) {
+                        cor = "#FF1E3C";
+                        situacao = "Crítico recorrente";
+                    } else if (criticos >= LIMITE_AMARELO_CRITICOS || total >= LIMITE_AMARELO_TOTAL) {
+                        cor = "#FFB000";
+                        situacao = "Atenção: recorrência";
+                    } else {
+                        cor = "#00E6A6";
+                        situacao = "Ocorrência isolada";
+                    }
+                    colorirMeta("ic_meta_causa", "texto_meta_causa" , total < 3 && criticos < 2);
+                    kpi_componente_principal.innerHTML = resposta4[0].nome;
+                    kpi_componente_principal.style.color = cor;
+                    kpi_causa.style.borderTopColor = cor;
+                     detalhe_kpi_componente.innerHTML = `${situacao} - ${resposta4[0].percentual}% dos alertas ( ${resposta4[0].contador} / ${resposta4[0].total} )`;
+                    // detalhe_kpi_componente.innerHTML =  `${resposta4[0].percentual}% dos alertas registrados ( ${resposta4[0].contador} / ${resposta4[0].total} )`
+                }
+
+        })
+    })
+}
+
+
+     
+    function carregarpicos(janela) {
+        janelaAtual = janela;
+
+        let botoes = ["24h", "7d", "30d"];
+
+        for (let i = 0; i < botoes.length; i++) {
+            let botao = document.getElementById("btn_" + botoes[i]);
+
+            if (botoes[i] == janela) {
+                botao.className = "px-3 py-2 text-xs bg-[#144840] text-[#00E6A6]";
+            } else {
+                botao.className = "px-3 py-2 text-xs text-[#A0B5AC] hover:bg-[#ffffff0d]";
+            }
+        }
+
+        fetch(`${linkPicos}/janelas/${janela}/picos.json`).then(resposta =>
+        resposta.json()).then(dados => {
+
+            let cores = {
+                temperatura: '#FFB000',
+                gpu: '#FF1F3D',
+                cpu: '#E879F9',
+                ram: '#438BFF',
+                disco: '#A78BFA',
+                swap: '#2DD4BF',
+                ventoinha: '#94A3B8'
+            };
+
+            let horas = [];     
+            let tempo = [];     
+            let nomes = [];
+            let datasets = [];
+
+            if (janela == "24h") {
+                let agora = new Date();
+                agora.setMinutes(0, 0, 0);
+
+                for (let i = 23; i >= 0; i--) {
+                    let hora = new Date(agora.getTime() - i * 3600 * 1000);
+                    horas.push(hora.getTime());
+                    tempo.push(hora.getHours() + "h");
+                }
+            } else {
+                let quantosDias = 7;
+                if (janela == "30d") quantosDias = 30;
+
+                new Date().setHours(0, 0, 0, 0);
+
+                for (let i = quantosDias - 1; i >= 0; i--) {
+                    let dia = new Date(new Date().getTime() - i * 24 * 3600 * 1000);
+                    horas.push(dia.getTime());
+                    tempo.push(dia.toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit" }));
+                }
+            }
+
+            periodosBarras = horas;
+            picosAtuais = dados.dados;
+
+            for (let i = 0; i < dados.dados.length; i++) {
+                if (!nomes.includes(dados.dados[i].componente)) {
+                    nomes.push(dados.dados[i].componente);
+                }
+            }
+
+            for (let c = 0; c < nomes.length; c++) {
+                let valores = [];
+
+                for (let t = 0; t < horas.length; t++) {
+                    let soma = 0;
+
+                    for (let i = 0; i < dados.dados.length; i++) {
+                        let mesmaBarra = false;
+
+                        if (janela == "24h") {
+                            mesmaBarra = new Date(dados.dados[i].timestamp).getTime() == horas[t];                             
+                        } else {
+                            mesmaBarra = new Date(dados.dados[i].timestamp).toDateString() == new Date(horas[t]).toDateString(); 
+                        }
+
+                        if (mesmaBarra && dados.dados[i].componente == nomes[c]) {
+                            soma += Number(dados.dados[i].qtd) || 0;
+                        }
+                    }
+                    valores.push(soma);
+                }
+
+                datasets.push({
+                    label: nomes[c],
+                    data: valores,
+                    backgroundColor: cores[nomes[c]] || '#94A3B8',
+                    borderRadius: 4
+                });
+            }
+
+            graficopicos.data.labels = tempo;
+            graficopicos.data.datasets = datasets;
+            graficopicos.update();
+
+            if (dados.dados.length == 0) {
+                document.getElementById('ondePicos').innerHTML = '<p class="text-xs text-[#00E6A6]">Nenhum pico</p>';
+            } else {
+                document.getElementById('ondePicos').innerHTML = '<p class="text-xs text-gray-400">Clique em uma barra para ver onde os picos aconteceram.</p>';
+            }
+        })
+    }
+
+// atualizardash()
+
+document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") {
+        atualizardash();
+    }
+});
+
+setInterval(() => {
+    if (document.visibilityState === "visible") {
+        atualizardash();
+    }
+}, 60000);
+// ver se vai mudar o tempo
+        
+
+
+</script>
+</body>
+
+</html>

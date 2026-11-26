@@ -195,6 +195,11 @@ function removercripto(idligacao) {
     return database.executar(instrucaoSql);
 }
 
+function listarcomponenteprincipal(iddispositivo){
+    var instrucaoSql = `select count(a.id) as contador , sum(count(a.id)) over () as total , c.nome, round(100 * count(a.id) / sum(count(a.id)) over (), 1) as percentual, sum(a.severidade = 'Crítica') as criticos , sum(a.severidade = 'Aviso') as atencoes from maquina_componente mc join alerta a on a.id_mc = mc.id join componente c on mc.id_componente = c.id where mc.id_maquina = ${iddispositivo} and a.data_hora_detectado >= NOW() - interval 30 day   group by c.nome order by contador desc limit 1;`;
+    return database.executar(instrucaoSql);
+}
+
 
 module.exports = {  
     cadastrar,
@@ -212,5 +217,6 @@ module.exports = {
     catalogocripto,
     listarcripto,
     adicionarcripto,
-    removercripto
+    removercripto,
+    listarcomponenteprincipal
 };
