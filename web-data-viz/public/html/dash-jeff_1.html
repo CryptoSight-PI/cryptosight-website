@@ -3,123 +3,193 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/output.css">
+    <link rel="shortcut icon" href="../assets/imgs/logo.png" type="image/x-icon">
     <title>CryptoSight</title>
-
-    <!-- Twind: lê as classes do HTML e gera o CSS sozinho (sem arquivo .css) -->
-    <script src="https://cdn.twind.style" crossorigin></script>
-
-    <!-- Só as fontes continuam em CSS, porque precisam do @font-face -->
-    <style>
-        @font-face {
-            font-family: 'inter';
-            src: url('../assets/fonts/Inter-VariableFont_opsz,wght.ttf');
-        }
-        @font-face {
-            font-family: 'oi';
-            src: url('../assets/fonts/Manrope-VariableFont_wght.ttf');
-        }
-        .f-inter { font-family: 'inter', Arial, sans-serif; }
-        .f-oi    { font-family: 'oi', Arial, sans-serif; }
-    </style>
 </head>
 
-<body class="flex min-h-screen text-white font-sans bg-gradient-to-br from-[#0d1412] via-[#09483f] to-[#131d1a]">
+<body class="flex min-h-screen text-white font-sans bg-gradient-to-br from-[#0d1412] via-[#09483f] to-[#131d1a] pl-15">
 
     <!-- Barra lateral -->
-    <div class="w-10 shrink-0 min-h-screen bg-[#0a211b] border-r border-[#174b3e] flex flex-col items-center gap-5 py-3">
-        <div class="w-6 h-6 border border-[#00c99a] rounded-full mb-2.5"></div>
-        <div class="w-5 h-5 rounded"></div>
-        <div class="w-5 h-5 rounded"></div>
-        <div class="w-5 h-5 rounded"></div>
-        <div class="w-5 h-5 rounded"></div>
-        <div class="w-5 h-5 rounded"></div>
-    </div>
+    <dialog class="bg-[#0C1F19] flex flex-col group h-screen w-15 hover:w-70 transition-all duration-300 ease-in-out pt-5 z-99 overflow-hidden border-r border-[#207F70]" popover="hint" open>
+        <img src="../assets/imgs/logo.png" class="absolute self-center-safe justify-self-center-safe h-10 group-hover:h-15 transition-all duration-300 ease-in-out">
+
+        <a href="dashboard-financeira.html">
+        <div class="rounded-2xl flex flex-row pl-2 pr-2 pt-3 pb-3 ml-2 mr-2 mt-30 mb-2 hover:cursor-pointer w-10.5 group-hover:w-64 transition-all duration-300 ease-out bg-[#144840]">
+            <img src="../assets/icones-dash/dashboard-plus-verde.svg" class="h-6">
+            <p class="hidden group-hover:block text-[#00E6A6] justify-center self-center text-sm ml-3 text-nowrap font-inter font-semibold">Dashboard</p>
+        </div>
+        </a>
+        <a href="farm.html">
+        <div class="rounded-2xl flex flex-row pl-2 pr-2 pt-3 pb-3 ml-2 w-13 hover:cursor-pointer">
+            <img src="../assets/icones-dash/farm-icon.svg" class="h-6">
+            <p class="hidden group-hover:block text-[#A0B5AC] justify-center self-center text-sm ml-3 text-nowrap font-inter font-semibold">Gerenciar Farms</p>
+        </div>
+        </a>
+        <a href="dispositivos.html">
+        <div class="rounded-2xl flex flex-row pl-2 pr-2 pt-3 pb-3 ml-2 w-13 hover:cursor-pointer">
+            <img src="../assets/icones-dash/server-plus.svg" class="h-6">
+            <p class="hidden group-hover:block text-[#A0B5AC] justify-center self-center text-sm ml-3 text-nowrap font-inter font-semibold">Gerenciar Máquinas</p>
+        </div>
+        </a>
+        <a href="user-register.html">
+        <div class="rounded-2xl flex flex-row pl-2 pr-2 pt-3 pb-3 ml-2 w-13 hover:cursor-pointer">
+            <img src="../assets/icones-dash/user-icon.svg" class="h-6">
+            <p class="hidden group-hover:block text-[#A0B5AC] justify-center self-center text-sm ml-3 text-nowrap font-inter font-semibold">Gerenciar Usuários</p>
+        </div>
+        </a>
+
+        <a href="../index.html">
+        <div class="absolute rounded-2xl flex flex-row pl-2 pr-2 pt-3 pb-3 ml-3 w-13 hover:cursor-pointer bottom-3">
+            <img src="../assets/icones-dash/sair.svg" class="h-6">
+            <p class="hidden group-hover:block text-[#A0B5AC] justify-center self-center text-sm ml-3 text-nowrap font-inter font-semibold">Logout</p>
+        </div>
+        </a>
+    </dialog>
 
     <!-- Área principal -->
-    <div class="flex-1 min-w-0 flex flex-col gap-3.5 px-4 py-5 md:px-[5%]">
+    <div class="flex-1 min-w-0 flex flex-col gap-3.5 px-10 py-5">
 
         <!-- Cabeçalho: coluna no celular, linha a partir do md -->
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-5 md:min-h-[110px]">
-            <div class="w-full md:w-[42%] h-[85px]"></div>
-            <div class="w-full md:w-[52%] h-[68px] border border-[#175443] rounded-xl"></div>
-        </div>
+        <div class="border-b border-[#207F70] flex flex-row justify-between p-5 -mx-10 -mt-5 pl-10 pr-15 place-content-center">
+            <div class="flex flex-row gap-5">
+                <div class="bg-[#207F70] rounded-2xl px-4 py-3 flex flex-row">
+                    <img src="../../assets/imgs/bitdeer-logo.svg" alt="">
+                    <p class="font-space-mono ml-3 font-semibold text-sm text-nowrap place-content-center">Bitdeer Technologies Group</p>
+                </div>
+                <button class="bg-transparent rounded-2xl border border-[#207F70] place-content-center flex flex-row pl-4 pr-4 pt-3 pb-3 hover:cursor-pointer hover:bg-[#00000025] transition-colors duration-100 ease-in-out">
+                    <img src="../../assets/imgs/download.svg" class="">
+                    <p class="font-space-mono ml-3 text-sm text-nowrap place-content-center">Exportar relatório</p>
+                </button>
+            </div>
+            <div class="flex flex-row align-baseline">
+                <p class="font-space-mono font-bold place-self-center mr-3 text-lg">Jeff Smith</p>
+                <img src="../../assets/imgs/Jeff.png" class="rounded-4xl border border-[#207F70] p-0.5 h-14">
+            </div>
+    </div>
 
         <!-- Botões de período -->
-        <div class="flex self-end w-[150px] border border-[#a7b7b074] rounded-full overflow-hidden">
-            <button class="bg-[#075b48] text-[#5cf0c5] text-[8px] px-[11px] py-[3px] cursor-pointer">7 dias</button>
-            <button class="bg-transparent text-[#a7b7b0] text-[8px] px-[11px] py-[3px] cursor-pointer">30 dias</button>
-            <button class="bg-transparent text-[#a7b7b0] text-[8px] px-[11px] py-[3px] cursor-pointer">90 dias</button>
+        <div class="flex flex-row justify-end">
+            <div class="bg-[#0C1F19] border-[#207F70] border rounded-2xl m-5 grid grid-cols-3 place-content-center w-1/5">
+                <span class="flex flex-row justify-center rounded-2xl filtro-selecionado border border-transparent p-1 hover:cursor-pointer hover:filtro-selecionado">7 dias</span>
+                <span class="flex flex-row justify-center rounded-2xl border border-transparent p-1 hover:cursor-pointer hover:filtro-selecionado">30 dias</span>
+                <span class="flex flex-row justify-center rounded-2xl border border-transparent p-1 hover:cursor-pointer hover:filtro-selecionado">90 dias</span>
+            </div>
         </div>
 
         <!-- Cards: 2 colunas no celular, 3 no sm, 5 no lg -->
         <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-1.5">
-            <div class="bg-[#0b211b] border border-[#175443] rounded-md p-3">
-                <p class="text-xs text-[#f0f8ff71] f-inter">Gasto de energia</p>
-                <h2 class="mt-2.5 text-xl xl:text-[28px] font-bold text-[#f0f8ff] f-oi">R$ 1.2345,5</h2>
-                <p class="mt-1 text-[10px] text-[#f0f8ff71] f-inter">Estimado: 1.234,56</p>
+            <div class="bg-[#0b211b] border border-[#175443] rounded-2xl p-3">
+                <p class="text-xs text-[#f0f8ff71] font-inter">Gasto de energia</p>
+                <h2 class="mt-2.5 text-xl xl:text-[28px] font-bold text-[#f0f8ff] font-['Manrope']">R$ 1.2345,5</h2>
+                <p class="mt-1 text-[10px] text-[#f0f8ff71] font-inter">Estimado: 1.234,56</p>
             </div>
-            <div class="bg-[#0b211b] border border-[#175443] rounded-md p-3">
-                <p class="text-xs text-[#f0f8ff71] f-inter">Gasto de energia</p>
-                <h2 class="mt-2.5 text-xl xl:text-[28px] font-bold text-[#f0f8ff] f-oi">R$ 1.2345,5</h2>
-                <p class="mt-1 text-[10px] text-[#f0f8ff71] f-inter">Estimado: 1.234,56</p>
+            <div class="bg-[#0b211b] border border-[#175443] rounded-2xl p-3">
+                <p class="text-xs text-[#f0f8ff71] font-inter">Gasto de energia</p>
+                <h2 class="mt-2.5 text-xl xl:text-[28px] font-bold text-[#f0f8ff] font-['Manrope']">R$ 1.2345,5</h2>
+                <p class="mt-1 text-[10px] text-[#f0f8ff71] font-inter">Estimado: 1.234,56</p>
             </div>
-            <div class="bg-[#0b211b] border border-[#175443] rounded-md p-3">
-                <p class="text-xs text-[#f0f8ff71] f-inter">Gasto de energia</p>
-                <h2 class="mt-2.5 text-xl xl:text-[28px] font-bold text-[#f0f8ff] f-oi">R$ 1.2345,5</h2>
-                <p class="mt-1 text-[10px] text-[#f0f8ff71] f-inter">Estimado: 1.234,56</p>
+            <div class="bg-[#0b211b] border border-[#175443] rounded-2xl p-3">
+                <p class="text-xs text-[#f0f8ff71] font-inter">Gasto de energia</p>
+                <h2 class="mt-2.5 text-xl xl:text-[28px] font-bold text-[#f0f8ff] font-['Manrope']">R$ 1.2345,5</h2>
+                <p class="mt-1 text-[10px] text-[#f0f8ff71] font-inter">Estimado: 1.234,56</p>
             </div>
-            <div class="bg-[#0b211b] border border-[#175443] rounded-md p-3">
-                <p class="text-xs text-[#f0f8ff71] f-inter">Gasto de energia</p>
-                <h2 class="mt-2.5 text-xl xl:text-[28px] font-bold text-[#f0f8ff] f-oi">R$ 1.2345,5</h2>
-                <p class="mt-1 text-[10px] text-[#f0f8ff71] f-inter">Estimado: 1.234,56</p>
+            <div class="bg-[#0b211b] border border-[#175443] rounded-2xl p-3">
+                <p class="text-xs text-[#f0f8ff71] font-inter">Gasto de energia</p>
+                <h2 class="mt-2.5 text-xl xl:text-[28px] font-bold text-[#f0f8ff] font-['Manrope']">R$ 1.2345,5</h2>
+                <p class="mt-1 text-[10px] text-[#f0f8ff71] font-inter">Estimado: 1.234,56</p>
             </div>
-            <div class="bg-[#0b211b] border border-[#175443] rounded-md p-3">
-                <p class="text-xs text-[#f0f8ff71] f-inter">Gasto de energia</p>
-                <h2 class="mt-2.5 text-xl xl:text-[28px] font-bold text-[#f0f8ff] f-oi">R$ 1.2345,5</h2>
-                <p class="mt-1 text-[10px] text-[#f0f8ff71] f-inter">Estimado: 1.234,56</p>
+            <div class="bg-[#0b211b] border border-[#175443] rounded-2xl p-3">
+                <p class="text-xs text-[#f0f8ff71] font-inter">Gasto de energia</p>
+                <h2 class="mt-2.5 text-xl xl:text-[28px] font-bold text-[#f0f8ff] font-['Manrope']">R$ 1.2345,5</h2>
+                <p class="mt-1 text-[10px] text-[#f0f8ff71] font-inter">Estimado: 1.234,56</p>
             </div>
         </div>
 
         <!-- Gráfico e ranking: 1 coluna no celular, 2 no lg -->
-        <div class="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-3.5">
-            <div class="h-[155px] bg-[#0b211b] border border-[#175443] rounded-xl"></div>
-            <div class="h-[155px] bg-[#0b211b] border border-[#175443] rounded-xl"></div>
+        <div class="flex flex-col justify-center lg:flex-row gap-1.5">
+            <div class="lg:w-3/5 p-5 bg-[#0b211b] border border-[#175443] rounded-2xl">
+                <canvas id="grafico"></canvas>
+            </div>
+            <div class="lg:w-2/5 bg-[#0b211b] border border-[#175443] rounded-2xl p-5">
+                <p>Rigs menos eficientes:</p>
+                <p>Consumo de energia sem retorno proporcional por dia</p>
+                <div class="grid grid-rows-4">
+                    <div class="grid grid-cols-5">
+                        <span>RIG</span>
+                        <span>HASHRATE</span>
+                        <span>ENERGIA</span>
+                        <span>RECEITA</span>
+                        <span>DIAGNOSTICO</span>
+                    </div>
+                    <div class="grid grid-cols-5">
+                        <div>
+                            <span>MR01-01</span>
+                            <span>Farm A - São Paulo</span>
+                        </div>
+                        <span><span id="hashrate-l1">77</span>/<span id="hash-total-l1">77</span></span>
+                        <span>R$<span id="energia-l1">32,00</span></span>
+                        <span>R$<span id="receita-l1">32,00</span></span>
+                        <span id="diagnostico-l1">Baixa eficiência</span>
+                    </div>
+                    <div class="grid grid-cols-5">
+                        <div>
+                            <span>MR01-01</span>
+                            <span>Farm A - São Paulo</span>
+                        </div>
+                        <span><span id="hashrate-l1">77</span>/<span id="hash-total-l1">77</span></span>
+                        <span>R$<span id="energia-l1">32,00</span></span>
+                        <span>R$<span id="receita-l1">32,00</span></span>
+                        <span id="diagnostico-l1">Baixa eficiência</span>
+                    </div>
+                    <div class="grid grid-cols-5">
+                        <div>
+                            <span>MR01-01</span>
+                            <span>Farm A - São Paulo</span>
+                        </div>
+                        <span><span id="hashrate-l1">77</span>/<span id="hash-total-l1">77</span></span>
+                        <span>R$<span id="energia-l1">32,00</span></span>
+                        <span>R$<span id="receita-l1">32,00</span></span>
+                        <span id="diagnostico-l1">Baixa eficiência</span>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Título da seção PUE -->
-        <div class="h-[22px] mt-2 f-inter"></div>
+        <div class="h-[22px] mt-2 font-inter"></div>
 
         <!-- Monitoramento de PUE: 1 coluna, 2 no sm, 4 no xl -->
         <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-[1fr_1.8fr_1.8fr_1.4fr] gap-1.5 p-5 border border-[#175443] bg-[#022822] rounded-lg">
 
             <!-- PUE geral -->
             <div class="min-w-0 min-h-[160px] p-3 border border-[#175443] bg-[#022822] rounded-[7px]">
-                <p class="font-bold text-[#00c99a] f-inter">PUE atual</p>
-                <h1 class="mt-1 text-4xl font-bold text-[#f0f8ff] f-oi">1,25</h1>
-                <h5 class="mt-1 text-sm font-bold text-[#f0f8ff] f-oi">Ideal: 1,20</h5>
-                <h5 class="mt-1 text-sm font-bold text-[#f0f8ff] f-oi">↓ -0,5</h5>
+                <p class="font-bold text-[#00c99a] font-inter">PUE atual</p>
+                <h1 class="mt-1 text-4xl font-bold text-[#f0f8ff] font-['Manrope']">1,25</h1>
+                <h5 class="mt-1 text-sm font-bold text-[#f0f8ff] font-['Manrope']">Ideal: 1,20</h5>
+                <h5 class="mt-1 text-sm font-bold text-[#f0f8ff] font-['Manrope']">↓ -0,5</h5>
             </div>
 
             <!-- Estatísticas -->
             <div class="min-w-0 min-h-[160px] p-3 border border-[#175443] bg-[#022822] rounded-[7px]">
-                <p class="text-[13px] text-[#feffff7a] f-inter">Total de rigs</p>
-                <h1 class="mt-1 mb-2 text-3xl font-bold text-[#f0f8ff] f-oi">42</h1>
+                <p class="text-[13px] text-[#feffff7a] font-inter">Total de rigs</p>
+                <h1 class="mt-1 mb-2 text-3xl font-bold text-[#f0f8ff] font-['Manrope']">42</h1>
 
-                <div class="grid grid-cols-[8px_1fr_auto] items-center gap-2 text-sm text-[#bdcbc4] f-oi">
+                <div class="grid grid-cols-[8px_1fr_auto] items-center gap-2 text-sm text-[#bdcbc4] font-['Manrope']">
                     <span class="w-[7px] h-[7px] rounded-full bg-[#00c99a]"></span>
                     <span>Dentro do ideal</span>
                     <b class="text-[#cbd8d2]">18 (42,86%)</b>
                 </div>
                 <div class="my-1.5 border-b border-[#ffffff54]"></div>
 
-                <div class="grid grid-cols-[8px_1fr_auto] items-center gap-2 text-sm text-[#bdcbc4] f-oi">
+                <div class="grid grid-cols-[8px_1fr_auto] items-center gap-2 text-sm text-[#bdcbc4] font-['Manrope']">
                     <span class="w-[7px] h-[7px] rounded-full bg-[#d99b00]"></span>
                     <span>Atenção</span>
                     <b class="text-[#cbd8d2]">20 (47,62%)</b>
                 </div>
                 <div class="my-1.5 border-b border-[#ffffff54]"></div>
 
-                <div class="grid grid-cols-[8px_1fr_auto] items-center gap-2 text-sm text-[#bdcbc4] f-oi">
+                <div class="grid grid-cols-[8px_1fr_auto] items-center gap-2 text-sm text-[#bdcbc4] font-['Manrope']">
                     <span class="w-[7px] h-[7px] rounded-full bg-[#f04444]"></span>
                     <span>Níveis críticos</span>
                     <b class="text-[#cbd8d2]">04 (9,52%)</b>
@@ -128,29 +198,29 @@
 
             <!-- Gráfico PUE -->
             <div class="min-w-0 min-h-[160px] p-3 border border-[#175443] bg-[#022822] rounded-[7px]">
-                <p class="font-bold text-[#00c99a] f-inter">PUE atual</p>
+                <p class="font-bold text-[#00c99a] font-inter">PUE atual</p>
             </div>
 
             <!-- Rigs críticos -->
             <div class="min-w-0 min-h-[160px] p-3 border border-[#175443] bg-[#022822] rounded-lg">
-                <p class="mb-3 text-[13px] font-bold text-[#ff7777e4] f-inter">Rigs com o PUE mais crítico</p>
+                <p class="mb-3 text-[13px] font-bold text-[#ff7777e4] font-inter">Rigs com o PUE mais crítico</p>
 
-                <div class="grid grid-cols-[1fr_auto] gap-2 text-xs text-[#bdcbc4] f-oi">
+                <div class="grid grid-cols-[1fr_auto] gap-2 text-xs text-[#bdcbc4] font-['Manrope']">
                     <span>Dentro do ideal</span><b class="text-[#cbd8d2]">18 (42,86%)</b>
                 </div>
                 <div class="my-1.5 border-b border-[#ffffff30]"></div>
 
-                <div class="grid grid-cols-[1fr_auto] gap-2 text-xs text-[#bdcbc4] f-oi">
+                <div class="grid grid-cols-[1fr_auto] gap-2 text-xs text-[#bdcbc4] font-['Manrope']">
                     <span>Atenção</span><b class="text-[#cbd8d2]">20 (47,62%)</b>
                 </div>
                 <div class="my-1.5 border-b border-[#ffffff30]"></div>
 
-                <div class="grid grid-cols-[1fr_auto] gap-2 text-xs text-[#bdcbc4] f-oi">
+                <div class="grid grid-cols-[1fr_auto] gap-2 text-xs text-[#bdcbc4] font-['Manrope']">
                     <span>Níveis críticos</span><b class="text-[#cbd8d2]">04 (9,52%)</b>
                 </div>
                 <div class="my-1.5 border-b border-[#ffffff30]"></div>
 
-                <div class="grid grid-cols-[1fr_auto] gap-2 text-xs text-[#bdcbc4] f-oi">
+                <div class="grid grid-cols-[1fr_auto] gap-2 text-xs text-[#bdcbc4] font-['Manrope']">
                     <span>Níveis críticos</span><b class="text-[#cbd8d2]">04 (9,52%)</b>
                 </div>
             </div>
@@ -160,3 +230,95 @@
 
 </body>
 </html>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    Chart.defaults.color = '#81988D'
+    const ctx = document.getElementById('grafico');
+
+    new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: ['03/11', '04/11', '05/11', '06/11', '07/11', '08/11','Hoje'],
+        datasets: [{
+        label: 'Custo Energético',
+        data: [12, 19, 3, 5, 2, 3,15],
+        borderWidth: 1,
+        borderColor: '#FFAE00',
+        pointBorderColor: '#FFFFFF00',
+        pointHoverBackgroundColor: '#FFAE00'
+        },
+    {
+        label: 'Rendimento',
+        data: [16, 12, 8, 9, 1, 4,20],
+        borderWidth: 1,
+        fill: 'origin',
+        pointBackgroundColor: '#FFFFFF00',
+        // Fundo em degradê explicado para ajudar quem quiser fazer também:
+        // cria o degradê da parte do grafico que está preenchida
+        backgroundColor: function(context) {
+
+            // variavel q recebe o gráfico em si
+            let chart = context.chart;
+
+            // recebe a area q o gravico está desenhado no canvas, pra podermos mexer nela
+            let ctx = chart.ctx;
+
+            // recebe a area do gráfico para sabermos onde ele começa e onde termina
+            let chartArea = chart.chartArea;
+
+            // evita erros impedindo que a função quebre enquanto o gráfico tá carregando
+            if (!chartArea) {
+            return null;
+            }
+
+            // cria um gradiente onde o gráfico está desenhado, que começa no topo do gráfico (x=0, y=topo) e vai até a base (x=0, y=base)
+            const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+
+            // definindo as cores nos pontos do degradê, sendo 0 o começo (0%) e 1 o final (100%)
+            // (se quiser adicionar uma cor no meio, só criar um ponto desses em 0.5 por exemplo)
+            gradient.addColorStop(0, '#00E6A6');   
+            gradient.addColorStop(1, '#0D3831');   
+
+            // envia o degradê criado para o atributo backgroundColor, fazendo com que ele se torne a "cor do fundo"
+            return gradient;
+        },
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    autoSkip: true,
+                    maxTicksLimit: 5
+                }
+            },
+            x: {
+                ticks: {
+                    autoSkip: true,
+                    maxTicksLimit: 7
+                }
+            }
+        },
+        plugins: {
+            title: {
+                display: true,
+                fullSize: true,
+                align: "start",
+                color: "#FFF",
+                text: 'Rendimento x Custo de energia (por dia)',
+                font:{
+                    size:20,
+                    family: "Inter"
+                }
+            },
+            legend: {
+                align: "end",
+                labels: {color: "#FFF"}
+            }
+        }
+    }
+  });
+</script>

@@ -2,5 +2,6 @@
 node_modules
 package-lock.json
 output.css
+AGENTS.md
 
 .github

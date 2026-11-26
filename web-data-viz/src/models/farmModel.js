@@ -29,20 +29,40 @@ function findById(id) {
     return database.executar(sql);
 }
 
-function create(nome, id_empresa, cep, logradouro, bairro, cidade, id_uf, numero, complemento) {
-    // return ensureCep(cep, logradouro, bairro, cidade, id_uf).then(function () {
-        var addressSql = mysql.format(`
+function create(nome, id_empresa, cep, logradouro, bairro, cidade, id_uf, numero, complemento, valor, categoria, dia_aluguel, id_usuario) {
+    var addressSql = mysql.format(`
         INSERT INTO endereco (cep, logradouro, bairro, cidade, id_uf, numero, complemento, sede) 
         VALUES (?, ?, ?, ?, ?, ?, ?, 0);
     `, [cep, logradouro, bairro, cidade, id_uf, numero, complemento]);
 
     return database.executar(addressSql).then(function (addressResult) {
         var id_endereco = addressResult.insertId;
-        var farmSql = mysql.format(`
-            INSERT INTO farm (nome, id_empresa, id_endereco) VALUES (?, ?, ?);
-        `, [nome, id_empresa, id_endereco]);
 
-        return database.executar(farmSql)
+        function inserirFarm() {
+            if (categoria == 'Local de Farm alugado') {
+                var farmSql = mysql.format(`
+                    INSERT INTO farm (nome, id_empresa, id_endereco, aluguel, dia_pagamento_aluguel) VALUES (?, ?, ?, ?, ?);
+                `, [nome, id_empresa, id_endereco, valor, dia_aluguel]);
+                return database.executar(farmSql);
+            }
+
+            var farmSqlPadrao = mysql.format(`
+                INSERT INTO farm (nome, id_empresa, id_endereco) VALUES (?, ?, ?);
+            `, [nome, id_empresa, id_endereco]);
+            return database.executar(farmSqlPadrao).then(function (farmResult) {
+                if (categoria == "Local de Farm comprado") {
+                    var pagamentoSql = mysql.format(`
+                        INSERT INTO pagamento (id_usuario, id_farm, valor, categoria) VALUES (?, ?, ?, ?);
+                    `, [id_usuario, farmResult.insertId, valor, categoria]);
+                    return database.executar(pagamentoSql).then(function () {
+                        return farmResult;
+                    });
+                }
+                return farmResult;
+            });
+        }
+
+        return inserirFarm()
             .then(function (farmResult) {
                 return { id: farmResult.insertId, id_endereco: id_endereco };
             })
@@ -55,23 +75,38 @@ function create(nome, id_empresa, cep, logradouro, bairro, cidade, id_uf, numero
     });
 }
 
-function update(id, nome, cep, logradouro, bairro, cidade, id_uf, numero, complemento) {
-    // return ensureCep(cep, logradouro, bairro, cidade, id_uf).then(function () {
+function update(id, nome, cep, logradouro, bairro, cidade, id_uf, numero, complemento, valor, categoria, dia_aluguel, id_usuario) {
     var findFarmSql = mysql.format(`SELECT id_endereco FROM farm WHERE id = ?;`, [id]);
-        return database.executar(findFarmSql).then(function (result) {
+    return database.executar(findFarmSql).then(function (result) {
         if (result.length === 0) {
             throw new Error("Farm não encontrada para atualização.");
         }
-        var id_endereco = result[0].id_endereco;
+
+        var farmSet = "f.nome = ?";
+        var farmParams = [nome];
+        if (categoria == 'Local de Farm alugado') {
+            farmSet += ", f.aluguel = ?, f.dia_pagamento_aluguel = ?";
+            farmParams.push(valor, dia_aluguel);
+        }
 
         var sql = mysql.format(`
             UPDATE endereco e
             JOIN farm f ON e.id = f.id_endereco
-            SET f.nome = ?, e.cep = ?, e.logradouro = ?, e.bairro = ?, e.cidade = ?, e.id_uf = ?, e.numero = ?, e.complemento = ?
+            SET ${farmSet}, e.cep = ?, e.logradouro = ?, e.bairro = ?, e.cidade = ?, e.id_uf = ?, e.numero = ?, e.complemento = ?
             WHERE f.id = ?;
-        `, [nome, cep, logradouro, bairro, cidade, id_uf, numero, complemento, id]);
-        
-        return database.executar(sql);
+        `, farmParams.concat([cep, logradouro, bairro, cidade, id_uf, numero, complemento, id]));
+
+        return database.executar(sql).then(function (res) {
+            if (categoria == "Local de Farm comprado") {
+                var pagamentoSql = mysql.format(`
+                    INSERT INTO pagamento (id_usuario, id_farm, valor, categoria) VALUES (?, ?, ?, ?);
+                `, [id_usuario, id, valor, categoria]);
+                return database.executar(pagamentoSql).then(function () {
+                    return res;
+                });
+            }
+            return res;
+        });
     });
 }
 
