@@ -11,10 +11,17 @@ require("dotenv").config({ path: caminho_env });
 var express = require("express");
 var cors = require("cors");
 var path = require("path");
+
+// const http = require("http");
+// const { WebSocketServer } = require('ws')
+
 var PORTA_APP = process.env.APP_PORT;
 var HOST_APP = process.env.APP_HOST;
 
 var app = express();
+
+// const server = http.createServer(app)
+// const wss = new WebSocketServer({ server, path: '/ws' })
 
 var indexRouter = require("./src/routes/index");
 var usuarioRouter = require("./src/routes/usuarios");
@@ -24,22 +31,29 @@ var dispositivosRouter = require("./src/routes/dispositivos");
 var farmsRouter = require("./src/routes/farms");
 var sessoesRouter = require("./src/routes/sessoes");
 var dashboardGeralRouter = require("./src/routes/dashboardGeralRoutes");
+var nocRouter = require("./src/routes/noc");
+// var bobIARouter = require("./src/routes/bobAIRoute");
+
+// var poolApiRouter = require("./src/routes/pool-api");
 
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
-
+// app.use((req, res, next) => { res.set('Access-Control-Allow-Origin', '*'); next() })
 app.use(cors());
 
 app.use("/", indexRouter);
 app.use("/usuarios", usuarioRouter);
+// app.use("/pool-api/v1/", poolApiRouter);
 app.use("/empresas", empresasRouter);
 app.use("/ufs", ufsRouter);
 app.use("/dispositivos", dispositivosRouter);
 app.use("/farms", farmsRouter);
 app.use("/sessoes" , sessoesRouter);
 app.use("/dashboard-geral", dashboardGeralRouter);
+app.use("/noc", nocRouter);
+// app.use("/bobIA", bobIARouter);
 
 
 app.listen(PORTA_APP, function () {
@@ -53,8 +67,29 @@ app.listen(PORTA_APP, function () {
     ##   ##  ######   #####             ####     ##  ##     ##     ##  ##              ##      ####    ######  
     \n\n\n                                                                                                 
     Servidor do seu site já está rodando! Acesse o caminho a seguir para visualizar .: http://${HOST_APP}:${PORTA_APP} :. \n\n
+    WebSocket disponível em ws://${HOST_APP}:${PORTA_APP}
+    \n \n
     Você está rodando sua aplicação em ambiente de .:${process.env.AMBIENTE_PROCESSO}:. \n\n
     \tSe .:desenvolvimento:. você está se conectando ao banco local. \n
     \tSe .:producao:. você está se conectando ao banco remoto. \n\n
     \t\tPara alterar o ambiente, comente ou descomente as linhas 1 ou 2 no arquivo 'app.js'\n\n`);
 });
+
+
+// wss.on("connection", (ws) => {
+//     console.log("Novo client conectado via WebSocket!");
+
+//     ws.on("message", (message) => {
+//         console.log("Mensagem recebida:", message.toString());
+//     });
+
+//     ws.on("close", () => {
+//         console.log("Client desconectado!");
+//     });
+
+//     ws.on("error", (error) => {
+//         console.error("Erro no WebSocket:", error);
+//     });
+
+//     ws.send("Conexão WebSocket estabelecida!");
+// });
