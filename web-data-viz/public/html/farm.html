@@ -69,7 +69,7 @@
 
         
 
-        <dialog id="modal_adicionar_farm" class="w-full p-15 m-auto max-w-xl bg-[#0C1F19] border border-[#207F70]/60 rounded-2xl backdrop:backdrop-blur-sm">
+        <dialog id="modal_adicionar_farm" class="w-fit p-15 m-auto max-w-xl bg-[#0C1F19] border border-[#207F70]/60 rounded-2xl backdrop:backdrop-blur-sm scrollbar-gutter-stable scrollbar-track-transparent scrollbar-thumb-[#207F70]/60">
             <h2 class="text-2xl text-white font-bold pb-4">Nova Farm</h2>
             <div>
                 <label class="text-white">Nome da farm</label>
@@ -112,7 +112,36 @@
                 <label class="text-white">Complemento</label>
                 <input id="iptcomplementofarm" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
             </div>
-                        <div class="flex justify-between">
+
+            <div class="mt-4">
+                <label class="text-white">Gastos</label>
+                <div class="flex flex-wrap gap-4 mt-2 text-white">
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="radio" name="historico_farm" id="iptcompradofarm" onchange="alternarcamposhistorico('')" class="accent-[#00E6A6] cursor-pointer">
+                        Comprado
+                    </label>
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="radio" name="historico_farm" id="iptalugadofarm" onchange="alternarcamposhistorico('')" class="accent-[#00E6A6] cursor-pointer">
+                        Alugado
+                    </label>
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="radio" name="historico_farm" id="iptnaohistoricofarm" onchange="alternarcamposhistorico('')" class="accent-[#00E6A6] cursor-pointer" checked>
+                        Não acrescentar no histórico
+                    </label>
+                </div>
+
+                <div id="divvalorfarm" class="hidden mt-3">
+                    <label class="text-white">Valor (R$)</label>
+                    <input type="number" min="0" step="0.01" placeholder="0,00" id="iptvalorfarm" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+                </div>
+
+                <div id="divdiaalugadofarm" class="hidden mt-3">
+                    <label class="text-white">Dia do aluguel</label>
+                    <select id="iptdiaalugadofarm" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60"></select>
+                </div>
+            </div>
+
+            <div class="flex justify-between">
                 <button class="p-3 mt-5 text-white bg-[#00E6A6] rounded-2xl font-bold" onclick="adicionarfarm()">CADASTRAR</button>
                 <button class="p-3 mt-5 rounded-2xl border border-[#207F70]/60 text-[#A0B5AC] hover:text-white font-bold cursor-pointer transition-colors" onclick="modal_adicionar_farm.close()">CANCELAR</button>
             </div>
@@ -216,6 +245,34 @@
             <div>
                 <label class="text-white">Complemento</label>
                 <input id="iptcomplementofarmeditado" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+            </div>
+
+            <div class="mt-4">
+                <label class="text-white">Gastos</label>
+                <div class="flex flex-wrap gap-4 mt-2 text-sm">
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="radio" name="historico_farm_editado" id="iptcompradofarmeditado" onchange="alternarcamposhistorico('editado')" class="accent-[#00E6A6] cursor-pointer">
+                        Nova compra
+                    </label>
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="radio" name="historico_farm_editado" id="iptalugadofarmeditado" onchange="alternarcamposhistorico('editado')" class="accent-[#00E6A6] cursor-pointer">
+                        Novo aluguel
+                    </label>
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="radio" name="historico_farm_editado" id="iptnaohistoricofarmeditado" onchange="alternarcamposhistorico('editado')" class="accent-[#00E6A6] cursor-pointer" checked>
+                        Não alterar gastos
+                    </label>
+                </div>
+
+                <div id="divvalorfarmeditado" class="hidden mt-3">
+                    <label class="text-white">Valor</label>
+                    <input type="number" min="0" step="0.01" placeholder="0,00" id="iptvalorfarmeditado" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60">
+                </div>
+
+                <div id="divdiaalugadofarmeditado" class="hidden mt-3">
+                    <label class="text-white">Dia do aluguel</label>
+                    <select id="iptdiaalugadofarmeditado" class="w-full bg-[#101b18] text-white px-3 py-2 rounded-xl border border-[#207F70]/60"></select>
+                </div>
             </div>
 
             <div class="flex justify-between">
@@ -367,8 +424,38 @@
         if (uf) document.getElementById(`iptuffarm${sufixo}`).value = uf.id;
     }
 
+    function carregardiasaluguel() {
+        for (let sufixo of ["", "editado"]) {
+            let sel = document.getElementById(`iptdiaalugadofarm${sufixo}`);
+            sel.innerHTML = `<option value="" class="bg-[#0C1F19]">Selecione o dia</option>`;
+            for (let dia = 1; dia <= 31; dia++) {
+                sel.innerHTML += `<option value="${dia}" class="bg-[#0C1F19]">${dia}</option>`;
+            }
+        }
+    }
+
+    carregardiasaluguel();
+
+    function alternarcamposhistorico(sufixo) {
+        const comprado = document.getElementById(`iptcompradofarm${sufixo}`).checked;
+        const alugado = document.getElementById(`iptalugadofarm${sufixo}`).checked;
+        const naoAcrescentar = document.getElementById(`iptnaohistoricofarm${sufixo}`).checked;
+
+        document.getElementById(`divvalorfarm${sufixo}`).classList.toggle("hidden", !comprado && !alugado);
+        document.getElementById(`divdiaalugadofarm${sufixo}`).classList.toggle("hidden", !alugado);
+
+        if (naoAcrescentar) {
+            document.getElementById(`iptvalorfarm${sufixo}`).value = "";
+            document.getElementById(`iptdiaalugadofarm${sufixo}`).value = "";
+        }
+    }
+
     function pegarcampos(sufixo) {
         let v = (nome) => document.getElementById(`ipt${nome}farm${sufixo}`).value.trim();
+        let valorTxt = v("valor").replace(",", ".");
+        let diaTxt = v("diaalugado");
+        let valorNum = valorTxt === "" ? 0 : Number(valorTxt);
+        let diaNum = diaTxt === "" ? 0 : Number(diaTxt).checked;
         return {
             nome: v("nome"),
             cep: v("cep"),
@@ -377,7 +464,11 @@
             cidade: v("cidade"),
             id_uf: v("uf"),
             numero: v("numero"),
-            complemento: v("complemento")
+            complemento: v("complemento"),
+            valor: Number.isFinite(valorNum) ? valorNum : 0,
+            categoria: document.getElementById(`iptalugadofarm${sufixo}`).checked ? "Local de Farm alugado" : comprado ? "Local de Farm comprado" : null,
+            dia_aluguel: document.getElementById(`iptalugadofarm${sufixo}`).checked && Number.isFinite(diaNum) && diaNum >= 1 ? diaNum : null,
+            id_usuario: sessionStorage.ID_USUARIO
         };
     }
 
@@ -393,12 +484,15 @@
     document.getElementById("iptcidadefarm").value = "";
     document.getElementById("iptnumerofarm").value = "";
     document.getElementById("iptcomplementofarm").value = "";
+    document.getElementById("iptnaohistoricofarm").checked = true;
+    alternarcamposhistorico("");
     
     document.getElementById("modal_adicionar_farm").showModal();
 }
 
     function adicionarfarm() {
         let campos = pegarcampos("");
+        console.log(campos)
 
         if (!camposvalidos(campos)) {
             alert("Preencha todos os campos (CEP com 8 dígitos).");
@@ -417,7 +511,8 @@
                 modal_adicionar_farm.close();
                 listarfarms();
             } else {
-                resposta.text().then((t) => alert("Erro ao cadastrar: " + t));
+                console.log("resposta: " + campos)
+                resposta.text().then((t) => console.log("Erro ao cadastrar: " + t));
             }
         })
         .catch((erro) => {
@@ -440,6 +535,8 @@
         iptuffarmeditado.value = f.id_uf;
         iptnumerofarmeditado.value = f.numero;
         iptcomplementofarmeditado.value = f.complemento || "";
+        iptnaohistoricofarmeditado.checked = true;
+        alternarcamposhistorico("editado");
 
         modal_editar_farm.showModal();
     }
@@ -463,7 +560,7 @@
                 modal_editar_farm.close();
                 listarfarms();
             } else {
-                resposta.text().then((t) => alert("Erro ao editar: " + t));
+            resposta.text().then((t) => alert("Erro ao editar: " + t));
             }
         })
         .catch((erro) => {

@@ -11,6 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "@stomp/stompjs": "^7.5.0",
+    "@aws-sdk/client-s3": "^3.1161.0",
     "@tailwindcss/cli": "^4.3.3",
     "concurrently": "^10.0.6",
     "cors": "^2.8.5",
