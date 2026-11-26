@@ -51,7 +51,7 @@
                 <img src="../../assets/imgs/bitdeer-logo.svg" alt="">
                 <p id="nome_empresa" class="font-space-mono ml-3 font-semibold text-sm text-nowrap place-content-center">Bitdeer Technologies Group</p>
             </div>
-            <button class="bg-transparent rounded-2xl border border-[#207F70] place-content-center flex flex-row pl-4 pr-4 pt-3 pb-3 hover:cursor-pointer hover:bg-[#00000025] transition-colors duration-100 ease-in-out">
+            <button onclick="exportarRelatorio()" class="bg-transparent rounded-2xl border border-[#207F70] place-content-center flex flex-row pl-4 pr-4 pt-3 pb-3 hover:cursor-pointer hover:bg-[#00000025] transition-colors duration-100 ease-in-out">
                 <img src="../../assets/imgs/download.svg">
                 <p class="font-space-mono ml-3 text-sm text-nowrap place-content-center">Exportar relatório</p>
             </button>
@@ -62,7 +62,7 @@
         </div>
     </div>
 
-    <div class="ml-10 mt-7 mr-15 mb-6 flex flex-row items-center gap-2 text-sm font-space-mono text-[#A0B5AC]">
+    <div class="ml-10 mt-7 mr-15 mb-1 flex flex-row items-center gap-2 text-sm font-space-mono text-[#A0B5AC]">
         <span id="nome_farm" class="text-white font-semibold text-2xl">...</span>
         <span class="text-[#207F70] text-2xl">></span>
         <span id="nome_sessao" class="text-white font-semibold text-2xl">...</span>
@@ -71,7 +71,13 @@
         <span id="id_rig" class="text-white font-semibold text-2xl"></span>
     </div>
 
-    <div class="grid grid-cols-4 gap-4 px-3 sm:px-5 lg:pl-15 lg:pr-10 mt-2">
+    <p class="sm:px-5 lg:pl-15 lg:pr-10 text-[11px] text-[#A0B5AC] flex items-center gap-4 justify-end mr-5">
+        <span>Meta ideal:</span>
+        <span><i class="fa-solid fa-bullseye mr-1" style="color:#00E6A6"></i>verde = cumprida</span>
+        <span><i class="fa-solid fa-bullseye mr-1" style="color:#A0B5AC"></i>cinza = não cumprida</span>
+    </p>
+
+    <div class="grid grid-cols-4 gap-4 px-3 sm:px-5 lg:pl-15 lg:pr-10 mt-1">
         <div id="kpi_status" class="rounded-2xl border border-[#207F70] bg-[#0C1F19] border-t-[3px] border-solid p-2.5 sm:p-4 transition-transform duration-300 hover:scale-103">
             <p class="text-sm text-white">Status</p>
             <p id="pico_status" class="font-space-mono font-bold text-2xl sm:text-4xl mt-2"> ... </p>
@@ -111,7 +117,7 @@
         </div>
     </div>
 
-    <div class="grid grid-cols-1 xl:grid-cols-2 gap-4 px-3 sm:px-5 lg:pl-15 lg:pr-10 mt-4 mb-10">
+    <div class="grid grid-cols-1 xl:grid-cols-2 gap-4 px-3 sm:px-5 lg:pl-15 lg:pr-10 mt-2 mb-10">
         <div class="rounded-2xl border border-[#207F70] bg-[#0C1F19] p-5 min-w-0">
             <div class="flex flex-wrap justify-between gap-3 mb-4">
                 <div>
@@ -138,7 +144,7 @@
             <div class="flex items-start justify-between mb-4 gap-3">
                 <div>
                     <h3 class="text-white text-lg font-semibold">Estado atual dos componentes</h3>
-                        <button id="btn_virar_todos" style="margin-top:6px;padding:4px 12px;font-size:12px;border-radius:999px;border:1px solid #00E6A6;background:#144840;color:#00E6A6;cursor:pointer"><i class="fa-solid fa-hand-pointer" style="margin-right:6px"></i>CLIQUE EM CADA CARD PARA VER 24h, 7d e 30d</button>                    
+                        <button id="btn_virar_todos" style="margin-top:6px;padding:4px 12px;font-size:12px;border-radius:999px;border:1px solid #00E6A6;background:#144840;color:#00E6A6;"><i class="fa-solid fa-hand-pointer" style="margin-right:6px"></i>CLIQUE EM CADA CARD PARA VER 24h, 7d e 30d</button>                    
                         <p class="text-[10px] text-gray-500 mt-1 flex items-center gap-1 flex-wrap">
                         <span style="display:inline-block;width:16px;height:9px;box-sizing:border-box;border:1px dashed rgba(255,255,255,0.75);background:rgba(0,230,166,0.15);border-radius:3px"></span>faixa ideal
                         <span style="display:inline-block;width:2px;height:9px;background:#FF5269;border-radius:1px;margin-left:8px"></span>limites
@@ -718,6 +724,82 @@
     let janelaAtual = "24h";
     let periodosBarras = [];
     let picosAtuais = [];
+
+
+
+function exportarRelatorio() {
+    let doc = new window.jspdf.jsPDF();
+
+    //funcao auxiliar
+    function texto(t, x, y, tamanho = 11, negrito = false) {
+        // t é o texto,  x e y sao as posicoes no pdf, tamanho é o tamanho, padrao 8 e declaro negrito false
+        doc.setFont("helvetica", negrito ? "bold" : "normal");
+        //helvetica, se for negrito vai ser bold
+        doc.setFontSize(tamanho);
+        doc.text(String(t), x, y);
+    }
+
+    let y = 20;
+    //embaixo vai ir somando no y para descer a linha no pdf
+
+    texto("Relatorio da maquina", 15, y, 18, true);
+    y += 10;
+
+    texto("Farm: " + nome_farm.innerText, 15, y);
+    y += 7;
+    texto("Sessao: " + nome_sessao.innerText, 15, y);
+    y += 7;
+    texto("Rig: " + idRig, 15, y);
+    y += 7;
+    texto("Gerado em: " + new Date().toLocaleString("pt-BR"), 15, y);
+
+    y += 12;
+    doc.line(15, y, 195, y);
+    y += 10;
+
+    texto("Status geral: " + pico_status.innerText, 15, y, 12, true);
+    y += 8;
+
+    texto("Causa principal: " + kpi_componente_principal.innerText, 15, y);
+    y += 8;
+
+    texto("Proxima falha: " + previsao_horas.innerText, 15, y);
+    y += 8;
+
+    texto("Detalhes: " + previsao_detalhe.innerText, 15, y);
+    y += 12;
+
+    doc.line(15, y, 195, y);
+    y += 10;
+
+    texto("Componentes", 15, y, 13, true);
+    y += 9;
+
+    let componentes = [
+        "cpu", "ram", "swap", "temperatura",
+        "gpu", "disco", "ventoinha"
+    ];
+
+    for (let i = 0; i < componentes.length; i++) {
+        let nome = componentes[i];
+        let card = document.getElementById("card_" + nome);
+
+        if (card.style.display == "none") continue;
+
+        let valor = card.querySelector(".text-2xl");
+
+        let status = document.getElementById("status_" + nome);
+
+        texto(nome.toUpperCase() + ": " + (valor ? valor.innerText : "--") + " | " + status.innerText, 15, y);
+        // aqui de cada componetne, no for
+
+        //utilizo innertext em todos, que ja pega o texto que esta dentro desse elemento / id
+
+        y += 8;
+    }
+
+    doc.save("relatorio-rig-" + idRig + ".pdf");
+}
 
 
 function colorirMeta(id, texto , atingiu) {
