@@ -277,7 +277,14 @@ options: {
 
 
 function iniciarGraficos () {
-  const companyId = Number(sessionStorage.getItem('noc_company_id')) || Number(getQueryParam('companyId')) || 1;
+  // Prefer the company id saved at login (sessionStorage.ID_EMPRESA), then the noc-specific saved id,
+  // then the URL query param, then fallback to 1.
+  const companyId = Number(
+    sessionStorage.getItem('ID_EMPRESA') ||
+    sessionStorage.getItem('noc_company_id') ||
+    getQueryParam('companyId') ||
+    1
+  );
   // persist selected company in sessionStorage so it can be reused by other pages
   sessionStorage.setItem('noc_company_id', companyId);
 

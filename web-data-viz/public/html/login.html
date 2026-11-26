@@ -103,6 +103,8 @@
                     setTimeout(function () {
                         if (json.cargo == "SuperAdmin" || json.cargo == "Administrador") {
                             window.location = "user-register.html";
+                        } else if (json.cargo="AnalistaNOC") {
+                            window.location = "./dash-noc/dashboard-noc.html"
                         } else {
                             window.location = "./dash-analista/dashboard-geral.html";
                         }
