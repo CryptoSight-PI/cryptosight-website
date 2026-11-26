@@ -38,23 +38,26 @@
 
             <h1 class="text-2xl font-bold text-white">Dashboard NOC</h1>
 
-            <div class="inline-flex divide-x divide-[#207F70] overflow-hidden rounded-lg border border-[#207F70] bg-[#0C1F19]">
-
-                <label class="cursor-pointer px-4 py-1.5 font-ibm-mono text-sm font-normal text-gray-400 transition-all duration-200 hover:text-white active:scale-95 has-checked:bg-[#2dd4a7]/20 has-checked:text-[#2dd4a7]">
-                    <input type="radio" name="periodo" value="24h" class="sr-only" checked>
-                    24h
-                </label>
-
-                <label class="cursor-pointer px-4 py-1.5 font-ibm-mono text-sm font-normal text-gray-400 transition-all duration-200 hover:text-white active:scale-95 has-checked:bg-[#2dd4a7]/20 has-checked:text-[#2dd4a7]">
-                    <input type="radio" name="periodo" value="7d" class="sr-only">
-                    7d
-                </label>
-
-                <label class="cursor-pointer px-4 py-1.5 font-ibm-mono text-sm font-normal text-gray-400 transition-all duration-200 hover:text-white active:scale-95 has-checked:bg-[#2dd4a7]/20 has-checked:text-[#2dd4a7]">
-                    <input type="radio" name="periodo" value="30d" class="sr-only">
-                    30d
-                </label>
-
+            <div class="flex flex-row gap-2">
+                <div>
+                    <select id="select-farm" name="farm" class="rounded-lg border border-[#207F70] bg-[#0C1F19] px-4 py-1.5 font-ibm-mono text-sm font-normal text-gray-400 transition-all duration-200 hover:text-white focus:outline-none focus:ring-1 focus:ring-[#2dd4a7]">
+                        <option value="">Carregando farms...</option>
+                    </select>
+                </div>
+                <div class="inline-flex divide-x divide-[#207F70] overflow-hidden rounded-lg border border-[#207F70] bg-[#0C1F19]">
+                    <label class="cursor-pointer px-4 py-1.5 font-ibm-mono text-sm font-normal text-gray-400 transition-all duration-200 hover:text-white active:scale-95 has-checked:bg-[#2dd4a7]/20 has-checked:text-[#2dd4a7]">
+                        <input type="radio" name="periodo" value="24h" class="sr-only" checked>
+                        24h
+                    </label>
+                    <label class="cursor-pointer px-4 py-1.5 font-ibm-mono text-sm font-normal text-gray-400 transition-all duration-200 hover:text-white active:scale-95 has-checked:bg-[#2dd4a7]/20 has-checked:text-[#2dd4a7]">
+                        <input type="radio" name="periodo" value="7d" class="sr-only">
+                        7d
+                    </label>
+                    <label class="cursor-pointer px-4 py-1.5 font-ibm-mono text-sm font-normal text-gray-400 transition-all duration-200 hover:text-white active:scale-95 has-checked:bg-[#2dd4a7]/20 has-checked:text-[#2dd4a7]">
+                        <input type="radio" name="periodo" value="30d" class="sr-only">
+                        30d
+                    </label>
+                </div>
             </div>
         </div>
         <!-- KPIS -->
@@ -64,44 +67,44 @@
             <!-- bom -->
             <div class="flex min-h-28 flex-col justify-between bg-[#0C1F19] border border-[#207F70] rounded-lg p-4">
                 <div class="flex items-center justify-between">
-                    <span class="font-normal text-gray-400">Shares aceitos</span>
-                    <strong class="text-3xl text-[#2dd4a7]">1.284</strong>
+                    <span class="font-normal text-lg text-gray-400">Shares aceitos</span>
+                    <strong id="kpi-shares-aceitos" class="text-3xl text-[#2dd4a7]">1.284</strong>
                 </div>
                 <span class="flex items-center gap-2 text-sm font-normal text-[#2dd4a7]">
-                    <span class="size-3 rounded-full bg-[#2dd4a7]"></span>bom
+                    <span class="size-3 rounded-full bg-[#2dd4a7]"></span><span class="text-lg">bom</span>
                 </span>
             </div>
 
             <!-- ruim -->
             <div class="flex min-h-28 flex-col justify-between bg-[#0C1F19] border border-red-400/60 rounded-lg p-4">
                 <div class="flex items-center justify-between">
-                    <span class="font-normal text-gray-400">Shares rejeitados</span>
-                    <strong class="text-3xl text-red-400">5,8%</strong>
+                    <span class="font-normal text-gray-400 text-lg">Shares rejeitados</span>
+                    <strong id="kpi-shares-rejeitados" class="text-3xl text-red-400">5,8%</strong>
                 </div>
                 <span class="flex items-center gap-2 text-sm font-normal text-red-400">
-                    <span class="size-3 rounded-full bg-red-400"></span>ruim · limite 2%
+                    <span class="size-3 rounded-full bg-red-400"></span><span class="text-lg">ruim · limite 2%</span>
                 </span>
             </div>
 
-            <!-- dentro do esperado -->
+            <!-- em alerta -->
             <div class="flex min-h-28 flex-col justify-between bg-[#0C1F19] border border-[#207F70] rounded-lg p-4">
                 <div class="flex items-center justify-between">
-                    <span class="font-normal text-gray-400">Shares stale</span>
-                    <strong class="text-3xl text-[#FFAE00]">1,6%</strong>
+                    <span class="font-normal text-gray-400 text-lg">Shares stale</span>
+                    <strong id="kpi-shares-stale" class="text-3xl text-[#FFAE00]">1,6%</strong>
                 </div>
                 <span class="flex items-center gap-2 text-sm font-normal text-[#FFAE00]">
-                    <span class="size-3 rounded-full bg-[#FFAE00]"></span>Em atenção · limite 2%
+                    <span class="size-3 rounded-full bg-[#FFAE00]"></span><span class="text-lg">Em atenção · limite 2%</span>
                 </span>
             </div>
 
             <!-- ruim -->
             <div class="flex min-h-28 flex-col justify-between bg-[#0C1F19] border border-red-400/60 rounded-lg p-4">
                 <div class="flex items-center justify-between">
-                    <span class="font-normal text-gray-400">Latência da pool</span>
-                    <strong class="text-3xl text-red-400">212 ms</strong>
+                    <span class="font-normaltext-gray-400 text-lg">Latência da pool</span>
+                    <strong id="kpi-latencia-pool" class="text-3xl text-red-400">212 ms</strong>
                 </div>
                 <span class="flex items-center gap-2 text-sm font-normal text-red-400">
-                    <span class="size-3 rounded-full bg-red-400"></span>ruim · limite 150 ms
+                    <span class="size-3 rounded-full bg-red-400"></span><span class="text-lg">ruim · limite 150 ms</span>
                 </span>
             </div>
 
@@ -114,7 +117,7 @@
         <div class="md:col-span-3 flex flex-col gap-4">
             <div class="md:col-span-3 bg-[#0C1F19] border border-[#207F70] rounded-lg p-6 min-h-120">
                 <h2 class="text-2xl">Correlação de índices</h2>
-                <h4 class="font-ibm-mono text-gray-500 mt-1">Gráfico de linha temporal que cada endpoint da API, nos locais de incidente</h4>
+                <h4 class="font-ibm-mono text-gray-500 mt-1">Gráfico de linha temporal do Endpoint da API</h4>
 
                 <div class="w-full mt-8 mb-6">
                     <canvas id="grafico-hashrate-efetivo"></canvas>
@@ -135,16 +138,16 @@
             <div class="flex-1 bg-[#0C1F19] border border-[#207F70] rounded-lg p-6 min-h-40">        
                 <div class="mb-8">
                     <h2 class="text-2xl">Linha Temporal</h2>
-                    <h4 class="font-ibm-mono text-gray-500 mt-1">Gráfico de linha temporal que cada endpoint da API, nos locais de incidente</h4>
+                    <h4 class="font-ibm-mono text-gray-500 mt-1">Rota de resposta do Endpoint da API</h4>
                 </div>
 
 
                 <div class="flex flex-col gap-5">
                     <!-- Farm A -->
                     <section>
-                        <p class="mb-2 font-ibm-mono text-red-400">Farm A · Sessão 2 · Rig-03</p>
+                        <!-- <p class="mb-2 font-ibm-mono text-red-400">Farm A · Sessão 2 · Rig-03</p> -->
                         <div class="flex items-center">
-                            <div class="no"><span class="no-nome">Rig-03 · eth0</span><strong class="no-valor">ativa</strong></div>
+                            <div class="no"><span class="no-nome">Farm-03 · </span><strong class="no-valor">ativa</strong></div>
                             <span class="linha"></span>
                             <div class="no"><span class="no-nome">Gateway</span><strong class="no-valor">2 ms</strong></div>
                             <span class="linha"></span>
@@ -238,6 +241,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../../js/noc-chart.js"></script>
+    <!-- When serving the HTML statically (Go Live), point the frontend to the API server below -->
+    <script>window.NOC_API_BASE = 'http://localhost:3333'</script>
     <script src="../../js/noc-service.js"></script>
 </body>
 </html>

@@ -1,24 +1,39 @@
-const labels = [
-'0h', '1h', '2h', '3h', '4h', '5h', 
-'6h', '7h', '8h', '9h', '10h', '11h', 
-'12h', '13h', '14h', '15h', '16h', '17h', 
-'18h', '19h', '20h', '21h', '22h', '23h'
-]
+// Simple service to fetch NOC data from the backend
+// API_BASE can be set globally (window.NOC_API_BASE) when serving the HTML statically
+const API_BASE = (typeof window !== 'undefined' && window.NOC_API_BASE) ? window.NOC_API_BASE : '';
 
-const dataHashrate = Array.from({ length: 24 }, () => +(105 + Math.random() * 10).toFixed(1));
-const dataRtt = Array.from({ length: 24 }, () => Math.floor(25 + Math.random() * 40));
-const dataShares = Array.from({ length: 24 }, () => Math.floor(Math.random() * 4));
-
-const hipoteses = [
-  { titulo: 'Rede local', estado: 'descartada',
-    detalhe: 'gateway 2 ms · DNS 18 ms · eth0 ativa · 0 erros de entrada/saída' },
-  { titulo: 'Pool / rota externa', estado: 'provavel',
-    detalhe: 'RTT 212 ms (limite 150) · perda 5,8% · Stratum 880 ms, perto do limite de 1 000' },
-  { titulo: 'Hardware', estado: 'descartada',
-    detalhe: 'temperatura GPU 68 °C · utilização 97% · sem alerta de recursos' }
-]
-
-const estadoHipotese = {
-  descartada: { rotulo: '✓ DESCARTADA', cor: 'text-[#2dd4a7]' },
-  provavel:   { rotulo: '! PROVÁVEL',   cor: 'text-red-400' }
+function fetchKPIs(farmId = 1, period = '30d') {
+  return fetch(`${API_BASE}/noc/kpis/${farmId}?period=${encodeURIComponent(period)}`).then(res => {
+    if (!res.ok) throw new Error('Erro ao buscar KPIs');
+    return res.json();
+  });
 }
+
+function fetchEficiencia(farmId = 1, period = '30d') {
+  return fetch(`${API_BASE}/noc/eficiencia/${farmId}?period=${encodeURIComponent(period)}`).then(res => {
+    if (!res.ok) throw new Error('Erro ao buscar eficiencia');
+    return res.json();
+  });
+}
+
+function fetchMedicaoRede(farmId = 1, period = '30d') {
+  return fetch(`${API_BASE}/noc/medicao_rede/${farmId}?period=${encodeURIComponent(period)}`).then(res => {
+    if (!res.ok) throw new Error('Erro ao buscar medicao_rede');
+    return res.json();
+  });
+}
+
+function fetchFarmsByCompany(companyId = 1) {
+  return fetch(`${API_BASE}/farms/list/${companyId}`).then(res => {
+    if (!res.ok) throw new Error('Erro ao buscar farms');
+    return res.json();
+  });
+}
+
+/* export functions to global scope so noc-chart.js can call them (app isn't using modules) */
+window.nocService = {
+  fetchKPIs,
+  fetchEficiencia,
+  fetchMedicaoRede,
+  fetchFarmsByCompany
+};
