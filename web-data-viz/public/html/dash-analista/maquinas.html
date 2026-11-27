@@ -414,16 +414,16 @@
 
         let leitor = new FileReader();
 
-        leitor.onload = function () {
+         leitor.onload = function () {
             fetch(`/usuarios/foto/${sessionStorage.ID_USUARIO}`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ imagem: leitor.result })
-            }).then(r =>
-            r.json()).then(dados =>
-            {
-                foto_usuario.src = dados.foto + "?v=" + Date.now();
-                })
+            })
+                .then(r => {
+                    if (!r.ok) throw new Error();
+                    location.reload();
+                }).catch(() => alert("Não foi possível salvar a foto."));
         };
 
         leitor.readAsDataURL(arquivo);
