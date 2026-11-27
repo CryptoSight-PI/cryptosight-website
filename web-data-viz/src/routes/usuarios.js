@@ -22,4 +22,8 @@ router.post("/:idUsuario/farms", function (req, res) {
     usuarioController.salvarFarmsUsuario(req, res);
 });
 
+router.get("/foto/:idUsuario", usuarioController.buscarFoto);
+
+router.post("/foto/:idUsuario", usuarioController.atualizarFoto);
+
 module.exports = router;

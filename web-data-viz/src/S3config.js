@@ -1,5 +1,5 @@
 
-import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
+import { S3Client, GetObjectCommand, PutObjectCommand, HeadObjectCommand } from "@aws-sdk/client-s3";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -49,4 +49,35 @@ export async function buscarJson(camada, caminho) {
     console.log(dados);
 
     return dados;
+}
+
+export async function enviarArquivo(caminho, corpo, tipo) {
+    if (!bucket_gold) {
+        throw new Error("Bucket não configurado no .env");
+    }
+
+    await s3.send(new PutObjectCommand({
+        Bucket: bucket_gold,
+        Key: caminho,
+        Body: corpo,
+        ContentType: tipo,
+        CacheControl: "no-cache"
+    }));
+}
+
+export async function existeArquivo(caminho) {
+    try {
+        await s3.send(new HeadObjectCommand({
+            Bucket: bucket_gold,
+            Key: caminho
+        }));
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+
+export function urlPublica(caminho) {
+    let partes = caminho.split("/").map(encodeURIComponent).join("/");
+    return `https://${bucket_gold}.s3.${process.env.AWS_DEFAULT_REGION}.amazonaws.com/${partes}`;
 }

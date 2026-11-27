@@ -37,7 +37,7 @@ var nocRouter = require("./src/routes/noc");
 // var poolApiRouter = require("./src/routes/pool-api");
 
 
-app.use(express.json());
+app.use(express.json({ limit: "5mb" }));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 // app.use((req, res, next) => { res.set('Access-Control-Allow-Origin', '*'); next() })
