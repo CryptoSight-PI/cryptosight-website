@@ -17,7 +17,7 @@
         <a href="">
         <div class="rounded-2xl flex flex-row pl-2 pr-2 pt-3 pb-3 ml-2 mr-2 mt-30 mb-2 hover:cursor-pointer w-10.5 group-hover:w-64 transition-all duration-300 ease-out bg-[#144840]">
             <img src="../../assets/icones-dash/geral-verde.svg">
-            <p class="hidden group-hover:block text-[#00E6A6] justify-center self-center text-sm ml-3 text-nowrap font-inter font-semibold">Macrovisão</p>
+            <p class="hidden group-hover:block text-[#00E6A6] justify-center self-center text-sm ml-3 text-nowrap font-inter font-semibold">Macrovisão</p> 
         </div>
         </a>
         <div onclick="abrirFarms()" class="rounded-2xl flex flex-row pl-2 pr-2 pt-3 pb-3 ml-2 w-13 hover:cursor-pointer">
@@ -55,7 +55,8 @@
 
     <div class="ml-5 mr-5 md:ml-10 md:mr-15 pb-10 flex flex-col gap-4 font-[Inter] tabular-nums text-[#eaf3f0]">
         <div class="mt-7 mr-15 flex flex-row items-center gap-2 text-sm font-space-mono text-[#A0B5AC]">
-            <span class="text-white font-semibold text-2xl">Macrovisão</span>
+            <span class="text-white font-semibold text-2xl">Macrovisão</span> <span id="ultima_coleta" class="whitespace-nowrap text-xs text-gray-400"><i class="fa-regular fa-clock mr-1"></i>Última coleta</span>
+            
         </div>
 
         <section aria-label="Indicadores" class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
@@ -76,19 +77,19 @@
                     <span id="reincidentes_anterior"></span>
                     <span class="font-semibold whitespace-nowrap text-[#00E6A6]">Ver máquinas →</span>
                 </div>
-                <p id="texto_meta_reincidentes" class="mt-2 border-t border-[#207F70]/40 pt-1.5 text-[11px] text-[#A0B5AC]"><i id="ic_meta_reincidentes" class="fa-solid fa-bullseye mr-1 text-[#6d6f6e]"></i><span>Meta: não passar do mês anterior</span></p>
+                <p id="texto_meta_reincidentes" class="mt-2 border-t border-[#207F70]/40 pt-1.5 text-[11px] text-[#A0B5AC]"><i id="ic_meta_reincidentes" class="fa-solid fa-bullseye mr-1 text-[#6d6f6e]"></i></p>
             </div>
         </article>
         <article id="kpi_horario" class="flex min-w-0 flex-col rounded-2xl border border-t-[3px] border-[#207F70]/50 border-t-[#6d6f6e] bg-[#0d1f18] px-5 pt-3.5 pb-4">
             <p class="text-[13px] font-medium">Dia e horário que mais dão problema</p>
-            <p id="horario_valor" class="mt-2 truncate font-space-mono text-[26px] leading-tight font-bold sm:text-[28px]">...</p>
+            <p id="horario_valor" class="mt-2 truncate font-space-mono text-[26px] leading-tight font-bold sm:text-[42px]">...</p>
             <div class="mt-auto pt-3 text-xs text-[#A0B5AC]">
                 <p id="horario_detalhe">Carregando...</p>
             </div>
         </article>
         <article id="kpi_uptime" class="flex min-w-0 flex-col rounded-2xl border border-t-[3px] border-[#207F70]/50 border-t-[#6d6f6e] bg-[#0d1f18] px-5 pt-3.5 pb-4">
             <p class="text-[13px] font-medium">Máquinas em uptime</p>
-            <p id="uptime_valor" class="mt-2 truncate font-space-mono text-[26px] leading-tight font-bold sm:text-[28px]">...</p>
+            <p id="uptime_valor" class="mt-2 truncate font-space-mono text-[26px] leading-tight font-bold sm:text-[42px]">...</p>
             <div class="mt-auto pt-3 text-xs text-[#A0B5AC]">
                 <p id="uptime_detalhe">Carregando...</p>
                 <p id="texto_meta_uptime" class="mt-2 border-t border-[#207F70]/40 pt-1.5 text-[11px] text-[#A0B5AC]"><i id="ic_meta_uptime" class="fa-solid fa-bullseye mr-1 text-[#6d6f6e]"></i><span>Meta: 98% das máquinas online</span></p>
@@ -96,7 +97,7 @@
         </article>
         <article id="kpi_resolvidos" class="flex min-w-0 flex-col rounded-2xl border border-t-[3px] border-[#207F70]/50 border-t-[#6d6f6e] bg-[#0d1f18] px-5 pt-3.5 pb-4">
             <p class="text-[13px] font-medium">Alertas resolvidos · <span id="resolvidos_mes">...</span></p>
-            <p id="resolvidos_valor" class="mt-2 truncate font-space-mono text-[26px] leading-tight font-bold sm:text-[28px]">...</p>
+            <p id="resolvidos_valor" class="mt-2 truncate font-space-mono text-[26px] leading-tight font-bold sm:text-[42px]">...</p>
             <div class="mt-auto pt-3 text-xs text-[#A0B5AC]">
                 <p id="resolvidos_detalhe">Carregando...</p>
                 <p class="mt-1 flex items-center gap-1.5">
