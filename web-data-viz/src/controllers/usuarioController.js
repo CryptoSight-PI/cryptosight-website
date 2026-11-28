@@ -1,6 +1,7 @@
 var usuarioModel = require("../models/usuarioModel");
 
 
+
 async function validarAdmin(idSolicitante) {
     if (!idSolicitante) return null;
     var r = await usuarioModel.buscarPorId(idSolicitante);
@@ -236,6 +237,76 @@ async function salvarFarmsUsuario(req, res) {
     }
 }
 
+function sanitizarNome(nome) {
+    return String(nome).replace(/[<>:"/\\|?*]/g, "_").replace(/^[ .]+|[ .]+$/g, "");
+}
+
+async function montarChaveFoto(idUsuario) {
+    var r = await usuarioModel.buscarEmpresa(idUsuario);
+    if (r.length == 0) return null;
+
+    var empresa = r[0];
+    var nomeEmpresa = sanitizarNome(empresa.nome_fantasia || empresa.razao_social);
+
+    return `${empresa.id}/${nomeEmpresa}/fotos/usuarios/${idUsuario}`;
+}
+
+
+async function atualizarFoto(req, res) {
+    var idUsuario = Number(req.params.idUsuario);
+    var imagem = req.body.imagem;
+
+    if (!idUsuario || !imagem) {
+        return res.status(400).send("Envie a imagem no campo 'imagem'");
+    }
+
+    var partes = imagem.match(/^data:(image\/(?:jpeg|png|webp));base64,(.+)$/);
+    if (!partes) {
+        return res.status(400).send("Formato inválido. Use JPG, PNG ou WEBP");
+    }
+
+    var tipo = partes[1];
+    var buffer = Buffer.from(partes[2], "base64");
+
+    if (buffer.length > 2 * 1024 * 1024) {
+        return res.status(400).send("A imagem deve ter até 2MB");
+    }
+
+    try {
+        var chave = await montarChaveFoto(idUsuario);
+        if (!chave) return res.status(404).send("Usuário não encontrado");
+
+        var { enviarArquivo, urlPublica } = await import("../S3config.js");
+
+        await enviarArquivo(chave, buffer, tipo);
+
+        res.json({ foto: urlPublica(chave) });
+    } catch (e) { erro(res, e); }
+}
+
+async function buscarFoto(req, res) {
+    var idUsuario = Number(req.params.idUsuario);
+
+    if (!idUsuario) {
+        return res.status(400).send("Usuário inválido");
+    }
+
+    try {
+        var chave = await montarChaveFoto(idUsuario);
+        //montar chaves retorna o caminho
+        if (!chave) return res.status(404).send("Usuário não encontrado");
+
+        var { existeArquivo, urlPublica } = await import("../S3config.js");
+
+        if (!(await existeArquivo(chave))) {
+            return res.json({ foto: null });
+        }
+
+        res.json({ foto: urlPublica(chave) });
+    } catch (e) {
+        erro(res, e); 
+    }
+}
 
 
 module.exports = {
@@ -248,5 +319,7 @@ module.exports = {
     editar,
     excluir, 
     buscarFarmsDoUsuario,
-    salvarFarmsUsuario
+    salvarFarmsUsuario,
+    atualizarFoto,
+    buscarFoto
 };

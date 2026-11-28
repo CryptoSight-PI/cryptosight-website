@@ -85,6 +85,14 @@ function inserirFarmUsuario(idUsuario, idFarm) {
     return database.executar(instrucaoSql);
 }
 
+function buscarEmpresa(idUsuario) {
+    var sql = `select e.id, e.nome_fantasia, e.razao_social
+               from usuario u
+               join empresa e on e.id = u.id_empresa
+               where u.id = ?;`;
+    return database.executar(sql, [idUsuario]);
+}
+
 
 
 module.exports = {
@@ -101,5 +109,6 @@ module.exports = {
     excluir,
     buscarFarmsDoUsuario,
     deletarFarmsDoUsuario,
-    inserirFarmUsuario
+    inserirFarmUsuario,
+    buscarEmpresa
 };

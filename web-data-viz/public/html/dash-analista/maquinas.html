@@ -58,7 +58,13 @@
         </div>
         <div class="flex flex-row align-baseline">
             <p id="nome_usuario" class="font-space-mono font-bold place-self-center mr-3 text-lg">Luiz Oliveira</p>
-            <img src="../../assets/imgs/Luiz.png" class="rounded-4xl border border-[#207F70] p-0.5">
+            <label class="relative cursor-pointer group" title="Alterar foto">
+                <img id="foto_usuario" src="../../assets/imgs/foto-template.jpg" class="size-15 object-cover rounded-4xl border border-[#207F70] p-0.5">
+                <span class="absolute inset-0 rounded-4xl bg-black/50 flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity">
+                    <i class="fa-solid fa-camera"></i>
+                </span>
+                <input type="file" accept="image/png,image/jpeg,image/webp" class="hidden" onchange="enviarFoto(this)">
+            </label>        
         </div>
     </div>
 
@@ -391,6 +397,37 @@
     let idFarm = params.get("farm")
 
     nome_usuario.innerHTML = sessionStorage.NOME_USUARIO
+
+    fetch(`/usuarios/foto/${sessionStorage.ID_USUARIO}`).then(r => r.json())
+    .then(dados => {
+        if (dados.foto) foto_usuario.src = dados.foto + "?v=" + Date.now();
+    })
+
+    function enviarFoto(input) {
+        let arquivo = input.files[0];
+        if (!arquivo) return;
+
+        if (arquivo.size > 2 * 1024 * 1024) {
+            alert("A imagem deve ter até 2MB.");
+            return;
+        }
+
+        let leitor = new FileReader();
+
+         leitor.onload = function () {
+            fetch(`/usuarios/foto/${sessionStorage.ID_USUARIO}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ imagem: leitor.result })
+            })
+                .then(r => {
+                    if (!r.ok) throw new Error();
+                    location.reload();
+                }).catch(() => alert("Não foi possível salvar a foto."));
+        };
+
+        leitor.readAsDataURL(arquivo);
+    }
 
     id_rig.innerHTML = idRig
 

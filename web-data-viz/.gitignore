@@ -4,4 +4,5 @@ package-lock.json
 output.css
 .env 
 /.env
+.env.dev
 .github
