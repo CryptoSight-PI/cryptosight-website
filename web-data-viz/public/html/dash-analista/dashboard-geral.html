@@ -7,7 +7,8 @@
     <link rel="icon" href="../../assets/imgs/logo.png">
     <link rel="stylesheet" href="../../css/output.css">
     <link rel="stylesheet" href="../../css/style.css">
-    <title>Dashboard - Visão Geral</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>Painel - Macrovisão</title>
 </head>
 
 <body class="min-h-screen w-screen pl-15 bg-linear-135 from-[#0d1412] via-[#09483f] to-[#0d1412] text-white bg-fixed overflow-x-hidden">
@@ -16,7 +17,7 @@
         <a href="">
         <div class="rounded-2xl flex flex-row pl-2 pr-2 pt-3 pb-3 ml-2 mr-2 mt-30 mb-2 hover:cursor-pointer w-10.5 group-hover:w-64 transition-all duration-300 ease-out bg-[#144840]">
             <img src="../../assets/icones-dash/geral-verde.svg">
-            <p class="hidden group-hover:block text-[#00E6A6] justify-center self-center text-sm ml-3 text-nowrap font-inter font-semibold">Visão Geral</p>
+            <p class="hidden group-hover:block text-[#00E6A6] justify-center self-center text-sm ml-3 text-nowrap font-inter font-semibold">Macrovisão</p>
         </div>
         </a>
         <div onclick="abrirFarms()" class="rounded-2xl flex flex-row pl-2 pr-2 pt-3 pb-3 ml-2 w-13 hover:cursor-pointer">
@@ -40,7 +41,7 @@
                 <img src="../../assets/imgs/bitdeer-logo.svg" alt="">
                 <p id="nome_empresa" class="font-space-mono ml-3 font-semibold text-sm text-nowrap place-content-center">Bitdeer Technologies Group</p>
             </div>
-            <button class="bg-transparent rounded-2xl border border-[#207F70] place-content-center flex flex-row pl-4 pr-4 pt-3 pb-3 hover:cursor-pointer hover:bg-[#00000025] transition-colors duration-100 ease-in-out">
+            <button type="button" onclick="document.getElementById('painel_relatorio').scrollIntoView({ behavior: 'smooth', block: 'center' })" class="bg-transparent rounded-2xl border border-[#207F70] place-content-center flex flex-row pl-4 pr-4 pt-3 pb-3 hover:cursor-pointer hover:bg-[#00000025] transition-colors duration-100 ease-in-out">
                 <img src="../../assets/imgs/download.svg" class="">
                 <p class="font-space-mono ml-3 text-sm text-nowrap place-content-center">Exportar relatório</p>
             </button>
@@ -54,40 +55,67 @@
 
     <div class="ml-5 mr-5 md:ml-10 md:mr-15 pb-10 flex flex-col gap-4 font-[Inter] tabular-nums text-[#eaf3f0]">
         <div class="mt-7 mr-15 flex flex-row items-center gap-2 text-sm font-space-mono text-[#A0B5AC]">
-            <span class="text-white font-semibold text-2xl">Macrovisão<span>
+            <span class="text-white font-semibold text-2xl">Macrovisão</span>
         </div>
 
-        <!-- kpis -->
         <section aria-label="Indicadores" class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <article id="kpi_reincidentes" class="min-w-0 rounded-2xl border border-t-[3px] border-[#207F70]/50 border-t-[#6d6f6e] bg-[#0d1f18] px-5 pt-3.5 pb-4">
-            <p class="text-[13px] font-medium">Farm com mais reincidentes</p>
+
+        <!-- card clicável: abre o modal com as máquinas reincidentes do mês -->
+        <article id="kpi_reincidentes" onclick="abrirReincidentes()" onkeydown="if (event.key == 'Enter' || event.key == ' ') { event.preventDefault(); abrirReincidentes() }" role="button" tabindex="0" class="flex min-w-0 flex-col rounded-2xl border border-t-[3px] border-[#207F70]/50 border-t-[#6d6f6e] bg-[#0d1f18] px-5 pt-3.5 pb-4 cursor-pointer transition-colors hover:bg-[#102a21]">
+            <p class="text-[13px] font-medium">Farm com mais reincidentes · <span id="reincidentes_mes">...</span></p>
             <p id="reincidentes_valor" class="mt-2 truncate font-space-mono text-[26px] leading-tight font-bold sm:text-[28px]">...</p>
-            <p id="reincidentes_detalhe" class="mt-1.5 text-xs text-[#8ea79f]">Carregando...</p>
+            <div class="mt-auto pt-3 text-xs text-[#A0B5AC]">
+                <p id="reincidentes_detalhe">Carregando...</p>
+
+                <!-- comparação com o mês passado total de TODAS as farms -->
+                <p class="mt-1 flex items-center gap-1.5">
+                    <span id="reincidentes_geral"></span>
+                    <span id="reincidentes_seta" class="inline-flex"></span>
+                </p>
+                <div class="mt-0.5 flex items-center justify-between gap-2 text-[10px]">
+                    <span id="reincidentes_anterior"></span>
+                    <span class="font-semibold whitespace-nowrap text-[#00E6A6]">Ver máquinas →</span>
+                </div>
+                <p id="texto_meta_reincidentes" class="mt-2 border-t border-[#207F70]/40 pt-1.5 text-[11px] text-[#A0B5AC]"><i id="ic_meta_reincidentes" class="fa-solid fa-bullseye mr-1 text-[#6d6f6e]"></i><span>Meta: não passar do mês anterior</span></p>
+            </div>
         </article>
-        <article id="kpi_horario" class="min-w-0 rounded-2xl border border-t-[3px] border-[#207F70]/50 border-t-[#6d6f6e] bg-[#0d1f18] px-5 pt-3.5 pb-4">
+        <article id="kpi_horario" class="flex min-w-0 flex-col rounded-2xl border border-t-[3px] border-[#207F70]/50 border-t-[#6d6f6e] bg-[#0d1f18] px-5 pt-3.5 pb-4">
             <p class="text-[13px] font-medium">Dia e horário que mais dão problema</p>
             <p id="horario_valor" class="mt-2 truncate font-space-mono text-[26px] leading-tight font-bold sm:text-[28px]">...</p>
-            <p id="horario_detalhe" class="mt-1.5 text-xs text-[#8ea79f]">Carregando...</p>
+            <div class="mt-auto pt-3 text-xs text-[#A0B5AC]">
+                <p id="horario_detalhe">Carregando...</p>
+            </div>
         </article>
-        <article id="kpi_uptime" class="min-w-0 rounded-2xl border border-t-[3px] border-[#207F70]/50 border-t-[#6d6f6e] bg-[#0d1f18] px-5 pt-3.5 pb-4">
+        <article id="kpi_uptime" class="flex min-w-0 flex-col rounded-2xl border border-t-[3px] border-[#207F70]/50 border-t-[#6d6f6e] bg-[#0d1f18] px-5 pt-3.5 pb-4">
             <p class="text-[13px] font-medium">Máquinas em uptime</p>
             <p id="uptime_valor" class="mt-2 truncate font-space-mono text-[26px] leading-tight font-bold sm:text-[28px]">...</p>
-            <p id="uptime_detalhe" class="mt-1.5 text-xs text-[#8ea79f]">Carregando...</p>
-            <p class="mt-1 text-[10px] text-[#8ea79f]">Ideal: 98%</p>
+            <div class="mt-auto pt-3 text-xs text-[#A0B5AC]">
+                <p id="uptime_detalhe">Carregando...</p>
+                <p id="texto_meta_uptime" class="mt-2 border-t border-[#207F70]/40 pt-1.5 text-[11px] text-[#A0B5AC]"><i id="ic_meta_uptime" class="fa-solid fa-bullseye mr-1 text-[#6d6f6e]"></i><span>Meta: 98% das máquinas online</span></p>
+            </div>
         </article>
-        <article id="kpi_resolvidos" class="min-w-0 rounded-2xl border border-t-[3px] border-[#207F70]/50 border-t-[#6d6f6e] bg-[#0d1f18] px-5 pt-3.5 pb-4">
-            <p class="text-[13px] font-medium">Alertas resolvidos (30d)</p>
+        <article id="kpi_resolvidos" class="flex min-w-0 flex-col rounded-2xl border border-t-[3px] border-[#207F70]/50 border-t-[#6d6f6e] bg-[#0d1f18] px-5 pt-3.5 pb-4">
+            <p class="text-[13px] font-medium">Alertas resolvidos · <span id="resolvidos_mes">...</span></p>
             <p id="resolvidos_valor" class="mt-2 truncate font-space-mono text-[26px] leading-tight font-bold sm:text-[28px]">...</p>
-            <p id="resolvidos_detalhe" class="mt-1.5 text-xs text-[#8ea79f]">Carregando...</p>
-            <p class="mt-1 text-[10px] text-[#8ea79f]">Ideal: 96%</p>
+            <div class="mt-auto pt-3 text-xs text-[#A0B5AC]">
+                <p id="resolvidos_detalhe">Carregando...</p>
+                <p class="mt-1 flex items-center gap-1.5">
+                    <span id="resolvidos_anterior"></span>
+                    <span id="resolvidos_seta" class="inline-flex"></span>
+                </p>
+                <p id="texto_meta_resolvidos" class="mt-2 border-t border-[#207F70]/40 pt-1.5 text-[11px] text-[#A0B5AC]"><i id="ic_meta_resolvidos" class="fa-solid fa-bullseye mr-1 text-[#6d6f6e]"></i><span>Meta: 96% resolvidos</span></p>
+            </div>
         </article>
         </section>
 
 
         <section class="grid grid-cols-1 gap-4 lg:grid-cols-5">
 
+
+            <div class="flex min-w-0 flex-col gap-4 lg:col-span-3">
+
             <!-- grafico alertas -->
-            <div class="flex min-w-0 flex-col rounded-2xl border border-[#207F70]/50 bg-[#0d1f18] p-4 md:p-5 lg:col-span-3">
+            <div class="flex min-w-0 flex-1 flex-col rounded-2xl border border-[#207F70]/50 bg-[#0d1f18] p-4 md:p-5">
                 <div class="flex flex-wrap items-start justify-between gap-3">
                     <div class="min-w-0">
                         <h2 class="text-lg font-semibold leading-tight">Alertas por Farm</h2>
@@ -122,16 +150,59 @@
                     </div>
                 </div>
 
-                <div class="mt-auto flex flex-wrap justify-between gap-2 pt-4 text-xs text-[#8ea79f]">
+                <div class="mt-auto flex flex-wrap justify-between gap-2 pt-3 text-xs text-[#8ea79f]">
                     <span id="grafico_dica">Clique em uma barra para ver os alertas e abrir o chamado no Jira</span>
                     <span id="grafico_resumo" class="font-space-mono"></span>
                 </div>
             </div>
 
+            <div id="painel_relatorio" class="rounded-2xl border border-[#207F70]/50 bg-[#0d1f18] p-4 md:p-5">
+                <h2 class="text-lg font-semibold leading-tight">Exportar relatório</h2>
+                <p class="mt-1 text-xs text-[#8ea79f]">PDF com os alertas do período escolhido</p>
+
+                <div class="mt-3 flex flex-wrap items-end gap-x-4 gap-y-2.5 text-xs">
+                    <div class="flex flex-col gap-1">
+                        <label for="rel_inicio" class="text-[#8ea79f]">De</label>
+                        <input id="rel_inicio" type="date" style="color-scheme: dark" class="rounded-lg border border-[#207F70]/50 bg-[#0b1a14] px-2.5 py-1.5 text-white">
+                    </div>
+                    <div class="flex flex-col gap-1">
+                        <label for="rel_fim" class="text-[#8ea79f]">Até</label>
+                        <input id="rel_fim" type="date" style="color-scheme: dark" class="rounded-lg border border-[#207F70]/50 bg-[#0b1a14] px-2.5 py-1.5 text-white">
+                    </div>
+                    <div class="flex flex-col gap-1">
+                        <label for="rel_farm" class="text-[#8ea79f]">Farm</label>
+                        <select id="rel_farm" class="cursor-pointer rounded-lg border border-[#207F70]/50 bg-[#0b1a14] px-2.5 py-1.5 text-white">
+                            <option value="">Todas as farms</option>
+                        </select>
+                    </div>
+                    <div class="flex flex-col gap-1">
+                        <label for="rel_componente" class="text-[#8ea79f]">Componente</label>
+                        <select id="rel_componente" class="cursor-pointer rounded-lg border border-[#207F70]/50 bg-[#0b1a14] px-2.5 py-1.5 text-white">
+                            <option value="">Todos os componentes</option>
+                        </select>
+                    </div>
+                    <label class="flex cursor-pointer items-center gap-2 pb-2 text-[#eaf3f0]">
+                        <input id="rel_reincidentes" type="checkbox" class="size-4 cursor-pointer accent-[#00E6A6]">
+                        Incluir reincidentes
+                    </label>
+                    <button id="rel_botao" type="button" onclick="gerarRelatorio()" class="ml-auto flex cursor-pointer items-center gap-2 rounded-lg bg-[#00644f] px-4 py-2 font-semibold text-[#00E6A6] hover:brightness-125 disabled:cursor-wait disabled:opacity-60">
+                        <img src="../../assets/imgs/download.svg" alt="" class="size-4">
+                        <span id="rel_botao_texto">Exportar PDF</span>
+                    </button>
+                    <p id="rel_msg" class="w-full text-[#FF1E3C] empty:hidden" role="status"></p>
+                </div>
+            </div>
+        </div>
+
             <!-- mapa de saude (vem do ETL) -->
             <div class="flex min-w-0 flex-col rounded-2xl border border-[#207F70]/50 bg-[#0d1f18] p-4 md:p-5 lg:col-span-2">
-                <h2 class="text-lg font-semibold leading-tight">Mapa de saúde</h2>
-                <p class="mt-1 font-space-mono text-[11px] text-[#8ea79f]">Farm › Sessão › Rig</p>
+                <div class="flex items-start justify-between gap-3">
+                    <div>
+                        <h2 class="text-lg font-semibold leading-tight">Mapa de saúde</h2>
+                        <p class="mt-1 font-space-mono text-[11px] text-[#8ea79f]">Farm › Sessão › Rig</p>
+                    </div>
+                    <span id="ultima_coleta" class="whitespace-nowrap text-xs text-gray-400"><i class="fa-regular fa-clock mr-1"></i>Última coleta</span>
+                </div>
 
                 <div id="mapa_saude" class="mt-4 flex max-h-140 flex-col gap-4 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-[#207F70] scrollbar-track-transparent">
                     <p class="text-xs text-[#8ea79f]">Carregando...</p>
@@ -163,6 +234,22 @@
         <div id="modal_lista" class="flex min-h-0 flex-col gap-2.5 overflow-y-auto px-5 pt-3 pb-4 scrollbar-thin scrollbar-thumb-[#207F70] scrollbar-track-transparent"></div>
     </dialog>
 
+    <!-- modal das máquinas reincidentes do mês -->
+    <dialog id="modal-reincidentes" class="fixed top-auto bottom-0 left-0 right-0 mx-auto max-h-[74vh] w-full max-w-5xl flex-col rounded-t-2xl border border-b-0 border-[#207F70]/50 bg-[#0d1f18] p-0 text-white open:flex backdrop:bg-black/60 backdrop:backdrop-blur-sm">
+        <div class="flex items-start justify-between gap-3 border-b border-[#207F70]/50 px-5 pt-4 pb-3">
+            <div class="min-w-0">
+                <h2 id="reinc_titulo" class="truncate font-space-mono text-lg leading-tight font-bold">Reincidentes</h2>
+                <p id="reinc_subtitulo" class="mt-1 text-xs text-[#8ea79f]"></p>
+            </div>
+            <form method="dialog">
+                <button type="submit" aria-label="Fechar" class="grid size-9 cursor-pointer place-items-center rounded-lg border border-[#207F70]/50 text-[#8ea79f] hover:text-white">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+                </button>
+            </form>
+        </div>
+        <div id="reinc_lista" class="flex min-h-0 flex-col gap-2.5 overflow-y-auto px-5 pt-3 pb-4 scrollbar-thin scrollbar-thumb-[#207F70] scrollbar-track-transparent"></div>
+    </dialog>
+
     <script>
     var idEmpresa = sessionStorage.ID_EMPRESA
 
@@ -170,7 +257,6 @@
         nome_usuario.innerHTML = sessionStorage.NOME_USUARIO
     }
 
-    // metas "ideais" mostradas nas kpis -YasminEloitaNascimento
     const IDEAL_UPTIME = 98
     const IDEAL_RESOLVIDOS = 96
 
@@ -185,6 +271,29 @@
     let agrupar = "farm"
     let janela = "7d"
     let farms = []
+
+    // endereço do servidor Java que gera o PDF (RelatorioServer) -YasminEloitaNascimento
+    const URL_RELATORIO = "http://localhost:8081/relatorio"
+
+    const MESES = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
+    const MES_ATUAL = MESES[new Date().getMonth()]
+    const MES_ANTERIOR = MESES[(new Date().getMonth() + 11) % 12]
+
+    const SETA_CIMA = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4 3 20h18z"/></svg>'
+    const SETA_BAIXO = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 20 3 4h18z"/></svg>'
+    const SETA_IGUAL = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 9h14M5 15h14"/></svg>'
+
+    
+    function setaVariacao(atual, anterior, subirEhBom) {
+        let boa = "text-[#00E6A6]", ruim = "text-[#FF1E3C]"
+        if (atual > anterior) return `<span class="${subirEhBom ? boa : ruim}" title="Aumentou em relação a ${MES_ANTERIOR}">${SETA_CIMA}</span>`
+        if (atual < anterior) return `<span class="${subirEhBom ? ruim : boa}" title="Diminuiu em relação a ${MES_ANTERIOR}">${SETA_BAIXO}</span>`
+        return `<span class="text-[#8ea79f]" title="Igual a ${MES_ANTERIOR}">${SETA_IGUAL}</span>`
+    }
+
+    function textoReincidentes(qtd) {
+        return `${qtd} ${qtd == 1 ? "reincidente" : "reincidentes"}`
+    }
 
     // evita quebrar o html se o nome tiver < ou > -YasminEloitaNascimento
     function esc(texto) {
@@ -206,19 +315,40 @@
         return VERMELHO
     }
 
+    
+    function colorirMeta(idTexto, idIcone, atingiu) {
+        let cor = atingiu ? VERDE : "#A0B5AC"
+        document.getElementById(idTexto).style.color = cor
+        document.getElementById(idIcone).style.color = cor
+    }
+
     // kpi
     function carregarKpis() {
         fetch(`/dashboard-geral/kpis/${idEmpresa}`).then(r => r.json()).then(dados => {
 
-            if (dados.farm_reincidentes) {
-                reincidentes_valor.innerHTML = esc(dados.farm_reincidentes.nome)
-                reincidentes_detalhe.innerHTML = `${dados.farm_reincidentes.maquinas} máquinas com 3+ alertas do mesmo componente (30d)`
+            document.getElementById("reincidentes_mes").textContent = MES_ATUAL
+
+            // valor grande = farm com mais reincidentes no mês 
+            //  seta = total de TODAS as farms x mês passado
+            let f = dados.farm_reincidentes
+            let g = dados.reincidentes_geral || { total: 0, anterior: 0 }
+            let totalGeral = Number(g.total)
+            let anteriorGeral = Number(g.anterior)
+
+            if (f) {
+                reincidentes_valor.innerHTML = esc(f.nome)
+                reincidentes_detalhe.innerHTML = `${textoReincidentes(Number(f.total))} nesta farm`
                 pintarKpi("kpi_reincidentes", "reincidentes_valor", VERMELHO)
             } else {
                 reincidentes_valor.innerHTML = "Nenhuma"
-                reincidentes_detalhe.innerHTML = "Sem reincidência nos últimos 30 dias"
+                reincidentes_detalhe.innerHTML = `Sem reincidência em ${MES_ATUAL}`
                 pintarKpi("kpi_reincidentes", "reincidentes_valor", VERDE)
             }
+
+            reincidentes_geral.innerHTML = `Todas as farms: <b class="text-[#eaf3f0]">${totalGeral}</b>`
+            reincidentes_seta.innerHTML = setaVariacao(totalGeral, anteriorGeral, false)
+            reincidentes_anterior.innerHTML = `${MES_ANTERIOR}: ${textoReincidentes(anteriorGeral)} (todas as farms)`
+            colorirMeta("texto_meta_reincidentes", "ic_meta_reincidentes", totalGeral <= anteriorGeral)
 
             if (dados.dia_horario) {
                 horario_valor.innerHTML = `${dados.dia_horario.dia} · ${dados.dia_horario.hora}`
@@ -230,15 +360,29 @@
                 pintarKpi("kpi_horario", "horario_valor", VERDE)
             }
 
+            // resolvidos do MÊS atual x mês passado -YasminEloitaNascimento
+            document.getElementById("resolvidos_mes").textContent = MES_ATUAL
             let r = dados.alertas_resolvidos
+            let ant = r.anterior || { total: 0, percentual: 0 }
+
             if (r.total == 0) {
                 resolvidos_valor.innerHTML = "--"
-                resolvidos_detalhe.innerHTML = "Sem alertas nos últimos 30 dias"
+                resolvidos_detalhe.innerHTML = `Sem alertas em ${MES_ATUAL}`
                 pintarKpi("kpi_resolvidos", "resolvidos_valor", VERDE)
+                colorirMeta("texto_meta_resolvidos", "ic_meta_resolvidos", true)
             } else {
                 resolvidos_valor.innerHTML = r.percentual + "%"
                 resolvidos_detalhe.innerHTML = `${r.resolvidos} de ${r.total} alertas resolvidos`
                 pintarKpi("kpi_resolvidos", "resolvidos_valor", corPorIdeal(r.percentual, IDEAL_RESOLVIDOS))
+                colorirMeta("texto_meta_resolvidos", "ic_meta_resolvidos", r.percentual >= IDEAL_RESOLVIDOS)
+            }
+
+            if (ant.total == 0) {
+                resolvidos_anterior.innerHTML = `${MES_ANTERIOR}: sem alertas`
+                resolvidos_seta.innerHTML = ""
+            } else {
+                resolvidos_anterior.innerHTML = `${MES_ANTERIOR}: ${ant.percentual}% (${ant.resolvidos} de ${ant.total})`
+                resolvidos_seta.innerHTML = r.total == 0 ? "" : setaVariacao(r.percentual, ant.percentual, true)
             }
         })
     }
@@ -250,11 +394,13 @@
                 uptime_valor.innerHTML = "--"
                 uptime_detalhe.innerHTML = "Sem dados do ETL"
                 pintarKpi("kpi_uptime", "uptime_valor", CINZA)
+                colorirMeta("texto_meta_uptime", "ic_meta_uptime", false)
                 return
             }
             uptime_valor.innerHTML = String(dados.percentual).replace(".", ",") + "%"
             uptime_detalhe.innerHTML = `${dados.online} de ${dados.total} máquinas online`
             pintarKpi("kpi_uptime", "uptime_valor", corPorIdeal(dados.percentual, IDEAL_UPTIME))
+            colorirMeta("texto_meta_uptime", "ic_meta_uptime", dados.percentual >= IDEAL_UPTIME)
         })
     }
 
@@ -268,8 +414,13 @@
     }
 
     function carregarMapa() {
-        fetch(`/dashboard-geral/mapa-saude/${idEmpresa}`).then(r => r.json()).then(lista => {
+        fetch(`/dashboard-geral/mapa-saude/${idEmpresa}`).then(r => r.json()).then(resposta => {
             let caixa = document.getElementById("mapa_saude")
+            let lista = resposta.farms
+
+            document.getElementById("ultima_coleta").innerHTML = resposta.gerado_em
+                ? '<i class="fa-regular fa-clock mr-1"></i>Última coleta: ' + new Date(resposta.gerado_em).toLocaleTimeString("pt-BR")
+                : "Sem dados do ETL"
 
             if (!Array.isArray(lista) || lista.length == 0) {
                 caixa.innerHTML = '<p class="text-xs text-[#8ea79f]">Sem dados do ETL.</p>'
@@ -308,37 +459,7 @@
                     ${sessoes}
                 </article>`
             }
-            filtrarMapa()
         })
-    }
-
-    // busca por nome da farm ou numero da rig -YasminEloitaNascimento
-    function filtrarMapa() {
-        let texto = document.getElementById("busca").value.trim().toLowerCase()
-        let cards = document.querySelectorAll("#mapa_saude article")
-
-        for (let i = 0; i < cards.length; i++) {
-            let nomeFarm = cards[i].dataset.farm
-            let rigs = cards[i].querySelectorAll("button[data-rig]")
-            let achouRig = false
-
-            for (let j = 0; j < rigs.length; j++) {
-                let bate = texto != "" && (rigs[j].dataset.rig == texto || rigs[j].textContent == texto)
-                rigs[j].style.outline = bate ? "2px solid #fff" : ""
-                if (bate) achouRig = true
-            }
-
-            cards[i].style.display = (texto == "" || nomeFarm.includes(texto) || achouRig) ? "" : "none"
-        }
-    }
-
-    
-    function mudarAgrupamento(novo) {
-        agrupar = novo
-        document.getElementById("g_farm").className = novo == "farm" ? BTN_ATIVO : BTN_INATIVO
-        document.getElementById("g_dia").className = novo == "dia" ? BTN_ATIVO : BTN_INATIVO
-        document.getElementById("g_horario").className = novo == "horario" ? BTN_ATIVO : BTN_INATIVO
-        carregarGrafico()
     }
 
     function mudarJanela(nova) {
@@ -371,7 +492,7 @@
                 let escala = Math.ceil(maior / 4) * 4
 
                 
-                let altura = agrupar == "farm" ? "h-16 lg:h-24" : "h-9"
+                let altura = agrupar == "farm" ? "h-12 lg:h-16" : "h-9"
 
                 for (let i = 0; i < dados.barras.length; i++) {
                     let b = dados.barras[i]
@@ -450,6 +571,11 @@
 
                 let quando = new Date(a.detectado_em).toLocaleString("pt-BR", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" })
 
+                // o modal só lista o alerta principal; os reincidentes aparecem como contador embaixo -YasminEloitaNascimento
+                let reincidentes = a.reincidentes > 0
+                    ? `<span class="mt-0.5 text-[11px] font-semibold text-[#ff6b7d]">+ ${textoReincidentes(a.reincidentes)}</span>`
+                    : ""
+
                 let chip = a.chave_jira
                     ? `<span class="inline-flex items-center gap-1.5 rounded-md border border-[#00E6A6]/35 px-2.5 py-1.5 font-space-mono text-xs font-bold text-[#00E6A6]">${esc(a.chave_jira)}${ICONE_LINK}</span>`
                     : `<span class="rounded-md border border-white/20 px-2.5 py-1.5 font-space-mono text-xs text-[#8ea79f]">Sem chamado</span>`
@@ -467,6 +593,7 @@
                         <span class="font-space-mono text-[13px] font-bold">Rig ${String(a.maquina).padStart(2, "0")} · ${esc(a.componente)}</span>
                         <span class="text-[13px]">${esc(a.descricao)}</span>
                         <span class="mt-0.5 text-[11px] text-[#8ea79f]">${esc(a.farm)} / ${esc(a.sessao)} · ${quando} · ${tempoAtras(a.detectado_em)}</span>
+                        ${reincidentes}
                     </span>
                     <span class="flex flex-wrap items-center gap-2">
                         <span class="rounded-md px-2.5 py-1 text-[11px] font-semibold ${critico ? "bg-[#FF1E3C]/15 text-[#ff6b7d]" : "bg-[#FFB001]/15 text-[#FFB001]"}">${critico ? "Crítico" : "Atenção"}</span>
@@ -480,11 +607,124 @@
         })
     }
 
+    // modal do card de reincidentes: máquina, farm, sessão e componente (mês atual) -YasminEloitaNascimento
+    const ICONE_REPETIR = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg>'
+
+    function abrirReincidentes() {
+        fetch(`/dashboard-geral/reincidentes/${idEmpresa}`).then(r => r.json()).then(dados => {
+            let itens = dados.itens || []
+            let maquinas = new Set(itens.map(i => i.maquina)).size
+
+            document.getElementById("reinc_titulo").innerHTML = `Reincidentes · ${MES_ATUAL}`
+            document.getElementById("reinc_subtitulo").innerHTML = itens.length == 0
+                ? "Nenhuma máquina reincidente neste mês"
+                : `Todas as farms · ${textoReincidentes(dados.total)} em ${maquinas} ${maquinas == 1 ? "máquina" : "máquinas"} · mais críticas primeiro`
+
+            let lista = document.getElementById("reinc_lista")
+            lista.innerHTML = ""
+
+            if (itens.length == 0) {
+                lista.innerHTML = `<p class="py-4 text-center text-xs text-[#00E6A6]">Nenhum reincidente em ${MES_ATUAL}.</p>`
+            }
+
+            for (let i = 0; i < itens.length; i++) {
+                let m = itens[i]
+                let critico = Number(m.criticos) > 0
+                let ultimo = new Date(m.ultimo_em).toLocaleString("pt-BR", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" })
+
+                lista.innerHTML += `
+                <div class="flex flex-wrap items-center gap-x-3.5 gap-y-2.5 rounded-xl border px-3.5 py-3 ${critico ? "border-[#FF1E3C]/30 bg-[#FF1E3C]/8" : "border-[#FFB001]/25 bg-[#FFB001]/6"}">
+                    <span class="grid size-10 shrink-0 place-items-center rounded-xl ${critico ? "bg-[#FF1E3C]/15 text-[#ff4d63]" : "bg-[#FFB001]/15 text-[#FFB001]"}">${ICONE_REPETIR}</span>
+                    <span class="flex min-w-0 flex-1 basis-56 flex-col">
+                        <span class="font-space-mono text-[13px] font-bold">Rig ${String(m.maquina).padStart(2, "0")} · ${esc(m.componente)}</span>
+                        <span class="text-[13px]">${esc(m.farm)} / ${esc(m.sessao)}</span>
+                        <span class="mt-0.5 text-[11px] text-[#8ea79f]">Último reincidente: ${ultimo}${critico ? ` · ${Number(m.criticos)} ${Number(m.criticos) == 1 ? "crítico" : "críticos"}` : ""}</span>
+                    </span>
+                    <span class="flex flex-wrap items-center gap-2">
+                        <span class="rounded-md px-2.5 py-1 text-[11px] font-semibold ${critico ? "bg-[#FF1E3C]/15 text-[#ff6b7d]" : "bg-[#FFB001]/15 text-[#FFB001]"}">${critico ? "Crítico" : "Atenção"}</span>
+                        <span class="rounded-md bg-white/10 px-2.5 py-1 text-[11px] font-semibold">${textoReincidentes(Number(m.total))}</span>
+                    </span>
+                </div>`
+            }
+
+            document.getElementById("modal-reincidentes").showModal()
+        })
+    }
+
+    function dataIso(d) {
+        return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0")
+    }
+
+    function mensagemRelatorio(texto) {
+        document.getElementById("rel_msg").textContent = texto
+    }
+
+    function gerarRelatorio() {
+        let inicio = document.getElementById("rel_inicio").value
+        let fim = document.getElementById("rel_fim").value
+        let incluir = document.getElementById("rel_reincidentes").checked
+        let botao = document.getElementById("rel_botao")
+        let textoBotao = document.getElementById("rel_botao_texto")
+
+        mensagemRelatorio("")
+        if (!inicio || !fim) {
+            mensagemRelatorio("Escolha a data inicial e a final.")
+            return
+        }
+        if (fim < inicio) {
+            mensagemRelatorio("A data final não pode ser antes da inicial.")
+            return
+        }
+
+        botao.disabled = true
+        textoBotao.textContent = "Gerando..."
+
+        fetch(`${URL_RELATORIO}?empresa=${idEmpresa}&inicio=${inicio}&fim=${fim}&farm=${document.getElementById("rel_farm").value}&componente=${document.getElementById("rel_componente").value}&reincidentes=${incluir}`)
+            .then(r => {
+                if (!r.ok) return r.text().then(t => { throw new Error(t || "Erro ao gerar o relatório.") })
+                return r.blob()
+            })
+            .then(pdf => {
+                let link = document.createElement("a")
+                link.href = URL.createObjectURL(pdf)
+                link.download = `relatorio-alertas_${inicio}_a_${fim}.pdf`
+                link.click()
+                URL.revokeObjectURL(link.href)
+            })
+            .catch(e => {
+                // TypeError = não conseguiu nem falar com o servidor
+                mensagemRelatorio(e instanceof TypeError ? "Não foi possível conectar ao servidor de relatórios." : e.message)
+            })
+            .finally(() => {
+                botao.disabled = false
+                textoBotao.textContent = "Exportar PDF"
+            })
+    }
+
+    // padrão: do dia 1 do mês até hoje
+    let hojeData = new Date()
+    document.getElementById("rel_inicio").value = dataIso(new Date(hojeData.getFullYear(), hojeData.getMonth(), 1))
+    document.getElementById("rel_fim").value = dataIso(hojeData)
+    document.getElementById("rel_inicio").max = dataIso(hojeData)
+    document.getElementById("rel_fim").max = dataIso(hojeData)
+
     // lista as farms no filtro do grafico  -YasminEloitaNascimento
     function carregarFarms() {
         fetch(`/farms/list/${idEmpresa}`).then(r => r.json()).then(lista => {
             farms = lista
             let select = document.getElementById("filtro-farm")
+            let selectRelatorio = document.getElementById("rel_farm")
+            for (let i = 0; i < lista.length; i++) {
+                select.innerHTML += `<option value="${lista[i].id}">${esc(lista[i].nome)}</option>`
+                selectRelatorio.innerHTML += `<option value="${lista[i].id}">${esc(lista[i].nome)}</option>`
+            }
+        })
+    }
+
+    // componentes (CPU, RAM...) para o filtro do relatório -YasminEloitaNascimento
+    function carregarComponentes() {
+        fetch("/dashboard-geral/componentes").then(r => r.json()).then(lista => {
+            let select = document.getElementById("rel_componente")
             for (let i = 0; i < lista.length; i++) {
                 select.innerHTML += `<option value="${lista[i].id}">${esc(lista[i].nome)}</option>`
             }
@@ -498,15 +738,16 @@
         carregarGrafico()
     }
 
-    // nome da empresa no cabecalho (mesma rota do maquinas.html) -YasminEloitaNascimento
+    // nome da empresa no cabecalho -YasminEloitaNascimento
     fetch(`/empresas/buscar/${idEmpresa}`).then(r => r.json()).then(e => {
         nome_empresa.innerHTML = esc(e[0].nome_fantasia)
     })
 
     carregarFarms()
+    carregarComponentes()
     atualizar()
 
-    // atualiza a cada 60s so se a aba estiver aberta (igual ao maquinas.html) -YasminEloitaNascimento
+    // atualiza a cada 60s so se a aba estiver aberta -YasminEloitaNascimento
     setInterval(() => {
         if (document.visibilityState === "visible") atualizar()
     }, 60000)

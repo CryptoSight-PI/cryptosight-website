@@ -12,6 +12,12 @@ router.get("/alertas-por-farm/:idEmpresa", controller.alertasPorFarm);
 // alertas de uma farm para o modal  -YasminEloitaNascimento
 router.get("/alertas/:idEmpresa/:idFarm", controller.alertasDaFarm);
 
+// maquinas reincidentes do mes (modal do card) -YasminEloitaNascimento
+router.get("/reincidentes/:idEmpresa", controller.reincidentes);
+
+// lista de componentes (filtro do relatorio) -YasminEloitaNascimento
+router.get("/componentes", controller.componentes);
+
 // KPI de uptime -YasminEloitaNascimento
 router.get("/uptime/:idEmpresa", controller.uptime);
 

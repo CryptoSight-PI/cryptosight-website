@@ -19,6 +19,7 @@ async function kpis(req, res) {
         let idEmpresa = req.params.idEmpresa;
 
         let reincidentes = await model.kpiReincidentes(idEmpresa);
+        let reincidentesGeral = await model.kpiReincidentesGeral(idEmpresa);
         let diaHorario = await model.kpiDiaHorario(idEmpresa);
         let resolvidos = await model.kpiResolvidos(idEmpresa);
 
@@ -26,9 +27,14 @@ async function kpis(req, res) {
         let pico = diaHorario[0] || null;
         let total = Number(resolvidos[0].total);
         let feitos = Number(resolvidos[0].resolvidos);
+        let totalAnterior = Number(resolvidos[0].total_anterior);
+        let feitosAnterior = Number(resolvidos[0].resolvidos_anterior);
 
         res.json({
-            farm_reincidentes: farm ? { id: farm.id, nome: farm.nome, maquinas: Number(farm.maquinas) } : null,
+            // farm com mais reincidentes no MES atual -YasminEloitaNascimento
+            farm_reincidentes: farm ? { id: farm.id, nome: farm.nome, total: Number(farm.total) } : null,
+            // total de todas as farms: mes atual x mes passado 
+            reincidentes_geral: { total: Number(reincidentesGeral[0].total), anterior: Number(reincidentesGeral[0].anterior) },
             dia_horario: pico ? {
                 dia: DIAS[pico.dia - 1], // DAYOFWEEK do mysql: 1 = domingo -YasminEloitaNascimento
                 hora: String(pico.hora).padStart(2, "0") + "h",
@@ -37,7 +43,13 @@ async function kpis(req, res) {
             alertas_resolvidos: {
                 resolvidos: feitos,
                 total: total,
-                percentual: total > 0 ? Math.round((feitos / total) * 100) : 0
+                percentual: total > 0 ? Math.round((feitos / total) * 100) : 0,
+                
+                anterior: {
+                    resolvidos: feitosAnterior,
+                    total: totalAnterior,
+                    percentual: totalAnterior > 0 ? Math.round((feitosAnterior / totalAnterior) * 100) : 0
+                }
             }
         });
     } catch (erro) {
@@ -104,9 +116,10 @@ async function alertasDaFarm(req, res) {
             sessao: a.sessao,
             componente: a.componente,
             descricao: a.descricao,
-            severidade: a.severidade,
+            severidade: /^cr/i.test(a.severidade) ? "critico" : "atencao", 
             status: a.status,
             detectado_em: a.data_hora_detectado,
+            reincidentes: Number(a.reincidentes), // reincidentes ligados a este alerta principal
             chave_jira: a.chave_jira,
             link_jira: (base && a.chave_jira) ? `${base}/browse/${a.chave_jira}` : null
         }));
@@ -114,6 +127,38 @@ async function alertasDaFarm(req, res) {
         let criticos = alertas.filter(a => a.severidade == "critico").length;
 
         res.json({ farm: linhas.length ? linhas[0].farm : null, total: alertas.length, criticos: criticos, alertas: alertas });
+    } catch (erro) {
+        console.log(erro);
+        res.status(500).json({ erro: erro.message });
+    }
+}
+
+// maquinas com reincidente no mes atual (modal do card de reincidentes) -YasminEloitaNascimento
+async function reincidentes(req, res) {
+    try {
+        let linhas = await model.reincidentesDoMes(req.params.idEmpresa);
+
+        let itens = linhas.map(l => ({
+            maquina: l.id_maquina,
+            componente: l.componente,
+            farm: l.farm,
+            sessao: l.sessao,
+            total: Number(l.total),
+            criticos: Number(l.criticos),
+            ultimo_em: l.ultimo_em
+        }));
+
+        res.json({ total: itens.reduce((soma, i) => soma + i.total, 0), itens: itens });
+    } catch (erro) {
+        console.log(erro);
+        res.status(500).json({ erro: erro.message });
+    }
+}
+
+// componentes (CPU, RAM...) para o filtro do relatorio -YasminEloitaNascimento
+async function componentes(req, res) {
+    try {
+        res.json(await model.listarComponentes());
     } catch (erro) {
         console.log(erro);
         res.status(500).json({ erro: erro.message });
@@ -160,7 +205,8 @@ async function mapaSaude(req, res) {
         let base = `${idEmpresa}/${empresa.nome_fantasia}/operacional`;
 
         let catalogo = await model.lerGold(`${base}/catalogo/estrutura.json`);
-        let status = await model.lerGold(`${base}/geral/tempo_real/status.json`);
+        let statusJson = await model.lerGoldCompleto(`${base}/geral/tempo_real/status.json`);
+        let status = statusJson.dados;
         let abertos = await model.alertasAbertosPorFarm(idEmpresa);
 
         // monta farm > sessao > rigs usando o catalogo -YasminEloitaNascimento
@@ -193,11 +239,12 @@ async function mapaSaude(req, res) {
 
         lista.sort((a, b) => b.alertas_abertos - a.alertas_abertos);
 
-        res.json(lista);
+        // gerado_em = hora da ultima coleta da ETL (igual ao maquinas.html)
+        res.json({ gerado_em: statusJson.gerado_em, farms: lista });
     } catch (erro) {
         console.log(erro);
         res.status(500).json({ erro: erro.message });
     }
 }
 
-module.exports = { kpis, alertasPorFarm, alertasDaFarm, uptime, mapaSaude };
+module.exports = { kpis, alertasPorFarm, alertasDaFarm, reincidentes, componentes, uptime, mapaSaude };
